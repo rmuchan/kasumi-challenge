@@ -23,8 +23,8 @@
     },
     "def_base": {
       "random": "biased",
-      "expect": 5,
-      "min": 3.6
+      "expect": 1.2,
+      "min": 0.8
     },
     "str_grow": {
       "random": "biased",
@@ -43,8 +43,8 @@
     },
     "life_grow": {
       "random": "biased",
-      "expect": 10,
-      "min": 8.1
+      "expect": 5,
+      "min": 4.2
     },
     "defense_str_rate": {
       "random": "uniform",
@@ -60,6 +60,11 @@
       "random": "uniform",
       "min": 0,
       "max": 1
+    },
+    "attack_rate": {
+      "random": "biased",
+      "expect": 3.2,
+      "min": 2.88
     }
   }
 }
