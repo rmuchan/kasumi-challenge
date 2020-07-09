@@ -1,50 +1,38 @@
 {
   "character_template": {
     "lvl": 1,
-    "str_base": {
+    "str_base": 50,
+    "str_grow": 1,
+    "str_build": {
       "random": "biased",
-      "expect": 50,
-      "min": 36
+      "expect": 1,
+      "min": 0.6
     },
-    "int_base": {
+    "int_base": 50,
+    "int_grow": 1,
+    "int_build": {
       "random": "biased",
-      "expect": 50,
-      "min": 36
+      "expect": 1,
+      "min": 0.6
     },
-    "per_base": {
+    "per_base": 50,
+    "per_grow": 1,
+    "per_build": {
       "random": "biased",
-      "expect": 50,
-      "min": 36
+      "expect": 1,
+      "min": 0.6
     },
-    "life_base": {
+    "life_base": 200,
+    "life_grow": 10,
+    "life_build": {
       "random": "biased",
-      "expect": 200,
-      "min": 160
+      "expect": 1,
+      "min": 0.6
     },
     "def_base": {
       "random": "biased",
       "expect": 1.2,
       "min": 0.8
-    },
-    "str_grow": {
-      "random": "biased",
-      "expect": 1,
-      "min": 0.8
-    },
-    "int_grow": {
-      "random": "biased",
-      "expect": 1,
-      "min": 0.8
-    },
-    "per_grow": {
-      "random": "biased",
-      "expect": 1,
-      "min": 0.8
-    },
-    "life_grow": {
-      "random": "biased",
-      "expect": 5,
-      "min": 4.2
     },
     "defense_str_rate": {
       "random": "uniform",
