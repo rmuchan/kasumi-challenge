@@ -1,0 +1,62 @@
+[
+  {
+    "desc": "力量+6 成长值+0.08",
+    "buff": {
+      "str_base": 6,
+      "str_grow": 0.08
+    }
+  },
+  {
+    "desc": "敏捷+6 成长值+0.08",
+    "buff": {
+      "int_base": 6,
+      "int_grow": 0.08
+    }
+  },
+  {
+    "desc": "感知+6 成长值+0.08",
+    "buff": {
+      "per_base": 6,
+      "per_grow": 0.08
+    }
+  },
+  {
+    "desc": "闪避+10%",
+    "buff": {
+      "dodge": 0.1
+    }
+  },
+  {
+    "desc": "基础防御+0.9",
+    "buff": {
+      "def_base": 0.9
+    }
+  },
+  {
+    "desc": "吸血+10%",
+    "buff": {
+      "hem_rate": 0.1
+    }
+  },
+  {
+    "desc": "基础暴击倍率+40%",
+    "buff": {
+      "cri_base": 0.4
+    }
+  },
+  {
+    "desc": "基础生命+50 成长值+0.4",
+    "buff": {
+      "life_base": 50,
+      "life_grow": 0.4
+    }
+  },
+  {
+    "desc": "魔法伤害倍率+8%",
+    "buff": {
+      "mage_rate": {
+        "multiply": 1.08
+      }
+    }
+  }
+]
