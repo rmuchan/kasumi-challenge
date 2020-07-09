@@ -22,7 +22,8 @@ def get_skill_desc(skill: Dict[str, Any]) -> str:
     :param skill: 技能
     :return: 插入具体数值的技能描述
     """
-    return skill['desc'].format(*([_get_param_desc(y) for y in x['param']] for x in skill['effect']))
+    return '【' + skill['name'] + '】' \
+           + skill['desc'].format(*([_get_param_desc(y) for y in x['param']] for x in skill['effect']))
 
 
 def _get_param_desc(param) -> str:
