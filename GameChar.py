@@ -1,4 +1,7 @@
 import os, json
+from .rand import biased
+import random
+from typing import Tuple, Any
 
 # 读数值配置文件  路径可能会修改
 with open('%s/%s' % (os.path.dirname(__file__), 'chara-numerical.json')) as File:
@@ -20,13 +23,13 @@ def atk_calc(int_cur):
     return int_cur * chara_numerical['atk_rate']
 
 
-# 血量计算
-def hp_calc(str_cur, life_base, life_grow, lv):
+# 血量计算  -  modify基本上就是给Shadoul用的了(
+def hp_calc(str_cur, life_base, life_grow, lv, modify):
     current = str_cur
     for _ in range(lv-1):
         current = current * chara_numerical['hp_lv_rate'] + life_grow
     hp = life_base + current
-    hp *= chara_numerical['hp_rate']
+    hp *= chara_numerical['hp_rate'] * modify
     return hp
 
 
@@ -83,7 +86,7 @@ chara = dict(str_cur=50,
 class GameChara:
     def __init__(self, chara: dict):
         self.attributes = chara
-        self.HP_cur = chara['HP']
+        self.HP = chara['HP']
 
     @property
     def defence(self):
@@ -93,11 +96,59 @@ class GameChara:
     def attack(self):
         return self.attributes['attack']
 
+    @property
+    def crit_rate(self):
+        return self.attributes['crit_rate']
+
+    @property
+    def recover_rate(self):
+        return self.attributes['recover_rate']
+
+    @property
+    def buff_rate(self):
+        return self.attributes['buff_rate']
+
+    @property
+    def spell_rate(self):
+        return self.attributes['spell_rate']
+
+    @property
+    def is_dead(self):
+        return self.HP <= 0
+
+    """
+    当角色物理攻击时调用这个函数。
+    本次伤害会有一个随机的波动，且会有暴击的可能
+    返回值为一个tuple，[0]为已算入暴击伤害的攻击伤害，[1]为是否暴击
+    """
+    def do_attack(self) -> Tuple[float, bool]:
+        attack_damage = biased(1, 0.7) * self.attack
+        # 暴击判断
+        is_crit = (random.random() < chara_numerical['crit_chance'])
+
+        if is_crit:
+            attack_damage *= self.crit_rate
+
+        return attack_damage, is_crit
+
+    """
+    当角色受到物理伤害的时候调用这个函数，需要传入伤害量。
+    函数会自动计算防御减免后的伤害
+    """
+    # TODO 不准备搞护盾击破直接Cut掉伤害了，打算是打在护盾上的伤害不计算护甲减免
+    #  这对减免法术伤害来说是很有效的，同样的，护盾附加时永远只取最大值
     def take_damage(self, damage_value):
         damage_decrease = 1 + chara_numerical['def_rate'] * self.defence
         real_damage = damage_value / damage_decrease
-        self.HP_cur -= real_damage
-        return real_damage
+        return self._hurt(real_damage)
+
+    """
+    角色扣血时调用这个函数，需要传入伤害量。
+    优先对护盾造成伤害
+    """
+    def _hurt(self, damage):
+        self.HP -= damage
+        return damage
 
 
 if __name__ == '__main__':
