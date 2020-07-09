@@ -35,13 +35,13 @@
   {
     "desc": "吸血+10%",
     "buff": {
-      "hem_rate": 0.1
+      "life_steal_rate": 0.1
     }
   },
   {
     "desc": "基础暴击倍率+40%",
     "buff": {
-      "cri_base": 0.4
+      "crit_rate": 0.4
     }
   },
   {
@@ -54,7 +54,7 @@
   {
     "desc": "魔法伤害倍率+8%",
     "buff": {
-      "mage_rate": {
+      "spell_rate": {
         "multiply": 1.08
       }
     }
