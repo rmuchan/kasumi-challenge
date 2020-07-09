@@ -31,9 +31,9 @@ def hp_calc(str_cur, life_base, life_grow, lv):
 
 
 # 防御计算
-def def_calc(str_cur, int_cur, defense_str_rate, def_base):
+def def_calc(str_cur, int_cur, defense_str_rate, def_base, extra):
     adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * chara_numerical['def_adj_rate'] + def_base
+    return adj * chara_numerical['def_adj_rate'] + def_base + extra
 
 
 # 暴击率增益计算
