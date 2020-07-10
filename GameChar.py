@@ -87,6 +87,7 @@ class GameChara:
     def __init__(self, chara: dict):
         self.attributes = chara
         self.HP = chara['HP']
+        self.shield = 0
 
     @property
     def defence(self):
@@ -117,7 +118,7 @@ class GameChara:
         return self.HP <= 0
 
     """
-    当角色物理攻击时调用这个函数。
+    角色物理攻击。
     本次伤害会有一个随机的波动，且会有暴击的可能
     返回值为一个tuple，[0]为已算入暴击伤害的攻击伤害，[1]为是否暴击
     """
@@ -132,25 +133,76 @@ class GameChara:
         return attack_damage, is_crit
 
     """
-    当角色受到物理伤害的时候调用这个函数，需要传入伤害量。
-    函数会自动计算防御减免后的伤害
+    角色受到伤害，需要传入伤害量，可选是否为法术伤害。
+    伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
+    返回一个tuple，[0]为实际伤害量，[1]为击破护盾状态(0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破)
     """
-    # TODO 不准备搞护盾击破直接Cut掉伤害了，打算是打在护盾上的伤害不计算护甲减免
-    #  这对减免法术伤害来说是很有效的，同样的，护盾附加时永远只取最大值
-    def take_damage(self, damage_value):
-        damage_decrease = 1 + chara_numerical['def_rate'] * self.defence
-        real_damage = damage_value / damage_decrease
-        return self._hurt(real_damage)
+    def take_damage(self, damage, magic=False):
+
+        shield_break = 0
+        shield_damage = 0
+
+        # 护盾将会被优先攻击
+        if self.shield > 0:
+            shield_break = 1
+            shield_damage = self._shield_hurt(damage)
+            damage -= shield_damage
+            # 伤害全部被护盾挡下
+            if damage == 0:
+                return shield_damage, 2
+
+        if magic:
+            real_damage = self._life_hurt(damage)
+        else:
+            real_damage = self._life_hurt(self._damage_reduce(damage))
+
+        return real_damage+shield_damage, shield_break
 
     """
-    角色扣血时调用这个函数，需要传入伤害量。
-    优先对护盾造成伤害
+    角色的护盾受到攻击，需要传入伤害量
+    如果护盾未击破，返回伤害量
+    否则返回护盾量
     """
-    def _hurt(self, damage):
+    def _shield_hurt(self, damage):
+        if damage < self.shield:
+            self.shield -= damage
+            return damage
+        else:
+            shield = self.shield
+            self.shield = 0
+            return shield
+
+    """
+    角色扣血时，需要传入伤害量。
+    返回实际造成的伤害
+    """
+    def _life_hurt(self, damage):
         self.HP -= damage
         return damage
+
+    """
+    计算护甲伤害减免，传入伤害量。
+    返回护甲减免后的伤害值
+    """
+    def _damage_reduce(self, damage):
+        damage_decrease = 1 + chara_numerical['def_rate'] * self.defence
+        return damage / damage_decrease
+
+    """
+    生命恢复。传入恢复量
+    超过最大值的将会被舍弃
+    返回实际恢复量
+    """
+    def _recover(self, recovery):
+        self.HP += recovery
+        if self.HP <= self.attributes['HP']:
+            return recovery
+        else:
+            diff = self.HP - self.attributes['HP']
+            self.HP = self.attributes['HP']
+            return diff
 
 
 if __name__ == '__main__':
     a = GameChara(chara)
-    print(crit_rate_calc())
+    #print(crit_rate_calc())
