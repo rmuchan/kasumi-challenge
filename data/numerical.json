@@ -54,5 +54,17 @@
   "per_base": 50,
   "per_grow": 1,
   "life_base": 200,
-  "life_grow": 10
+  "life_grow": 10,
+  "atk_rate": 3.2,
+  "crit_base": 1.75,
+  "crit_chance": 0.16,
+  "def_adj_rate": 0.05,
+  "def_rate": 0.27,
+  "dodge_base": 0.05,
+  "dodge_rate": 0.0009,
+  "enhance_constant": 0.0367,
+  "enhance_exponent": 0.845,
+  "hp_lv_rate": 1.004,
+  "hp_rate": 5,
+  "attr_rate": 1.012
 }
