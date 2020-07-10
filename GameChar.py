@@ -98,6 +98,10 @@ class GameChara:
         return self.attributes['attack']
 
     @property
+    def crit_chance(self):
+        return chara_numerical['crit_chance']
+
+    @property
     def crit_rate(self):
         return self.attributes['crit_rate']
 
@@ -125,7 +129,7 @@ class GameChara:
     def do_attack(self) -> Tuple[float, bool]:
         attack_damage = biased(1, 0.7) * self.attack
         # 暴击判断
-        is_crit = (random.random() < chara_numerical['crit_chance'])
+        is_crit = (random.random() < self.crit_chance)
 
         if is_crit:
             attack_damage *= self.crit_rate
