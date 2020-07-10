@@ -1,29 +1,21 @@
 {
   "character_template": {
     "lvl": 1,
-    "str_base": 50,
-    "str_grow": 1,
     "str_build": {
       "random": "biased",
       "expect": 1,
       "min": 0.6
     },
-    "int_base": 50,
-    "int_grow": 1,
     "int_build": {
       "random": "biased",
       "expect": 1,
       "min": 0.6
     },
-    "per_base": 50,
-    "per_grow": 1,
     "per_build": {
       "random": "biased",
       "expect": 1,
       "min": 0.6
     },
-    "life_base": 200,
-    "life_grow": 10,
     "life_build": {
       "random": "biased",
       "expect": 1,
@@ -54,5 +46,13 @@
       "expect": 3.2,
       "min": 2.88
     }
-  }
+  },
+  "str_base": 50,
+  "str_grow": 1,
+  "int_base": 50,
+  "int_grow": 1,
+  "per_base": 50,
+  "per_grow": 1,
+  "life_base": 200,
+  "life_grow": 10
 }

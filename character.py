@@ -133,8 +133,8 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
     }
     for k, v in translate.items():
         ui.append('%s: %.2f+%.2f (%s)' % (v,
-                                          char[f'{k}_base'] * char[f'{k}_build'][0],
-                                          char[f'{k}_grow'] * char[f'{k}_build'][0],
+                                          data.numerical[f'{k}_base'] * char[f'{k}_build'][0],
+                                          data.numerical[f'{k}_grow'] * char[f'{k}_build'][0],
                                           char[f'{k}_build'][1]))
     ui.append('基础物防: %.2f (%s)' % (char['def_base'][0], char['def_base'][1]))
     ui.append('攻击倍率: %.2f (%s)' % (char['attack_rate'][0], char['attack_rate'][1]))
