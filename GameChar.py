@@ -149,32 +149,32 @@ class GameChara:
         # 护盾将会被优先攻击
         if self.shield > 0:
             shield_break = 1
-            shield_damage = self._shield_hurt(damage)
-            damage -= shield_damage
+            total_damage = damage
+            damage = self._shield_hurt(damage)
             # 伤害全部被护盾挡下
             if damage == 0:
-                return shield_damage, 2
+                return total_damage - damage, 2
 
         if magic:
             real_damage = self._life_hurt(damage)
         else:
             real_damage = self._life_hurt(self._damage_reduce(damage))
 
-        return real_damage+shield_damage, shield_break
+        return real_damage + shield_damage, shield_break
 
     """
     角色的护盾受到攻击，需要传入伤害量
-    如果护盾未击破，返回伤害量
-    否则返回护盾量
+    如果护盾未击破，返回0
+    否则返回溢出的伤害量
     """
     def _shield_hurt(self, damage):
         if damage < self.shield:
             self.shield -= damage
-            return damage
+            return 0
         else:
-            shield = self.shield
+            damage -= self.shield
             self.shield = 0
-            return shield
+            return damage
 
     """
     角色扣血时，需要传入伤害量。
