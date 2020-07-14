@@ -14,9 +14,10 @@ with open('%s/%s' % (os.path.dirname(__file__), 'chara-numerical.json')) as File
 # 属性计算
 def attr_calc(attr_base, attr_grow, lv):
     current = attr_base
-    for _ in range(lv-1):
-        current = current*(chara_numerical['attr_rate']) + attr_grow
+    for _ in range(lv - 1):
+        current = current * (chara_numerical['attr_rate']) + attr_grow
     return current
+
 
 # 攻击计算
 def atk_calc(int_cur):
@@ -26,7 +27,7 @@ def atk_calc(int_cur):
 # 血量计算  -  modify基本上就是给Shadoul用的了(
 def hp_calc(str_cur, life_base, life_grow, lv, modify):
     current = str_cur
-    for _ in range(lv-1):
+    for _ in range(lv - 1):
         current = current * chara_numerical['hp_lv_rate'] + life_grow
     hp = life_base + current
     hp *= chara_numerical['hp_rate'] * modify
@@ -69,17 +70,18 @@ def buff_rate_calc(per_cur):
 def dodge_calc(per_cur, extra):
     return chara_numerical['dodge_base'] + extra + per_cur * chara_numerical['dodge_rate']
 
+
 chara = dict(str_cur=50,
              int_cur=50,
              per_cur=50,
              defense_str_rate=0.5,
              magic_int_rate=0.5,
              health_per_rate=0.5,
-             life_base = 200,
-             life_grow = 5,
-             HP = 200,
-             defence = 3,
-             attack = 80
+             life_base=200,
+             life_grow=5,
+             HP=200,
+             defence=3,
+             attack=80
              )
 
 
@@ -88,6 +90,7 @@ class GameChara:
         self.attributes = chara
         self.HP = chara['HP']
         self.shield = 0
+        self.buff = {}
 
     @property
     def defence(self):
@@ -95,7 +98,11 @@ class GameChara:
 
     @property
     def attack(self):
-        return self.attributes['attack']
+        add = 0
+        if 'attack_add' in self.buff.keys():
+            for item in self.buff['attack_add']:
+                add += item[0]
+        return self.attributes['attack'] + add
 
     @property
     def crit_chance(self):
@@ -121,13 +128,13 @@ class GameChara:
     def is_dead(self):
         return self.HP <= 0
 
-    """
-    角色物理攻击。
-    本次伤害会有一个随机的波动，且会有暴击的可能
-    返回值为一个tuple，[0]为已算入暴击伤害的攻击伤害，[1]为是否暴击
-    """
     def do_attack(self) -> Tuple[float, bool]:
-        attack_damage = biased(1, 0.7) * self.attack
+        """
+        角色物理攻击。
+        本次伤害会有一个随机的波动，且会有暴击的可能
+        返回值为一个tuple，[0]为已算入暴击伤害的攻击伤害，[1]为是否暴击
+        """
+        attack_damage = biased(1, chara_numerical['damage_fluctuation']) * self.attack
         # 暴击判断
         is_crit = (random.random() < self.crit_chance)
 
@@ -136,13 +143,12 @@ class GameChara:
 
         return attack_damage, is_crit
 
-    """
-    角色受到伤害，需要传入伤害量，可选是否为法术伤害。
-    伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
-    返回一个tuple，[0]为实际伤害量，[1]为击破护盾状态(0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破)
-    """
     def take_damage(self, damage, magic=False):
-
+        """
+        角色受到伤害，需要传入伤害量，可选是否为法术伤害。
+        伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
+        返回一个tuple，[0]为实际伤害量，[1]为击破护盾状态(0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破)
+        """
         shield_break = 0
         shield_damage = 0
 
@@ -162,42 +168,12 @@ class GameChara:
 
         return real_damage + shield_damage, shield_break
 
-    """
-    角色的护盾受到攻击，需要传入伤害量
-    如果护盾未击破，返回0
-    否则返回溢出的伤害量
-    """
-    def _shield_hurt(self, damage):
-        if damage < self.shield:
-            self.shield -= damage
-            return 0
-        else:
-            damage -= self.shield
-            self.shield = 0
-            return damage
-
-    """
-    角色扣血时，需要传入伤害量。
-    返回实际造成的伤害
-    """
-    def _life_hurt(self, damage):
-        self.HP -= damage
-        return damage
-
-    """
-    计算护甲伤害减免，传入伤害量。
-    返回护甲减免后的伤害值
-    """
-    def _damage_reduce(self, damage):
-        damage_decrease = 1 + chara_numerical['def_rate'] * self.defence
-        return damage / damage_decrease
-
-    """
-    生命恢复。传入恢复量
-    超过最大值的将会被舍弃
-    返回实际恢复量
-    """
-    def _recover(self, recovery):
+    def recover(self, recovery):
+        """
+        生命恢复。传入恢复量
+        超过最大值的将会被舍弃
+        返回实际恢复量
+        """
         self.HP += recovery
         if self.HP <= self.attributes['HP']:
             return recovery
@@ -206,7 +182,80 @@ class GameChara:
             self.HP = self.attributes['HP']
             return diff
 
+    def give_shield(self, value):
+        """
+        添加护盾时使用，传入护盾量
+        护盾不会叠加，只会取最大值
+        返回实际护盾添加量
+        """
+        if self.shield >= value:
+            return 0
+        else:
+            diff = value - self.shield
+            self.shield = value
+            return diff
+
+    def add_attack_buff(self, value, time):
+        """
+        给角色添加一个攻击力的buff
+        当value为负数的时候则为攻击力降低
+        time为持续回合数
+        没有返回值
+        """
+        self._add_buff('attack_add', value, time)
+
+    def _shield_hurt(self, damage):
+        """
+        角色的护盾受到攻击，需要传入伤害量
+        如果护盾未击破，返回0
+        否则返回溢出的伤害量
+        """
+        if damage < self.shield:
+            self.shield -= damage
+            return 0
+        else:
+            damage -= self.shield
+            self.shield = 0
+            return damage
+
+    def _life_hurt(self, damage):
+        """
+        角色扣血时，需要传入伤害量。
+        返回实际造成的伤害
+        """
+        self.HP -= damage
+        return damage
+
+    def _damage_reduce(self, damage):
+        """
+        计算护甲伤害减免，传入伤害量。
+        返回护甲减免后的伤害值
+        """
+        damage_decrease = 1 + chara_numerical['def_rate'] * self.defence
+        return damage / damage_decrease
+
+    def _attack_buff(self, rate):
+        """
+        如果一个技能涉及到百分比强化攻击力，调用这个函数，传入提升量。
+        返回实际战斗力提升点数
+        """
+        return self.attributes['attack'] * rate
+
+    def _add_buff(self, buff_type, value, time):
+        """
+        用作一个添加和管理buff的统一函数接口
+        :param buff_type: buff的类型，具体请查阅文档
+        :param value: buff的数值
+        :param time: 持续时间
+        """
+        if buff_type not in self.buff:
+            self.buff[buff_type] = []
+
+        self.buff[buff_type].append((value, time))
+
+
+
 
 if __name__ == '__main__':
     a = GameChara(chara)
-    #print(crit_rate_calc())
+    # print(crit_rate_calc())
