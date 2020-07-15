@@ -155,6 +155,10 @@ class GameChar:
             skill.dec_cooldown()
 
     def skill_activate(self):
+        """
+        发动技能。顺序依次为终极技能，技能123，最后普通攻击作为一个技能
+        :return: 技能的dict模板
+        """
         if self.MP >= 1000:
             self.MP = 0
             return self.attributes['unique']
@@ -162,7 +166,7 @@ class GameChar:
             ret = self.skills[i]
             if ret:
                 if self.MP < ret.mp_cost:
-                    return None
+                    return self.normal_attack
                 self.MP -= ret.mp_cost
                 return ret.data
 
