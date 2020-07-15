@@ -1,0 +1,38 @@
+{
+    "name": {
+        "random": "choice",
+        "values": [
+            "火球术",
+            "水球术",
+            "闪电球",
+            "冰锥术",
+            "暗影球"
+        ]
+    },
+    "desc": "对敌人单体造成{0[0]}点魔法伤害",
+    "feedback": "这里是反馈",
+    "effect": [
+        {
+            "type": "MGC_DMG",
+            "target": {
+                "type": "RAND",
+                "team": 0,
+                "limit": 1
+            },
+            "skill_param": [
+                {
+                    "random": "biased",
+                    "expect": 100,
+                    "min": 80
+                }
+            ],
+            "unique_param": [
+                {
+                    "random": "biased",
+                    "expect": 160,
+                    "min": 120
+                }
+            ]
+        }
+    ]
+}
