@@ -58,7 +58,7 @@
       "min": 1,
       "max": 5
     },
-    "tp_cost": {
+    "mp_cost": {
       "random": "triangular_int",
       "min": 60,
       "max": 120
