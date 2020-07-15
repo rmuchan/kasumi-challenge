@@ -1,12 +1,11 @@
-import os, json
-from .rand import biased
 import random
-from typing import Tuple, Any, List
-from GameSkill import GameSkill
+from typing import Tuple, List
 
-# 读数值配置文件  路径可能会修改
-with open('%s/%s' % (os.path.dirname(__file__), 'chara-numerical.json')) as File:
-    chara_numerical = json.load(File)
+import data
+from GameSkill import GameSkill
+from .rand import biased
+
+numerical = data.numerical
 
 
 class GameChar:
@@ -34,7 +33,7 @@ class GameChar:
 
     @property
     def crit_chance(self):
-        return chara_numerical['crit_chance']
+        return numerical['crit_chance']
 
     @property
     def crit_rate(self):
@@ -66,7 +65,7 @@ class GameChar:
         本次伤害会有一个随机的波动，且会有暴击的可能
         返回值为一个tuple，[0]为已算入暴击伤害的攻击伤害，[1]为是否暴击
         """
-        attack_damage = biased(1, chara_numerical['damage_fluctuation']) * self.attack
+        attack_damage = biased(1, numerical['damage_fluctuation']) * self.attack
         # 暴击判断
         is_crit = (random.random() < self.crit_chance)
 
@@ -210,7 +209,7 @@ class GameChar:
         计算护甲伤害减免，传入伤害量。
         返回护甲减免后的伤害值
         """
-        damage_decrease = 1 + chara_numerical['def_rate'] * self.defence
+        damage_decrease = 1 + numerical['def_rate'] * self.defence
         return damage / damage_decrease
 
     def _attack_buff(self, rate):
@@ -231,7 +230,6 @@ class GameChar:
             self.buff[buff_type] = []
 
         self.buff[buff_type].append((value, time))
-
 
 
 if __name__ == '__main__':

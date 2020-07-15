@@ -1,9 +1,6 @@
-import json
-import os
+import data
 
-# 读数值配置文件  路径可能会修改
-with open('%s/%s' % (os.path.dirname(__file__), 'chara-numerical.json')) as File:
-    chara_numerical = json.load(File)
+numerical = data.numerical
 
 
 # 以下到类声明之前的所有函数都会用于战斗直接相关的属性的生成，在类中无需记录基础三属性 ----
@@ -13,40 +10,40 @@ with open('%s/%s' % (os.path.dirname(__file__), 'chara-numerical.json')) as File
 def attr_calc(attr_base, attr_grow, lv):
     current = attr_base
     for _ in range(lv - 1):
-        current = current * (chara_numerical['attr_rate']) + attr_grow
+        current = current * (numerical['attr_rate']) + attr_grow
     return current
 
 
 # 攻击计算
 def atk_calc(int_cur):
-    return int_cur * chara_numerical['atk_rate']
+    return int_cur * numerical['atk_rate']
 
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(
 def hp_calc(str_cur, life_base, life_grow, lv, modify):
     current = str_cur
     for _ in range(lv - 1):
-        current = current * chara_numerical['hp_lv_rate'] + life_grow
+        current = current * numerical['hp_lv_rate'] + life_grow
     hp = life_base + current
-    hp *= chara_numerical['hp_rate'] * modify
+    hp *= numerical['hp_rate'] * modify
     return hp
 
 
 # 防御计算
 def def_calc(str_cur, int_cur, defense_str_rate, def_base, extra):
     adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * chara_numerical['def_adj_rate'] + def_base + extra
+    return adj * numerical['def_adj_rate'] + def_base + extra
 
 
 # 暴击率增益计算
 def crit_rate_calc(str_cur, int_cur, defense_str_rate, def_base, extra):
     adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * chara_numerical['def_adj_rate'] + def_base + extra
+    return adj * numerical['def_adj_rate'] + def_base + extra
 
 
 # 下面会有三个基于属性的技能强化率的计算会用到这个函数
 def attr_based_enhance(attr):
-    return chara_numerical['enhance_constant'] * (attr ** chara_numerical['enhance_exponent'])
+    return numerical['enhance_constant'] * (attr ** numerical['enhance_exponent'])
 
 
 # 护盾与治疗倍率
@@ -66,7 +63,7 @@ def buff_rate_calc(per_cur):
 
 # 闪避
 def dodge_calc(per_cur, extra):
-    return chara_numerical['dodge_base'] + extra + per_cur * chara_numerical['dodge_rate']
+    return numerical['dodge_base'] + extra + per_cur * numerical['dodge_rate']
 
 
 chara = dict(str_cur=50,
