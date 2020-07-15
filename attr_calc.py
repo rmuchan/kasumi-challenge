@@ -5,23 +5,23 @@ numerical = data.numerical
 
 def game_char_gen(chara: dict) -> dict:
     game_char = {}
-    str_ = _attr_calc(numerical['str_base'] * chara['str_build'],
-                      numerical['str_grow'] * chara['str_build'],
+    str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0],
+                      numerical['str_grow'] * chara['str_build'][0],
                       chara['lvl'])
-    int_ = _attr_calc(numerical['int_base'] * chara['int_build'],
-                      numerical['int_grow'] * chara['int_build'],
+    int_ = _attr_calc(numerical['int_base'] * chara['int_build'][0],
+                      numerical['int_grow'] * chara['int_build'][0],
                       chara['lvl'])
-    per_ = _attr_calc(numerical['per_base'] * chara['per_build'],
-                      numerical['per_grow'] * chara['per_build'],
+    per_ = _attr_calc(numerical['per_base'] * chara['per_build'][0],
+                      numerical['per_grow'] * chara['per_build'][0],
                       chara['lvl'])
 
     game_char['name'] = chara['name']
     game_char['attack'] = _atk_calc(int_)
-    game_char['defence'] = _def_calc(str_, int_, chara['defence_str_rate'],
-                                     _calc_passive(chara['def_base'], chara, 'def_base'), )
+    game_char['defence'] = _def_calc(str_, int_, chara['defense_str_rate'],
+                                     _calc_passive(chara['def_base'][0], chara, 'def_base'), )
     game_char['HP'] = _hp_calc(str_,
-                               numerical['life_base'] * chara['life_build'],
-                               numerical['life_grow'] * chara['life_build'],
+                               numerical['life_base'] * chara['life_build'][0],
+                               numerical['life_grow'] * chara['life_build'][0],
                                chara['lvl'],
                                _calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
     game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate'])
@@ -29,7 +29,7 @@ def game_char_gen(chara: dict) -> dict:
                                                _calc_passive(1.0, chara, 'spell_rate'))
     game_char['buff_rate'] = _buff_rate_calc(per_)
     game_char['crit_rate'] = _calc_passive(numerical['crit_base'], chara, 'crit_rate')
-    game_char['life_steam_rate'] = _calc_passive(0, chara, 'life_steal_rate')
+    game_char['life_steal_rate'] = _calc_passive(0, chara, 'life_steal_rate')
     game_char['dodge'] = _dodge_calc(per_, _calc_passive(0, chara, 'dodge'))
 
     for i in range(1, 4):
@@ -71,7 +71,7 @@ def _hp_calc(str_cur, life_base, life_grow, lv, modify):
     for _ in range(lv - 1):
         current = current * numerical['hp_lv_rate'] + life_grow
     hp = life_base + current
-    hp *= numerical['hp_rate'] * modify
+    hp *= modify
     return hp
 
 
