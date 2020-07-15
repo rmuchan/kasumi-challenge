@@ -1,96 +1,24 @@
 import os, json
 from .rand import biased
 import random
-from typing import Tuple, Any
+from typing import Tuple, Any, List
+from GameSkill import GameSkill
 
 # 读数值配置文件  路径可能会修改
 with open('%s/%s' % (os.path.dirname(__file__), 'chara-numerical.json')) as File:
     chara_numerical = json.load(File)
 
 
-## 以下到类声明之前的所有函数都会用于战斗直接相关的属性的生成，在类中无需记录基础三属性 ----
-
-
-# 属性计算
-def attr_calc(attr_base, attr_grow, lv):
-    current = attr_base
-    for _ in range(lv - 1):
-        current = current * (chara_numerical['attr_rate']) + attr_grow
-    return current
-
-
-# 攻击计算
-def atk_calc(int_cur):
-    return int_cur * chara_numerical['atk_rate']
-
-
-# 血量计算  -  modify基本上就是给Shadoul用的了(
-def hp_calc(str_cur, life_base, life_grow, lv, modify):
-    current = str_cur
-    for _ in range(lv - 1):
-        current = current * chara_numerical['hp_lv_rate'] + life_grow
-    hp = life_base + current
-    hp *= chara_numerical['hp_rate'] * modify
-    return hp
-
-
-# 防御计算
-def def_calc(str_cur, int_cur, defense_str_rate, def_base, extra):
-    adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * chara_numerical['def_adj_rate'] + def_base + extra
-
-
-# 暴击率增益计算
-def crit_rate_calc(str_cur, int_cur, defense_str_rate, def_base, extra):
-    adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * chara_numerical['def_adj_rate'] + def_base + extra
-
-
-# 下面会有三个基于属性的技能强化率的计算会用到这个函数
-def attr_based_enhance(attr):
-    return chara_numerical['enhance_constant'] * (attr ** chara_numerical['enhance_exponent'])
-
-
-# 护盾与治疗倍率
-def recover_rate_calc(per_cur, str_cur, health_per_rate):
-    return attr_based_enhance(per_cur * health_per_rate + str_cur * (1 - health_per_rate))
-
-
-# 魔法伤害增强 - 对于Magecian种族，mage_rate会有更高的数值
-def spell_rate_calc(int_cur, per_cur, magic_int_rate, extra):
-    return attr_based_enhance(int_cur * magic_int_rate + per_cur * (1 - magic_int_rate)) * extra
-
-
-# 增益类技能效果增强
-def buff_rate_calc(per_cur):
-    return attr_based_enhance(per_cur)
-
-
-# 闪避
-def dodge_calc(per_cur, extra):
-    return chara_numerical['dodge_base'] + extra + per_cur * chara_numerical['dodge_rate']
-
-
-chara = dict(str_cur=50,
-             int_cur=50,
-             per_cur=50,
-             defense_str_rate=0.5,
-             magic_int_rate=0.5,
-             health_per_rate=0.5,
-             life_base=200,
-             life_grow=5,
-             HP=200,
-             defence=3,
-             attack=80
-             )
-
-
-class GameChara:
+class GameChar:
     def __init__(self, chara: dict):
         self.attributes = chara
         self.HP = chara['HP']
         self.shield = 0
         self.buff = {}
+        self.MP = 0
+        self.skills = []
+        for i in range(3):
+            self.skills.append(GameSkill(self.attributes[f'skill_{i}']))
 
     @property
     def defence(self):
@@ -125,8 +53,12 @@ class GameChara:
         return self.attributes['spell_rate']
 
     @property
-    def is_dead(self):
-        return self.HP <= 0
+    def not_dead(self):
+        return self.HP > 0
+
+    @property
+    def normal_attack(self):
+        return self.attributes['normal_attack']
 
     def do_attack(self) -> Tuple[float, bool]:
         """
@@ -204,6 +136,51 @@ class GameChara:
         """
         self._add_buff('attack_add', value, time)
 
+    def buff_fade(self):
+        """
+        回合结束时调用。
+        移除所有持续时间为0的buff，其余所有buff持续时间-1
+        """
+        for buff_type in self.buff:
+            for i in buff_type:
+                new_buff_array = []
+                if i[1] > 0:
+                    new_buff_array.append((i[0], i[1] - 1))
+                self.buff[buff_type] = new_buff_array
+
+    def skill_cooldown(self):
+        """
+        减全部技能的CD
+        """
+        for skill in self.skills:
+            skill.dec_cooldown()
+
+    def skill_activate(self):
+        if self.MP >= 1000:
+            self.MP = 0
+            return self.attributes['unique']
+        for i in range(3):
+            ret = self.skills[i]
+            if ret:
+                if self.MP < ret.mp_cost:
+                    return None
+                self.MP -= ret.mp_cost
+                return ret.data
+
+        return self.normal_attack
+
+    def gain_mp(self, value):
+        """
+        MP增加的时候使用，函数会保证MP值不超过1000点
+        """
+        self.MP += value
+        if self.MP > 1000:
+            self.MP = 1000
+
+    # TODO 技能效果执行
+    def use_effect(self, selector: List['GameChar'], param: List) -> str:
+        pass
+
     def _shield_hurt(self, damage):
         """
         角色的护盾受到攻击，需要传入伤害量
@@ -221,9 +198,11 @@ class GameChara:
     def _life_hurt(self, damage):
         """
         角色扣血时，需要传入伤害量。
-        返回实际造成的伤害
+        返回实际造成的伤害，同时增加TP值
         """
         self.HP -= damage
+        damage_percent = damage / self.attributes['HP']
+        self.MP += damage_percent * 1000
         return damage
 
     def _damage_reduce(self, damage):
@@ -255,7 +234,6 @@ class GameChara:
 
 
 
-
 if __name__ == '__main__':
-    a = GameChara(chara)
+    pass
     # print(crit_rate_calc())
