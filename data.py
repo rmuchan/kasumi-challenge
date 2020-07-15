@@ -17,6 +17,9 @@ class _Dir:
                     self._loaded[item] = json.load(f)
         return self._loaded[item]
 
+    def __getitem__(self, item: str):
+        return getattr(self, item)
+
 
 _root = _Dir(path.join(path.dirname(__file__), 'data'))
 __getattr__ = _root.__getattr__
