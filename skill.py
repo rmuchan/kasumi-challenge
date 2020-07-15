@@ -37,7 +37,12 @@ def get_skill_desc(skill: Dict[str, Any]) -> str:
     :param skill: 技能
     :return: 插入具体数值的技能描述
     """
-    return '【' + skill['name'] + '】' + '；'.join(get_effect_desc(x) for x in skill['effect'])
+    return '【{name}】\n ├ 冷却回合：{cd}\n ├ MP消耗：{mp}\n └ 效果：{desc}'.format(
+        name=skill['name'],
+        cd=skill['cooldown'],
+        mp=skill['mp_cost'],
+        desc='；'.join(get_effect_desc(x) for x in skill['effect'])
+    )
 
 
 def get_effect_desc(effect: Dict[str, Any]) -> str:

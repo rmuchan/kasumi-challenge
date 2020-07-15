@@ -58,8 +58,9 @@ async def _create_step_passive_select(ui: UI, proto: Dict[str, Any]):
     ui.append('被动加成在下列项目中选择：')
     for idx, val in enumerate(candidate):
         ui.append('%d. %s' % (idx + 1, val['desc']))
-    await ui.send()
-    selection = await ui.input('选择被动加成')
+    ui.append('—' * 12)
+    await ui.send('选择被动加成')
+    selection = await ui.input()
     while not selection.isdigit() or int(selection) - 1 not in range(len(candidate)):
         selection = await ui.input('你的输入不正确，请重新输入')
     selection = int(selection) - 1
@@ -72,8 +73,9 @@ def _create_step_skill_select(skill_num: int):
         ui.append(f'第{skill_num}个技能在下列项目中选择：')
         for idx, val in enumerate(candidate):
             ui.append('%d. %s' % (idx + 1, get_skill_desc(val)))
-        await ui.send()
-        selection = await ui.input(f'选择第{skill_num}个技能')
+        ui.append('—' * 12)
+        await ui.send(f'选择第{skill_num}个技能')
+        selection = await ui.input()
         while not selection.isdigit() or int(selection) - 1 not in range(len(candidate)):
             selection = await ui.input('你的输入不正确，请重新输入')
         selection = int(selection) - 1
@@ -87,8 +89,9 @@ async def _create_step_unique_select(ui: UI, proto: Dict[str, Any]):
     ui.append('终极技能在下列项目中选择：')
     for idx, val in enumerate(candidate):
         ui.append('%d. %s' % (idx + 1, get_skill_desc(val)))
-    await ui.send()
-    selection = await ui.input('选择终极技能')
+    ui.append('—' * 12)
+    await ui.send('选择终极技能')
+    selection = await ui.input()
     while not selection.isdigit() or int(selection) - 1 not in range(len(candidate)):
         selection = await ui.input('你的输入不正确，请重新输入')
     selection = int(selection) - 1
@@ -153,11 +156,12 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
         'life': '生命'
     }
     for k, v in translate.items():
-        ui.append('%s: %.0f + %.2f (%s)' % (v,
-                                            data.numerical[f'{k}_base'] * char[f'{k}_build'][0],
-                                            data.numerical[f'{k}_grow'] * char[f'{k}_build'][0],
-                                            char[f'{k}_build'][1]))
-    ui.append('基础物防: %.2f (%s)' % (char['def_base'][0], char['def_base'][1]))
+        ui.append('%s: %.0f + %.2f (%s)' %
+                  (v,
+                   calc_passive(data.numerical[f'{k}_base'] * char[f'{k}_build'][0], char, f'{k}_base'),
+                   calc_passive(data.numerical[f'{k}_grow'] * char[f'{k}_build'][0], char, f'{k}_grow'),
+                   char[f'{k}_build'][1]))
+    ui.append('基础物防: %.2f (%s)' % (calc_passive(char['def_base'][0], char, 'def_base'), char['def_base'][1]))
     ui.append('攻击倍率: %.2f (%s)' % (char['attack_rate'][0], char['attack_rate'][1]))
 
 
@@ -185,3 +189,17 @@ _PRINT_STEPS = {
     'skill_3': _print_step_skill(3),
     'unique': _print_step_unique,
 }
+
+
+def calc_passive(base: float, char: dict, key: str) -> float:
+    race = data.race[char['race_id']]['buff']
+    passive = char.get('passive', {'buff': {}})['buff']
+    add = 0
+    multiply = 1
+    for b in (race, passive):
+        modify = b.get(key, 0)
+        if isinstance(modify, dict):
+            multiply *= modify['multiply']
+        else:
+            add += modify
+    return (base + add) * multiply
