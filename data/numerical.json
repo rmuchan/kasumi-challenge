@@ -44,9 +44,27 @@
     "attack_rate": {
       "random": "biased",
       "expect": 3.2,
-      "min": 2.88
+      "min": 2.76
     }
   },
+  "skill_template": {
+    "chance": {
+      "random": "triangular",
+      "min": 0.05,
+      "max": 0.15
+    },
+    "cooldown": {
+      "random": "triangular_int",
+      "min": 1,
+      "max": 5
+    },
+    "tp_cost": {
+      "random": "triangular_int",
+      "min": 60,
+      "max": 120
+    }
+  },
+  "single_effect_chance": 0.6,
   "str_base": 50,
   "str_grow": 1,
   "int_base": 50,

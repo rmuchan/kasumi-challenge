@@ -1,33 +1,84 @@
-from typing import Dict, Any, Iterable
+import random
+from typing import Dict, Any
 
+import data
 from rand import randomize
 
 
-def create_skill(template: Dict[str, Any], is_unique: bool) -> Dict[str, Any]:
-    skill = randomize(template)
-    for effect in skill['effect']:
-        if 'param' not in effect:
-            effect['param'] = effect['unique_param' if is_unique else 'skill_param']
-            del effect['skill_param']
-            del effect['unique_param']
+def create_skill(is_unique: bool) -> Dict[str, Any]:
+    skill = randomize(data.numerical['skill_template'])
+    effect = []
+    if random.random() < data.numerical['single_effect_chance']:
+        effect.append(_create_skill_effect(3, is_unique))
+    else:
+        effect.append(_create_skill_effect(2, is_unique))
+        effect.append(_create_skill_effect(1, is_unique))
+    skill['name'] = effect[0]['name']
+    skill['effect'] = effect
     return skill
+
+
+def _create_skill_effect(level: int, is_unique: bool) -> Dict[str, Any]:
+    pool = data.skill_effect_pool[f'lv-{level}']
+    template = random.choices(pool, [x['weight'] for x in pool])[0]
+    effect = randomize(template)
+    if 'param' not in effect:
+        effect['param'] = effect['unique_param' if is_unique else 'skill_param']
+        del effect['skill_param']
+        del effect['unique_param']
+    return effect
 
 
 def get_skill_desc(skill: Dict[str, Any]) -> str:
     """生成技能描述。
 
-    以技能desc字段为模板，传入技能效果参数。模板中可以插入形如{a[b]}的字符串，将被替换为第a个效果的第b个参数（均从0开始计数）。
-    参数如果由biased随机函数生成，则会以8.00(SS)的形式同时插入其数值和评级，否则只插入其数值（保留两位小数）。
+    生成每个技能效果的描述，并加上技能名。
 
     :param skill: 技能
     :return: 插入具体数值的技能描述
     """
-    return '【' + skill['name'] + '】' \
-           + skill['desc'].format(*([_get_param_desc(y) for y in x['param']] for x in skill['effect']))
+    return '【' + skill['name'] + '】' + '；'.join(get_effect_desc(x) for x in skill['effect'])
 
 
-def _get_param_desc(param) -> str:
-    if isinstance(param, Iterable):
-        return '{0:.2f}({1})'.format(*param)
+def get_effect_desc(effect: Dict[str, Any]) -> str:
+    """生成技能效果描述。
+
+    以技能效果desc字段为模板，传入参数。模板中可以插入用于str.format的格式化字符串，format时会将effect展开作为命名参数传入。
+    param元素如果由biased随机函数生成，则会以8.00(SS)的形式同时插入其数值和评级，否则只插入其数值（保留两位小数）。
+    除param外的元素原样传入。
+
+    :param effect: 技能效果
+    :return: 插入具体数值的效果描述
+    """
+    return effect['desc'].format(param=[_get_param_desc(x) for x in effect['param']],
+                                 **{k: v for k, v in effect.items() if k != 'param'})
+
+
+def _get_param_desc(param):
+    if isinstance(param, (list, tuple)):
+        return _BiasedRandomFormat(param)
+    elif isinstance(param, int):
+        return str(param)
     else:
-        return '{:.2f}'.format(param)
+        return _NumFormat(param)
+
+
+class _BiasedRandomFormat:
+    def __init__(self, val):
+        self._val = _NumFormat(val[0])
+        self._appraise = val[1]
+
+    def __format__(self, format_spec: str):
+        return format(self._val, format_spec) + f'({self._appraise})'
+
+
+class _NumFormat:
+    def __init__(self, val: float):
+        self._val = val
+
+    def __format__(self, format_spec: str):
+        if format_spec and format_spec[-1] == '%':
+            format_spec = format_spec[:-1]
+            return format(self._val * 100, format_spec or '.0f') + '%'
+
+        return format(self._val, format_spec or '.0f')
