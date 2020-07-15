@@ -22,8 +22,9 @@ class UI(ABC):
         if send_msg:
             await self.do_send(send_msg)
 
-    async def input(self, prompt: str) -> str:
-        await self.do_send(prompt)
+    async def input(self, prompt: Optional[str] = None) -> str:
+        if prompt:
+            await self.do_send(prompt)
         return await self.do_input()
 
     @abstractmethod
