@@ -208,7 +208,7 @@ class GameChar:
 
         param = effect['param']
 
-        ret = {}
+        ret = dict()
         ret['params'] = []
 
         # 普通攻击
@@ -234,6 +234,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_attack_buff(param[0][0], param[1])
                 ret['params'].append(dict(target=self._self_replace(obj.name), point=real_added))
+            return ret
 
         # 百分比强化
         if effect['type'] == 'PHY_ATK_BUFF_RATE':
@@ -242,6 +243,7 @@ class GameChar:
                 real_point = obj._attack_buff(param[0][0])
                 real_added = obj.add_attack_buff(real_point, param[1])
                 ret['params'].append(dict(target=self._self_replace(obj.name), point=real_added))
+            return ret
 
 
     def _shield_hurt(self, damage):
