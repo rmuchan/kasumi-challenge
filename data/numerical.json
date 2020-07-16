@@ -98,5 +98,7 @@
     0.36,
     0.28,
     0.22
-  ]
+  ],
+  "hp_display_unit": 320,
+  "boss_display_shorten": 4.5
 }

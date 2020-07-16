@@ -80,17 +80,13 @@ class Gaming(ABC):
         for chara in team:
             skill_gotten = chara.skill_activate()
             if skill_gotten is not None:
-                print(chara.name, skill_gotten['name'], chara.MP)
-                for effect in skill_gotten['effect']:
-                    selected = self.selector(effect['target'], team_name, chara)
-                    feedback = chara.use_effect(selected, effect)
-                    for i in feedback['params']:
-                        print(feedback['feedback'].format(**i))
-                    # TODO 更好的UI的展示内容
-            else:
-                pass
-                # 说明MP不够用
-                # print('TP不足')
+                for skill in skill_gotten:
+                    print(chara.name, skill['name'], chara.MP)
+                    for effect in skill['effect']:
+                        selected = self.selector(effect['target'], team_name, chara)
+                        feedback = chara.use_effect(selected, effect)
+                        for k, v in feedback.items():
+                            print(v['feedback'].format(target=k, **v['param']))
 
     def _status_manage(self, team_name):
         team = self._get_team(team_name)

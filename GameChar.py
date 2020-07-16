@@ -25,7 +25,11 @@ class GameChar:
 
     @property
     def name(self):
-        return  self.attributes['name']
+        return self.attributes['name']
+
+    @property
+    def is_player(self):
+        return self.attributes['is_player']
 
     @property
     def attack(self):
@@ -168,16 +172,16 @@ class GameChar:
         """
         if self.MP >= 1000:
             self.MP = 0
-            return self.attributes['unique']
+            return [self.attributes['unique']]
         for i in range(3):
             ret = self.skills[i].can_be_used()
             if ret:
                 if self.MP < ret['mp_cost']:
-                    return self.normal_attack
+                    return [self.normal_attack]
                 self.MP -= ret['mp_cost']
-                return ret
+                return [ret]
 
-        return self.normal_attack
+        return [self.normal_attack]
 
     def turn_mp_gain(self):
         """
@@ -274,6 +278,23 @@ class GameChar:
 
         return ret
 
+    def life_display(self) -> str:
+        """
+        这个函数将会返回一个图形化的体力条
+        """
+        hp_bar = ''
+        adj_hp = self.HP if self.is_player else int(self.HP / numerical['boss_display_shorten'])
+        whole = int(adj_hp / numerical['hp_display_unit'])
+        rest = adj_hp - numerical['hp_display_unit'] * whole
+
+        hp_bar += '▉' * whole
+        hp_bar += hp_block(rest)
+
+        return hp_bar
+
+    def mp_display(self) -> str:
+        value = int(self.MP / (1000 / 8))
+        return mp_block_list[value]
 
     def _shield_hurt(self, damage):
         """
@@ -331,6 +352,27 @@ class GameChar:
             return '自身'
         return chara_name
 
+
+hp_block_list = ' ▏▎▍▌▋▊▉'
+mp_block_list = ' ▁▂▃▄▅▆▇♠'
+
+
+def hp_block(value):
+    value = int(value / (numerical['hp_display_unit'] / 8))
+    return hp_block_list[value]
+
+
+def life_display(hp) -> str:
+    hp_bar = ''
+
+    whole = int(hp / numerical['hp_display_unit'])
+    rest = hp - numerical['hp_display_unit'] * whole
+
+    hp_bar += '▉' * whole
+    hp_bar += hp_block(rest)
+
+    return hp_bar
+
+
 if __name__ == '__main__':
     pass
-    # print(crit_rate_calc())
