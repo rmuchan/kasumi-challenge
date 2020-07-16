@@ -50,7 +50,7 @@ async def _create_step_skill_candidate(_: UI, proto: Dict[str, Any]):
     proto['skill_2_candidate'] = [create_skill(False) for _ in range(3)]
     proto['skill_3_candidate'] = [create_skill(False) for _ in range(3)]
     proto['unique_candidate'] = [create_skill(True) for _ in range(3)]
-    proto['passive_candidate'] = random.sample(data.skill_pool.passive, 3)
+    proto['passive_candidate'] = random.sample(data.skill_effect_pool.passive, 3)
 
 
 async def _create_step_passive_select(ui: UI, proto: Dict[str, Any]):
