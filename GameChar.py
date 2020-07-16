@@ -1,5 +1,5 @@
 import random
-from typing import Tuple, List
+from typing import Tuple, List, Optional
 
 import data
 from GameSkill import GameSkill
@@ -24,6 +24,10 @@ class GameChar:
         return self.attributes['defence']
 
     @property
+    def name(self):
+        return  self.attributes['name']
+
+    @property
     def attack(self):
         add = 0
         if 'attack_add' in self.buff.keys():
@@ -46,6 +50,10 @@ class GameChar:
     @property
     def buff_rate(self):
         return self.attributes['buff_rate']
+
+    @property
+    def hp_percentage(self):
+        return self.HP / self.attributes['HP']
 
     @property
     def spell_rate(self):
@@ -172,6 +180,12 @@ class GameChar:
 
         return self.normal_attack
 
+    def turn_mp_gain(self):
+        """
+        每回合固定获取一定的MP
+        """
+        self.gain_mp(random.random() * numerical['random_mp_gain_extra'] + numerical['random_mp_gain_base'])
+
     def gain_mp(self, value):
         """
         MP增加的时候使用，函数会保证MP值不超过1000点
@@ -181,8 +195,36 @@ class GameChar:
             self.MP = 1000
 
     # TODO 技能效果执行
-    def use_effect(self, selector: List['GameChar'], param: List) -> str:
-        pass
+    def use_effect(self, selector: List['GameChar'], effect: dict) -> Optional[dict]:
+        """
+        角色行动时一定会调用这个函数，发动技能效果。
+        :param selector: 选择到的角色数组
+        :param effect: 技能的dict信息
+        :return:
+        """
+        if len(selector) == 0:
+            return None
+
+        def self_replace(chara_name: str) -> str:
+            if chara_name == self.name:
+                return '自身'
+            return chara_name
+
+        ret = {}
+
+        # 魔法伤害
+        if effect['type'] == 'MGC_DMG':
+            ret['feedback'] = '对{target}造成了{damage}点魔法伤害'
+            ret['params'] = []
+            for obj in selector:
+                magic_damage = effect['param'][0][0] * self.attributes['spell_rate']
+                real_damage, _ = obj.take_damage(magic_damage, magic=True)
+                ret['params'].append((self_replace(self.name), real_damage))
+            return ret
+
+
+
+
 
     def _shield_hurt(self, damage):
         """
@@ -205,7 +247,7 @@ class GameChar:
         """
         self.HP -= damage
         damage_percent = damage / self.attributes['HP']
-        self.MP += damage_percent * 1000
+        self.gain_mp(damage_percent * 1000)
         return damage
 
     def _damage_reduce(self, damage):

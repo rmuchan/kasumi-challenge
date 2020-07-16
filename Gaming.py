@@ -87,6 +87,7 @@ class Gaming(ABC):
         for chara in team:
             chara.buff_fade()
             chara.skill_cooldown()
+            chara.turn_mp_gain()
 
 
     @abstractmethod
