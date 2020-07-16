@@ -72,7 +72,7 @@ def _create_step_skill_select(skill_num: int):
         candidate = proto[f'skill_{skill_num}_candidate']
         ui.append(f'第{skill_num}个技能在下列项目中选择：')
         for idx, val in enumerate(candidate):
-            ui.append('%d. %s' % (idx + 1, get_skill_desc(val)))
+            ui.append('%d. %s' % (idx + 1, get_skill_desc(val, False)))
         ui.append('—' * 12)
         await ui.send(f'选择第{skill_num}个技能')
         selection = await ui.input()
@@ -88,7 +88,7 @@ async def _create_step_unique_select(ui: UI, proto: Dict[str, Any]):
     candidate = proto['unique_candidate']
     ui.append('终极技能在下列项目中选择：')
     for idx, val in enumerate(candidate):
-        ui.append('%d. %s' % (idx + 1, get_skill_desc(val)))
+        ui.append('%d. %s' % (idx + 1, get_skill_desc(val, True)))
     ui.append('—' * 12)
     await ui.send('选择终极技能')
     selection = await ui.input()
@@ -101,13 +101,17 @@ async def _create_step_unique_select(ui: UI, proto: Dict[str, Any]):
 async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
     ui.append('你的技能有：')
     for idx in range(1, 4):
-        ui.append('%d. %s' % (idx, get_skill_desc(proto[f'skill_{idx}'])))
+        ui.append('%d. %s' % (idx, get_skill_desc(proto[f'skill_{idx}'], False)))
     await ui.send()
     selection = await ui.input('选择主技能')
     while not selection.isdigit() or int(selection) - 1 not in range(3):
         selection = await ui.input('你的输入不正确，请重新输入')
     selection = int(selection)
-    proto['skill_1'], proto[f'skill_{selection}'] = proto[f'skill_{selection}'], proto['skill_1']
+    primary = proto[f'skill_{selection}']
+    proto['skill_1'], proto[f'skill_{selection}'] = primary, proto['skill_1']
+    primary['chance'] *= data.numerical['primary_skill_chance_rate']
+    primary['cooldown'] = int(primary['cooldown'] * data.numerical['primary_skill_cooldown_rate'])
+    primary['mp_cost'] -= data.numerical['primary_skill_cost_decrease']
 
 
 _CREATE_STEPS = {
@@ -172,13 +176,13 @@ def _print_step_passive(ui: UI, char: Dict[str, Any]):
 def _print_step_skill(skill_num: int):
     def append_skill(ui: UI, char: Dict[str, Any]):
         skill = char[f'skill_{skill_num}']
-        ui.append(f'技能{skill_num}: %s' % get_skill_desc(skill))
+        ui.append(f'技能{skill_num}: %s' % get_skill_desc(skill, False))
 
     return append_skill
 
 
 def _print_step_unique(ui: UI, char: Dict[str, Any]):
-    ui.append('终极技能：%s' % get_skill_desc(char['unique']))
+    ui.append('终极技能：%s' % get_skill_desc(char['unique'], True))
 
 
 _PRINT_STEPS = {

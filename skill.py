@@ -26,20 +26,38 @@ def _create_skill_effect(level: int, is_unique: bool) -> Dict[str, Any]:
         effect['param'] = effect['unique_param' if is_unique else 'skill_param']
         del effect['skill_param']
         del effect['unique_param']
+    if effect['target']['type'] not in ('SELF', 'ALL', 'OTHER'):
+        limit = effect['target']['limit']
+        old = effect['param'][0]
+        if isinstance(old, tuple):
+            effect['param'][0] = (_calc_aoe_param(old[0], limit), old[1])
+        else:
+            effect['param'][0] = _calc_aoe_param(old, limit)
     return effect
 
 
-def get_skill_desc(skill: Dict[str, Any]) -> str:
+def _calc_aoe_param(base: float, limit: int) -> float:
+    rate = data.numerical['aoe_separate_rate']
+    return base * (rate[limit] if limit < len(rate) else rate[-1])
+
+
+def get_skill_desc(skill: Dict[str, Any], is_unique: bool) -> str:
     """生成技能描述。
 
     生成每个技能效果的描述，并加上技能名。
 
     :param skill: 技能
+    :param is_unique: 是否为终极技能
     :return: 插入具体数值的技能描述
     """
-    return '【{name}】\n ├ 冷却回合：{cd}\n ├ MP消耗：{mp}\n └ 效果：{desc}'.format(
+    if is_unique:
+        format_ = '【{name}】\n └ 效果：{desc}'
+    else:
+        format_ = '【{name}】\n ├ 冷却回合：{cd}\n ├ 动态概率：{chance:.1f%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'
+    return format_.format(
         name=skill['name'],
         cd=skill['cooldown'],
+        chance=_NumFormat(skill['chance']),
         mp=skill['mp_cost'],
         desc='；'.join(get_effect_desc(x) for x in skill['effect'])
     )

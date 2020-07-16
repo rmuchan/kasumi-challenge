@@ -87,5 +87,16 @@
   "attr_rate": 1.012,
   "damage_fluctuation": 0.5,
   "random_mp_gain_base": 75,
-  "random_mp_gain_extra": 60
+  "random_mp_gain_extra": 60,
+  "primary_skill_chance_rate": 1.5,
+  "primary_skill_cooldown_rate": 0.5,
+  "primary_skill_cost_decrease": 12,
+  "aoe_separate_rate": [
+    0,
+    1,
+    0.52,
+    0.36,
+    0.28,
+    0.22
+  ]
 }
