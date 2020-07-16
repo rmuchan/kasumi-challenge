@@ -137,11 +137,12 @@ class GameChar:
     def add_attack_buff(self, value, time):
         """
         给角色添加一个攻击力的buff
+        这个buff会受到角色本身的buff_rate的加成
         当value为负数的时候则为攻击力降低
         time为持续回合数
         没有返回值
         """
-        self._add_buff('attack_add', value, time)
+        self._add_buff('attack_add', value * self.buff_rate, time)
 
     def buff_fade(self):
         """
@@ -205,25 +206,44 @@ class GameChar:
         if len(selector) == 0:
             return None
 
-        def self_replace(chara_name: str) -> str:
-            if chara_name == self.name:
-                return '自身'
-            return chara_name
+        param = effect['param']
 
-        ret = {}
+        ret = dict()
+        ret['params'] = []
+
+        # 普通攻击
+        if effect['type'] == 'NORMAL_ATK':
+            ret['feedback'] = '对{target}造成了{damage}点伤害'
+            for obj in selector:
+                real_damage, _ = obj.take_damage(self.do_attack())
+                ret['params'].append(dict(target=self._self_replace(obj.name), damage=real_damage))
+            return ret
 
         # 魔法伤害
         if effect['type'] == 'MGC_DMG':
             ret['feedback'] = '对{target}造成了{damage}点魔法伤害'
-            ret['params'] = []
             for obj in selector:
-                magic_damage = effect['param'][0][0] * self.attributes['spell_rate']
+                magic_damage = param[0][0] * self.spell_rate
                 real_damage, _ = obj.take_damage(magic_damage, magic=True)
-                ret['params'].append((self_replace(self.name), real_damage))
+                ret['params'].append(dict(target=self._self_replace(obj.name), damage=real_damage))
             return ret
 
+        # 固定值攻击强化
+        if effect['type'] == 'PHY_ATK_BUFF_CONST':
+            ret['feedback'] = '强化了{target}{point}点攻击'
+            for obj in selector:
+                real_added = obj.add_attack_buff(param[0][0], param[1])
+                ret['params'].append(dict(target=self._self_replace(obj.name), point=real_added))
+            return ret
 
-
+        # 百分比强化
+        if effect['type'] == 'PHY_ATK_BUFF_RATE':
+            ret['feedback'] = '强化了{target}{point}点攻击'
+            for obj in selector:
+                real_point = obj._attack_buff(param[0][0])
+                real_added = obj.add_attack_buff(real_point, param[1])
+                ret['params'].append(dict(target=self._self_replace(obj.name), point=real_added))
+            return ret
 
 
     def _shield_hurt(self, damage):
@@ -277,6 +297,10 @@ class GameChar:
 
         self.buff[buff_type].append((value, time))
 
+    def _self_replace(self, chara_name: str) -> str:
+        if chara_name == self.name:
+            return '自身'
+        return chara_name
 
 if __name__ == '__main__':
     pass
