@@ -86,7 +86,7 @@ class Gaming(ABC):
                     feedback = chara.use_effect(selected, effect)
                     for i in feedback['params']:
                         print(feedback['feedback'].format(**i))
-                    # TODO print(feedback)
+                    # TODO 更好的UI的展示内容
             else:
                 pass
                 # 说明MP不够用

@@ -16,6 +16,7 @@ def game_char_gen(chara: dict) -> dict:
                       chara['lvl'])
 
     game_char['name'] = chara['name']
+    game_char['is_player'] = True
     game_char['attack'] = _atk_calc(int_)
     game_char['defence'] = _def_calc(str_, int_, chara['defense_str_rate'],
                                      _calc_passive(chara['def_base'][0], chara, 'def_base'), )
@@ -51,7 +52,7 @@ def game_char_gen(chara: dict) -> dict:
             }
         ]
     }
-
+    # TODO 技能1的额外强化 (Sc那边)
     return game_char
 
 

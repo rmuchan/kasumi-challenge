@@ -199,49 +199,80 @@ class GameChar:
         角色行动时一定会调用这个函数，发动技能效果。
         :param selector: 选择到的角色数组
         :param effect: 技能的dict信息
-        :return:
+        :return: {角色名: {feedback: 返回信息, param: {返回信息需要用到的参数}}}
         """
         if len(selector) == 0:
             return None
 
         param = effect['param']
 
-        ret = dict()
-        ret['params'] = []
+        ret = {}
 
         # 普通攻击
         if effect['type'] == 'NORMAL_ATK':
-            ret['feedback'] = '对{target}造成了{damage:.0f}点伤害'
             for obj in selector:
-                real_damage, _ = obj.take_damage(self.do_attack()[0])
-                ret['params'].append(dict(target=self._self_replace(obj.name), damage=real_damage))
-            return ret
+                atk_damage, is_crit = self.do_attack()
+                real_damage, shield_status = obj.take_damage(atk_damage)
+                tgt = self._self_replace(obj.name)
+                feedback = ''
+                if is_crit:
+                    feedback += '暴击！'
+                feedback += '对{target}'
+                # 未击破
+                if shield_status == 2:
+                    feedback += '的护盾'
+
+                feedback += '造成了{damage:.0f}点伤害'
+                # 击破护盾了
+                if shield_status == 1:
+                    feedback += '，破坏了护盾'
+                ret[tgt] = {
+                    'feedback': feedback,
+                    'param': {'damage': real_damage}
+                }
 
         # 魔法伤害
-        if effect['type'] == 'MGC_DMG':
-            ret['feedback'] = '对{target}造成了{damage:.0f}点魔法伤害'
+        elif effect['type'] == 'MGC_DMG':
             for obj in selector:
                 magic_damage = param[0][0] * self.spell_rate
                 real_damage, _ = obj.take_damage(magic_damage, magic=True)
-                ret['params'].append(dict(target=self._self_replace(obj.name), damage=real_damage))
-            return ret
+                tgt = self._self_replace(obj.name)
+                if tgt in ret:
+                    ret[tgt]['param']['damage'] += real_damage
+                else:
+                    ret[tgt] = {
+                        'feedback': '对{target}造成了{damage:.0f}点魔法伤害',
+                        'param': {'damage': real_damage}
+                    }
 
         # 固定值攻击强化
-        if effect['type'] == 'PHY_ATK_BUFF_CONST':
-            ret['feedback'] = '强化了{target}{point:.0f}点攻击'
+        elif effect['type'] == 'PHY_ATK_BUFF_CONST':
             for obj in selector:
                 real_added = obj.add_attack_buff(param[0][0], param[1])
-                ret['params'].append(dict(target=self._self_replace(obj.name), point=real_added))
-            return ret
+                tgt = self._self_replace(obj.name)
+                if tgt in ret:
+                    ret[tgt]['param']['point'] += real_added
+                else:
+                    ret[tgt] = {
+                        'feedback': '强化了{target}{point:.0f}点攻击，持续{duration}回合',
+                        'param': {'point': real_added, 'duration': param[1]}
+                    }
 
         # 百分比强化
-        if effect['type'] == 'PHY_ATK_BUFF_RATE':
-            ret['feedback'] = '强化了{target}{point:.0f}点攻击'
+        elif effect['type'] == 'PHY_ATK_BUFF_RATE':
             for obj in selector:
                 real_point = obj._attack_buff(param[0][0])
                 real_added = obj.add_attack_buff(real_point, param[1])
-                ret['params'].append(dict(target=self._self_replace(obj.name), point=real_added))
-            return ret
+                tgt = self._self_replace(obj.name)
+                if tgt in ret:
+                    ret[tgt]['param']['point'] += real_added
+                else:
+                    ret[tgt] = {
+                        'feedback': '强化了{target}{point:.0f}点攻击，持续{duration}回合',
+                        'param': {'point': real_added, 'duration': param[1]}
+                    }
+
+        return ret
 
 
     def _shield_hurt(self, damage):
