@@ -31,9 +31,10 @@ class GameSkill:
 
 
 if __name__ == '__main__':
-    a = GameSkill(dict(chance=0.1, cooldown=1, tp_cost=20))
+    a = GameSkill(dict(chance=0.1, cooldown=5, tp_cost=20))
     total = 0
     for _ in range(233333):
         if a.can_be_used():
             total += 1
+        a.dec_cooldown()
     print(total/233333)
