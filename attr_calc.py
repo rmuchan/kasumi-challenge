@@ -39,14 +39,17 @@ def game_char_gen(chara: dict) -> dict:
 
     game_char['normal_attack'] = {
         'name': '普通攻击',
-        'effect': {
-            'type': 'NORMAL_ATK',
-            'target': {
-                'type': "RAND",
-                'team': 0,
-                'limit': 1
+        'effect': [
+            {
+                'type': 'NORMAL_ATK',
+                'target': {
+                    'type': "RAND",
+                    'team': 0,
+                    'limit': 1
+                },
+                'param': []
             }
-        }
+        ]
     }
 
     return game_char

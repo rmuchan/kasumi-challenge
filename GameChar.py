@@ -3,7 +3,7 @@ from typing import Tuple, List, Optional
 
 import data
 from GameSkill import GameSkill
-from .rand import biased
+from rand import biased
 
 numerical = data.numerical
 
@@ -17,7 +17,7 @@ class GameChar:
         self.MP = 0
         self.skills = []
         for i in range(3):
-            self.skills.append(GameSkill(self.attributes[f'skill_{i}']))
+            self.skills.append(GameSkill(self.attributes[f'skill_{i + 1}']))
 
     @property
     def defence(self):
@@ -73,7 +73,7 @@ class GameChar:
         本次伤害会有一个随机的波动，且会有暴击的可能
         返回值为一个tuple，[0]为已算入暴击伤害的攻击伤害，[1]为是否暴击
         """
-        attack_damage = biased(1, numerical['damage_fluctuation']) * self.attack
+        attack_damage = biased(1, numerical['damage_fluctuation'])[0] * self.attack
         # 暴击判断
         is_crit = (random.random() < self.crit_chance)
 
@@ -140,9 +140,11 @@ class GameChar:
         这个buff会受到角色本身的buff_rate的加成
         当value为负数的时候则为攻击力降低
         time为持续回合数
-        没有返回值
+        返回实际强化量
         """
-        self._add_buff('attack_add', value * self.buff_rate, time)
+        real_point = value * self.buff_rate
+        self._add_buff('attack_add', real_point, time)
+        return real_point
 
     def buff_fade(self):
         """
@@ -150,11 +152,7 @@ class GameChar:
         移除所有持续时间为0的buff，其余所有buff持续时间-1
         """
         for buff_type in self.buff:
-            for i in buff_type:
-                new_buff_array = []
-                if i[1] > 0:
-                    new_buff_array.append((i[0], i[1] - 1))
-                self.buff[buff_type] = new_buff_array
+            self.buff[buff_type] = [(i[0], i[1] - 1) for i in self.buff[buff_type] if i[1] > 0]
 
     def skill_cooldown(self):
         """
@@ -172,12 +170,12 @@ class GameChar:
             self.MP = 0
             return self.attributes['unique']
         for i in range(3):
-            ret = self.skills[i]
+            ret = self.skills[i].can_be_used()
             if ret:
-                if self.MP < ret.mp_cost:
+                if self.MP < ret['mp_cost']:
                     return self.normal_attack
-                self.MP -= ret.mp_cost
-                return ret.data
+                self.MP -= ret['mp_cost']
+                return ret
 
         return self.normal_attack
 
@@ -213,15 +211,15 @@ class GameChar:
 
         # 普通攻击
         if effect['type'] == 'NORMAL_ATK':
-            ret['feedback'] = '对{target}造成了{damage}点伤害'
+            ret['feedback'] = '对{target}造成了{damage:.0f}点伤害'
             for obj in selector:
-                real_damage, _ = obj.take_damage(self.do_attack())
+                real_damage, _ = obj.take_damage(self.do_attack()[0])
                 ret['params'].append(dict(target=self._self_replace(obj.name), damage=real_damage))
             return ret
 
         # 魔法伤害
         if effect['type'] == 'MGC_DMG':
-            ret['feedback'] = '对{target}造成了{damage}点魔法伤害'
+            ret['feedback'] = '对{target}造成了{damage:.0f}点魔法伤害'
             for obj in selector:
                 magic_damage = param[0][0] * self.spell_rate
                 real_damage, _ = obj.take_damage(magic_damage, magic=True)
@@ -230,7 +228,7 @@ class GameChar:
 
         # 固定值攻击强化
         if effect['type'] == 'PHY_ATK_BUFF_CONST':
-            ret['feedback'] = '强化了{target}{point}点攻击'
+            ret['feedback'] = '强化了{target}{point:.0f}点攻击'
             for obj in selector:
                 real_added = obj.add_attack_buff(param[0][0], param[1])
                 ret['params'].append(dict(target=self._self_replace(obj.name), point=real_added))
@@ -238,7 +236,7 @@ class GameChar:
 
         # 百分比强化
         if effect['type'] == 'PHY_ATK_BUFF_RATE':
-            ret['feedback'] = '强化了{target}{point}点攻击'
+            ret['feedback'] = '强化了{target}{point:.0f}点攻击'
             for obj in selector:
                 real_point = obj._attack_buff(param[0][0])
                 real_added = obj.add_attack_buff(real_point, param[1])
