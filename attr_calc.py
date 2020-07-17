@@ -57,10 +57,13 @@ def game_char_gen(chara: dict) -> dict:
 
 # 属性计算
 def _attr_calc(attr_base, attr_grow, lv):
-    current = attr_base
-    for _ in range(lv - 1):
-        current = current * (numerical['attr_rate']) + attr_grow
-    return current
+    k = numerical['attr_rate']
+    n = lv
+    m = attr_grow
+    c_1 = attr_base - m
+
+    a_n = c_1 * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
+    return a_n
 
 
 # 攻击计算
@@ -70,12 +73,13 @@ def _atk_calc(int_cur):
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(
 def _hp_calc(str_cur, life_base, life_grow, lv, modify):
-    current = str_cur
-    for _ in range(lv - 1):
-        current = current * numerical['hp_lv_rate'] + life_grow
-    hp = life_base + current
-    hp *= modify
-    return hp
+    k = numerical['hp_lv_rate']
+    n = lv
+    m = life_grow
+    c_1 = str_cur - m
+
+    a_n = c_1 * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
+    return (a_n + life_base) * modify
 
 
 # 防御计算
