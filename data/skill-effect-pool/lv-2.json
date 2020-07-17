@@ -1,0 +1,176 @@
+[
+  {
+    "name": {
+      "random": "choice",
+      "values": [
+        "火球术",
+        "水球术",
+        "闪电球",
+        "冰锥术",
+        "暗影球"
+      ]
+    },
+    "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+    "weight": 3,
+    "type": "MGC_DMG",
+    "target": {
+      "type": "RAND",
+      "team": 0,
+      "limit": {
+        "random": "cubic",
+        "min": 1,
+        "max": 4
+      }
+    },
+    "skill_param": [
+      {
+        "random": "biased",
+        "expect": 200,
+        "min": 160
+      }
+    ],
+    "unique_param": [
+      {
+        "random": "biased",
+        "expect": 320,
+        "min": 240
+      }
+    ]
+  },
+  {
+    "name": {
+      "random": "choice",
+      "values": [
+        "攻击强化",
+        "攻击激励",
+        "攻击专注"
+      ]
+    },
+    "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
+    "weight": 1,
+    "type": "PHY_ATK_BUFF_CONST",
+    "target": {
+      "type": "SELF",
+      "team": 1,
+      "limit": 1
+    },
+    "skill_param": [
+      {
+        "random": "biased",
+        "expect": 20,
+        "min": 16
+      },
+      {
+        "random": "triangular_int",
+        "min": 1,
+        "max": 3
+      }
+    ],
+    "unique_param": [
+      {
+        "random": "biased",
+        "expect": 32,
+        "min": 24
+      },
+      {
+        "random": "triangular_int",
+        "min": 1,
+        "max": 4
+      }
+    ]
+  },
+  {
+    "name": {
+      "random": "choice",
+      "values": [
+        "团队激励",
+        "团队鼓舞",
+        "团队协同",
+        "攻击协助"
+      ]
+    },
+    "desc": "强化攻击最高的{target[limit]}名队友{param[0]}点攻击，持续{param[1]}回合",
+    "weight": 1,
+    "type": "PHY_ATK_BUFF_CONST",
+    "target": {
+      "type": "ATKMOST",
+      "team": 1,
+      "limit": {
+        "random": "cubic",
+        "min": 1,
+        "max": 4
+      }
+    },
+    "skill_param": [
+      {
+        "random": "biased",
+        "expect": 20,
+        "min": 16
+      },
+      {
+        "random": "triangular_int",
+        "min": 1,
+        "max": 3
+      }
+    ],
+    "unique_param": [
+      {
+        "random": "biased",
+        "expect": 32,
+        "min": 24
+      },
+      {
+        "random": "triangular_int",
+        "min": 1,
+        "max": 4
+      }
+    ]
+  },
+  {
+    "name": {
+      "random": "choice",
+      "values": [
+        "团队激励",
+        "团队鼓舞",
+        "团队协同",
+        "攻击协助"
+      ]
+    },
+    "desc": "强化攻击最高的{target[limit]}名队友{param[0]:%}攻击，持续{param[1]}回合",
+    "weight": 1,
+    "type": "PHY_ATK_BUFF_RATE",
+    "target": {
+      "type": "ATKMOST",
+      "team": 1,
+      "limit": {
+        "random": "cubic",
+        "min": 1,
+        "max": 4
+      }
+    },
+    "skill_param": [
+      {
+        "random": "biased",
+        "expect": 0.15,
+        "min": 0.1
+      },
+      {
+        "random": "triangular_int",
+        "min": 1,
+        "max": 3
+      }
+    ],
+    "unique_param": [
+      {
+        "random": "biased",
+        "expect": 0.2,
+        "min": 0.12
+      },
+      {
+        "random": "triangular_int",
+        "min": 1,
+        "max": 4
+      }
+    ]
+  }
+]
