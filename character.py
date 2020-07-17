@@ -129,7 +129,7 @@ _CREATE_STEPS = {
 def _build_character_from_proto(proto: Dict[str, Any]) -> Dict[str, Any]:
     assert proto['progress'] == 'full'
     fields_to_copy = [
-        'name', 'race', 'race_id', 'lvl',
+        'name', 'race', 'race_id', 'exp',
         'str_build', 'int_build', 'per_build', 'life_build', 'def_base',
         'defense_str_rate', 'magic_int_rate', 'health_per_rate', 'attack_rate',
         'passive', 'skill_1', 'skill_2', 'skill_3', 'unique',
