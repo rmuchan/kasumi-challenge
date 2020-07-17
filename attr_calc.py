@@ -57,13 +57,7 @@ def game_char_gen(chara: dict) -> dict:
 
 # 属性计算
 def _attr_calc(attr_base, attr_grow, lv):
-    k = numerical['attr_rate']
-    n = lv
-    m = attr_grow
-    c_1 = attr_base - m
-
-    a_n = c_1 * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
-    return a_n
+    return _recurrence(attr_base, numerical['attr_rate'], attr_grow, lv)
 
 
 # 攻击计算
@@ -73,13 +67,7 @@ def _atk_calc(int_cur):
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(
 def _hp_calc(str_cur, life_base, life_grow, lv, modify):
-    k = numerical['hp_lv_rate']
-    n = lv
-    m = life_grow
-    c_1 = str_cur - m
-
-    a_n = c_1 * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
-    return (a_n + life_base) * modify
+    return (_recurrence(str_cur, numerical['hp_lv_rate'], life_grow, lv) + life_base) * modify
 
 
 # 防御计算
@@ -131,3 +119,7 @@ def _calc_passive(base: float, char: dict, key: str) -> float:
         else:
             add += modify
     return (base + add) * multiply
+
+
+def _recurrence(a_1: float, k: float, m: float, n: int) -> float:
+    return (a_1 - m) * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
