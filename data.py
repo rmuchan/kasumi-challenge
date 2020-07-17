@@ -8,6 +8,10 @@ class _Dir:
         self._path = pth
         self._loaded = {}
 
+    # 参与布尔运算时始终视为False，允许以"data.nonexistent or {}"的形式使用默认值
+    def __bool__(self):
+        return False
+
     def __getattr__(self, item: str):
         if not item or item[0] == '_':
             raise AttributeError(item)
