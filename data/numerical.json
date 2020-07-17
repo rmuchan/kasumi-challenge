@@ -100,5 +100,12 @@
     0.22
   ],
   "hp_display_unit": 320,
-  "boss_display_shorten": 4.5
+  "boss_display_shorten": 4.5,
+  "exp_add_rate": 1.2,
+  "exp_add_point": 100,
+  "exp_base": 1000,
+  "exp_earn_base": 450,
+  "exp_earn_add": 30,
+  "exp_earn_rate": 1.067
+
 }
