@@ -3,17 +3,38 @@ import data
 numerical = data.numerical
 
 
+def _recurrence(a_1: float, k: float, m: float, n: int) -> float:
+    return (a_1 - m) * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
+
+
+# 生成每级升级需要的EXP
+def _exp_requirement(lv: int) -> 100:
+    return int(_recurrence(numerical['exp_base'], numerical['exp_add_rate'], numerical['exp_add_point'], lv) / 100) * 100
+
+
+# 生成经验数组
+def _exp_overlay_gen() -> list:
+    exp_overlay = [0]
+    for i in range(1,31):
+        exp_overlay.append(exp_overlay[-1] + _exp_requirement(i))
+    return exp_overlay
+
+
+exp_overlay_list = _exp_overlay_gen()
+
+
 def game_char_gen(chara: dict) -> dict:
     game_char = {}
+    lv = _lv_calc(chara['exp'])
     str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0],
                       numerical['str_grow'] * chara['str_build'][0],
-                      chara['lvl'])
+                      lv)
     int_ = _attr_calc(numerical['int_base'] * chara['int_build'][0],
                       numerical['int_grow'] * chara['int_build'][0],
-                      chara['lvl'])
+                      lv)
     per_ = _attr_calc(numerical['per_base'] * chara['per_build'][0],
                       numerical['per_grow'] * chara['per_build'][0],
-                      chara['lvl'])
+                      lv)
 
     game_char['name'] = chara['name']
     game_char['is_player'] = True
@@ -23,7 +44,7 @@ def game_char_gen(chara: dict) -> dict:
     game_char['HP'] = _hp_calc(str_,
                                numerical['life_base'] * chara['life_build'][0],
                                numerical['life_grow'] * chara['life_build'][0],
-                               chara['lvl'],
+                               lv,
                                _calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
     game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate'])
     game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate'],
@@ -121,5 +142,10 @@ def _calc_passive(base: float, char: dict, key: str) -> float:
     return (base + add) * multiply
 
 
-def _recurrence(a_1: float, k: float, m: float, n: int) -> float:
-    return (a_1 - m) * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
+# 根据经验等级计算
+def _lv_calc(exp: int):
+    for i in range(1, 30):
+        if exp_overlay_list[i - 1] <= exp < exp_overlay_list[i]:
+            return i
+    return 30
+

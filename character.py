@@ -7,6 +7,8 @@ from interact import UI
 from skill import get_skill_desc, create_skill
 
 
+# TODO 天赋树
+
 async def create_character(ui: UI):
     proto = ui.retrieve('proto_character')
     if isinstance(proto, dict) and proto.get('progress') == 'full':
