@@ -6,6 +6,7 @@ from nonebot import on_command, CommandSession
 from nonebot import on_natural_language, NLPSession, IntentCommand
 from nonebot.typing import Context_T
 
+import data
 from interact import UI
 
 # context id -> running UI
@@ -19,6 +20,7 @@ class BotContextUI(UI):
         self._ctx = ctx
         self._ctx_id = context_id(ctx)
         self._pending_input = None
+        self._store = data.saves[self.uid()] or {}
 
     def uid(self) -> int:
         return self._ctx['user_id']
@@ -45,10 +47,11 @@ class BotContextUI(UI):
             raise BotContextUI._CancelException
 
     def store(self, key: str, value: Any) -> None:
-        raise NotImplementedError
+        self._store[key] = value
+        data.saves[self.uid()] = self._store
 
     def retrieve(self, key: str) -> Optional[Any]:
-        raise NotImplementedError
+        return self._store.get(key)
 
     def run(self, func, *args, **kwargs):
         """
