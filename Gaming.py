@@ -115,9 +115,10 @@ class Gaming(ABC):
             chara.turn_mp_gain()
 
     def _display_status(self):
+        self.ui.append('—' * 12)
         for chara in self.team_a:
             self.ui.append('[{name}]{mp}|{hp}'.format(name=chara.name, mp=chara.mp_display(), hp=chara.life_display()))
-        self.ui.append('—' * 12)
+        self.ui.append('—' * 7)
         for chara in self.team_b:
             self.ui.append('[{name}]{mp}|{hp}'.format(name=chara.name, mp=chara.mp_display(), hp=chara.life_display()))
 

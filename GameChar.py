@@ -95,6 +95,7 @@ class GameChar:
         shield_break = 0
         shield_damage = 0
 
+        # TODO 考虑闪避
         # 护盾将会被优先攻击
         if self.shield > 0:
             shield_break = 1
@@ -217,6 +218,7 @@ class GameChar:
             for obj in selector:
                 atk_damage, is_crit = self.do_attack()
                 real_damage, shield_status = obj.take_damage(atk_damage)
+                # TODO 吸血
                 feedback = ''
                 if is_crit:
                     feedback += '暴击！'
