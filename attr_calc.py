@@ -52,7 +52,6 @@ def game_char_gen(chara: dict) -> dict:
             }
         ]
     }
-    # TODO 技能1的额外强化 (Sc那边)
     return game_char
 
 

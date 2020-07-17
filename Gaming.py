@@ -1,16 +1,18 @@
 import random
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import List
 from GameChar import GameChar
+from interact import UI
 
 
 class Gaming(ABC):
-    def __init__(self, team_a: List[dict], team_b: List[dict]):
+    def __init__(self, team_a: List[dict], team_b: List[dict], ui: UI):
         self.team_a = [GameChar(x) for x in team_a]
         self.team_b = [GameChar(x) for x in team_b]
         self.turn = 1
+        self.ui = ui
 
-    def start(self):
+    async def start(self):
         while True:
             # 获胜状态判断
             if len(self.team_a) == 0 and len(self.team_b) == 0:
@@ -20,7 +22,7 @@ class Gaming(ABC):
             if len(self.team_b) == 0:
                 return 'a_win'
 
-            print('回合数：', self.turn)
+            self.ui.append('回合数：{}'.format(self.turn))
 
             # 技能发动、攻击、效果执行
             # 然后buff结算、减冷却
@@ -32,6 +34,9 @@ class Gaming(ABC):
 
             self.team_a = self._death_check('a')
             self.team_b = self._death_check('b')
+
+            self._display_status()
+            await self.ui.send()
 
             self.turn += 1
 
@@ -81,12 +86,25 @@ class Gaming(ABC):
             skill_gotten = chara.skill_activate()
             if skill_gotten is not None:
                 for skill in skill_gotten:
-                    print(chara.name, skill['name'], chara.MP)
+                    self.ui.append(f'[{chara.name}] 使用了 "{skill["name"]}"')
+                    feedback = []
                     for effect in skill['effect']:
                         selected = self.selector(effect['target'], team_name, chara)
-                        feedback = chara.use_effect(selected, effect)
-                        for k, v in feedback.items():
-                            print(v['feedback'].format(target=k, **v['param']))
+                        feedback.extend(chara.use_effect(selected, effect))
+                    merged = []
+                    for f in feedback:
+                        for m in merged:
+                            if m['feedback'] == f['feedback'] and m['merge_key'] == f['merge_key']:
+                                for k, v in f['param'].items():
+                                    m['param'][k] += v
+                                break
+                        else:
+                            merged.append(f)
+                    if merged:
+                        lines = [x['feedback'].format(**x['merge_key'], **x['param']) for x in merged]
+                        for line in lines[:-1]:
+                            self.ui.append(' ├ ' + line)
+                        self.ui.append(' └ ' + lines[-1])
 
     def _status_manage(self, team_name):
         team = self._get_team(team_name)
@@ -96,13 +114,12 @@ class Gaming(ABC):
             chara.skill_cooldown()
             chara.turn_mp_gain()
 
+    def _display_status(self):
+        for chara in self.team_a:
+            self.ui.append('[{name}]{mp}|{hp}'.format(name=chara.name, mp=chara.mp_display(), hp=chara.life_display()))
+        self.ui.append('—' * 12)
+        for chara in self.team_b:
+            self.ui.append('[{name}]{mp}|{hp}'.format(name=chara.name, mp=chara.mp_display(), hp=chara.life_display()))
+
     def _get_team(self, team_name):
         return getattr(self, f'team_{team_name}')
-
-    # @abstractmethod
-    def _msg_append(self, msg_text):
-        pass
-
-    # @abstractmethod
-    def _msg_send(self):
-        pass

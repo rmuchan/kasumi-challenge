@@ -198,7 +198,7 @@ class GameChar:
             self.MP = 1000
 
     # TODO 技能效果执行
-    def use_effect(self, selector: List['GameChar'], effect: dict) -> Optional[dict]:
+    def use_effect(self, selector: List['GameChar'], effect: dict) -> Optional[list]:
         """
         角色行动时一定会调用这个函数，发动技能效果。
         :param selector: 选择到的角色数组
@@ -210,14 +210,13 @@ class GameChar:
 
         param = effect['param']
 
-        ret = {}
+        ret = []
 
         # 普通攻击
         if effect['type'] == 'NORMAL_ATK':
             for obj in selector:
                 atk_damage, is_crit = self.do_attack()
                 real_damage, shield_status = obj.take_damage(atk_damage)
-                tgt = self._self_replace(obj.name)
                 feedback = ''
                 if is_crit:
                     feedback += '暴击！'
@@ -226,55 +225,47 @@ class GameChar:
                 if shield_status == 2:
                     feedback += '的护盾'
 
-                feedback += '造成了{damage:.0f}点伤害'
+                feedback += '造成了{amount:.0f}点伤害'
                 # 击破护盾了
                 if shield_status == 1:
                     feedback += '，破坏了护盾'
-                ret[tgt] = {
+                ret.append({
                     'feedback': feedback,
-                    'param': {'damage': real_damage}
-                }
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'amount': real_damage}
+                })
 
         # 魔法伤害
         elif effect['type'] == 'MGC_DMG':
             for obj in selector:
                 magic_damage = param[0][0] * self.spell_rate
                 real_damage, _ = obj.take_damage(magic_damage, magic=True)
-                tgt = self._self_replace(obj.name)
-                if tgt in ret:
-                    ret[tgt]['param']['damage'] += real_damage
-                else:
-                    ret[tgt] = {
-                        'feedback': '对{target}造成了{damage:.0f}点魔法伤害',
-                        'param': {'damage': real_damage}
-                    }
+                ret.append({
+                    'feedback': '对{target}造成了{amount:.0f}点魔法伤害',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'amount': real_damage}
+                })
 
         # 固定值攻击强化
         elif effect['type'] == 'PHY_ATK_BUFF_CONST':
             for obj in selector:
                 real_added = obj.add_attack_buff(param[0][0], param[1])
-                tgt = self._self_replace(obj.name)
-                if tgt in ret:
-                    ret[tgt]['param']['point'] += real_added
-                else:
-                    ret[tgt] = {
-                        'feedback': '强化了{target}{point:.0f}点攻击，持续{duration}回合',
-                        'param': {'point': real_added, 'duration': param[1]}
-                    }
+                ret.append({
+                    'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
 
         # 百分比强化
         elif effect['type'] == 'PHY_ATK_BUFF_RATE':
             for obj in selector:
                 real_point = obj._attack_buff(param[0][0])
                 real_added = obj.add_attack_buff(real_point, param[1])
-                tgt = self._self_replace(obj.name)
-                if tgt in ret:
-                    ret[tgt]['param']['point'] += real_added
-                else:
-                    ret[tgt] = {
-                        'feedback': '强化了{target}{point:.0f}点攻击，持续{duration}回合',
-                        'param': {'point': real_added, 'duration': param[1]}
-                    }
+                ret.append({
+                    'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
 
         return ret
 
@@ -293,7 +284,7 @@ class GameChar:
         return hp_bar
 
     def mp_display(self) -> str:
-        value = int(self.MP / (1000 / 8))
+        value = int(self.MP / (1000 / 7))
         return mp_block_list[value]
 
     def _shield_hurt(self, damage):
@@ -350,15 +341,15 @@ class GameChar:
     def _self_replace(self, chara_name: str) -> str:
         if chara_name == self.name:
             return '自身'
-        return chara_name
+        return f'[{chara_name}]'
 
 
-hp_block_list = ' ▏▎▍▌▋▊▉'
-mp_block_list = ' ▁▂▃▄▅▆▇♠'
+hp_block_list = '▏▎▍▌▋▊▉'
+mp_block_list = '▁▂▃▄▅▆▇♠'
 
 
 def hp_block(value):
-    value = int(value / (numerical['hp_display_unit'] / 8))
+    value = int(value / (numerical['hp_display_unit'] / 7))
     return hp_block_list[value]
 
 
