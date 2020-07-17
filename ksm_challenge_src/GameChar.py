@@ -1,8 +1,8 @@
 import random
 from typing import Tuple, List, Optional
 
-from . import data
 from .GameSkill import GameSkill
+from .data import data
 from .rand import biased
 
 numerical = data.numerical

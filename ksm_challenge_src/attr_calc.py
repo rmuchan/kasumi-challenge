@@ -1,4 +1,4 @@
-from . import data
+from .data import data
 
 numerical = data.numerical
 

@@ -6,7 +6,7 @@ from nonebot import on_command, CommandSession
 from nonebot import on_natural_language, NLPSession, IntentCommand
 from nonebot.typing import Context_T
 
-from . import data
+from .data import data
 from .interact import UI
 
 # context id -> running UI

@@ -1,7 +1,7 @@
 import random
 from typing import Dict, Any
 
-from . import data
+from .data import data
 from .rand import randomize
 
 

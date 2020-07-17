@@ -1,8 +1,8 @@
 import random
 from typing import Dict, Any
 
-from . import data
 from . import rand
+from .data import data
 from .interact import UI
 from .skill import get_skill_desc, create_skill
 

@@ -35,5 +35,5 @@ class _Dir:
             json.dump(value, f, ensure_ascii=False, indent=2)
 
 
-_root = _Dir(path.join(path.dirname(__file__), 'data'))
-__getattr__ = _root.__getattr__
+data = _Dir(path.join(path.dirname(__file__), 'data'))
+__getattr__ = data.__getattr__
