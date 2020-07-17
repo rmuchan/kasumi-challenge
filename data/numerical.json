@@ -1,6 +1,6 @@
 {
   "character_template": {
-    "lvl": 1,
+    "exp": 0,
     "str_build": {
       "random": "biased",
       "expect": 1,

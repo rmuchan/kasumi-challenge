@@ -13,7 +13,7 @@ def create_skill(is_unique: bool) -> Dict[str, Any]:
     else:
         effect.append(_create_skill_effect(2, is_unique))
         effect.append(_create_skill_effect(1, is_unique))
-    skill['name'] = effect[0]['name']
+    skill['name'] = '·'.join(x['name'] for x in effect)
     skill['effect'] = effect
     return skill
 
