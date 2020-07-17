@@ -127,3 +127,6 @@ def _calc_passive(base: float, char: dict, key: str) -> float:
         else:
             add += modify
     return (base + add) * multiply
+
+if __name__ == '__main__':
+    pass
