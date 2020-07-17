@@ -1,10 +1,10 @@
 import random
 from typing import Dict, Any
 
-import data
-import rand
-from interact import UI
-from skill import get_skill_desc, create_skill
+from . import data
+from . import rand
+from .interact import UI
+from .skill import get_skill_desc, create_skill
 
 
 # TODO 天赋树

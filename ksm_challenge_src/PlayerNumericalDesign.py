@@ -1,5 +1,4 @@
-import matplotlib.pyplot as plt
-import data
+from . import data
 
 numerical = data.numerical
 

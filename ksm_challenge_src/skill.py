@@ -1,8 +1,8 @@
 import random
 from typing import Dict, Any
 
-import data
-from rand import randomize
+from . import data
+from .rand import randomize
 
 
 def create_skill(is_unique: bool) -> Dict[str, Any]:

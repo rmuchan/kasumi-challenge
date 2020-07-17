@@ -6,8 +6,8 @@ from nonebot import on_command, CommandSession
 from nonebot import on_natural_language, NLPSession, IntentCommand
 from nonebot.typing import Context_T
 
-import data
-from interact import UI
+from . import data
+from .interact import UI
 
 # context id -> running UI
 _running: Dict[str, 'BotContextUI'] = {}

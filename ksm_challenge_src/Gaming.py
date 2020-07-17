@@ -1,8 +1,8 @@
 import random
 from abc import ABC
 from typing import List
-from GameChar import GameChar
-from interact import UI
+from .GameChar import GameChar
+from .interact import UI
 
 
 class Gaming(ABC):
