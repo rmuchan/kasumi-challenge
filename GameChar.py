@@ -100,7 +100,7 @@ class GameChar:
         shield_damage = 0
 
         # 考虑闪避
-        if random.random() < self.dodge:
+        if random.random() < self.dodge and not magic:
             return 0, -1
 
         # 护盾将会被优先攻击
