@@ -62,9 +62,7 @@ async def _create_step_passive_select(ui: UI, proto: Dict[str, Any]):
         ui.append('%d. %s' % (idx + 1, val['desc']))
     ui.append('—' * 12)
     await ui.send('选择被动加成')
-    selection = await ui.input()
-    while not selection.isdigit() or int(selection) - 1 not in range(len(candidate)):
-        selection = await ui.input('你的输入不正确，请重新输入')
+    selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
     selection = int(selection) - 1
     proto['passive'] = candidate[selection]
 
@@ -77,9 +75,7 @@ def _create_step_skill_select(skill_num: int):
             ui.append('%d. %s' % (idx + 1, get_skill_desc(val, False)))
         ui.append('—' * 12)
         await ui.send(f'选择第{skill_num}个技能')
-        selection = await ui.input()
-        while not selection.isdigit() or int(selection) - 1 not in range(len(candidate)):
-            selection = await ui.input('你的输入不正确，请重新输入')
+        selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
         selection = int(selection) - 1
         proto[f'skill_{skill_num}'] = candidate[selection]
 
@@ -93,9 +89,7 @@ async def _create_step_unique_select(ui: UI, proto: Dict[str, Any]):
         ui.append('%d. %s' % (idx + 1, get_skill_desc(val, True)))
     ui.append('—' * 12)
     await ui.send('选择终极技能')
-    selection = await ui.input()
-    while not selection.isdigit() or int(selection) - 1 not in range(len(candidate)):
-        selection = await ui.input('你的输入不正确，请重新输入')
+    selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
     selection = int(selection) - 1
     proto['unique'] = candidate[selection]
 
@@ -104,10 +98,9 @@ async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
     ui.append('你的技能有：')
     for idx in range(1, 4):
         ui.append('%d. %s' % (idx, get_skill_desc(proto[f'skill_{idx}'], False)))
-    await ui.send()
-    selection = await ui.input('选择主技能')
-    while not selection.isdigit() or int(selection) - 1 not in range(3):
-        selection = await ui.input('你的输入不正确，请重新输入')
+    ui.append('—' * 12)
+    await ui.send('选择主技能')
+    selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(3))
     selection = int(selection)
     primary = proto[f'skill_{selection}']
     proto['skill_1'], proto[f'skill_{selection}'] = primary, proto['skill_1']

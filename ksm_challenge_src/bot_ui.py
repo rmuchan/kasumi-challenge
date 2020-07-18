@@ -50,7 +50,10 @@ class BotContextUI(UI):
         try:
             return await asyncio.wait_for(self._pending_input, self._bot.config.SESSION_EXPIRE_TIMEOUT.total_seconds())
         except asyncio.TimeoutError:
-            raise BotContextUI._CancelException
+            self.abort()
+
+    def abort(self) -> None:
+        raise BotContextUI._CancelException
 
     def store(self, key: str, value: Any) -> None:
         if value is not None:
