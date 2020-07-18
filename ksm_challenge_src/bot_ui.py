@@ -1,5 +1,5 @@
 import asyncio
-from typing import Optional, Any, Dict
+from typing import Optional, Any, Dict, Set
 
 from nonebot import NoneBot, context_id
 from nonebot import on_command, CommandSession
@@ -11,6 +11,12 @@ from .interact import UI
 
 # context id -> running UI
 _running: Dict[str, 'BotContextUI'] = {}
+# mode -> {context id of running UI}
+_mutex: Dict[str, Set[str]] = {
+    'default': set(),
+    'group': set(),
+    'user': set()
+}
 
 
 class BotContextUI(UI):
@@ -20,7 +26,7 @@ class BotContextUI(UI):
         self._ctx = ctx
         self._ctx_id = context_id(ctx)
         self._pending_input = None
-        self._store = data.saves[self.uid()] or {}
+        self._store = data.saves[str(self.uid())] or {}
 
     def uid(self) -> int:
         return self._ctx['user_id']
@@ -47,24 +53,34 @@ class BotContextUI(UI):
             raise BotContextUI._CancelException
 
     def store(self, key: str, value: Any) -> None:
-        self._store[key] = value
-        data.saves[self.uid()] = self._store
+        if value is not None:
+            self._store[key] = value
+        elif key in self._store:
+            del self._store[key]
+        data.saves[str(self.uid())] = self._store
 
     def retrieve(self, key: str) -> Optional[Any]:
         return self._store.get(key)
 
-    def run(self, func, *args, **kwargs):
+    def run(self, func, *, mutex_mode='default', args=None, kwargs=None):
         """
-        使用本UI执行函数。上下文ID相同的UI同一时刻只能有一个通过run执行函数。
+        使用本UI执行函数。互斥的UI同一时刻只能有一个通过run执行函数。
         func会以await func(self, *args, **kwargs)的形式调用。
         该函数即刻返回，不等待func执行结束。
 
         :param func: 待执行的函数。必须为异步函数，且接受至少一个位置参数。
+        :param mutex_mode: 互斥粒度，可以为'default'、'group'或'user'
         :param args: 需传入的其他位置参数
         :param kwargs: 需传入的其他命名参数
         :return: 无
         :raise BotContextUI.RunningException: 若有上下文ID相同的UI正在通过run执行函数
         """
+
+        if args is None:
+            args = ()
+        if kwargs is None:
+            kwargs = {}
+
         async def _run():
             try:
                 await func(self, *args, **kwargs)
@@ -72,9 +88,13 @@ class BotContextUI(UI):
                 pass
             finally:
                 del _running[self._ctx_id]
+                _mutex[mutex_mode].remove(mutex_id)
 
-        if self._ctx_id in _running:
-            raise BotContextUI.RunningException
+        for mode, locked in _mutex.items():
+            if context_id(self._ctx, mode=mode) in locked:
+                raise BotContextUI.RunningException
+        mutex_id = context_id(self._ctx, mode=mutex_mode)
+        _mutex[mutex_mode].add(mutex_id)
         _running[self._ctx_id] = self
         asyncio.ensure_future(_run())
 
