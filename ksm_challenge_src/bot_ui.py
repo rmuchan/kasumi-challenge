@@ -73,7 +73,7 @@ class BotContextUI(UI):
         :param args: 需传入的其他位置参数
         :param kwargs: 需传入的其他命名参数
         :return: 无
-        :raise BotContextUI.RunningException: 若有上下文ID相同的UI正在通过run执行函数
+        :raise BotContextUI.RunningException: 若有互斥的UI正在通过run执行函数
         """
 
         if args is None:
