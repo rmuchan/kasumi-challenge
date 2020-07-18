@@ -3,6 +3,7 @@ from abc import ABC
 from typing import List
 from GameChar import GameChar
 from interact import UI
+import asyncio
 
 
 class Gaming(ABC):
@@ -39,6 +40,8 @@ class Gaming(ABC):
             await self.ui.send()
 
             self.turn += 1
+
+            # await asyncio.sleep(16)
 
     def selector(self, target, team_name: str, initiator: GameChar):
         type_ = target['type']

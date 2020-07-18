@@ -48,6 +48,10 @@ class GameChar:
         return self.attributes['crit_rate']
 
     @property
+    def dodge(self):
+        return self.attributes['dodge']
+
+    @property
     def recover_rate(self):
         return self.attributes['recover_rate']
 
@@ -90,12 +94,15 @@ class GameChar:
         """
         角色受到伤害，需要传入伤害量，可选是否为法术伤害。
         伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
-        返回一个tuple，[0]为实际伤害量，[1]为击破护盾状态(0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破)
+        返回一个tuple，[0]为实际伤害量，[1]为攻击状态(-1: 闪避了, 0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破)
         """
         shield_break = 0
         shield_damage = 0
 
-        # TODO 考虑闪避
+        # 考虑闪避
+        if random.random() < self.dodge:
+            return 0, -1
+
         # 护盾将会被优先攻击
         if self.shield > 0:
             shield_break = 1
@@ -198,7 +205,7 @@ class GameChar:
         if self.MP > 1000:
             self.MP = 1000
 
-    # TODO 技能效果执行
+    # 技能效果执行
     def use_effect(self, selector: List['GameChar'], effect: dict) -> Optional[list]:
         """
         角色行动时一定会调用这个函数，发动技能效果。
@@ -217,19 +224,29 @@ class GameChar:
         if effect['type'] == 'NORMAL_ATK':
             for obj in selector:
                 atk_damage, is_crit = self.do_attack()
-                real_damage, shield_status = obj.take_damage(atk_damage)
-                # TODO 吸血
+                real_damage, atk_status = obj.take_damage(atk_damage)
+                # 吸血
+                self.recover(real_damage)
+
+                # miss
+                if atk_status == -1:
+                    ret.append({
+                        'feedback': '{target}闪避了攻击',
+                        'merge_key': {'target': self._self_replace(obj.name)},
+                        'param': {}
+                    })
+
                 feedback = ''
                 if is_crit:
                     feedback += '暴击！'
                 feedback += '对{target}'
                 # 未击破
-                if shield_status == 2:
+                if atk_status == 2:
                     feedback += '的护盾'
 
                 feedback += '造成了{amount:.0f}点伤害'
                 # 击破护盾了
-                if shield_status == 1:
+                if atk_status == 1:
                     feedback += '，破坏了护盾'
                 ret.append({
                     'feedback': feedback,
