@@ -20,7 +20,7 @@ class BotContextUI(UI):
         self._ctx = ctx
         self._ctx_id = context_id(ctx)
         self._pending_input = None
-        self._store = data.saves[self.uid()] or {}
+        self._store = data.saves[str(self.uid())] or {}
 
     def uid(self) -> int:
         return self._ctx['user_id']
@@ -47,8 +47,11 @@ class BotContextUI(UI):
             raise BotContextUI._CancelException
 
     def store(self, key: str, value: Any) -> None:
-        self._store[key] = value
-        data.saves[self.uid()] = self._store
+        if value is not None:
+            self._store[key] = value
+        elif key in self._store:
+            del self._store[key]
+        data.saves[str(self.uid())] = self._store
 
     def retrieve(self, key: str) -> Optional[Any]:
         return self._store.get(key)
