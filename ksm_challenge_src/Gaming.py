@@ -1,10 +1,9 @@
 import random
 from abc import ABC
 from typing import List
-from GameChar import GameChar
-from interact import UI
-import asyncio
-
+from .GameChar import GameChar
+from .interact import UI
+import asynico
 
 class Gaming(ABC):
     def __init__(self, team_a: List[dict], team_b: List[dict], ui: UI):

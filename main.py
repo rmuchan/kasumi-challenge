@@ -2,11 +2,10 @@ import asyncio
 import json
 from typing import Optional, Any
 
-import data
-from Gaming import Gaming
-from attr_calc import game_char_gen
-from character import create_character, print_character
-from interact import UI
+from ksm_challenge_src.Gaming import Gaming
+from ksm_challenge_src.attr_calc import game_char_gen
+from ksm_challenge_src.character import create_character, print_character
+from ksm_challenge_src.interact import UI
 
 
 class CLI(UI):
