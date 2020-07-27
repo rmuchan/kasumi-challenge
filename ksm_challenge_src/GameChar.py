@@ -255,9 +255,15 @@ class GameChar:
         elif effect['type'] == 'MGC_DMG':
             for obj in selector:
                 magic_damage = param[0][0] * self.spell_rate
-                real_damage, _ = obj.take_damage(magic_damage, magic=True)
+                real_damage, atk_status = obj.take_damage(magic_damage, magic=True)
+                feedback = '对{target}'
+                if atk_status == 2:
+                    feedback += '的护盾'
+                feedback += '造成了{amount:.0f}点魔法伤害'
+                if atk_status == 1:
+                    feedback += '，破坏了护盾'
                 ret.append({
-                    'feedback': '对{target}造成了{amount:.0f}点魔法伤害',
+                    'feedback': feedback,
                     'merge_key': {'target': self._self_replace(obj.name)},
                     'param': {'amount': real_damage}
                 })
