@@ -1,5 +1,5 @@
 import random
-from typing import Dict, Any
+from typing import Dict, Any, Iterable
 
 from . import util
 from .data import data
@@ -16,14 +16,17 @@ def create_skill(is_unique: bool) -> Dict[str, Any]:
             _process_effect(effect)
     else:
         skill = randomize(data.numerical['skill_template'])
-        effect = [_create_skill_effect(lvl) for lvl in (2, 1)]
+        # noinspection PyListCreation
+        effect = [_create_skill_effect(2, ())]
+        effect.append(_create_skill_effect(1, effect[0]['type']))
         skill['name'] = '·'.join(x['name'] for x in effect)
         skill['effect'] = effect
     return skill
 
 
-def _create_skill_effect(level: int) -> Dict[str, Any]:
+def _create_skill_effect(level: int, forbidden_type: Iterable[str]) -> Dict[str, Any]:
     pool = data.skill_effect_pool[f'lv-{level}']
+    pool = list(filter(lambda x: x['type'] not in forbidden_type, pool))
     template = random.choices(pool, [x['weight'] for x in pool])[0]
     effect = randomize(template)
     _process_effect(effect)
