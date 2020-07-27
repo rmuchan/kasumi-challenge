@@ -31,7 +31,7 @@ def _create_skill_effect(level: int) -> Dict[str, Any]:
 
 
 def _process_effect(effect: Dict[str, Any]):
-    if effect['target']['type'] not in ('SELF', 'ALL', 'OTHER'):
+    if effect['target']['type'] not in ('SELF', 'ALL', 'OTHER') and effect['param']:
         limit = effect['target']['limit']
         old = effect['param'][0]
         if isinstance(old, tuple):
@@ -57,11 +57,11 @@ def get_skill_desc(skill: Dict[str, Any], is_unique: bool) -> str:
     if is_unique:
         format_ = '【{name}】\n └ 效果：{desc}'
     else:
-        format_ = '【{name}】\n ├ 冷却回合：{cd}\n ├ 动态概率：{chance:.1f%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'
+        format_ = '【{name}】\n ├ 冷却回合：{cd}\n ├ 动态概率：{chance:.1%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'
     return format_.format(
         name=skill['name'],
         cd=skill['cooldown'],
-        chance=util.NumFormat(skill['chance']),
+        chance=skill['chance'],
         mp=skill['mp_cost'],
         desc='；'.join(get_effect_desc(x) for x in skill['effect'])
     )

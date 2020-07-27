@@ -343,7 +343,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj._add_spell_buff(param[0][0], param[1])
                 ret.append({
-                    'feedback': '强化了{target}{amount:%}的法术强度，持续{duration}回合',
+                    'feedback': '强化了{target}{amount:.0%}的法术强度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
