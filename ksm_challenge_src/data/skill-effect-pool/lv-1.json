@@ -64,7 +64,7 @@
                 "战术"
             ]
         },
-        "desc": "强化我方全体，提升{param[0]:%}的攻击，持续{param[1]回合",
+        "desc": "强化我方全体，提升{param[0]:%}的攻击，持续{param[1]}回合",
         "weight": 1,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
@@ -94,7 +94,7 @@
                 "战吼"
             ]
         },
-        "desc": "提升自身{param[0]:%}的攻击，持续{param[1]回合",
+        "desc": "提升自身{param[0]:%}的攻击，持续{param[1]}回合",
         "weight": 1,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
@@ -134,8 +134,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 28,
-                "min": 21
+                "expect": 18,
+                "min": 12
             }
         ]
     },
@@ -158,8 +158,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 50,
-                "min": 38
+                "expect": 36,
+                "min": 24
             }
         ]
     },
@@ -172,7 +172,7 @@
                 "共鸣"
             ]
         },
-        "desc": "提升自身{param[0]:%}的法术强度，持续{param[1]回合}",
+        "desc": "提升自身{param[0]:%}的法术强度，持续{param[1]}回合",
         "weight": 1,
         "type": "MGC_BUFF_RATE",
         "target": {

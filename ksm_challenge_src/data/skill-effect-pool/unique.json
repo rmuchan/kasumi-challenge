@@ -20,7 +20,7 @@
                     "team": 0,
                     "limit": 1
                 },
-                "skill_param": [
+                "param": [
                     {
                         "random": "biased",
                         "expect": 250,
@@ -51,7 +51,7 @@
                     "team": 0,
                     "limit": 1
                 },
-                "skill_param": [
+                "param": [
                     {
                         "random": "biased",
                         "expect": 120,
@@ -80,7 +80,7 @@
                     "team": 1,
                     "limit": 1
                 },
-                "skill_param": [
+                "param": [
                     {
                         "random": "biased",
                         "expect": 230,
@@ -114,11 +114,11 @@
                     "team": 1,
                     "limit": 2
                 },
-                "skill_param": [
+                "param": [
                     {
                         "random": "biased",
-                        "expect": 250,
-                        "min": 180
+                        "expect": 150,
+                        "min": 100
                     }
                 ]
             }
@@ -142,32 +142,17 @@
                     "team": 1,
                     "limit": 1
                 },
-                "skill_param": [
+                "param": [
                     {
                         "random": "biased",
-                        "expect": 250,
-                        "min": 200
+                        "expect": 180,
+                        "min": 150
                     }
                 ]
             }
         ]
     },
     {
-        "chance": {
-            "random": "triangular",
-            "min": 0.05,
-            "max": 0.15
-        },
-        "cooldown": {
-            "random": "triangular_int",
-            "min": 3,
-            "max": 5
-        },
-        "mp_cost": {
-            "random": "triangular_int",
-            "min": 60,
-            "max": 120
-        },
         "name": {
             "random": "choice",
             "values": [
@@ -187,7 +172,7 @@
                     "team": 0,
                     "limit": 1
                 },
-                "skill_param": [
+                "param": [
                     {
                         "random": "biased",
                         "expect": 0.70,
@@ -219,11 +204,11 @@
                     "team": 1,
                     "limit": 1
                 },
-                "skill_param": [
+                "param": [
                     {
                         "random": "biased",
-                        "expect": 0.22,
-                        "min": 0.18
+                        "expect": 0.95,
+                        "min": 0.80
                     },
                     {
                         "random": "cubic",

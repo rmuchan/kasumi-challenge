@@ -298,9 +298,9 @@ class GameChar:
             for obj in selector:
                 real_shield = obj.give_shield(param[0][0])
                 if real_shield == 0:
-                    feedback = '{target}当前的护盾更好！没有使用新的护盾',
+                    feedback = '{target}当前的护盾更好！没有使用新的护盾'
                 else:
-                    feedback = '为{target}添加了{shield}点护盾'
+                    feedback = '为{target}添加了{shield:.0f}点护盾'
                 ret.append({
                     'feedback': feedback,
                     'merge_key': {'target': self._self_replace(obj.name)},

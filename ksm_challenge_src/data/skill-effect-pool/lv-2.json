@@ -65,7 +65,7 @@
                 "战术协调"
             ]
         },
-        "desc": "强化我方全体，提升{param[0]:%}的攻击，持续{param[1]回合",
+        "desc": "强化我方全体，提升{param[0]:%}的攻击，持续{param[1]}回合",
         "weight": 1,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
@@ -95,7 +95,7 @@
                 "战吼"
             ]
         },
-        "desc": "提升自身{param[0]:%}的攻击，持续{param[1]回合",
+        "desc": "提升自身{param[0]:%}的攻击，持续{param[1]}回合",
         "weight": 1,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
@@ -137,8 +137,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 60,
-                "min": 49
+                "expect": 40,
+                "min": 30
             }
         ]
     },
@@ -163,8 +163,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 110,
-                "min": 80
+                "expect": 70,
+                "min": 50
             }
         ]
     },
@@ -178,7 +178,7 @@
                 "魔术宝石"
             ]
         },
-        "desc": "提升自身{param[0]:%}的法术强度，持续{param[1]回合}",
+        "desc": "提升自身{param[0]:%}的法术强度，持续{param[1]}回合",
         "weight": 1,
         "type": "MGC_BUFF_RATE",
         "target": {
