@@ -18,9 +18,9 @@ class Gaming(ABC):
             if len(self.team_a) == 0 and len(self.team_b) == 0:
                 return 'all_dead', self.turn
             if len(self.team_a) == 0:
-                return 'b_win', self.turn
+                return 'b', self.turn
             if len(self.team_b) == 0:
-                return 'a_win', self.turn
+                return 'a', self.turn
 
             self.ui.append('回合数：{}'.format(self.turn))
 

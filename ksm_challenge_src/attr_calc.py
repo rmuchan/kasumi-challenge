@@ -71,6 +71,7 @@ def game_char_gen(chara: dict) -> dict:
             }
         ]
     }
+    #print(game_char)
     return game_char
 
 
@@ -132,4 +133,3 @@ def _lv_calc(exp: int):
         if exp_overlay_list[i - 1] <= exp < exp_overlay_list[i]:
             return i
     return 30
-

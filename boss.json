@@ -1,20 +1,20 @@
 {
-    "name": "1",
-    "is_player": true,
-    "attack": 220,
-    "defence": 4,
-    "HP": 5000,
+    "name": "魔法师",
+    "is_player": false,
+    "attack": 190,
+    "defence": 3.1,
+    "HP": 2000,
     "recover_rate": 1,
     "spell_rate": 1,
     "buff_rate": 1,
     "crit_rate": 1.75,
     "life_steal_rate": 0,
-    "dodge": 0.06,
+    "dodge": 0.03,
     "skill_1": {
         "chance": 0.12121533425658145,
         "cooldown": 2,
         "mp_cost": 61,
-        "name": "攻击激励",
+        "name": "护盾",
         "effect": [
             {
                 "name": "攻击激励",
@@ -27,7 +27,7 @@
                     "limit": 1
                 },
                 "param": [
-                    300
+                    [240]
                 ]
             }
         ]
@@ -73,7 +73,7 @@
                     "limit": 1
                 },
                 "param": [
-                    [307.72778794452057,
+                    [270.72778794452057,
                     "S"
                     ]
                 ]
@@ -92,13 +92,13 @@
                 "weight": 3,
                 "type": "MGC_DMG",
                 "target": {
-                    "type": "RAND",
+                    "type": "ALL",
                     "team": 0,
-                    "limit": 4
+                    "limit": 1
                 },
                 "param": [
                     [
-                    350,
+                    210,
                     "B"
                     ]
                 ]
@@ -111,7 +111,7 @@
             {
                 "type": "NORMAL_ATK",
                 "target": {
-                    "type": "RAND",
+                    "type": "RAND_SAFE",
                     "team": 0,
                     "limit": 2
                 },
