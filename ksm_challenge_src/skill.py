@@ -57,16 +57,18 @@ def get_skill_desc(skill: Dict[str, Any], is_unique: bool) -> str:
     :return: 插入具体数值的技能描述
     """
     if is_unique:
-        format_ = '【{name}】\n └ 效果：{desc}'
+        return '【{name}】\n └ 效果：{desc}'.format(
+            name=skill['name'],
+            desc='；'.join(get_effect_desc(x) for x in skill['effect'])
+        )
     else:
-        format_ = '【{name}】\n ├ 冷却回合：{cd}\n ├ 动态概率：{chance:.1%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'
-    return format_.format(
-        name=skill['name'],
-        cd=skill['cooldown'],
-        chance=skill['chance'],
-        mp=skill['mp_cost'],
-        desc='；'.join(get_effect_desc(x) for x in skill['effect'])
-    )
+        return '【{name}】\n ├ 冷却回合：{cd}\n ├ 动态概率：{chance:.1%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'.format(
+            name=skill['name'],
+            cd=skill['cooldown'],
+            chance=skill['chance'],
+            mp=skill['mp_cost'],
+            desc='；'.join(get_effect_desc(x) for x in skill['effect'])
+        )
 
 
 def get_effect_desc(effect: Dict[str, Any]) -> str:

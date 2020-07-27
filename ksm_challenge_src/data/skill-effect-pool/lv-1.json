@@ -1,133 +1,219 @@
 [
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "炎爆",
-        "急冻",
-        "雷鸣",
-        "暗影",
-        "魔爆",
-        "爆破",
-        "魔能"
-      ]
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "燃烧",
+                "电击",
+                "冰刺",
+                "暗影"
+            ]
+        },
+        "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+        "weight": 3,
+        "type": "MGC_DMG",
+        "target": {
+            "type": "RAND",
+            "team": 0,
+            "limit": 1
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 30,
+                "min": 21
+            }
+        ]
     },
-    "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
-    "weight": 3,
-    "type": "MGC_DMG",
-    "target": {
-      "type": "RAND",
-      "team": 0,
-      "limit": {
-        "random": "cubic",
-        "min": 1,
-        "max": 4
-      }
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "暖风",
+                "寒风",
+                "覆雪",
+                "暗能"
+            ]
+        },
+        "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+        "weight": 2,
+        "type": "MGC_DMG",
+        "target": {
+            "type": "RAND",
+            "team": 0,
+            "limit": {
+                "random": "cubic",
+                "min": 2,
+                "max": 4
+            }
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 30,
+                "min": 21
+            }
+        ]
     },
-    "param": [
-      {
-        "random": "biased",
-        "expect": 100,
-        "min": 80
-      }
-    ]
-  },
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "鼓舞",
-        "协同",
-        "推进"
-      ]
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "激励",
+                "鼓舞",
+                "战术"
+            ]
+        },
+        "desc": "强化我方全体，提升{param[0]:%}的攻击，持续{param[1]}回合",
+        "weight": 1,
+        "type": "PHY_ATK_BUFF_RATE",
+        "target": {
+            "type": "ALL",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 0.05,
+                "min": 0.04
+            },
+            {
+                "random": "cubic",
+                "min": 2,
+                "max": 3
+            }
+        ]
     },
-    "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
-    "weight": 1,
-    "type": "PHY_ATK_BUFF_CONST",
-    "target": {
-      "type": "SELF",
-      "team": 1,
-      "limit": 1
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "荣誉",
+                "暗示",
+                "战吼"
+            ]
+        },
+        "desc": "提升自身{param[0]:%}的攻击，持续{param[1]}回合",
+        "weight": 1,
+        "type": "PHY_ATK_BUFF_RATE",
+        "target": {
+            "type": "ALL",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 0.13,
+                "min": 0.10
+            },
+            {
+                "random": "cubic",
+                "min": 2,
+                "max": 3
+            }
+        ]
     },
-    "param": [
-      {
-        "random": "biased",
-        "expect": 10,
-        "min": 8
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 3
-      }
-    ]
-  },
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "鼓舞",
-        "协同",
-        "推进"
-      ]
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "治疗",
+                "医护"
+            ]
+        },
+        "desc": "恢复全体{param[0]}点生命",
+        "weight": 1,
+        "type": "HEAL",
+        "target": {
+            "type": "ALL",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 18,
+                "min": 12
+            }
+        ]
     },
-    "desc": "强化攻击最高的{target[limit]}名队友{param[0]}点攻击，持续{param[1]}回合",
-    "weight": 1,
-    "type": "PHY_ATK_BUFF_CONST",
-    "target": {
-      "type": "ATKMOST",
-      "team": 1,
-      "limit": {
-        "random": "cubic",
-        "min": 1,
-        "max": 4
-      }
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "包扎",
+                "恢复"
+            ]
+        },
+        "desc": "恢复自身{param[0]}点生命",
+        "weight": 1,
+        "type": "HEAL",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 36,
+                "min": 24
+            }
+        ]
     },
-    "param": [
-      {
-        "random": "biased",
-        "expect": 10,
-        "min": 8
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 3
-      }
-    ]
-  },
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "鼓舞",
-        "协同",
-        "推进"
-      ]
-    },
-    "desc": "强化攻击最高的{target[limit]}名队友{param[0]:%}攻击，持续{param[1]}回合",
-    "weight": 1,
-    "type": "PHY_ATK_BUFF_RATE",
-    "target": {
-      "type": "ATKMOST",
-      "team": 1,
-      "limit": {
-        "random": "cubic",
-        "min": 1,
-        "max": 4
-      }
-    },
-    "param": [
-      {
-        "random": "biased",
-        "expect": 0.1,
-        "min": 0.08
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 3
-      }
-    ]
-  }
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "小药瓶",
+                "魔粉",
+                "共鸣"
+            ]
+        },
+        "desc": "提升自身{param[0]:%}的法术强度，持续{param[1]}回合",
+        "weight": 1,
+        "type": "MGC_BUFF_RATE",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 0.03,
+                "min": 0.025
+            },
+            {
+                "random": "cubic",
+                "min": 5,
+                "max": 7
+            }
+        ]
+    },    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "护盾",
+                "屏障"
+            ]
+        },
+        "desc": "为自身添加{param[0]}点护盾",
+        "weight": 1,
+        "type": "SHIELD",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 80,
+                "min": 67
+            }
+        ]
+    }
 ]
