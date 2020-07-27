@@ -133,11 +133,11 @@
                 "skill_param": [
                     {
                         "random": "biased",
-                        "expect": 28,
-                        "min": 23
+                        "expect": 115,
+                        "min": 93
                     },
                     {
-                        "random": "triangular_int",
+                        "random": "cubic",
                         "min": 2,
                         "max": 3
                     }
@@ -300,7 +300,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "大幅度降低敌方攻击最高的角色{param[0]:%}的攻击力",
+                "desc": "大幅度降低敌方攻击最高的角色{param[0]:%}的攻击力，持续{param[1]回合}",
                 "type": "ATK_DEBUFF",
                 "target": {
                     "type": "ATKMOST",
@@ -348,7 +348,7 @@
                 "法术智慧"
             ]
         },
-        "weight": 4,
+        "weight": 3,
         "effect": [
             {
                 "desc": "强化自身{param[0]:%}的法术强度，持续{param[1]}回合",
@@ -361,11 +361,11 @@
                 "skill_param": [
                     {
                         "random": "biased",
-                        "expect": 0.135,
-                        "min": 0.111
+                        "expect": 0.105,
+                        "min": 0.85
                     },
                     {
-                        "random": "triangular_int",
+                        "random": "cubic",
                         "min": 7,
                         "max": 10
                     }

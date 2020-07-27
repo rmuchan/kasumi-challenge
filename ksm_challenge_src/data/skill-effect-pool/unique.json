@@ -1,0 +1,239 @@
+[
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "死亡射线",
+                "灭杀之焰",
+                "高压电击",
+                "严寒风雪",
+                "灭亡之影"
+            ]
+        },
+        "weight": 3,
+        "effect": [
+            {
+                "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+                "type": "MGC_DMG",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 250,
+                        "min": 175
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "毁灭之雨",
+                "魔能爆发",
+                "强磁雷场",
+                "严寒之域",
+                "虚空暗蚀"
+            ]
+        },
+        "weight": 3,
+        "effect": [
+            {
+                "desc": "对敌方全体造成{param[0]}点魔法伤害",
+                "type": "MGC_DMG",
+                "target": {
+                    "type": "ALL",
+                    "team": 0,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 120,
+                        "min": 85
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "全神贯注",
+                "杀戮渴望",
+                "武器大师"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 230,
+                        "min": 180
+                    },
+                    {
+                        "random": "cubic",
+                        "min": 2,
+                        "max": 3
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "天使降临",
+                "复苏之吻",
+                "强化治疗法术"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "治疗生命最低的两名队友{param[0]}点生命",
+                "type": "HEAL",
+                "target": {
+                    "type": "LIFELEAST",
+                    "team": 1,
+                    "limit": 2
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 250,
+                        "min": 180
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "守护天使",
+                "不灭屏障"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "为全体队友附加{param[0]}点护盾",
+                "type": "SHIELD",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 250,
+                        "min": 200
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "残废",
+                "攻击削弱",
+                "衰弱巫术",
+                "虚弱魔术"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "超大幅度降低敌方攻击最高的角色{param[0]:%}的攻击力，持续3回合",
+                "type": "ATK_DEBUFF",
+                "target": {
+                    "type": "ATKMOST",
+                    "team": 0,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.70,
+                        "min": 0.66
+                    },
+                    3
+                ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "先知的祝福",
+                "魔法的赐福",
+                "大型魔法强化宝石",
+                "法术超载",
+                "魔力过载"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "大幅度强化自身{param[0]:%}的法术强度，持续{param[1]}回合",
+                "type": "MGC_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.22,
+                        "min": 0.18
+                    },
+                    {
+                        "random": "cubic",
+                        "min": 3,
+                        "max": 4
+                    }
+                ]
+            }
+        ]
+    }
+]
+
+

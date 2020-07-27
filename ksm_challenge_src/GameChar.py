@@ -232,24 +232,24 @@ class GameChar:
                         'merge_key': {'target': self._self_replace(obj.name)},
                         'param': {}
                     })
+                else:
+                    feedback = ''
+                    if is_crit:
+                        feedback += '暴击！'
+                    feedback += '对{target}'
+                    # 未击破
+                    if atk_status == 2:
+                        feedback += '的护盾'
 
-                feedback = ''
-                if is_crit:
-                    feedback += '暴击！'
-                feedback += '对{target}'
-                # 未击破
-                if atk_status == 2:
-                    feedback += '的护盾'
-
-                feedback += '造成了{amount:.0f}点伤害'
-                # 击破护盾了
-                if atk_status == 1:
-                    feedback += '，破坏了护盾'
-                ret.append({
-                    'feedback': feedback,
-                    'merge_key': {'target': self._self_replace(obj.name)},
-                    'param': {'amount': real_damage}
-                })
+                    feedback += '造成了{amount:.0f}点伤害'
+                    # 击破护盾了
+                    if atk_status == 1:
+                        feedback += '，破坏了护盾'
+                    ret.append({
+                        'feedback': feedback,
+                        'merge_key': {'target': self._self_replace(obj.name)},
+                        'param': {'amount': real_damage}
+                    })
 
         # 魔法伤害
         elif effect['type'] == 'MGC_DMG':
