@@ -1,6 +1,7 @@
 import random
 from typing import Dict, Any
 
+from . import util
 from .data import data
 from .rand import randomize
 
@@ -57,7 +58,7 @@ def get_skill_desc(skill: Dict[str, Any], is_unique: bool) -> str:
     return format_.format(
         name=skill['name'],
         cd=skill['cooldown'],
-        chance=_NumFormat(skill['chance']),
+        chance=util.NumFormat(skill['chance']),
         mp=skill['mp_cost'],
         desc='；'.join(get_effect_desc(x) for x in skill['effect'])
     )
@@ -79,29 +80,8 @@ def get_effect_desc(effect: Dict[str, Any]) -> str:
 
 def _get_param_desc(param):
     if isinstance(param, (list, tuple)):
-        return _BiasedRandomFormat(param)
+        return util.BiasedRandomFormat(param)
     elif isinstance(param, int):
         return str(param)
     else:
-        return _NumFormat(param)
-
-
-class _BiasedRandomFormat:
-    def __init__(self, val):
-        self._val = _NumFormat(val[0])
-        self._appraise = val[1]
-
-    def __format__(self, format_spec: str):
-        return format(self._val, format_spec) + f'({self._appraise})'
-
-
-class _NumFormat:
-    def __init__(self, val: float):
-        self._val = val
-
-    def __format__(self, format_spec: str):
-        if format_spec and format_spec[-1] == '%':
-            format_spec = format_spec[:-1]
-            return format(self._val * 100, format_spec or '.0f') + '%'
-
-        return format(self._val, format_spec or '.0f')
+        return util.NumFormat(param)

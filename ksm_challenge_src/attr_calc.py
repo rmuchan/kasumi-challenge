@@ -1,15 +1,12 @@
+from . import util
 from .data import data
 
 numerical = data.numerical
 
 
-def _recurrence(a_1: float, k: float, m: float, n: int) -> float:
-    return (a_1 - m) * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
-
-
 # 生成每级升级需要的EXP
 def _exp_requirement(lv: int) -> 100:
-    return int(_recurrence(numerical['exp_base'], numerical['exp_add_rate'], numerical['exp_add_point'], lv) / 100) * 100
+    return int(util.recurrence(numerical['exp_base'], numerical['exp_add_rate'], numerical['exp_add_point'], lv) / 100) * 100
 
 
 # 生成经验数组
@@ -78,7 +75,7 @@ def game_char_gen(chara: dict) -> dict:
 
 # 属性计算
 def _attr_calc(attr_base, attr_grow, lv):
-    return _recurrence(attr_base, numerical['attr_rate'], attr_grow, lv)
+    return util.recurrence(attr_base, numerical['attr_rate'], attr_grow, lv)
 
 
 # 攻击计算
@@ -88,7 +85,7 @@ def _atk_calc(int_cur):
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(
 def _hp_calc(str_cur, life_base, life_grow, lv, modify):
-    return (_recurrence(str_cur, numerical['hp_lv_rate'], life_grow, lv) + life_base) * modify
+    return (util.recurrence(str_cur, numerical['hp_lv_rate'], life_grow, lv) + life_base) * modify
 
 
 # 防御计算
