@@ -320,7 +320,7 @@ class GameChar:
         # 净化
         elif effect['type'] == 'PURIFY':
             for obj in selector:
-                obj._add_silence_buff(param[1])
+                obj._purify()
                 ret.append({
                     'feedback': '清除了{target}所有的状态',
                     'merge_key': {'target': self._self_replace(obj.name)},
