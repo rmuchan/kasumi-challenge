@@ -6,6 +6,7 @@ from ksm_challenge_src.Gaming import Gaming
 from ksm_challenge_src.attr_calc import game_char_gen
 from ksm_challenge_src.character import create_character, print_character
 from ksm_challenge_src.interact import UI
+from ksm_challenge_src.telent_calc import show_talent, upgrade_talent
 
 
 class CLI(UI):
@@ -27,11 +28,11 @@ class CLI(UI):
         print()
 
     async def do_input(self) -> str:
-        if self._is_first:
-            self._is_first = False
-            return f'甲乙丙丁戊己庚辛'[self._uid]
-        return '1'
-        # return input()
+        # if self._is_first:
+        #     self._is_first = False
+        #     return f'甲乙丙丁戊己庚辛'[self._uid]
+        # return '1'
+        return input()
 
     def store(self, key: str, value: Any) -> None:
         if value is None:
@@ -44,17 +45,12 @@ class CLI(UI):
     def retrieve(self, key: str) -> Optional[Any]:
         return self._store.get(key)
 
+    def abort(self) -> None:
+        exit(1)
+
 
 async def main():
-    chars = []
-    for i in range(8):
-        ui = CLI(i)
-        c = await create_character(ui)
-        chars.append(c)
-        await print_character(ui, c)
-    gcs = [game_char_gen(x) for x in chars]
-    game = Gaming(gcs[:4], gcs[4:], CLI(0))
-    print(await game.start())
+    await upgrade_talent(CLI(1))
 
 if __name__ == '__main__':
     asyncio.run(main())
