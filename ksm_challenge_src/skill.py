@@ -7,9 +7,8 @@ from .rand import randomize
 
 
 def create_skill(is_unique: bool) -> Dict[str, Any]:
-    # TODO unique skill pool
-    if random.random() < data.numerical['single_effect_chance']:
-        pool = data.skill_effect_pool['lv-3']
+    if is_unique or random.random() < data.numerical['single_effect_chance']:
+        pool = data.skill_effect_pool['unique' if is_unique else 'lv-3']
         template = random.choices(pool, [x['weight'] for x in pool])[0]
         skill = randomize(template)
         for effect in skill['effect']:
