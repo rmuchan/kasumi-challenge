@@ -19,6 +19,10 @@ class GameChar:
         for i in range(3):
             self.skills.append(GameSkill(self.attributes[f'skill_{i + 1}']))
 
+# ————————————————————————————
+#           属性信息
+# ————————————————————————————
+
     @property
     def defence(self):
         return self.attributes['defence']
@@ -65,7 +69,11 @@ class GameChar:
 
     @property
     def spell_rate(self):
-        return self.attributes['spell_rate']
+        enhance = 1
+        if 'spell_enhance' in self.buff.keys():
+            for item in self.buff['spell_enhance']:
+                enhance *= (item[0] + 1)
+        return self.attributes['spell_rate'] * enhance
 
     @property
     def not_dead(self):
@@ -74,6 +82,17 @@ class GameChar:
     @property
     def normal_attack(self):
         return self.attributes['normal_attack']
+
+    @property
+    def is_silence(self):
+        if 'silence' in self.buff.keys():
+            return True
+        else:
+            return False
+
+# ————————————————————————————
+#           战斗功能
+# ————————————————————————————
 
     def do_attack(self) -> Tuple[float, bool]:
         """
@@ -119,45 +138,6 @@ class GameChar:
 
         return real_damage + shield_damage, shield_break
 
-    def recover(self, recovery):
-        """
-        生命恢复。传入恢复量
-        超过最大值的将会被舍弃
-        返回实际恢复量
-        """
-        self.HP += recovery
-        if self.HP <= self.attributes['HP']:
-            return recovery
-        else:
-            diff = self.HP - self.attributes['HP']
-            self.HP = self.attributes['HP']
-            return diff
-
-    def give_shield(self, value):
-        """
-        添加护盾时使用，传入护盾量
-        护盾不会叠加，只会取最大值
-        返回实际护盾添加量
-        """
-        if self.shield >= value:
-            return 0
-        else:
-            diff = value - self.shield
-            self.shield = value
-            return diff
-
-    def add_attack_buff(self, value, time):
-        """
-        给角色添加一个攻击力的buff
-        这个buff会受到角色本身的buff_rate的加成
-        当value为负数的时候则为攻击力降低
-        time为持续回合数
-        返回实际强化量
-        """
-        real_point = value * self.buff_rate
-        self._add_buff('attack_add', real_point, time)
-        return real_point
-
     def buff_fade(self):
         """
         回合结束时调用。
@@ -165,6 +145,8 @@ class GameChar:
         """
         for buff_type in self.buff:
             self.buff[buff_type] = [(i[0], i[1] - 1) for i in self.buff[buff_type] if i[1] > 0]
+
+        self.buff = {k: v for k, v in self.buff.items() if v}
 
     def skill_cooldown(self):
         """
@@ -178,6 +160,9 @@ class GameChar:
         发动技能。顺序依次为终极技能，技能123，最后普通攻击作为一个技能
         :return: 技能的dict模板
         """
+        if self.is_silence:
+            return [self.normal_attack]
+
         if self.MP >= 1000:
             self.MP = 0
             return [self.attributes['unique']]
@@ -197,15 +182,27 @@ class GameChar:
         """
         self.gain_mp(random.random() * numerical['random_mp_gain_extra'] + numerical['random_mp_gain_base'])
 
-    def gain_mp(self, value):
+    def life_display(self) -> str:
         """
-        MP增加的时候使用，函数会保证MP值不超过1000点
+        这个函数将会返回一个图形化的体力条
         """
-        self.MP += value
-        if self.MP > 1000:
-            self.MP = 1000
+        hp_bar = ''
+        adj_hp = self.HP if self.is_player else int(self.HP / numerical['boss_display_shorten'])
+        whole = int(adj_hp / numerical['hp_display_unit'])
+        rest = adj_hp - numerical['hp_display_unit'] * whole
 
-    # 技能效果执行
+        hp_bar += '▉' * whole
+        hp_bar += hp_block(rest)
+
+        return hp_bar
+
+    def mp_display(self) -> str:
+        value = int(self.MP / (1000 / 7))
+        return mp_block_list[value]
+# ————————————————————————————
+#         技能效果执行
+# ————————————————————————————
+
     def use_effect(self, selector: List['GameChar'], effect: dict) -> Optional[list]:
         """
         角色行动时一定会调用这个函数，发动技能效果。
@@ -268,7 +265,7 @@ class GameChar:
         # 固定值攻击强化
         elif effect['type'] == 'PHY_ATK_BUFF_CONST':
             for obj in selector:
-                real_added = obj.add_attack_buff(param[0][0], param[1])
+                real_added = obj._add_attack_buff(param[0][0], param[1])
                 ret.append({
                     'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -279,32 +276,164 @@ class GameChar:
         elif effect['type'] == 'PHY_ATK_BUFF_RATE':
             for obj in selector:
                 real_point = obj._attack_buff(param[0][0])
-                real_added = obj.add_attack_buff(real_point, param[1])
+                real_added = obj._add_attack_buff(real_point, param[1])
                 ret.append({
                     'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
 
+        # 治疗
+        elif effect['type'] == 'HEAL':
+            for obj in selector:
+                real_heal = obj.recover(param[0][0])
+                ret.append({
+                    'feedback': '恢复了{target}{heal:.0f}点生命',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'heal': real_heal}
+                })
+
+        # 护盾
+        elif effect['type'] == 'SHIELD':
+            for obj in selector:
+                real_shield = obj.give_shield(param[0][0])
+                if real_shield == 0:
+                    feedback = '{target}当前的护盾更好！没有使用新的护盾',
+                else:
+                    feedback = '为{target}添加了{shield}点护盾'
+                ret.append({
+                    'feedback': feedback,
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'shield': real_shield}
+                })
+
+        # 沉默
+        elif effect['type'] == 'SILENCE':
+            for obj in selector:
+                obj._add_silence_buff(param[1])
+                ret.append({
+                    'feedback': '沉默{target}{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {}
+                })
+
+        # 净化
+        elif effect['type'] == 'PURIFY':
+            for obj in selector:
+                obj._add_silence_buff(param[1])
+                ret.append({
+                    'feedback': '清除了{target}所有的状态',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {}
+                })
+
+        # 攻击削弱
+        elif effect['type'] == 'ATK_DEBUFF':
+            for obj in selector:
+                oppo_to_decrease_atk_point = obj._attack_buff(param[0][0]) * self.buff_rate
+                real_minus = obj._add_attack_buff(oppo_to_decrease_atk_point, param[1], is_debuff=True)
+                ret.append({
+                    'feedback': '削弱了{target}{minus_value:.0f}点攻击，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'minus_value': real_minus}
+                })
+
+        # 法术增强
+        elif effect['type'] == 'MGC_BUFF_RATE':
+            for obj in selector:
+                real_added = obj._add_spell_buff(param[0][0], param[1])
+                ret.append({
+                    'feedback': '强化了{target}{amount:%}的法术强度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
         return ret
 
-    def life_display(self) -> str:
+# ————————————————————————————
+#           效果处理
+# ————————————————————————————
+
+    def _add_buff(self, buff_type, value, time):
         """
-        这个函数将会返回一个图形化的体力条
+        用作一个添加和管理buff的统一函数接口
+        :param buff_type: buff的类型，具体请查阅文档
+        :param value: buff的数值
+        :param time: 持续时间
         """
-        hp_bar = ''
-        adj_hp = self.HP if self.is_player else int(self.HP / numerical['boss_display_shorten'])
-        whole = int(adj_hp / numerical['hp_display_unit'])
-        rest = adj_hp - numerical['hp_display_unit'] * whole
+        if buff_type not in self.buff:
+            self.buff[buff_type] = []
 
-        hp_bar += '▉' * whole
-        hp_bar += hp_block(rest)
+        self.buff[buff_type].append((value, time))
 
-        return hp_bar
+    def recover(self, recovery):
+        """
+        生命恢复。传入恢复量
+        超过最大值的将会被舍弃
+        返回实际恢复量
+        """
+        self.HP += recovery * self.recover_rate
+        if self.HP <= self.attributes['HP']:
+            return recovery
+        else:
+            diff = self.HP - self.attributes['HP']
+            self.HP = self.attributes['HP']
+            return diff
 
-    def mp_display(self) -> str:
-        value = int(self.MP / (1000 / 7))
-        return mp_block_list[value]
+    def give_shield(self, value):
+        """
+        添加护盾时使用，传入护盾量
+        护盾不会叠加，只会取最大值
+        返回实际护盾添加量
+        """
+        value *= self.recover_rate
+        if self.shield >= value:
+            return 0
+        else:
+            diff = value - self.shield
+            self.shield = value
+            return diff
+
+    def gain_mp(self, value):
+        """
+        MP增加的时候使用，函数会保证MP值不超过1000点
+        """
+        self.MP += value
+        if self.MP > 1000:
+            self.MP = 1000
+
+    def _add_attack_buff(self, value, time, is_debuff=False):
+        """
+        给角色添加一个攻击力的buff
+        这个buff会受到角色本身的buff_rate的加成
+        is_debuff为真时，此时的效果不会受到作用目标的buff_rate的加成，同时自动帮助玩家变为负数添加buff中
+        time为持续回合数
+        返回实际强化量
+        """
+        if is_debuff:
+            real_point = -value
+        else:
+            real_point = value * self.buff_rate
+        self._add_buff('attack_add', real_point, time)
+        return abs(real_point)
+
+    def _add_silence_buff(self, time):
+        self._add_buff('silence', True, time)
+
+    def _add_spell_buff(self, value, time, is_debuff=False):
+        """
+        添加一个魔法伤害提升的buff
+        这个buff会受到角色本身的buff_rate的加成
+        is_debuff为真时，此时的效果不会受到作用目标的buff_rate的加成，同时自动帮助玩家变为负数添加buff中
+        time为持续回合数
+        返回实际强化率(为百分号形式)
+        """
+        if is_debuff:
+            real_rate = -value
+        else:
+            real_rate = value * self.buff_rate
+        self._add_buff('spell_enhance', real_rate, time)
+        return abs(real_rate)
 
     def _shield_hurt(self, damage):
         """
@@ -324,7 +453,10 @@ class GameChar:
         """
         角色扣血时，需要传入伤害量。
         返回实际造成的伤害，同时增加TP值
+        最小伤害为1
         """
+        if damage <= 0:
+            damage = 1
         self.HP -= damage
         damage_percent = damage / self.attributes['HP']
         self.gain_mp(damage_percent * 1000)
@@ -345,17 +477,8 @@ class GameChar:
         """
         return self.attributes['attack'] * rate
 
-    def _add_buff(self, buff_type, value, time):
-        """
-        用作一个添加和管理buff的统一函数接口
-        :param buff_type: buff的类型，具体请查阅文档
-        :param value: buff的数值
-        :param time: 持续时间
-        """
-        if buff_type not in self.buff:
-            self.buff[buff_type] = []
-
-        self.buff[buff_type].append((value, time))
+    def _purify(self):
+        self.buff = {}
 
     def _self_replace(self, chara_name: str) -> str:
         if chara_name == self.name:

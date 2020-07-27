@@ -1,176 +1,378 @@
 [
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "火球术",
-        "水球术",
-        "闪电球",
-        "冰锥术",
-        "暗影球"
-      ]
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "爆裂火球",
+                "流水炮击",
+                "雷霆一击",
+                "冰锥穿刺",
+                "暗影腐蚀"
+            ]
+        },
+        "weight": 3,
+        "effect": [
+            {
+                "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+                "type": "MGC_DMG",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 100,
+                        "min": 70
+                    }
+                ]
+            }
+        ]
     },
-    "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
-    "weight": 3,
-    "type": "MGC_DMG",
-    "target": {
-      "type": "RAND",
-      "team": 0,
-      "limit": {
-        "random": "cubic",
-        "min": 1,
-        "max": 4
-      }
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "烈焰之风",
+                "激流涌动",
+                "闪电锁链",
+                "寒冰爆破",
+                "暗影裂隙"
+            ]
+        },
+        "weight": 3,
+        "effect": [
+            {
+                "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+                "type": "MGC_DMG",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": {
+                        "random": "cubic",
+                        "min": 2,
+                        "max": 4
+                    }
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 100,
+                        "min": 70
+                    }
+                ]
+            }
+        ]
     },
-    "skill_param": [
-      {
-        "random": "biased",
-        "expect": 300,
-        "min": 240
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 480,
-        "min": 360
-      }
-    ]
-  },
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "攻击强化",
-        "攻击激励",
-        "攻击专注"
-      ]
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 2,
+            "max": 4
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "勇气之章",
+                "闪亮刀锋",
+                "战斗呐喊",
+                "肾上腺素"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 28,
+                        "min": 23
+                    },
+                    {
+                        "random": "triangular_int",
+                        "min": 2,
+                        "max": 3
+                    }
+                ]
+            }
+        ]
     },
-    "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
-    "weight": 1,
-    "type": "PHY_ATK_BUFF_CONST",
-    "target": {
-      "type": "SELF",
-      "team": 1,
-      "limit": 1
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "自然祝福",
+                "战场救援",
+                "紧急医疗",
+                "医护之触"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "治疗生命最低的队友{param[0]}点生命",
+                "type": "HEAL",
+                "target": {
+                    "type": "LIFELEAST",
+                    "team": 1,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 160,
+                        "min": 100
+                    }
+                ]
+            }
+        ]
     },
-    "skill_param": [
-      {
-        "random": "biased",
-        "expect": 30,
-        "min": 24
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 3
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 48,
-        "min": 36
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 4
-      }
-    ]
-  },
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "团队激励",
-        "团队鼓舞",
-        "团队协同",
-        "攻击协助"
-      ]
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "守护之盾",
+                "防御屏障"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "为自己附加{param[0]}点护盾",
+                "type": "SHIELD",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 240,
+                        "min": 180
+                    }
+                ]
+            }
+        ]
     },
-    "desc": "强化攻击最高的{target[limit]}名队友{param[0]}点攻击，持续{param[1]}回合",
-    "weight": 1,
-    "type": "PHY_ATK_BUFF_CONST",
-    "target": {
-      "type": "ATKMOST",
-      "team": 1,
-      "limit": {
-        "random": "cubic",
-        "min": 1,
-        "max": 4
-      }
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "净化",
+                "状态重置",
+                "驱散魔法"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "清除一名敌人身上全部的状态效果",
+                "type": "PURIFY",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "skill_param": [
+                ]
+            }
+        ]
     },
-    "skill_param": [
-      {
-        "random": "biased",
-        "expect": 30,
-        "min": 24
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 3
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 48,
-        "min": 36
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 4
-      }
-    ]
-  },
-  {
-    "name": {
-      "random": "choice",
-      "values": [
-        "团队激励",
-        "团队鼓舞",
-        "团队协同",
-        "攻击协助"
-      ]
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "致残",
+                "攻击削弱",
+                "衰弱巫术",
+                "虚弱魔术"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "大幅度降低敌方攻击最高的角色{param[0]:%}的攻击力",
+                "type": "ATK_DEBUFF",
+                "target": {
+                    "type": "ATKMOST",
+                    "team": 0,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.36,
+                        "min": 0.25
+                    },
+                    {
+                        "random": "triangular_int",
+                        "min": 4,
+                        "max": 5
+                    }
+                ]
+            }
+        ]
     },
-    "desc": "强化攻击最高的{target[limit]}名队友{param[0]:%}攻击，持续{param[1]}回合",
-    "weight": 1,
-    "type": "PHY_ATK_BUFF_RATE",
-    "target": {
-      "type": "ATKMOST",
-      "team": 1,
-      "limit": {
-        "random": "cubic",
-        "min": 1,
-        "max": 4
-      }
-    },
-    "skill_param": [
-      {
-        "random": "biased",
-        "expect": 0.2,
-        "min": 0.1
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 3
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 0.25,
-        "min": 0.2
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 4
-      }
-    ]
-  }
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 2,
+            "max": 4
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "法力涌动",
+                "水晶之力",
+                "魔力增幅",
+                "魔法强化",
+                "法术智慧"
+            ]
+        },
+        "weight": 4,
+        "effect": [
+            {
+                "desc": "强化自身{param[0]:%}的法术强度，持续{param[1]}回合",
+                "type": "MGC_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "skill_param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.135,
+                        "min": 0.111
+                    },
+                    {
+                        "random": "triangular_int",
+                        "min": 7,
+                        "max": 10
+                    }
+                ]
+            }
+        ]
+    }
 ]
+
+
