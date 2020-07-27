@@ -9,11 +9,10 @@ async def show_talent(ui: UI):
         lvl = player_talent.get(attribute, 0)
         effect = param['effect']
         value = next(iter(effect.values())) if isinstance(effect, dict) else effect
-        line = '{}.【{}】{}+{}'.format(chr(ordinal), param['name'], param['desc'],
-                                     format(util.NumFormat(value * lvl), param['format']))
+        line = '{}.【{}】{}+{}'.format(chr(ordinal), param['name'], param['desc'], format(value * lvl, param['format']))
         if lvl < param['max_level']:
             line += ' (+{}) ●▶{}'.format(
-                format(util.NumFormat(value), param['format']),
+                format(value, param['format']),
                 util.recurrence(param['cost_base'], param['cost_ratio'], param['cost_grow'], lvl + 1)
             )
         else:
@@ -46,6 +45,19 @@ async def upgrade_talent(ui: UI):
     ui.store('talent', player_talent)
     ui.store('talent_coin', coin)
     await ui.send('天赋升级成功！')
+
+
+def build_talent_buff(ui: UI):
+    player_talent = ui.retrieve('talent') or {}
+    buff = {}
+    for attribute, lvl in player_talent.items():
+        effect = data.talent[attribute]['effect']
+        if isinstance(effect, dict):
+            effect = {k: v * lvl for k, v in effect.items()}
+        else:
+            effect *= lvl
+        buff[attribute] = effect
+    return buff
 
 
 if __name__ == '__main__':

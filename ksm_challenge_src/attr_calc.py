@@ -1,4 +1,5 @@
 from . import util
+from .character import calc_passive
 from .data import data
 
 numerical = data.numerical
@@ -37,19 +38,19 @@ def game_char_gen(chara: dict) -> dict:
     game_char['is_player'] = True
     game_char['attack'] = _atk_calc(int_)
     game_char['defence'] = _def_calc(str_, int_, chara['defense_str_rate'],
-                                     _calc_passive(chara['def_base'][0], chara, 'def_base'), )
+                                     calc_passive(chara['def_base'][0], chara, 'def_base'))
     game_char['HP'] = _hp_calc(str_,
                                numerical['life_base'] * chara['life_build'][0],
                                numerical['life_grow'] * chara['life_build'][0],
                                lv,
-                               _calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
+                               calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
     game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate'])
     game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate'],
-                                               _calc_passive(1.0, chara, 'spell_rate'))
+                                               calc_passive(1.0, chara, 'spell_rate'))
     game_char['buff_rate'] = _buff_rate_calc(per_)
-    game_char['crit_rate'] = _calc_passive(numerical['crit_base'], chara, 'crit_rate')
-    game_char['life_steal_rate'] = _calc_passive(0, chara, 'life_steal_rate')
-    game_char['dodge'] = _dodge_calc(per_, _calc_passive(0, chara, 'dodge'))
+    game_char['crit_rate'] = calc_passive(numerical['crit_base'], chara, 'crit_rate')
+    game_char['life_steal_rate'] = calc_passive(0, chara, 'life_steal_rate')
+    game_char['dodge'] = _dodge_calc(per_, calc_passive(0, chara, 'dodge'))
 
     for i in range(1, 4):
         game_char[f'skill_{i}'] = chara[f'skill_{i}']
@@ -123,20 +124,6 @@ def _buff_rate_calc(per_cur):
 # 闪避
 def _dodge_calc(per_cur, extra):
     return numerical['dodge_base'] + extra + per_cur * numerical['dodge_rate']
-
-
-def _calc_passive(base: float, char: dict, key: str) -> float:
-    race = data.race[char['race_id']]['buff']
-    passive = char['passive']['buff']
-    add = 0
-    multiply = 1
-    for b in (race, passive):
-        modify = b.get(key, 0)
-        if isinstance(modify, dict):
-            multiply *= modify['multiply']
-        else:
-            add += modify
-    return (base + add) * multiply
 
 
 # 根据经验等级计算
