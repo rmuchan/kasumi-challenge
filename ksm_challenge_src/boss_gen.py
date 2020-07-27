@@ -1,9 +1,10 @@
+from .rand import randomize
 from .data import data
 
-def boss_gen(boss_json: dict, lv):
-    boss = {}
-    boss['name'] = boss_json['name']
-    boss['is_player'] = False
+
+def boss_gen(template: dict, lv):
+    rating = [0, 0]
+    boss = randomize(template, rating)
 
     return boss
 

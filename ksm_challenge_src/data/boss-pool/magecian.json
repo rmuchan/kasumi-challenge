@@ -1,0 +1,177 @@
+{
+  "name": "魔术师",
+  "is_player": false,
+  "attack": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 180,
+    "max": 200
+  },
+  "defence_base": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 2.5,
+    "max": 3.7
+  },
+  "defence_grow": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 0.1,
+    "max": 0.2
+  },
+  "hp_base": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 560,
+    "max": 640
+  },
+  "life_base": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 190,
+    "max": 210
+  },
+  "life_grow": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 20,
+    "max": 20
+  },
+  "recover_rate": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 0.9,
+    "max": 1.1
+  },
+  "spell_rate": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 0.9,
+    "max": 1.1
+  },
+  "buff_rate": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 0.9,
+    "max": 1.1
+  },
+  "crit_rate": 1.75,
+  "life_steal_rate": 0,
+  "dodge": 0.06,
+  "skill_1": {
+    "chance": 0.12121533425658145,
+    "cooldown": 2,
+    "mp_cost": 61,
+    "name": "护盾",
+    "effect": [
+      {
+        "type": "SHIELD",
+        "target": {
+          "type": "SELF",
+          "team": 1,
+          "limit": 1
+        },
+        "param": [
+          {
+            "random": "triangular",
+            "rating_weight": 1,
+            "min": 250,
+            "max": 350
+          }
+        ]
+      }
+    ]
+  },
+  "skill_2": {
+    "chance": 0.1347145890263009,
+    "cooldown": 3,
+    "mp_cost": 85,
+    "name": "爆炸",
+    "effect": [
+      {
+        "type": "MGC_DMG",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 2
+        },
+        "param": [
+          [
+            {
+              "random": "triangular",
+              "rating_weight": 1,
+              "min": 100,
+              "max": 140
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "skill_3": {
+    "chance": 0.1347145890263009,
+    "cooldown": 3,
+    "mp_cost": 85,
+    "name": "猎杀",
+    "effect": [
+      {
+        "type": "MGC_DMG",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": [
+          [
+            {
+              "random": "triangular",
+              "rating_weight": 1,
+              "min": 270,
+              "max": 330
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "unique": {
+    "chance": 0.1279925289153045,
+    "cooldown": 1,
+    "mp_cost": 83,
+    "name": "炸了",
+    "effect": [
+      {
+        "type": "MGC_DMG",
+        "target": {
+          "type": "ALL",
+          "team": 0,
+          "limit": 4
+        },
+        "param": [
+          [
+            {
+              "random": "triangular",
+              "rating_weight": 1,
+              "min": 230,
+              "max": 270
+            }
+          ]
+        ]
+      }
+    ]
+  },
+  "normal_attack": {
+    "name": "普通攻击",
+    "effect": [
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 2
+        },
+        "param": []
+      }
+    ]
+  }
+}

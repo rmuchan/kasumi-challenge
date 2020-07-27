@@ -1,5 +1,5 @@
 import random
-from typing import Tuple, Any
+from typing import Tuple, Any, List
 
 
 def biased(expect: float, min_: float) -> Tuple[float, str]:
@@ -35,26 +35,34 @@ def cubic(min_: int, max_: int) -> int:
     return round(y * length + min_)
 
 
-def randomize(template: Any):
+def randomize(template: Any, rating: List[float] = None):
     if isinstance(template, list):
-        return [randomize(x) for x in template]
+        return [randomize(x, rating) for x in template]
     elif isinstance(template, dict):
         mode = template.get('random')
         if mode is None:
-            return {k: randomize(v) for k, v in template.items()}
+            return {k: randomize(v, rating) for k, v in template.items()}
         elif mode == 'choice':
-            return randomize(random.choice(template['values']))
-        elif mode == 'uniform':
-            return random.uniform(template['min'], template['max'])
-        elif mode == 'triangular':
-            return random.triangular(template['min'], template['max'])
-        elif mode == 'triangular_int':
-            return round(random.triangular(template['min'] - 0.49, template['max'] + 0.49))
-        elif mode == 'cubic':
-            return cubic(template['min'], template['max'])
+            return randomize(random.choice(template['values']), rating)
         elif mode == 'biased':
             return biased(template['expect'], template['min'])
+
+        min_, max_ = template['min'], template['max']
+        if mode == 'uniform':
+            value = random.uniform(template['min'], template['max'])
+        elif mode == 'triangular':
+            value = random.triangular(template['min'], template['max'])
+        elif mode == 'triangular_int':
+            value = round(random.triangular(template['min'] - 0.49, template['max'] + 0.49))
+        elif mode == 'cubic':
+            value = cubic(template['min'], template['max'])
         else:
             raise ValueError('Unknown randomize mode')
+
+        if rating is not None and 'rating_weight' in template:
+            weight = template['rating_weight']
+            rating[0] += weight * (value - min_) / (max_ - min_)
+            rating[1] += weight
+        return value
     else:
         return template
