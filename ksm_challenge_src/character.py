@@ -5,9 +5,8 @@ from . import rand
 from .data import data
 from .interact import UI
 from .skill import get_skill_desc, create_skill
+from .talent_calc import build_talent_buff
 
-
-# TODO 天赋树
 
 async def create_character(ui: UI):
     proto = ui.retrieve('proto_character')
@@ -16,6 +15,7 @@ async def create_character(ui: UI):
 
     if not isinstance(proto, dict) or proto.get('progress') not in _CREATE_STEPS:
         proto = _init_proto_character(ui.uid())
+        proto['talent'] = build_talent_buff(ui)
         proto['progress'] = 'name'
         ui.store('proto_character', proto)
 
@@ -124,7 +124,7 @@ _CREATE_STEPS = {
 def _build_character_from_proto(proto: Dict[str, Any]) -> Dict[str, Any]:
     assert proto['progress'] == 'full'
     fields_to_copy = [
-        'name', 'race', 'race_id', 'exp',
+        'name', 'race', 'race_id', 'talent', 'exp',
         'str_build', 'int_build', 'per_build', 'life_build', 'def_base',
         'defense_str_rate', 'magic_int_rate', 'health_per_rate', 'attack_rate',
         'passive', 'skill_1', 'skill_2', 'skill_3', 'unique',
@@ -192,13 +192,17 @@ _PRINT_STEPS = {
 
 def calc_passive(base: float, char: dict, key: str) -> float:
     race = data.race[char['race_id']]['buff']
-    passive = char.get('passive', {'buff': {}})['buff']
+    passive = char.get('passive', {}).get('buff', {})
+    talent = char.get('talent', {})
     add = 0
+    madd = 0
     multiply = 1
-    for b in (race, passive):
+    for b in (race, passive, talent):
         modify = b.get(key, 0)
-        if isinstance(modify, dict):
-            multiply *= modify['multiply']
-        else:
+        if not isinstance(modify, dict):
             add += modify
-    return (base + add) * multiply
+        elif 'madd' in modify:
+            madd += modify['madd']
+        else:
+            multiply *= modify['multiply']
+    return (base + add) * (1 + madd) * multiply

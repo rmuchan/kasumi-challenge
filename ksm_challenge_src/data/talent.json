@@ -72,7 +72,7 @@
   "dodge": {
     "name": "灵活移动",
     "desc": "闪避",
-    "format": ".1f%",
+    "format": ".1%",
     "effect": 0.025,
     "max_level": 10,
     "cost_base": 1,
@@ -82,7 +82,7 @@
   "hp_rate": {
     "name": "生命提升",
     "desc": "生命提升",
-    "format": ".1f%",
+    "format": ".1%",
     "effect": {
       "madd": 0.015
     },
@@ -94,7 +94,7 @@
   "recover_rate": {
     "name": "自然祝福",
     "desc": "护盾、回复技能的倍率",
-    "format": "%",
+    "format": ".0%",
     "effect": {
       "madd": 0.01
     },
@@ -106,7 +106,7 @@
   "spell_rate": {
     "name": "法术精通",
     "desc": "魔法伤害倍率",
-    "format": "%",
+    "format": ".0%",
     "effect": {
       "madd": 0.01
     },
@@ -118,7 +118,7 @@
   "buff_rate": {
     "name": "战斗灵感",
     "desc": "增益效果倍率",
-    "format": "%",
+    "format": ".0%",
     "effect": {
       "madd": 0.01
     },
@@ -130,7 +130,7 @@
   "crit_base": {
     "name": "暴击倍率",
     "desc": "暴击倍率",
-    "format": "%",
+    "format": ".0%",
     "effect": 0.03,
     "max_level": 8,
     "cost_base": 1,
@@ -140,7 +140,7 @@
   "exp_earn_rate": {
     "name": "经验获取增加",
     "desc": "经验获取增加",
-    "format": "%",
+    "format": ".0%",
     "effect": 0.1,
     "max_level": 30,
     "cost_base": 1,
@@ -150,7 +150,7 @@
   "talent_coin_earn_rate": {
     "name": "天赋币获取增加",
     "desc": "天赋币获取增加",
-    "format": "%",
+    "format": ".0%",
     "effect": 0.1,
     "max_level": 10,
     "cost_base": 1,
