@@ -1,0 +1,160 @@
+{
+  "str_base": {
+    "name": "肌肉强化",
+    "desc": "力量基础",
+    "format": ".1f",
+    "effect": 1.5,
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "int_base": {
+    "name": "协调训练",
+    "desc": "敏捷基础",
+    "format": ".1f",
+    "effect": 1.5,
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "per_base": {
+    "name": "精神统一",
+    "desc": "感知基础",
+    "format": ".1f",
+    "effect": 1.5,
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "str_grow": {
+    "name": "蛋白冲剂",
+    "desc": "力量成长",
+    "format": ".2f",
+    "effect": 0.03,
+    "max_level": 7,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "int_grow": {
+    "name": "敏捷训练",
+    "desc": "敏捷成长",
+    "format": ".2f",
+    "effect": 0.03,
+    "max_level": 7,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "per_grow": {
+    "name": "心灵强化",
+    "desc": "感知成长",
+    "format": ".2f",
+    "effect": 0.03,
+    "max_level": 7,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "def_base": {
+    "name": "硬化皮肤",
+    "desc": "物防基础",
+    "format": ".1f",
+    "effect": 0.3,
+    "max_level": 9,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "dodge": {
+    "name": "灵活移动",
+    "desc": "闪避",
+    "format": ".1%",
+    "effect": 0.025,
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "hp_rate": {
+    "name": "生命提升",
+    "desc": "生命提升",
+    "format": ".1%",
+    "effect": {
+      "madd": 0.015
+    },
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "recover_rate": {
+    "name": "自然祝福",
+    "desc": "护盾、回复技能的倍率",
+    "format": ".0%",
+    "effect": {
+      "madd": 0.01
+    },
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "spell_rate": {
+    "name": "法术精通",
+    "desc": "魔法伤害倍率",
+    "format": ".0%",
+    "effect": {
+      "madd": 0.01
+    },
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "buff_rate": {
+    "name": "战斗灵感",
+    "desc": "增益效果倍率",
+    "format": ".0%",
+    "effect": {
+      "madd": 0.01
+    },
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "crit_base": {
+    "name": "暴击倍率",
+    "desc": "暴击倍率",
+    "format": ".0%",
+    "effect": 0.03,
+    "max_level": 8,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "exp_earn_rate": {
+    "name": "经验获取增加",
+    "desc": "经验获取增加",
+    "format": ".0%",
+    "effect": 0.1,
+    "max_level": 30,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  },
+  "talent_coin_earn_rate": {
+    "name": "天赋币获取增加",
+    "desc": "天赋币获取增加",
+    "format": ".0%",
+    "effect": 0.1,
+    "max_level": 10,
+    "cost_base": 1,
+    "cost_ratio": 1,
+    "cost_grow": 1
+  }
+}

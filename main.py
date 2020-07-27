@@ -7,6 +7,7 @@ from ksm_challenge_src.Gaming import Gaming
 from ksm_challenge_src.attr_calc import game_char_gen
 from ksm_challenge_src.character import create_character, print_character
 from ksm_challenge_src.interact import UI
+from ksm_challenge_src.talent_calc import show_talent, upgrade_talent
 
 
 class CLI(UI):

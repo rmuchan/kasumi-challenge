@@ -60,6 +60,8 @@ class Gaming(ABC):
             result = team * (target['limit'] // len(team)) + random.sample(team, target['limit'] % len(team))
             random.shuffle(result)
             return result
+        if type_ == 'RAND_SAFE':
+            return random.sample(team, min(target['limit'], len(team)))
 
         key, reverse = {
             'LIFEMOST': (lambda x: x.hp_percentage, True),
