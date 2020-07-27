@@ -24,18 +24,11 @@
         "max": 4
       }
     },
-    "skill_param": [
+    "param": [
       {
         "random": "biased",
         "expect": 100,
         "min": 80
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 160,
-        "min": 120
       }
     ]
   },
@@ -56,7 +49,7 @@
       "team": 1,
       "limit": 1
     },
-    "skill_param": [
+    "param": [
       {
         "random": "biased",
         "expect": 10,
@@ -66,18 +59,6 @@
         "random": "triangular_int",
         "min": 1,
         "max": 3
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 16,
-        "min": 12
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 4
       }
     ]
   },
@@ -102,7 +83,7 @@
         "max": 4
       }
     },
-    "skill_param": [
+    "param": [
       {
         "random": "biased",
         "expect": 10,
@@ -112,18 +93,6 @@
         "random": "triangular_int",
         "min": 1,
         "max": 3
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 16,
-        "min": 12
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 4
       }
     ]
   },
@@ -148,7 +117,7 @@
         "max": 4
       }
     },
-    "skill_param": [
+    "param": [
       {
         "random": "biased",
         "expect": 0.1,
@@ -158,18 +127,6 @@
         "random": "triangular_int",
         "min": 1,
         "max": 3
-      }
-    ],
-    "unique_param": [
-      {
-        "random": "biased",
-        "expect": 0.16,
-        "min": 0.12
-      },
-      {
-        "random": "triangular_int",
-        "min": 1,
-        "max": 4
       }
     ]
   }

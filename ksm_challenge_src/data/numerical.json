@@ -55,7 +55,7 @@
     },
     "cooldown": {
       "random": "triangular_int",
-      "min": 1,
+      "min": 2,
       "max": 5
     },
     "mp_cost": {

@@ -6,26 +6,30 @@ from .rand import randomize
 
 
 def create_skill(is_unique: bool) -> Dict[str, Any]:
-    skill = randomize(data.numerical['skill_template'])
-    effect = []
+    # TODO unique skill pool
     if random.random() < data.numerical['single_effect_chance']:
-        effect.append(_create_skill_effect(3, is_unique))
+        pool = data.skill_effect_pool['lv-3']
+        template = random.choices(pool, [x['weight'] for x in pool])[0]
+        skill = randomize(template)
+        for effect in skill['effect']:
+            _process_effect(effect)
     else:
-        effect.append(_create_skill_effect(2, is_unique))
-        effect.append(_create_skill_effect(1, is_unique))
-    skill['name'] = '·'.join(x['name'] for x in effect)
-    skill['effect'] = effect
+        skill = randomize(data.numerical['skill_template'])
+        effect = [_create_skill_effect(lvl) for lvl in (2, 1)]
+        skill['name'] = '·'.join(x['name'] for x in effect)
+        skill['effect'] = effect
     return skill
 
 
-def _create_skill_effect(level: int, is_unique: bool) -> Dict[str, Any]:
+def _create_skill_effect(level: int) -> Dict[str, Any]:
     pool = data.skill_effect_pool[f'lv-{level}']
     template = random.choices(pool, [x['weight'] for x in pool])[0]
     effect = randomize(template)
-    if 'param' not in effect:
-        effect['param'] = effect['unique_param' if is_unique else 'skill_param']
-        del effect['skill_param']
-        del effect['unique_param']
+    _process_effect(effect)
+    return effect
+
+
+def _process_effect(effect: Dict[str, Any]):
     if effect['target']['type'] not in ('SELF', 'ALL', 'OTHER'):
         limit = effect['target']['limit']
         old = effect['param'][0]
@@ -33,7 +37,6 @@ def _create_skill_effect(level: int, is_unique: bool) -> Dict[str, Any]:
             effect['param'][0] = (_calc_aoe_param(old[0], limit), old[1])
         else:
             effect['param'][0] = _calc_aoe_param(old, limit)
-    return effect
 
 
 def _calc_aoe_param(base: float, limit: int) -> float:

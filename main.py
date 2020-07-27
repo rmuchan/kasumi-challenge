@@ -44,6 +44,9 @@ class CLI(UI):
     def retrieve(self, key: str) -> Optional[Any]:
         return self._store.get(key)
 
+    def abort(self) -> None:
+        exit(1)
+
 
 async def main():
     chars = []
