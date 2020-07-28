@@ -4,6 +4,7 @@ import random
 from nonebot import CommandSession, CommandGroup
 from nonebot.session import BaseSession
 
+from ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
@@ -40,10 +41,7 @@ async def _(session: CommandSession):
 @_cmd_group.command('query')
 async def _(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
-    char = ui.retrieve('character')
-    if char is None:
-        return await ui.send('你还没有创建角色')
-    await print_character(ui, char)
+    await show_chara_info(ui)
 
 
 # 发起pve
