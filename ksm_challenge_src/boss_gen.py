@@ -1,9 +1,7 @@
-#from .rand import randomize
-#from .data import data
 import json
 
-from ksm_challenge_src.GameChar import numerical
-from ksm_challenge_src.rand import randomize
+from .GameChar import numerical
+from .rand import randomize
 from .util import recurrence
 
 
@@ -24,7 +22,7 @@ def boss_gen(template: dict, lv):
 
 
 def attack_calc(atk, lv):
-    return recurrence(atk, numerical['attr_rate'] ,atk*0.02, lv)
+    return recurrence(atk, numerical['attr_rate'], atk*0.02, lv)
 
 
 def hp_calc(hp_base, life_base, lv):
@@ -36,10 +34,11 @@ def rates_3_calc(lv):
     virtual_attr = recurrence(numerical['per_base'], numerical['attr_rate'], numerical['per_grow'], lv)
     return numerical['enhance_constant'] * (virtual_attr ** numerical['enhance_exponent'])
 
+
 # 击败这个怪物会获得这么多经验
 def exp_earn_calc(lv: int):
     current = numerical['exp_earn_base']
-    for i in range(lv - 1):
+    for _ in range(lv - 1):
         current = current * numerical['exp_earn_rate'] + numerical['exp_earn_add']
     return current
 
