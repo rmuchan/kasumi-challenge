@@ -1,4 +1,5 @@
-from . import data, util
+from . import util
+from .data import data
 from .interact import UI
 
 
@@ -13,7 +14,7 @@ async def show_talent(ui: UI):
         if lvl < param['max_level']:
             line += ' (+{}) ●▶{}'.format(
                 format(value, param['format']),
-                util.recurrence(param['cost_base'], param['cost_ratio'], param['cost_grow'], lvl + 1)
+                int(util.recurrence(param['cost_base'], param['cost_ratio'], param['cost_grow'], lvl + 1))
             )
         else:
             line += ' (MAX)'
@@ -23,6 +24,8 @@ async def show_talent(ui: UI):
 
 
 async def upgrade_talent(ui: UI):
+    coin = ui.retrieve('talent_coin') or 0
+    ui.append('你有{}个天赋币'.format(coin))
     ui.append('你现有的天赋为：')
     await show_talent(ui)
     selection = await ui.input('选择想要强化的天赋',
@@ -35,8 +38,7 @@ async def upgrade_talent(ui: UI):
     if lvl >= param['max_level']:
         await ui.send('该天赋已达到满级')
         return
-    cost = util.recurrence(param['cost_base'], param['cost_ratio'], param['cost_grow'], lvl + 1)
-    coin = ui.retrieve('talent_coin') or 0
+    cost = int(util.recurrence(param['cost_base'], param['cost_ratio'], param['cost_grow'], lvl + 1))
     if cost > coin:
         await ui.send('天赋币不足')
         return

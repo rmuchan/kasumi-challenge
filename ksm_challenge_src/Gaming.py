@@ -40,7 +40,7 @@ class Gaming(ABC):
 
             self.turn += 1
 
-            # await asyncio.sleep(16)
+            await asyncio.sleep(12)
         return 'timeout', 30
 
     def selector(self, target, team_name: str, initiator: GameChar):

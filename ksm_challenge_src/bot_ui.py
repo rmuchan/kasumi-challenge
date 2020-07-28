@@ -32,6 +32,8 @@ class BotContextUI(UI):
         return self._ctx['user_id']
 
     async def do_send(self, msg: str) -> None:
+        if self._ctx['message_type'] != 'private':
+            msg = '\n' + msg
         await self._bot.send(self._ctx, msg, at_sender=True)
 
     async def do_input(self) -> str:

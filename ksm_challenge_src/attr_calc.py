@@ -7,13 +7,14 @@ numerical = data.numerical
 
 # 生成每级升级需要的EXP
 def _exp_requirement(lv: int) -> 100:
-    return int(util.recurrence(numerical['exp_base'], numerical['exp_add_rate'], numerical['exp_add_point'], lv) / 100) * 100
+    return int(
+        util.recurrence(numerical['exp_base'], numerical['exp_add_rate'], numerical['exp_add_point'], lv) / 100) * 100
 
 
 # 生成经验数组
 def _exp_overlay_gen() -> list:
     exp_overlay = [0]
-    for i in range(1,31):
+    for i in range(1, 31):
         exp_overlay.append(exp_overlay[-1] + _exp_requirement(i))
     return exp_overlay
 
@@ -55,7 +56,7 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
     game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate'],
                                                calc_passive(1.0, chara, 'spell_rate'))
     game_char['buff_rate'] = _buff_rate_calc(per_)
-    game_char['crit_rate'] = calc_passive(numerical['crit_base'], chara, 'crit_rate')
+    game_char['crit_rate'] = crit_rate_calc(str_, int_, chara['defense_str_rate'], calc_passive(0, chara, 'crit_rate'))
     game_char['life_steal_rate'] = calc_passive(0, chara, 'life_steal_rate')
     game_char['dodge'] = _dodge_calc(per_, calc_passive(0, chara, 'dodge'))
 
@@ -78,7 +79,7 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
             }
         ]
     }
-    #print(game_char)
+    # print(game_char)
     return game_char
 
 
@@ -103,10 +104,10 @@ def _def_calc(str_cur, int_cur, defense_str_rate, def_base):
     return adj * numerical['def_adj_rate'] + def_base
 
 
-# 暴击率增益计算
-def _crit_rate_calc(str_cur, int_cur, defense_str_rate, def_base):
+# 暴击倍率增益计算
+def crit_rate_calc(str_cur, int_cur, defense_str_rate, extra):
     adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * numerical['def_adj_rate'] + def_base
+    return adj / 150 + 1.40 + extra
 
 
 # 下面会有三个基于属性的技能强化率的计算会用到这个函数
