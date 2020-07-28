@@ -4,10 +4,7 @@ import json
 
 from ksm_challenge_src.GameChar import numerical
 from ksm_challenge_src.rand import randomize
-
-
-def recurrence(a_1: float, k: float, m: float, n: int) -> float:
-    return (a_1 - m) * k ** (n - 1) + m * (k ** n - 1) / (k - 1)
+from .util import recurrence
 
 
 def boss_gen(template: dict, lv):
