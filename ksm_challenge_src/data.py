@@ -34,6 +34,12 @@ class _Dir:
         with open(path.join(self._path, f'{item}.json'), 'w') as f:
             json.dump(value, f, ensure_ascii=False, indent=2)
 
+    def dir(self):
+        return os.listdir(self._path)
+
+    def dir(self):
+        return [x[:-len('.json')] for x in os.listdir(self._path) if x.endswith('.json')]
+
 
 data = _Dir(path.join(path.dirname(__file__), 'data'))
 __getattr__ = data.__getattr__

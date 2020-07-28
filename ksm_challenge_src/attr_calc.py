@@ -26,7 +26,7 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
     if test_lv:
         lv = test_lv
     else:
-        lv = _lv_calc(chara['exp'])
+        lv = lv_calc(chara['exp'])
     str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0],
                       numerical['str_grow'] * chara['str_build'][0],
                       lv)
@@ -135,7 +135,7 @@ def _dodge_calc(per_cur, extra):
 
 
 # 根据经验等级计算
-def _lv_calc(exp: int):
+def lv_calc(exp: int):
     for i in range(1, 30):
         if exp_overlay_list[i - 1] <= exp < exp_overlay_list[i]:
             return i
