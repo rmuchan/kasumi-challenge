@@ -215,3 +215,6 @@ def calc_passive(base: float, char: dict, key: str) -> float:
         else:
             multiply *= modify['multiply']
     return (base + add) * (1 + madd) * multiply
+
+def exp_to_talent_coin(exp):
+    return int(i ** numerical['talent_coin_earn_index'] * numerical['talent_coin_earn_rate'])
