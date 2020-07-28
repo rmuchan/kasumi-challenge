@@ -13,14 +13,14 @@ class Gaming(ABC):
         self.ui = ui
 
     async def start(self):
-        while self.turn < 40:
+        while self.turn < 30:
             # 获胜状态判断
             if len(self.team_a) == 0 and len(self.team_b) == 0:
                 return 'all_dead', self.turn
             if len(self.team_a) == 0:
-                return 'b', self.turn
+                return 'b_win', self.turn
             if len(self.team_b) == 0:
-                return 'a', self.turn
+                return 'a_win', self.turn
 
             self.ui.append('回合数：{}'.format(self.turn))
 
@@ -41,10 +41,12 @@ class Gaming(ABC):
             self.turn += 1
 
             # await asyncio.sleep(16)
-        return 'timeout', 40
+        return 'timeout', 30
 
     def selector(self, target, team_name: str, initiator: GameChar):
         type_ = target['type']
+        if type_ == 'SAME':
+            return self.selected
         if type_ == 'SELF':
             return [initiator]
         if type_ == 'OTHER':
@@ -94,8 +96,9 @@ class Gaming(ABC):
                     self.ui.append(f'[{chara.name}] 使用了 "{skill["name"]}"')
                     feedback = []
                     for effect in skill['effect']:
-                        selected = self.selector(effect['target'], team_name, chara)
-                        feedback.extend(chara.use_effect(selected, effect))
+                        # 这里把selected变为类变量，以便SAME选择器的正常使用
+                        self.selected = self.selector(effect['target'], team_name, chara)
+                        feedback.extend(chara.use_effect(self.selected, effect))
                     merged = []
                     for f in feedback:
                         for m in merged:

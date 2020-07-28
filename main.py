@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 from ksm_challenge_src.Gaming import Gaming
 from ksm_challenge_src.attr_calc import game_char_gen
+from ksm_challenge_src.boss_gen import boss_gen
 from ksm_challenge_src.character import create_character, print_character
 from ksm_challenge_src.interact import UI
 from ksm_challenge_src.talent_calc import show_talent, upgrade_talent
@@ -52,8 +53,10 @@ class CLI(UI):
     def abort(self) -> None:
         exit(1)
 
-with open('boss.json') as FILE:
+
+with open('ksm_challenge_src/data/boss-pool/magician.json') as FILE:
     boss = json.load(FILE)
+
 
 async def main():
     chars = []
@@ -63,35 +66,42 @@ async def main():
         chars.append(c)
         await print_character(ui, c)
     gcs = [game_char_gen(x) for x in chars]
-    game = Gaming(gcs[:4], [boss], CLI(0))
+    game = Gaming(gcs[:4], [boss_gen(boss, 1)], CLI(0))
     print(await game.start())
 
 
 async def main2():
-    tot = [0 for _ in range(41)]
-    tmo = 0
-    a_win = 0
+    time_limit = 30
+    test_amount = 1600
+    lvl_list = [1, 10, 20, 30]
+    turn_count = {i:[0 for _ in range(time_limit + 1)] for i in lvl_list}
+    time_out = {i: 0 for i in lvl_list}
+    a_win = {i: 0 for i in lvl_list}
+    for lvl in lvl_list:
+        for ix in range(test_amount):
+            if ix % 50 == 0:
+                print(lvl, ix)
+            chars = []
+            for i in range(4):
+                ui = CLI(i, debug_mode=True)
+                c = await create_character(ui)
+                chars.append(c)
+                await print_character(ui, c)
+            gcs = [game_char_gen(x) for x in chars]
+            game = Gaming(gcs[:4], [boss_gen(boss, 1)], CLI(0,debug_mode=True))
+            result, turn = await game.start()
+            turn_count[lvl][turn] += 1
+            if result == 'timeout':
+                time_out[lvl] += 1
+            if result == 'a_win':
+                a_win[lvl] += 1
+        turn_count[lvl][29] = time_out[lvl]
 
-    for ix in range(500):
-        print(ix)
-        chars = []
-        for i in range(8):
-            ui = CLI(i, debug_mode=True)
-            c = await create_character(ui)
-            chars.append(c)
-            await print_character(ui, c)
-        gcs = [game_char_gen(x) for x in chars]
-        game = Gaming(gcs[:4], [boss], CLI(0,debug_mode=True))
-        result, turn = await game.start()
-        tot[turn] += 1
-        if result == 'timeout':
-            tmo += 1
-        if result == 'a':
-            a_win += 1
-    print('--------')
-    print(a_win)
-    print(tmo)
-    plt.plot(list(range(41)), tot)
+    for lvl in lvl_list:
+        print('--------')
+        print(lvl, (a_win[lvl] / test_amount) * 100, '%')
+        plt.plot(list(range(time_limit + 1)), turn_count[lvl],label=str(lvl) + ('[%.0f%%]' % (a_win[lvl] / test_amount * 100)))
+    plt.legend()
     plt.show()
 
 
