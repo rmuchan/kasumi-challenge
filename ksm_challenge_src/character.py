@@ -2,7 +2,6 @@ import random
 from typing import Dict, Any
 
 from . import rand
-from .attr_calc import hp_calc
 from .data import data
 from .interact import UI
 from .skill import get_skill_desc, create_skill
@@ -160,6 +159,7 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
                    calc_passive(data.numerical[f'{k}_base'] * char[f'{k}_build'][0], char, f'{k}_base'),
                    calc_passive(data.numerical[f'{k}_grow'] * char[f'{k}_build'][0], char, f'{k}_grow'),
                    char[f'{k}_build'][1]))
+    from .attr_calc import hp_calc
     ui.append('生命: %.0f + %.1f (%s)' % (
         hp_calc(calc_passive(data.numerical['str_base'] * char['str_build'][0], char, 'str_base'),
                 calc_passive((char['life_build'][0] * data.numerical['life_base']), char, 'hp_base'),
