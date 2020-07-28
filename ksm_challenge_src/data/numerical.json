@@ -106,5 +106,8 @@
   "exp_base": 1000,
   "exp_earn_base": 450,
   "exp_earn_add": 30,
-  "exp_earn_rate": 1.067
+  "exp_earn_rate": 1.067,
+  "talent_coin_earn_index": 0.55,
+  "talent_coin_earn_rate": 0.2
+
 }
