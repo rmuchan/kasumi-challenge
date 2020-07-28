@@ -149,20 +149,24 @@ async def _(session: CommandSession):
         
         game = Gaming(bat['team_a'].values(), bat['team_b'].values(), ui_)
         result = await game.start()
-        if result == 'timeout':
-            await ui_.send('战斗超时！挑战失败了……遗憾')
-        elif result == 'b_win':
-            await ui_.send('挑战者的队伍全灭，挑战失败……遗憾')
-        elif result == 'a_win':
-            exp_earn = 0
-            for i in bat['team_b'].values():
-                exp_earn += i['exp_earn']
-
-            # TODO 为每个参与战斗的玩家添加经验
-            await ui_.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
-
-
         del _battles[group_id]
+
+        if bat['is_pvp']:
+            # TODO pvp结果反馈
+            pass
+        else:
+            if result == 'timeout':
+                await ui_.send('战斗超时！挑战失败了……遗憾')
+            elif result == 'b_win':
+                await ui_.send('挑战者的队伍全灭，挑战失败……遗憾')
+            elif result == 'a_win':
+                exp_earn = 0
+                for i in bat['team_b'].values():
+                    exp_earn += i['exp_earn']
+
+                await ui_.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
+                for uid in bat['team_a']:
+                    _give_exp(uid, exp_earn)
 
     try:
         ui.run(play, mutex_mode='group')
@@ -213,3 +217,9 @@ async def _remove_battle(session: BaseSession):
     if group_id in _battles and _battles[group_id]['can_join']:
         del _battles[group_id]
         await session.send('凑不齐人，摸了（')
+
+
+def _give_exp(uid: int, amount: int):
+    save = data.saves[str(uid)] or {}
+    save['character']['exp'] += amount
+    data.saves[str(uid)] = save
