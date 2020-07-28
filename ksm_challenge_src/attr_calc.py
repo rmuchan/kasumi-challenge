@@ -37,16 +37,20 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
                       numerical['per_grow'] * chara['per_build'][0],
                       lv)
 
+    game_char['str'] = str_
+    game_char['int'] = int_
+    game_char['per'] = per_
+
     game_char['name'] = chara['name']
     game_char['is_player'] = True
     game_char['attack'] = _atk_calc(int_)
     game_char['defence'] = _def_calc(str_, int_, chara['defense_str_rate'],
                                      calc_passive(chara['def_base'][0], chara, 'def_base'))
-    game_char['HP'] = _hp_calc(str_,
-                               numerical['life_base'] * chara['life_build'][0],
-                               numerical['life_grow'] * chara['life_build'][0],
-                               lv,
-                               calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
+    game_char['HP'] = hp_calc(str_,
+                              numerical['life_base'] * chara['life_build'][0],
+                              numerical['life_grow'] * chara['life_build'][0],
+                              lv,
+                              calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
     game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate'])
     game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate'],
                                                calc_passive(1.0, chara, 'spell_rate'))
@@ -89,7 +93,7 @@ def _atk_calc(int_cur):
 
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(
-def _hp_calc(str_cur, life_base, life_grow, lv, modify):
+def hp_calc(str_cur, life_base, life_grow, lv, modify):
     return (util.recurrence(str_cur, numerical['hp_lv_rate'], life_grow, lv) + life_base) * modify
 
 

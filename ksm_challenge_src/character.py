@@ -152,7 +152,6 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
         'str': '力量',
         'int': '敏捷',
         'per': '感知',
-        'life': '生命'
     }
     for k, v in translate.items():
         ui.append('%s: %.0f + %.2f (%s)' %
@@ -160,6 +159,16 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
                    calc_passive(data.numerical[f'{k}_base'] * char[f'{k}_build'][0], char, f'{k}_base'),
                    calc_passive(data.numerical[f'{k}_grow'] * char[f'{k}_build'][0], char, f'{k}_grow'),
                    char[f'{k}_build'][1]))
+    from ksm_challenge_src.attr_calc import hp_calc
+    ui.append('生命: %.0f + %.1f (%s)' % (
+        hp_calc(calc_passive(data.numerical['str_base'] * char['str_build'][0], char, 'str_base'),
+                calc_passive((char['life_build'][0] * data.numerical['life_base']), char, 'hp_base'),
+                data.numerical['life_grow'] * char['life_build'][0], 1,
+                calc_passive(data.numerical['hp_rate'], char, 'hp_rate')),
+        calc_passive(data.numerical['life_grow'] * char['life_build'][0], char, 'life_grow') * data.numerical['hp_rate'],
+        char['def_base'][1]
+    )
+              )
     ui.append('基础物防: %.2f (%s)' % (calc_passive(char['def_base'][0], char, 'def_base'), char['def_base'][1]))
     ui.append('攻击倍率: %.2f (%s)' % (char['attack_rate'][0], char['attack_rate'][1]))
 
