@@ -13,7 +13,7 @@ async def show_chara_info(ui: UI):
     ui.append('------玩家信息------')
     ui.append('名字：%s | 种族：%s' % (game_char['name'], char['race']))
     lv = lv_calc(char['exp'])
-    ui.append('等级：%d (%d/%d)\n' % (lv, char['exp'] - exp_overlay_list[lv-1], exp_overlay_list[lv]))
+    ui.append('等级：%d (%d/%d)' % (lv, char['exp'] - exp_overlay_list[lv-1], exp_overlay_list[lv]))
     ui.append('力量：%.0f | 敏捷：%.0f' % (game_char['str'], game_char['int']))
     ui.append('感知：%.0f | 生命：%.0f' % (game_char['per'], game_char['HP']))
     ui.append('攻击：%.0f | 防御：%.1f' % (game_char['attack'], game_char['defence']))

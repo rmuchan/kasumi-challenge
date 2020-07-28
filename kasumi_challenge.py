@@ -23,8 +23,7 @@ _cmd_group = CommandGroup('ksmgame', only_to_me=False)
 async def _(session: CommandSession):
     async def create(ui: UI):
         if ui.retrieve('character') is not None:
-            await ui.send('你已经有角色了（')
-            await print_character(ui, ui.retrieve('character'))
+            await ui.send('你已经拥有了一个角色！你可以使用ksmgame/query来查看属性')
             return
         char = await create_character(ui)
         ui.store('character', char)
@@ -39,7 +38,7 @@ async def _(session: CommandSession):
 
 # 查询角色信息
 @_cmd_group.command('query')
-async def _(session: CommandSession):
+async def _query(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     await show_chara_info(ui)
 
@@ -49,17 +48,20 @@ async def _(session: CommandSession):
 async def _(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     if session.ctx['message_type'] != 'group':
-        return await ui.send('只能在群里用（')
+        return await ui.send('请不要孤身冒险！前往QQ群中，募集队友，和其他冒险者们一起战斗吧！')
     group_id = session.ctx['group_id']
     if group_id in _battles:
-        return await ui.send('正打着呢（')
+        return await ui.send('战斗还在进行中！')
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('建角色，请（')
+        return await ui.send('先创建一个角色，然后再来挑战吧！')
 
     boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
     if is_saved:
-        ui.append('上次没人打的boss又回来辣（')
+        ui.append('上次没人打的boss又回来啦！')
+    else:
+        ui.append('本次的boss是：')
+    ui.append('强度参考值：%.0f' % (boss['power_rating'] * 1000))
     await ui.send(boss['desc'])
 
     _battles[group_id] = {
@@ -71,36 +73,36 @@ async def _(session: CommandSession):
         'capacity_b': 1
     }
     _battles[group_id]['team_a'][ui.uid()] = game_char_gen(char)
-    await ui.send('你发起并加入了一场boss战（')
+    await ui.send('你提议开启一场boss战！其他人可以使用ksmgame/join来加入小队')
 
     asyncio.ensure_future(_remove_battle(session))
 
 
 # 发起pvp
-@_cmd_group.command('pvp')
-async def _(session: CommandSession):
-    ui = BotContextUI(session.bot, session.ctx)
-    if session.ctx['message_type'] != 'group':
-        return await ui.send('只能在群里用（')
-    group_id = session.ctx['group_id']
-    if group_id in _battles:
-        return await ui.send('正打着呢（')
-    char = ui.retrieve('character')
-    if char is None:
-        return await ui.send('建角色，请（')
+# @_cmd_group.command('pvp')
+# async def _(session: CommandSession):
+#     ui = BotContextUI(session.bot, session.ctx)
+#     if session.ctx['message_type'] != 'group':
+#         return await ui.send('只能在群里用（')
+#     group_id = session.ctx['group_id']
+#     if group_id in _battles:
+#         return await ui.send('正打着呢（')
+#     char = ui.retrieve('character')
+#     if char is None:
+#         return await ui.send('建角色，请（')
 
-    _battles[group_id] = {
-        'can_join': True,
-        'is_pvp': True,
-        'team_a': {},
-        'team_b': {},
-        'capacity_a': 4,
-        'capacity_b': 4
-    }
-    _battles[group_id]['team_a'][ui.uid()] = game_char_gen(char)
-    await ui.send('你发起了一场决斗，并加入了a队（')
+#     _battles[group_id] = {
+#         'can_join': True,
+#         'is_pvp': True,
+#         'team_a': {},
+#         'team_b': {},
+#         'capacity_a': 4,
+#         'capacity_b': 4
+#     }
+#     _battles[group_id]['team_a'][ui.uid()] = game_char_gen(char)
+#     await ui.send('你发起了一场决斗，并加入了a队（')
 
-    asyncio.ensure_future(_remove_battle(session))
+#     asyncio.ensure_future(_remove_battle(session))
 
 
 # 加入战斗
@@ -108,16 +110,16 @@ async def _(session: CommandSession):
 async def _(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     if session.ctx['message_type'] != 'group':
-        return await ui.send('只能在群里用（')
+        return
     group_id = session.ctx['group_id']
     if group_id not in _battles:
-        return await ui.send('现在没有战斗（')
+        return await ui.send('现在还没有人募集队友')
     bat = _battles[group_id]
     if not bat['can_join']:
-        return await ui.send('已经开打了（')
+        return await ui.send('战斗已经开始，让我们期待他们的胜利归来！')
 
     if ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
-        return await ui.send('你已经加入当前战斗了（')
+        return await ui.send('你已经在小队中了！')
 
     team = session.current_arg.lower()
     if bat['is_pvp']:
@@ -129,24 +131,26 @@ async def _(session: CommandSession):
         team = 'a'
 
     if len(bat[f'team_{team}']) >= bat[f'capacity_{team}']:
-        return await ui.send('队伍满了（')
+        return await ui.send('队伍满员')
 
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('建角色，请（')
+        return await ui.send('先创建一个角色，然后再来加入队伍吧！')
     bat[f'team_{team}'][ui.uid()] = game_char_gen(char)
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
-        return await ui.send(f'你加入了{team}队')
+        return await ui.send(f'你加入了小队')
 
     bat['can_join'] = False
-    await ui.send('人齐了，开打！')
+    await ui.send('小队成员已经募集完毕，战斗即将开始！')
+    
+    await asyncio.sleep(10)
 
     async def play(ui_: UI):
         if not bat['is_pvp']:
             save = data.saves.group[str(group_id)] or {}
             if save.pop('boss', None) is not None:
                 data.saves.group[str(group_id)] = save
-        
+
         game = Gaming(bat['team_a'].values(), bat['team_b'].values(), ui_)
         result, _ = await game.start()
         del _battles[group_id]
@@ -180,7 +184,7 @@ async def _(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('您转生啥着呢（')
+        return await ui.send('你现在还没有角色，你可以直接新建一个角色！')
     coin = ui.retrieve('talent_coin') or 0
     acquire_coin = exp_to_talent_coin(char['exp'])
     ui.store('talent_coin', coin + acquire_coin)
@@ -216,7 +220,7 @@ async def _remove_battle(session: BaseSession):
     await asyncio.sleep(60)
     if group_id in _battles and _battles[group_id]['can_join']:
         del _battles[group_id]
-        await session.send('凑不齐人，摸了（')
+        await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')
 
 
 def _give_exp(uid: int, amount: int):
