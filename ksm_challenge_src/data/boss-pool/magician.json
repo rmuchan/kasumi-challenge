@@ -1,41 +1,35 @@
 {
-  "name": "魔术师",
+  "name": "邪魔术士",
   "is_player": false,
   "attack": {
     "random": "triangular",
     "rating_weight": 1,
-    "min": 180,
-    "max": 200
+    "min": 160,
+    "max": 140
   },
   "defence_base": {
     "random": "triangular",
     "rating_weight": 1,
     "min": 2.5,
-    "max": 3.7
+    "max": 3.2
   },
   "defence_grow": {
     "random": "triangular",
     "rating_weight": 1,
-    "min": 0.1,
-    "max": 0.2
+    "min": 0.18,
+    "max": 0.24
   },
   "hp_base": {
     "random": "triangular",
     "rating_weight": 1,
-    "min": 560,
-    "max": 640
+    "min": 420,
+    "max": 460
   },
   "life_base": {
     "random": "triangular",
     "rating_weight": 1,
-    "min": 190,
-    "max": 210
-  },
-  "life_grow": {
-    "random": "triangular",
-    "rating_weight": 1,
-    "min": 20,
-    "max": 20
+    "min": 210,
+    "max": 230
   },
   "recover_rate": {
     "random": "triangular",
@@ -46,8 +40,8 @@
   "spell_rate": {
     "random": "triangular",
     "rating_weight": 1,
-    "min": 0.9,
-    "max": 1.1
+    "min": 1,
+    "max": 1.2
   },
   "buff_rate": {
     "random": "triangular",
@@ -59,10 +53,10 @@
   "life_steal_rate": 0,
   "dodge": 0.06,
   "skill_1": {
-    "chance": 0.12121533425658145,
-    "cooldown": 2,
-    "mp_cost": 61,
-    "name": "护盾",
+    "chance": 0.13,
+    "cooldown": 3,
+    "mp_cost": 50,
+    "name": "邪能屏障",
     "effect": [
       {
         "type": "SHIELD",
@@ -72,21 +66,23 @@
           "limit": 1
         },
         "param": [
-          {
-            "random": "triangular",
-            "rating_weight": 1,
-            "min": 250,
-            "max": 350
-          }
+          [
+            {
+              "random": "triangular",
+              "rating_weight": 1,
+              "min": 260,
+              "max": 320
+            }
+          ]
         ]
       }
     ]
   },
   "skill_2": {
-    "chance": 0.1347145890263009,
+    "chance": 0.125,
     "cooldown": 3,
     "mp_cost": 85,
-    "name": "爆炸",
+    "name": "邪焰双珠",
     "effect": [
       {
         "type": "MGC_DMG",
@@ -100,8 +96,8 @@
             {
               "random": "triangular",
               "rating_weight": 1,
-              "min": 100,
-              "max": 140
+              "min": 90,
+              "max": 110
             }
           ]
         ]
@@ -126,8 +122,8 @@
             {
               "random": "triangular",
               "rating_weight": 1,
-              "min": 270,
-              "max": 330
+              "min": 230,
+              "max": 270
             }
           ]
         ]

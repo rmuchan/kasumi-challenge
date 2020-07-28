@@ -13,9 +13,9 @@ attr_rate = 1.012
 attr_add = 1.00
 attr_base = 50
 
-hp_base = 200
-hp_add = 5
-hp_lv_rate = 1.004
+hp_base = 160
+hp_add = 3.6
+hp_lv_rate = 1.003
 hp_rate = 2.4
 """
 伤害公式
@@ -97,7 +97,7 @@ def atkToDeathTime(lv):
     return hpCalc(lv) / damageCalc(lv)
 
 
-# 暴击率增益计算
+# 暴击倍率增益计算
 def crit_rate_calc(str_cur, int_cur, defense_str_rate, extra):
     adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
     return adj / 150 + 1.40 + extra
@@ -115,7 +115,8 @@ if __name__ == '__main__':
     # dm = 100
     # crit_chance = 0.16
     for i in [1, 10, 20, 30]:
-        print(recurrence(attrCalc(i), 1.004, 10, i) + 200 * numerical['hp_rate'])
+        print(hpCalc(i))
+        #print(recurrence(attrCalc(i), 1.004, 10, i) + 200 * numerical['hp_rate'])
 
         # print(crit_rate_calc(attrCalc(i), attrCalc(i), 0.5, 0))
         # a = crit_rate_calc(attrCalc(i), attrCalc(i), 0.5, 0) * crit_chance + \
