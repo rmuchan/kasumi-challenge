@@ -149,7 +149,19 @@ async def _(session: CommandSession):
         
         game = Gaming(bat['team_a'].values(), bat['team_b'].values(), ui_)
         result = await game.start()
-        await ui_.send(result)
+        if result == 'timeout':
+            await ui_.send('战斗超时！挑战失败了……遗憾')
+        elif result == 'b_win':
+            await ui_.send('挑战者的队伍全灭，挑战失败……遗憾')
+        elif result == 'a_win':
+            exp_earn = 0
+            for i in bat['team_b'].values():
+                exp_earn += i['exp_earn']
+
+            # TODO 为每个参与战斗的玩家添加经验
+            await ui_.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
+
+
         del _battles[group_id]
 
     try:

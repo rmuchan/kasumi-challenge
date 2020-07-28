@@ -17,7 +17,7 @@ def boss_gen(template: dict, lv):
     boss['spell_rate'] = boss['spell_rate'] * rates_3_calc(lv)
     boss['buff_rate'] = boss['buff_rate'] * rates_3_calc(lv)
     boss['power_rating'] = rating[0] * 2 / rating[1]
-    boss['exp_earn'] = boss['power_rating'] * exp_earn_calc(lv)
+    boss['exp_earn'] = int(boss['power_rating'] * exp_earn_calc(lv))
     return boss
 
 
