@@ -4,7 +4,7 @@ import random
 from nonebot import CommandSession, CommandGroup
 from nonebot.session import BaseSession
 
-from ksm_challenge_src.character_show import show_chara_info
+from .ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
