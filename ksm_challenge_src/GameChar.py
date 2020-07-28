@@ -25,7 +25,11 @@ class GameChar:
 
     @property
     def defence(self):
-        return self.attributes['defence']
+        add = 0
+        if 'defence' in self.buff.keys():
+            for item in self.buff['defence']:
+                add += item[0]
+        return self.attributes['defence'] + add
 
     @property
     def name(self):
@@ -354,6 +358,18 @@ class GameChar:
                     'param': {'amount': real_added}
                 })
 
+        # 护甲衰减
+        elif effect['type'] == 'DEF_DEC':
+            for obj in selector:
+                oppo_to_decrease_def_point = param[0][0] * self.buff_rate
+                real_added = obj._add_defence_buff(oppo_to_decrease_def_point, param[1], is_debuff=True)
+                ret.append({
+                    'feedback': '削弱了{target}{amount:.1f}点防御，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+        else:
+            raise ValueError('出现了未知的效果类型')
         return ret
 
 # ————————————————————————————
@@ -425,6 +441,21 @@ class GameChar:
 
     def _add_silence_buff(self, time):
         self._add_buff('silence', True, time)
+
+    def _add_defence_buff(self, value, time, is_debuff=False):
+        """
+        为角色添加防御相关的buff
+        :param value: buff的效果量
+        :param time: 持续回合数
+        :param is_debuff: 是否为Debuff，如果是debuff，数值将会自动反过来，并且不会被自身的buff_rate强化
+        :return: 实际衰减量
+        """
+        if is_debuff:
+            real_point = -value
+        else:
+            real_point = value * self.buff_rate
+        self._add_buff('defence', real_point, time)
+        return abs(real_point)
 
     def _add_spell_buff(self, value, time, is_debuff=False):
         """
