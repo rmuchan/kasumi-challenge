@@ -99,7 +99,7 @@
     0.28,
     0.22
   ],
-  "hp_display_unit": 120,
+  "hp_display_unit": 100,
   "boss_display_shorten": 2,
   "exp_add_rate": 1.2,
   "exp_add_point": 100,
