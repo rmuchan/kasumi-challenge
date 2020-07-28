@@ -1,6 +1,7 @@
 {
     "name": "邪魔术士",
     "is_player": false,
+    "desc": "这是一个暂时的描述",
     "weight_water_injection": {
         "random": "triangular",
         "rating_weight": 6,

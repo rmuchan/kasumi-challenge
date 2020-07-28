@@ -148,7 +148,7 @@ async def _(session: CommandSession):
                 data.saves.group[str(group_id)] = save
         
         game = Gaming(bat['team_a'].values(), bat['team_b'].values(), ui_)
-        result = await game.start()
+        result, _ = await game.start()
         del _battles[group_id]
 
         if bat['is_pvp']:

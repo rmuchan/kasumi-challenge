@@ -1,4 +1,5 @@
-from . import data, util
+from . import util
+from .data import data
 from .interact import UI
 
 
