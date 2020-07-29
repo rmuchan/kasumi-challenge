@@ -10,7 +10,7 @@ from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
 from .ksm_challenge_src.bot_ui import BotContextUI
-from .ksm_challenge_src.character import create_character, print_character, exp_to_talent_coin
+from .ksm_challenge_src.character import create_character, print_character, exp_to_talent_coin, calc_passive
 from .ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.data import data
 from .ksm_challenge_src.interact import UI
@@ -186,7 +186,7 @@ async def _(session: CommandSession):
         return await ui.send('每三天只能进行一次转生！')
 
     coin = int(ui.retrieve('talent_coin') or 0)
-    acquire_coin = exp_to_talent_coin(char['exp'])
+    acquire_coin = int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate'))
     ui.store('talent_coin', coin + acquire_coin)
     ui.store('character', None)
     ui.store('last_rebirth', current_time)
@@ -246,16 +246,20 @@ async def _play(ui: UI, gid: int):
         elif result == 'b_win':
             await ui.send('挑战者的队伍全灭，挑战失败……遗憾')
         elif result == 'a_win':
-            exp_earn = 0
-            for i in bat['team_b'].values():
-                exp_earn += i['exp_earn']
-
+            exp_earn = sum(x['exp_earn'] for x in bat['team_b'].values())
             await ui.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
+            for uid in bat['team_a']:
+                _give_exp(uid, exp_earn)
+        elif result == 'all_dead':
+            exp_earn = int(sum(x['exp_earn'] for x in bat['team_b'].values()) * 1.5)
+            await ui.send('挑战者与Boss无一生还，这份舍己为人的精神被人们所歌颂，获得的经验值额外增加50%%！\n'
+                          '每个人获得了%d点经验！' % exp_earn)
             for uid in bat['team_a']:
                 _give_exp(uid, exp_earn)
 
 
 def _give_exp(uid: int, amount: int):
     save = data.saves[str(uid)] or {}
-    save['character']['exp'] += amount
+    char = save['character']
+    char['exp'] += int(amount * calc_passive(1, char, 'exp_earn_rate'))
     data.saves[str(uid)] = save
