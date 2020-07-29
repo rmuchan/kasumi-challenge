@@ -33,9 +33,9 @@
     }
   },
   {
-    "desc": "吸血+10%",
+    "desc": "吸血+20%",
     "buff": {
-      "life_steal_rate": 0.1
+      "life_steal_rate": 0.2
     }
   },
   {

@@ -33,10 +33,6 @@ class GameChar:
         return self.attributes['defence'] + add
 
     @property
-    def name(self):
-        return self.attributes['name']
-
-    @property
     def not_short_hp(self):
         return self.attributes['not_short_hp']
 
@@ -72,6 +68,10 @@ class GameChar:
             for item in self.buff['dodge']:
                 add += item[0]
         return self.attributes['dodge'] + add
+
+    @property
+    def life_steal_rate(self):
+        return self.attributes['life_steal_rate']
 
     @property
     def recover_rate(self):
@@ -142,8 +142,13 @@ class GameChar:
 
         # 护盾将会被优先攻击
         if self.shield > 0:
+            # 预定护盾状态
             shield_break = 1
+            # 即将造成这么多的伤害
             total_damage = damage
+            # 暂存护盾值
+            shield_damage = self.shield
+            # 计算攻击护盾之后剩余的伤害
             damage = self._shield_hurt(damage)
             # 伤害全部被护盾挡下
             if damage == 0:
@@ -241,8 +246,9 @@ class GameChar:
             for obj in selector:
                 atk_damage, is_crit = self.do_attack()
                 real_damage, atk_status = obj.take_damage(atk_damage)
+
                 # 吸血
-                self.recover(real_damage)
+                self.recover(real_damage * self.life_steal_rate)
 
                 # miss
                 if atk_status == -1:
@@ -439,11 +445,13 @@ class GameChar:
         超过最大值的将会被舍弃
         返回实际恢复量
         """
-        self.HP += recovery * self.recover_rate
+        to_recover = recovery * self.recover_rate
+        pre_hp = self.HP
+        self.HP += to_recover
         if self.HP <= self.attributes['HP']:
             return recovery
         else:
-            diff = self.HP - self.attributes['HP']
+            diff = self.attributes['HP'] - pre_hp
             self.HP = self.attributes['HP']
             return diff
 

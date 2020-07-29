@@ -1,7 +1,7 @@
 {
     "name": "邪魔术士",
     "not_short_hp": false,
-    "desc": "【邪魔术士】操纵着未知且致命的邪能魔法，尽管它的利刃锋利无比，它还是更擅长用邪能构筑坚固的[邪能屏障]，用占满着毒液的[腐化双珠]攻击冒险者并腐蚀他们的盔甲。与[灭亡之触]会让你痛苦万分，但最可怕的，恐怕是被它的[狂乱邪焰]所吞噬。",
+    "desc": "【邪魔术士】操纵着未知且致命的邪能魔法，尽管它的利刃锋利无比，它还是更擅长用邪能构筑坚固的[邪能屏障]，用沾满着毒液的[腐化双珠]攻击冒险者并腐蚀他们的盔甲。与[灭亡之触]会让你痛苦万分，但最可怕的，恐怕是被它的[狂乱邪焰]所吞噬。",
     "weight_water_injection": {
         "random": "triangular",
         "rating_weight": 6,
@@ -29,14 +29,14 @@
     "hp_base": {
         "random": "triangular",
         "rating_weight": 7,
-        "min": 530,
-        "max": 570
+        "min": 590,
+        "max": 610
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 110,
-        "max": 130
+        "min": 90,
+        "max": 110
     },
     "recover_rate": {
         "random": "triangular",
@@ -58,7 +58,7 @@
     },
     "crit_rate": 1.60,
     "crit_chance": 0.15,
-    "life_steal_rate": 0,
+    "life_steal_rate": 0.6,
     "dodge": 0.06,
     "skill_1": {
         "chance": 0.13,

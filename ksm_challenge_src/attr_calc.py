@@ -58,7 +58,7 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
     game_char['buff_rate'] = _buff_rate_calc(per_)
     game_char['crit_rate'] = crit_rate_calc(str_, int_, chara['defense_str_rate'], calc_passive(0, chara, 'crit_rate'))
     game_char['crit_chance'] = numerical['crit_chance']
-    game_char['life_steal_rate'] = calc_passive(0, chara, 'life_steal_rate')
+    game_char['life_steal_rate'] = calc_passive(numerical['life_steal_rate_base'], chara, 'life_steal_rate')
     game_char['dodge'] = _dodge_calc(per_, calc_passive(0, chara, 'dodge'))
 
     for i in range(1, 4):

@@ -76,6 +76,7 @@
   "atk_rate": 3.2,
   "crit_base": 1.75,
   "crit_chance": 0.16,
+  "life_steal_rate_base":0.6,
   "def_adj_rate": 0.05,
   "def_rate": 0.26,
   "dodge_base": 0.05,
