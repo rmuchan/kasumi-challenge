@@ -162,8 +162,9 @@ async def _(session: CommandSession):
 
     last_rebirth = ui.retrieve('last_rebirth') or 0
     current_time = time.time()
-    if time.localtime(last_rebirth)[:3] == time.localtime(current_time)[:3]:
-        return await ui.send('每天只能进行一次转生！')
+    seconds_per_day = 24 * 60 * 60
+    if int(current_time / seconds_per_day) - int(last_rebirth / seconds_per_day) < 3:
+        return await ui.send('每三天只能进行一次转生！')
 
     coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = exp_to_talent_coin(char['exp'])
