@@ -131,14 +131,14 @@ class GameChar:
         """
         角色受到伤害，需要传入伤害量，可选是否为法术伤害。
         伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
-        返回一个tuple，[0]为实际伤害量，[1]为攻击状态(-1: 闪避了, 0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破)
+        返回一个tuple，[0]为实际伤害量，[1]为攻击状态(-1: 闪避了, 0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破), [2]为对生命本身而非护盾造成的伤害
         """
         shield_break = 0
         shield_damage = 0
 
         # 考虑闪避
         if random.random() < self.dodge and not magic:
-            return 0, -1
+            return 0, -1, 0
 
         # 护盾将会被优先攻击
         if self.shield > 0:
@@ -152,14 +152,14 @@ class GameChar:
             damage = self._shield_hurt(damage)
             # 伤害全部被护盾挡下
             if damage == 0:
-                return total_damage - damage, 2
+                return total_damage - damage, 2, 0
 
         if magic:
             real_damage = self._life_hurt(damage)
         else:
             real_damage = self._life_hurt(self._damage_reduce(damage))
 
-        return real_damage + shield_damage, shield_break
+        return real_damage + shield_damage, shield_break, real_damage
 
     def buff_fade(self):
         """
@@ -245,10 +245,10 @@ class GameChar:
         if effect['type'] == 'NORMAL_ATK':
             for obj in selector:
                 atk_damage, is_crit = self.do_attack()
-                real_damage, atk_status = obj.take_damage(atk_damage)
+                real_damage, atk_status, hp_damage = obj.take_damage(atk_damage)
 
                 # 吸血
-                self.recover(real_damage * self.life_steal_rate)
+                self.recover(hp_damage * self.life_steal_rate)
 
                 # miss
                 if atk_status == -1:
@@ -280,7 +280,7 @@ class GameChar:
         elif effect['type'] == 'MGC_DMG':
             for obj in selector:
                 magic_damage = param[0][0] * self.spell_rate
-                real_damage, atk_status = obj.take_damage(magic_damage, magic=True)
+                real_damage, atk_status, _ = obj.take_damage(magic_damage, magic=True)
                 feedback = '对{target}'
                 if atk_status == 2:
                     feedback += '的护盾'
