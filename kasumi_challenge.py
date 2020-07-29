@@ -5,6 +5,7 @@ import time
 from nonebot import CommandSession, CommandGroup
 from nonebot.session import BaseSession
 
+from .ksm_challenge_src.user_guide import show_help, show_guide
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
@@ -39,14 +40,32 @@ async def _(session: CommandSession):
 
 
 # 查询角色信息
-@_cmd_group.command('query')
+@_cmd_group.command('status')
 async def _query(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     await show_chara_info(ui)
 
 
+@_cmd_group.command('help')
+async def _(session: CommandSession):
+    param = session.current_arg_text.split()
+
+    # help
+    if len(param) == 0:
+        await session.send(show_help())
+        return
+
+    # guide
+    if len(param) == 1:
+        await session.send(show_guide(param[0]))
+        return
+
+
+
+
+
 # 发起pve
-@_cmd_group.command('pve')
+@_cmd_group.command('boss')
 async def _(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     if session.ctx['message_type'] != 'group':
