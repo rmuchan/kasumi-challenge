@@ -1,15 +1,16 @@
 import asyncio
 import random
+import time
 
 from nonebot import CommandSession, CommandGroup
 from nonebot.session import BaseSession
 
-from .ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
 from .ksm_challenge_src.bot_ui import BotContextUI
 from .ksm_challenge_src.character import create_character, print_character, exp_to_talent_coin
+from .ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.data import data
 from .ksm_challenge_src.interact import UI
 from .ksm_challenge_src.talent_calc import upgrade_talent
@@ -143,38 +144,10 @@ async def _(session: CommandSession):
 
     bat['can_join'] = False
     await ui.send('小队成员已经募集完毕，战斗即将开始！')
-    
-    await asyncio.sleep(10)
-
-    async def play(ui_: UI):
-        if not bat['is_pvp']:
-            save = data.saves.group[str(group_id)] or {}
-            if save.pop('boss', None) is not None:
-                data.saves.group[str(group_id)] = save
-
-        game = Gaming(bat['team_a'].values(), bat['team_b'].values(), ui_)
-        result, _ = await game.start()
-        del _battles[group_id]
-
-        if bat['is_pvp']:
-            # TODO pvp结果反馈
-            pass
-        else:
-            if result == 'timeout':
-                await ui_.send('战斗超时！挑战失败了……遗憾')
-            elif result == 'b_win':
-                await ui_.send('挑战者的队伍全灭，挑战失败……遗憾')
-            elif result == 'a_win':
-                exp_earn = 0
-                for i in bat['team_b'].values():
-                    exp_earn += i['exp_earn']
-
-                await ui_.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
-                for uid in bat['team_a']:
-                    _give_exp(uid, exp_earn)
 
     try:
-        ui.run(play, mutex_mode='group')
+        ui.at_sender = False
+        ui.run(_play, mutex_mode='group', args=(group_id,))
     except BotContextUI.RunningException:
         await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
 
@@ -186,10 +159,17 @@ async def _(session: CommandSession):
     char = ui.retrieve('character')
     if char is None:
         return await ui.send('你现在还没有角色，你可以直接新建一个角色！')
+
+    last_rebirth = ui.retrieve('last_rebirth') or 0
+    current_time = time.time()
+    if time.localtime(last_rebirth)[:3] == time.localtime(current_time)[:3]:
+        return await ui.send('每天只能进行一次转生！')
+
     coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = exp_to_talent_coin(char['exp'])
     ui.store('talent_coin', coin + acquire_coin)
     ui.store('character', None)
+    ui.store('last_rebirth', current_time)
     await ui.send(f'你的角色化为了{acquire_coin}个天赋币')
 
 
@@ -222,6 +202,37 @@ async def _remove_battle(session: BaseSession):
     if group_id in _battles and _battles[group_id]['can_join']:
         del _battles[group_id]
         await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')
+
+
+async def _play(ui: UI, gid: int):
+    await asyncio.sleep(10)
+    bat = _battles[gid]
+
+    if not bat['is_pvp']:
+        save = data.saves.group[str(gid)] or {}
+        if save.pop('boss', None) is not None:
+            data.saves.group[str(gid)] = save
+
+    game = Gaming(bat['team_a'].values(), bat['team_b'].values(), ui)
+    result, _ = await game.start()
+    del _battles[gid]
+
+    if bat['is_pvp']:
+        # TODO pvp结果反馈
+        pass
+    else:
+        if result == 'timeout':
+            await ui.send('战斗超时！挑战失败了……遗憾')
+        elif result == 'b_win':
+            await ui.send('挑战者的队伍全灭，挑战失败……遗憾')
+        elif result == 'a_win':
+            exp_earn = 0
+            for i in bat['team_b'].values():
+                exp_earn += i['exp_earn']
+
+            await ui.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
+            for uid in bat['team_a']:
+                _give_exp(uid, exp_earn)
 
 
 def _give_exp(uid: int, amount: int):

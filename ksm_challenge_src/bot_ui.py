@@ -26,14 +26,15 @@ class BotContextUI(UI):
         self._ctx = ctx
         self._ctx_id = context_id(ctx)
         self._pending_input = None
+        self.at_sender = True
 
     def uid(self) -> int:
         return self._ctx['user_id']
 
     async def do_send(self, msg: str) -> None:
-        if self._ctx['message_type'] != 'private':
+        if self.at_sender and self._ctx['message_type'] != 'private':
             msg = '\n' + msg
-        await self._bot.send(self._ctx, msg, at_sender=True)
+        await self._bot.send(self._ctx, msg, at_sender=self.at_sender)
 
     async def do_input(self) -> str:
         """
@@ -67,7 +68,8 @@ class BotContextUI(UI):
         data.saves[str(self.uid())] = store
 
     def retrieve(self, key: str) -> Optional[Any]:
-        return data.saves[str(self.uid())].get(key)
+        store = data.saves[str(self.uid())] or {}
+        return store.get(key)
 
     def run(self, func, *, mutex_mode='default', args=None, kwargs=None):
         """
