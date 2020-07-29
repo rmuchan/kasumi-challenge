@@ -145,8 +145,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 240,
-                        "min": 200
+                        "expect": 180,
+                        "min": 150
                     }
                 ]
             }
