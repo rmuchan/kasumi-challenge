@@ -9,8 +9,9 @@ numerical = data.numerical
 
 
 class GameChar:
-    def __init__(self, chara: dict):
+    def __init__(self, chara: dict, name: str):
         self.attributes = chara
+        self.name = name
         self.HP = chara['HP']
         self.shield = 0
         self.buff = {}
@@ -30,10 +31,6 @@ class GameChar:
             for item in self.buff['defence']:
                 add += item[0]
         return self.attributes['defence'] + add
-
-    @property
-    def name(self):
-        return self.attributes['name']
 
     @property
     def is_player(self):

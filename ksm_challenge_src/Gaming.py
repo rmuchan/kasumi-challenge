@@ -1,3 +1,4 @@
+import itertools
 import random
 from abc import ABC
 from typing import List
@@ -5,10 +6,20 @@ from .GameChar import GameChar
 from .interact import UI
 import asyncio
 
+
 class Gaming(ABC):
     def __init__(self, team_a: List[dict], team_b: List[dict], ui: UI):
-        self.team_a = [GameChar(x) for x in team_a]
-        self.team_b = [GameChar(x) for x in team_b]
+        used_names = set()
+
+        def get_name(char):
+            name = char['name']
+            if name in used_names:
+                name = next(f'{name}-{i}' for i in itertools.count(2) if f'{name}-{i}' not in used_names)
+            used_names.add(name)
+            return name
+
+        self.team_a = [GameChar(x, get_name(x)) for x in team_a]
+        self.team_b = [GameChar(x, get_name(x)) for x in team_b]
         self.turn = 1
         self.ui = ui
 
