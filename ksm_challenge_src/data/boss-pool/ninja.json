@@ -11,8 +11,8 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 8,
-        "min": 110,
-        "max": 140
+        "min": 120,
+        "max": 150
     },
     "defence_base": {
         "random": "triangular",
@@ -29,8 +29,8 @@
     "hp_base": {
         "random": "triangular",
         "rating_weight": 7,
-        "min": 230,
-        "max": 260
+        "min": 270,
+        "max": 300
     },
     "life_base": {
         "random": "triangular",
@@ -56,7 +56,7 @@
         "min": 1,
         "max": 1.14
     },
-    "crit_rate": 1.6,
+    "crit_rate": 1.75,
     "crit_chance": 0.7,
     "life_steal_rate": 0.8,
     "dodge": 0.6,
@@ -141,8 +141,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 0.5,
-                            "max": 0.60
+                            "min": 0.55,
+                            "max": 0.65
                         }
                     ],
                     30
@@ -240,9 +240,28 @@
                 "target": {
                     "type": "RAND",
                     "team": 0,
-                    "limit": 1
+                    "limit": 2
                 },
                 "param": []
+            },
+            {
+                "type": "CRIT_RATE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        {
+                            "random": "triangular",
+                            "rating_weight": 5,
+                            "min": 0.30,
+                            "max": 0.37
+                        }
+                    ],
+                    30
+                ]
             }
         ]
     }

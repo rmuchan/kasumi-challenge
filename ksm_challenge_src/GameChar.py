@@ -551,7 +551,7 @@ class GameChar:
         if is_debuff:
             real_rate = -value
         else:
-            real_rate = value * self.buff_rate
+            real_rate = value * self.buff_rate * 0.5
         self._add_buff('crit_rate', real_rate, time)
         return abs(real_rate)
 

@@ -11,8 +11,8 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 8,
-        "min": 170,
-        "max": 210
+        "min": 190,
+        "max": 230
     },
     "defence_base": {
         "random": "triangular",
@@ -29,14 +29,14 @@
     "hp_base": {
         "random": "triangular",
         "rating_weight": 7,
-        "min": 590,
-        "max": 610
+        "min": 630,
+        "max": 670
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 90,
-        "max": 110
+        "min": 110,
+        "max": 120
     },
     "recover_rate": {
         "random": "triangular",
@@ -78,8 +78,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 4,
-                            "min": 490,
-                            "max": 530
+                            "min": 530,
+                            "max": 580
                         }
                     ]
                 ]
@@ -104,8 +104,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 90,
-                            "max": 110
+                            "min": 120,
+                            "max": 140
                         }
                     ]
                 ]
@@ -121,9 +121,9 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 2.3,
-                            "max": 3.1
+                            "rating_weight": 4,
+                            "min": 3,
+                            "max": 3.4
                         }
                     ],
                     3
@@ -148,9 +148,9 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 210,
-                            "max": 240
+                            "rating_weight": 3,
+                            "min": 280,
+                            "max": 300
                         }
                     ]
                 ]
@@ -172,8 +172,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 2,
-                            "min": 230,
-                            "max": 240
+                            "min": 250,
+                            "max": 270
                         }
                     ]
                 ]

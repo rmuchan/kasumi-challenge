@@ -213,7 +213,7 @@
                 "防御屏障"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
                 "desc": "为自己附加{param[0]}点护盾",

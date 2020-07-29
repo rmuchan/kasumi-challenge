@@ -51,7 +51,7 @@ class Gaming(ABC):
 
             self.turn += 1
 
-            # await asyncio.sleep(12)
+            await asyncio.sleep(16)
 
         return 'timeout', 30
 

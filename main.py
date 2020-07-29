@@ -54,7 +54,7 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/magician.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/ninja.json') as FILE:
     boss = json.load(FILE)
 
 
@@ -66,14 +66,14 @@ async def main():
         chars.append(c)
         await print_character(ui, c)
     gcs = [game_char_gen(x) for x in chars]
-    game = Gaming(gcs[:4], [boss_gen(boss, 30)], CLI(0))
+    game = Gaming(gcs[:4], [boss_gen(boss, 1)], CLI(0))
     print(await game.start())
 
 
 async def main2():
     time_limit = 30
-    test_amount = 300
-    lvl_list = [1, 10, 20, 30]
+    test_amount = 200
+    lvl_list = [1, 15, 30]
     turn_count = {i:[0 for _ in range(time_limit + 1)] for i in lvl_list}
     time_out = {i: 0 for i in lvl_list}
     a_win = {i: 0 for i in lvl_list}
