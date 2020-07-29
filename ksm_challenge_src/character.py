@@ -99,6 +99,7 @@ async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
     for idx in range(1, 4):
         ui.append('%d. %s' % (idx, get_skill_desc(proto[f'skill_{idx}'], False)))
     ui.append('—' * 12)
+    ui.append('主技能会提升发动概率，减少冷却时间，并降低MP消耗')
     await ui.send('选择主技能')
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(3))
     selection = int(selection)

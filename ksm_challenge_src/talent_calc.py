@@ -24,7 +24,7 @@ async def show_talent(ui: UI):
 
 
 async def upgrade_talent(ui: UI):
-    coin = ui.retrieve('talent_coin') or 0
+    coin = int(ui.retrieve('talent_coin') or 0)
     ui.append('你有{}个天赋币'.format(coin))
     ui.append('你现有的天赋为：')
     await show_talent(ui)

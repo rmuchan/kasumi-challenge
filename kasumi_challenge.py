@@ -28,6 +28,7 @@ async def _(session: CommandSession):
         char = await create_character(ui)
         ui.store('character', char)
         ui.store('proto_character', None)
+        ui.append('角色创建完成！')
         await print_character(ui, char)
 
     try:
@@ -118,6 +119,10 @@ async def _(session: CommandSession):
     if not bat['can_join']:
         return await ui.send('战斗已经开始，让我们期待他们的胜利归来！')
 
+    char = ui.retrieve('character')
+    if char is None:
+        return await ui.send('先创建一个角色，然后再来加入队伍吧！')
+
     if ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
         return await ui.send('你已经在小队中了！')
 
@@ -132,10 +137,6 @@ async def _(session: CommandSession):
 
     if len(bat[f'team_{team}']) >= bat[f'capacity_{team}']:
         return await ui.send('队伍满员')
-
-    char = ui.retrieve('character')
-    if char is None:
-        return await ui.send('先创建一个角色，然后再来加入队伍吧！')
     bat[f'team_{team}'][ui.uid()] = game_char_gen(char)
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
         return await ui.send(f'你加入了小队')
@@ -185,7 +186,7 @@ async def _(session: CommandSession):
     char = ui.retrieve('character')
     if char is None:
         return await ui.send('你现在还没有角色，你可以直接新建一个角色！')
-    coin = ui.retrieve('talent_coin') or 0
+    coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = exp_to_talent_coin(char['exp'])
     ui.store('talent_coin', coin + acquire_coin)
     ui.store('character', None)
