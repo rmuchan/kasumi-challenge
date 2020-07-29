@@ -25,7 +25,7 @@ class UI(ABC):
     async def input(self, prompt: Optional[str] = None, *, is_valid: Callable[[str], bool] = lambda _: True) -> str:
         if prompt:
             await self.do_send(prompt)
-        for _ in range(3):
+        for _ in range(12):
             inp = await self.do_input()
             if is_valid(inp):
                 return inp

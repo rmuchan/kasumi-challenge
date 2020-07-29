@@ -93,7 +93,7 @@
   },
   "recover_rate": {
     "name": "自然祝福",
-    "desc": "护盾、回复技能的倍率",
+    "desc": "恢复强度",
     "format": ".0%",
     "effect": {
       "madd": 0.01
@@ -105,7 +105,7 @@
   },
   "spell_rate": {
     "name": "法术精通",
-    "desc": "魔法伤害倍率",
+    "desc": "法术倍率",
     "format": ".0%",
     "effect": {
       "madd": 0.01
@@ -117,7 +117,7 @@
   },
   "buff_rate": {
     "name": "战斗灵感",
-    "desc": "增益效果倍率",
+    "desc": "增益幅度",
     "format": ".0%",
     "effect": {
       "madd": 0.01
@@ -128,8 +128,8 @@
     "cost_grow": 3
   },
   "crit_base": {
-    "name": "暴击倍率",
-    "desc": "暴击倍率",
+    "name": "暴击伤害倍率",
+    "desc": "暴击伤害倍率",
     "format": ".0%",
     "effect": 0.03,
     "max_level": 8,

@@ -218,7 +218,7 @@ def _get_boss(gid: int, lvl: int):
 
 async def _remove_battle(session: BaseSession):
     group_id = session.ctx['group_id']
-    await asyncio.sleep(60)
+    await asyncio.sleep(120)
     if group_id in _battles and _battles[group_id]['can_join']:
         del _battles[group_id]
         await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')

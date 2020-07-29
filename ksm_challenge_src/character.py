@@ -62,7 +62,9 @@ async def _create_step_passive_select(ui: UI, proto: Dict[str, Any]):
     for idx, val in enumerate(candidate):
         ui.append('%d. %s' % (idx + 1, val['desc']))
     ui.append('—' * 12)
-    await ui.send('选择被动加成')
+    ui.append('(如果您不清楚这些属性的意义，您可以使用像\n"ksmgame-help 力量"\n这样的指令查询每个属性的意义)')
+    await ui.send(' ↓ 选择被动加成：')
+
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
     selection = int(selection) - 1
     proto['passive'] = candidate[selection]
@@ -75,7 +77,7 @@ def _create_step_skill_select(skill_num: int):
         for idx, val in enumerate(candidate):
             ui.append('%d. %s' % (idx + 1, get_skill_desc(val, False)))
         ui.append('—' * 12)
-        await ui.send(f'选择第{skill_num}个技能')
+        await ui.send(f' ↓ 选择第{skill_num}个技能：')
         selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
         selection = int(selection) - 1
         proto[f'skill_{skill_num}'] = candidate[selection]
@@ -89,7 +91,7 @@ async def _create_step_unique_select(ui: UI, proto: Dict[str, Any]):
     for idx, val in enumerate(candidate):
         ui.append('%d. %s' % (idx + 1, get_skill_desc(val, True)))
     ui.append('—' * 12)
-    await ui.send('选择终极技能')
+    await ui.send(' ↓ 选择终极技能：')
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
     selection = int(selection) - 1
     proto['unique'] = candidate[selection]
@@ -101,7 +103,7 @@ async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
         ui.append('%d. %s' % (idx, get_skill_desc(proto[f'skill_{idx}'], False)))
     ui.append('—' * 12)
     ui.append('主技能会提升发动概率，减少冷却时间，并降低MP消耗')
-    await ui.send('选择主技能')
+    await ui.send(' ↓ 选择主技能：')
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(3))
     selection = int(selection)
     primary = proto[f'skill_{selection}']
