@@ -157,16 +157,9 @@ async def _(session: CommandSession):
 
     if len(bat[f'team_{team}']) >= bat[f'capacity_{team}']:
         return await ui.send('队伍满员')
-    bat[f'team_{team}'][ui.uid()] = game_char_gen(char)
-    if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
-        return await ui.send(f'你加入了小队')
-
-    bat['can_join'] = False
-    await ui.send('小队成员已经募集完毕，战斗即将开始！')
 
     try:
-        ui.at_sender = False
-        ui.run(_play, mutex_mode='group', args=(group_id,))
+        ui.run(_join, mutex_mode='group', args=(group_id, team, char))
     except BotContextUI.RunningException:
         await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
 
@@ -227,6 +220,18 @@ async def _remove_battle(session: BaseSession):
     if group_id in _battles and _battles[group_id]['can_join']:
         del _battles[group_id]
         await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')
+
+
+async def _join(ui: BotContextUI, gid: int, team: str, char: dict):
+    bat = _battles[gid]
+    bat[f'team_{team}'][ui.uid()] = game_char_gen(char)
+    if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
+        return await ui.send(f'你加入了小队')
+
+    bat['can_join'] = False
+    ui.at_sender = False
+    await ui.send('小队成员已经募集完毕，战斗即将开始！')
+    await _play(ui, gid)
 
 
 async def _play(ui: UI, gid: int):
