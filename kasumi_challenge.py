@@ -25,7 +25,7 @@ _cmd_group = CommandGroup('ksmgame', only_to_me=False)
 async def _(session: CommandSession):
     async def create(ui: UI):
         if ui.retrieve('character') is not None:
-            await ui.send('你已经拥有了一个角色！你可以使用ksmgame/query来查看属性')
+            await ui.send('你已经拥有了一个角色！你可以使用ksmgame-status来查看属性')
             return
         char = await create_character(ui)
         ui.store('character', char)
@@ -94,7 +94,7 @@ async def _(session: CommandSession):
         'capacity_b': 1
     }
     _battles[group_id]['team_a'][ui.uid()] = game_char_gen(char)
-    await ui.send('你提议开启一场boss战！其他人可以使用ksmgame/join来加入小队')
+    await ui.send('你提议开启一场boss战！其他人可以使用ksmgame-join来加入小队')
 
     asyncio.ensure_future(_remove_battle(session))
 
@@ -182,8 +182,8 @@ async def _(session: CommandSession):
     last_rebirth = ui.retrieve('last_rebirth') or 0
     current_time = time.time()
     seconds_per_day = 24 * 60 * 60
-    if int(current_time / seconds_per_day) - int(last_rebirth / seconds_per_day) < 3:
-        return await ui.send('每三天只能进行一次转生！')
+    if int(current_time / seconds_per_day) - int(last_rebirth / seconds_per_day) < 1:
+        return await ui.send('每天只能进行一次转生！')
 
     coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate'))
@@ -200,6 +200,11 @@ async def _(session: CommandSession):
         BotContextUI(session.bot, session.ctx).run(upgrade_talent, mutex_mode='user')
     except BotContextUI.RunningException:
         await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
+
+
+@_cmd_group.command('reload')
+async def _(_: CommandSession):
+    data.reload()
 
 
 def _get_boss(gid: int, lvl: int):

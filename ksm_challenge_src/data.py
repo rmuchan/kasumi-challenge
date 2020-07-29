@@ -35,10 +35,10 @@ class _Dir:
             json.dump(value, f, ensure_ascii=False, indent=2)
 
     def dir(self):
-        return os.listdir(self._path)
-
-    def dir(self):
         return [x[:-len('.json')] for x in os.listdir(self._path) if x.endswith('.json')]
+
+    def reload(self):
+        self._loaded.clear()
 
 
 data = _Dir(path.join(path.dirname(__file__), 'data'))
