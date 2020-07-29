@@ -134,7 +134,7 @@ async def _(session: CommandSession):
         return
     group_id = session.ctx['group_id']
     if group_id not in _battles:
-        return await ui.send('现在还没有人募集队友')
+        return await ui.send('现在还没有人募集队友，你可以使用"ksmgame-boss"发起一次挑战')
     bat = _battles[group_id]
     if not bat['can_join']:
         return await ui.send('战斗已经开始，让我们期待他们的胜利归来！')
