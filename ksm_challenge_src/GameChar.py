@@ -19,9 +19,9 @@ class GameChar:
         for i in range(3):
             self.skills.append(GameSkill(self.attributes[f'skill_{i + 1}']))
 
-# ————————————————————————————
-#           属性信息
-# ————————————————————————————
+    # ————————————————————————————
+    #           属性信息
+    # ————————————————————————————
 
     @property
     def defence(self):
@@ -36,8 +36,8 @@ class GameChar:
         return self.attributes['name']
 
     @property
-    def is_player(self):
-        return self.attributes['is_player']
+    def not_short_hp(self):
+        return self.attributes['not_short_hp']
 
     @property
     def attack(self):
@@ -47,17 +47,30 @@ class GameChar:
                 add += item[0]
         return self.attributes['attack'] + add
 
+    # 暴击率是非线性叠加
     @property
     def crit_chance(self):
-        return numerical['crit_chance']
+        not_crit_chance = 1
+        if 'crit_chance' in self.buff.keys():
+            for item in self.buff['crit_chance']:
+                not_crit_chance *= (1 - item[0])
+        return 1 - (1 - self.attributes['crit_chance']) * not_crit_chance
 
     @property
     def crit_rate(self):
-        return self.attributes['crit_rate']
+        add = 0
+        if 'crit_rate' in self.buff.keys():
+            for item in self.buff['crit_rate']:
+                add += item[0]
+        return self.attributes['crit_rate'] + add
 
     @property
     def dodge(self):
-        return self.attributes['dodge']
+        add = 0
+        if 'dodge' in self.buff.keys():
+            for item in self.buff['dodge']:
+                add += item[0]
+        return self.attributes['dodge'] + add
 
     @property
     def recover_rate(self):
@@ -94,9 +107,9 @@ class GameChar:
         else:
             return False
 
-# ————————————————————————————
-#           战斗功能
-# ————————————————————————————
+    # ————————————————————————————
+    #           战斗功能
+    # ————————————————————————————
 
     def do_attack(self) -> Tuple[float, bool]:
         """
@@ -191,7 +204,7 @@ class GameChar:
         这个函数将会返回一个图形化的体力条
         """
         hp_bar = ''
-        adj_hp = self.HP if self.is_player else int(self.HP / numerical['boss_display_shorten'])
+        adj_hp = self.HP if self.not_short_hp else int(self.HP / numerical['boss_display_shorten'])
         whole = int(adj_hp / numerical['hp_display_unit'])
         rest = adj_hp - numerical['hp_display_unit'] * whole
 
@@ -203,9 +216,10 @@ class GameChar:
     def mp_display(self) -> str:
         value = int(self.MP / (1000 / 7))
         return mp_block_list[value]
-# ————————————————————————————
-#         技能效果执行
-# ————————————————————————————
+
+    # ————————————————————————————
+    #         技能效果执行
+    # ————————————————————————————
 
     def use_effect(self, selector: List['GameChar'], effect: dict) -> Optional[list]:
         """
@@ -361,20 +375,50 @@ class GameChar:
         # 护甲衰减
         elif effect['type'] == 'DEF_DEC':
             for obj in selector:
-                oppo_to_decrease_def_point = param[0][0] * self.buff_rate
-                real_added = obj._add_defence_buff(oppo_to_decrease_def_point, param[1], is_debuff=True)
+                real_added = obj._add_defence_buff(param[0][0] * self.buff_rate, param[1], is_debuff=True)
                 ret.append({
                     'feedback': '削弱了{target}{amount:.1f}点防御，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
+
+        # 暴击伤害倍率提升
+        elif effect['type'] == 'CRIT_RATE_BUFF':
+            for obj in selector:
+                real_added = obj._add_crit_rate(param[0][0], param[1])
+                ret.append({
+                    'feedback': '提升了{target}{amount:.0%}的暴击伤害倍率，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
+        # 暴击率提升
+        elif effect['type'] == 'CRIT_CHANCE_BUFF':
+            for obj in selector:
+                real_added = obj._add_crit_chance(param[0][0], param[1])
+                ret.append({
+                    'feedback': '提升了{target}{amount:.1f}的暴击率，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
+        # 闪避率提升
+        elif effect['type'] == 'DODGE_BUFF':
+            for obj in selector:
+                real_added = obj._add_dodge_buff(param[0][0], param[1])
+                ret.append({
+                    'feedback': '提升了{target}{amount:.0%}的闪避率，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
         else:
             raise ValueError('出现了未知的效果类型')
         return ret
 
-# ————————————————————————————
-#           效果处理
-# ————————————————————————————
+    # ————————————————————————————
+    #           效果处理
+    # ————————————————————————————
 
     def _add_buff(self, buff_type, value, time):
         """
@@ -460,7 +504,7 @@ class GameChar:
     def _add_spell_buff(self, value, time, is_debuff=False):
         """
         添加一个魔法伤害提升的buff
-        这个buff会受到角色本身的buff_rate的加成
+        这个buff不会会受到角色本身的buff_rate的加成 (主要是考虑到强度问题，后期会很爆炸()
         is_debuff为真时，此时的效果不会受到作用目标的buff_rate的加成，同时自动帮助玩家变为负数添加buff中
         time为持续回合数
         返回实际强化率(为百分号形式)
@@ -468,8 +512,53 @@ class GameChar:
         if is_debuff:
             real_rate = -value
         else:
-            real_rate = value * self.buff_rate
+            real_rate = value
         self._add_buff('spell_enhance', real_rate, time)
+        return abs(real_rate)
+
+    def _add_crit_chance(self, value, time, is_debuff=False):
+        """
+        添加暴击率提升的buff
+        不吃buff_rate加成
+        is_debuff为真时，自动帮助玩家变为负数添加buff中
+        time为持续回合数
+        返回实际强化/弱化率
+        """
+        if is_debuff:
+            real_rate = -value
+        else:
+            real_rate = value
+        self._add_buff('crit_chance', real_rate, time)
+        return abs(real_rate)
+
+    def _add_crit_rate(self, value, time, is_debuff=False):
+        """
+        添加暴击伤害倍率提升的buff
+        受到buff_rate的加成
+        is_debuff为真时，不会受到作用目标的buff_rate的加成，且自动帮助玩家变为负数添加buff中
+        time为持续回合数
+        返回实际强化/弱化率
+        """
+        if is_debuff:
+            real_rate = -value
+        else:
+            real_rate = value * self.buff_rate
+        self._add_buff('crit_rate', real_rate, time)
+        return abs(real_rate)
+
+    def _add_dodge_buff(self, value, time, is_debuff=False):
+        """
+        添加闪避的buff
+        不吃buff_rate加成
+        is_debuff为真时，自动帮助玩家变为负数添加buff中
+        time为持续回合数
+        返回实际强化/弱化率
+        """
+        if is_debuff:
+            real_rate = -value
+        else:
+            real_rate = value
+        self._add_buff('dodge', real_rate, time)
         return abs(real_rate)
 
     def _shield_hurt(self, damage):
@@ -522,6 +611,12 @@ class GameChar:
             return '自身'
         return f'[{chara_name}]'
 
+    def __repr__(self):
+        S = self.name + ', '
+        S += '%.0f/%.0f, ' % (self.HP, self.attributes['HP'])
+        S += 'shield: %.0f' % self.shield
+        S += 'buff: %s' % str(self.buff)
+        return S
 
 hp_block_list = '▏▎▍▌▋▊▉'
 mp_block_list = '▁▂▃▄▅▆▇♠'
