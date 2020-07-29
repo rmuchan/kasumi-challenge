@@ -16,9 +16,9 @@
     },
     "defence_base": {
         "random": "triangular",
-        "rating_weight": 1,
-        "min": 0.6,
-        "max": 0.1
+        "rating_weight": 6,
+        "min": 0.1,
+        "max": 0.6
     },
     "defence_grow": {
         "random": "triangular",
