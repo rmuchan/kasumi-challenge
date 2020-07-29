@@ -65,7 +65,7 @@
             ]
         },
         "desc": "强化我方全体，提升{param[0]:%}的攻击，持续{param[1]}回合",
-        "weight": 1,
+        "weight": 2,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
             "type": "ALL",
@@ -95,7 +95,7 @@
             ]
         },
         "desc": "提升自身{param[0]:%}的攻击，持续{param[1]}回合",
-        "weight": 1,
+        "weight": 4,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
             "type": "SELF",
@@ -183,8 +183,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.03,
-                "min": 0.025
+                "expect": 0.042,
+                "min": 0.032
             },
             {
                 "random": "cubic",
@@ -192,7 +192,8 @@
                 "max": 7
             }
         ]
-    },    {
+    },
+    {
         "name": {
             "random": "choice",
             "values": [
@@ -215,5 +216,31 @@
                 "min": 67
             }
         ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "铁壁",
+                "强固"
+            ]
+        },
+        "weight": 1,
+        "desc": "小幅度强化自身防御{param[0]:.1f}点，持续{param[1]}回合",
+        "type": "DEF_UP",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 3.1,
+                "min": 2.6
+            },
+            3
+        ]
     }
+
 ]

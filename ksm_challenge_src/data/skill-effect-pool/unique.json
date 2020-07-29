@@ -10,7 +10,7 @@
                 "灭亡之影"
             ]
         },
-        "weight": 3,
+        "weight": 4,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -41,7 +41,7 @@
                 "虚空暗蚀"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
                 "desc": "对敌方全体造成{param[0]}点魔法伤害",
@@ -65,15 +65,15 @@
         "name": {
             "random": "choice",
             "values": [
-                "全神贯注",
                 "杀戮渴望",
-                "武器大师"
+                "武器大师",
+                "狂怒战神"
             ]
         },
         "weight": 2,
         "effect": [
             {
-                "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
+                "desc": "大幅度强化自身{param[0]}点攻击，持续{param[1]}回合",
                 "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
@@ -83,14 +83,26 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 250,
-                        "min": 210
+                        "expect": 270,
+                        "min": 220
                     },
+                    3
+                ]
+            },            {
+                "desc": "沉默自己{param[1]}回合",
+                "type": "SILENCE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
                     {
-                        "random": "cubic",
-                        "min": 2,
-                        "max": 3
-                    }
+                        "random": "biased",
+                        "expect": 233,
+                        "min": 810
+                    },
+                    1
                 ]
             }
         ]
@@ -119,6 +131,35 @@
                         "random": "biased",
                         "expect": 360,
                         "min": 300
+                    }
+                ]
+            }
+        ]
+    },
+        {
+        "name": {
+            "random": "choice",
+            "values": [
+                "强效治疗药剂",
+                "觉醒之触",
+                "复苏治疗"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "治疗生命最低的一名队友{param[0]}点生命",
+                "type": "HEAL",
+                "target": {
+                    "type": "LIFELEAST",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 400,
+                        "min": 370
                     }
                 ]
             }
@@ -215,6 +256,65 @@
                         "min": 3,
                         "max": 4
                     }
+                ]
+            }
+        ]
+    },    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "终极射手",
+                "屏息射击",
+                "沉默的猎杀者",
+                "致命精准"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "中幅度强化自身{param[0]}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 90,
+                        "min": 70
+                    },
+                    1
+                ]
+            },
+            {
+                "desc": "在{param[1]}回合内提升自己100%的暴击率",
+                "type": "CRIT_CHANCE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [1,"S"],
+                    2
+                ]
+            },            {
+                "desc": "沉默自己{param[1]}回合",
+                "type": "SILENCE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 233,
+                        "min": 810
+                    },
+                    2
                 ]
             }
         ]
