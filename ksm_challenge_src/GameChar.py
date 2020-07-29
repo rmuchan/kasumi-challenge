@@ -389,6 +389,16 @@ class GameChar:
                     'param': {'amount': real_added}
                 })
 
+        # 护甲衰减
+        elif effect['type'] == 'DEF_UP':
+            for obj in selector:
+                real_added = obj._add_defence_buff(param[0][0] * self.buff_rate, param[1])
+                ret.append({
+                    'feedback': '强化了{target}{amount:.1f}点防御，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
         # 暴击伤害倍率提升
         elif effect['type'] == 'CRIT_RATE_BUFF':
             for obj in selector:
@@ -404,7 +414,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj._add_crit_chance(param[0][0], param[1])
                 ret.append({
-                    'feedback': '提升了{target}{amount:.1f}的暴击率，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.1%}的暴击率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -551,7 +561,7 @@ class GameChar:
         if is_debuff:
             real_rate = -value
         else:
-            real_rate = value * self.buff_rate * 0.5
+            real_rate = value * self.buff_rate
         self._add_buff('crit_rate', real_rate, time)
         return abs(real_rate)
 
