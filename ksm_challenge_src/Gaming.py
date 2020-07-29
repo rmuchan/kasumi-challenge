@@ -31,7 +31,7 @@ class Gaming(ABC):
 
             self._skill_check('b')
             self._status_manage('b')
-
+            self.ui.append('')
             self.team_a = self._death_check('a')
             self.team_b = self._death_check('b')
 
@@ -40,7 +40,8 @@ class Gaming(ABC):
 
             self.turn += 1
 
-            await asyncio.sleep(12)
+            # await asyncio.sleep(12)
+
         return 'timeout', 30
 
     def selector(self, target, team_name: str, initiator: GameChar):
@@ -75,14 +76,12 @@ class Gaming(ABC):
 
     def _death_check(self, team_name):
         team = self._get_team(team_name)
-
         now_team = []
         for chara in team:
             if chara.not_dead:
                 now_team.append(chara)
             else:
-                pass
-                # TODO 汇报死亡消息
+                self.ui.append('{}倒下了！'.format(chara.name))
 
         return now_team
 
