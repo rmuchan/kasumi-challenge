@@ -82,7 +82,7 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 90,
+                        "expect": 110,
                         "min": 70
                     }
                 ]
@@ -97,8 +97,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.075,
-                        "min": 0.065
+                        "expect": 0.0125,
+                        "min": 0.085
                     },
                     {
                         "random": "cubic",
@@ -425,8 +425,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.195,
-                        "min": 0.165
+                        "expect": 0.295,
+                        "min": 0.265
                     },
                     {
                         "random": "cubic",
@@ -621,6 +621,27 @@
                         "min": 0.22
                     },
                     4
+                ]
+            },
+            {
+                "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 40,
+                        "min": 30
+                    },
+                    {
+                        "random": "cubic",
+                        "min": 2,
+                        "max": 3
+                    }
                 ]
             }
         ]

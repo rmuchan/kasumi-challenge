@@ -81,8 +81,8 @@
             },
             {
                 "random": "cubic",
-                "min": 2,
-                "max": 3
+                "min": 3,
+                "max": 4
             }
         ]
     },
@@ -111,8 +111,8 @@
             },
             {
                 "random": "cubic",
-                "min": 2,
-                "max": 3
+                "min": 3,
+                "max": 4
             }
         ]
     },
@@ -152,11 +152,11 @@
                 "医护"
             ]
         },
-        "desc": "恢复自身{param[0]}点生命",
+        "desc": "恢复生命值最低的队友{param[0]}点生命",
         "weight": 2,
         "type": "HEAL",
         "target": {
-            "type": "SELF",
+            "type": "LIFELEAST",
             "team": 1,
             "limit": 0
         },
@@ -189,8 +189,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.13,
-                "min": 0.12
+                "expect": 0.19,
+                "min": 0.15
             },
             {
                 "random": "cubic",

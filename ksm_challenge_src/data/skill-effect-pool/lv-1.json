@@ -183,8 +183,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.062,
-                "min": 0.052
+                "expect": 0.12,
+                "min": 0.10
             },
             {
                 "random": "cubic",
