@@ -11,8 +11,8 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 140,
-        "max": 168
+        "min": 170,
+        "max": 200
     },
     "defence_base": {
         "random": "triangular",
@@ -59,9 +59,9 @@
     "crit_rate": 1.75,
     "crit_chance": 0.16,
     "life_steal_rate": 0.6,
-    "dodge": 0.09,
+    "dodge": 0.14,
     "skill_1": {
-        "chance": 0.3,
+        "chance": 0.13,
         "cooldown": 1,
         "mp_cost": 70,
         "name": "狂怒龙卷",

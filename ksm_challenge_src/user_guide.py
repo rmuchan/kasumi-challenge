@@ -1,7 +1,4 @@
-from .data import data
-
-version = '0.0.7'
-
+from .data import version
 
 def show_help():
     S = """——-KASUMI CHALLENGE 帮助-——
@@ -17,7 +14,7 @@ ksmgame-rebirth: 删除当前角色并获得天赋币(24小时内只能转生一
 ————————————
 在ksmgame-help后面增加下列关键词可以详细了解游戏机制：
 如"ksmgame-help 种族"可以展示种族说明
-""" % version
+""" % version.logfile[-1]['version']
     S += ', '.join(['[%s]' % k for k in guide])
 
     return S
@@ -29,7 +26,7 @@ def show_guide(key_word: str):
 
 
 def show_log():
-    return "—-———-更新日志-———-—\n" + data.version[-1]['log']
+    return "—-———-更新日志-———-—\n" + version.logfile[-1]['log']
 
 
 guide = {}

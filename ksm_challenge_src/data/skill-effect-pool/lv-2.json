@@ -36,7 +36,7 @@
                 "暗波动"
             ]
         },
-        "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+        "desc": "随机攻击敌人{target[limit]}次，每次造成{param[0]}点魔法伤害",
         "weight": 2,
         "type": "MGC_DMG",
         "target": {
@@ -163,8 +163,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 110,
-                "min": 95
+                "expect": 150,
+                "min": 115
             }
         ]
     },
@@ -219,8 +219,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 180,
-                "min": 150
+                "expect": 200,
+                "min": 170
             }
         ]
     },
@@ -244,34 +244,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 3.1,
-                "min": 2.6
-            },
-            3
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
-                "团队防御提升",
-                "协同防守",
-                "构建防守"
-            ]
-        },
-        "weight": 1,
-        "desc": "小幅度强化全队防御{param[0]:.1f}点，持续{param[1]}回合",
-        "type": "DEF_UP",
-        "target": {
-            "type": "ALL",
-            "team": 1,
-            "limit": 1
-        },
-        "param": [
-            {
-                "random": "biased",
-                "expect": 1.5,
-                "min": 1.1
+                "expect": 2.0,
+                "min": 1.8
             },
             3
         ]
@@ -287,7 +261,7 @@
             ]
         },
         "weight": 2,
-        "desc": "提高自身{param[0]:.0f%}的暴击率，持续{param[1]}回合",
+        "desc": "提高自身{param[0]:.0%}的暴击率，持续{param[1]}回合",
         "type": "CRIT_CHANCE_BUFF",
         "target": {
             "type": "SELF",

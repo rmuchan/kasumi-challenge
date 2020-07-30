@@ -25,7 +25,7 @@
                 "暗影腐蚀"
             ]
         },
-        "weight": 5,
+        "weight": 2,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -40,6 +40,70 @@
                         "random": "biased",
                         "expect": 140,
                         "min": 110
+                    }
+                ]
+            }
+        ]
+    }, {
+        "chance": {
+            "random": "triangular",
+            "min": 0.04,
+            "max": 0.10
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 1,
+            "max": 4
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "奥术强化攻击",
+                "魔法追踪术",
+                "闪电磁场",
+                "能量涌动"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+                "type": "MGC_DMG",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 90,
+                        "min": 70
+                    }
+                ]
+            },            {
+                "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
+                "type": "MGC_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.75,
+                        "min": 0.65
+                    },
+                    {
+                        "random": "cubic",
+                        "min": 8,
+                        "max": 10
                     }
                 ]
             }
@@ -71,10 +135,10 @@
                 "暗影裂隙"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
-                "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
+                "desc": "随机攻击敌人{target[limit]}次，每次造成{param[0]}点魔法伤害",
                 "type": "MGC_DMG",
                 "target": {
                     "type": "RAND",
@@ -120,7 +184,7 @@
                 "肾上腺素"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
                 "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
@@ -133,7 +197,7 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 115,
+                        "expect": 106,
                         "min": 93
                     },
                     {
@@ -170,7 +234,7 @@
                 "医护之触"
             ]
         },
-        "weight": 2,
+        "weight": 3,
         "effect": [
             {
                 "desc": "治疗生命最低的队友{param[0]}点生命",
@@ -183,8 +247,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 180,
-                        "min": 130
+                        "expect": 200,
+                        "min": 160
                     }
                 ]
             }
@@ -226,8 +290,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 240,
-                        "min": 190
+                        "expect": 270,
+                        "min": 240
                     }
                 ]
             }
@@ -361,13 +425,13 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.165,
-                        "min": 0.145
+                        "expect": 0.195,
+                        "min": 0.165
                     },
                     {
                         "random": "cubic",
-                        "min": 7,
-                        "max": 10
+                        "min": 6,
+                        "max": 8
                     }
                 ]
             }
@@ -399,7 +463,7 @@
                 "构建防御"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
                 "desc": "大幅度强化自身防御{param[0]:.1f}点，持续{param[1]}回合",
@@ -412,8 +476,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 4.4,
-                        "min": 3.7
+                        "expect": 3,
+                        "min": 2.4
                     },
                     5
                 ]
@@ -457,8 +521,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 2.1,
-                        "min": 1.5
+                        "expect": 1.8,
+                        "min": 1.4
                     },
                     5
                 ]
@@ -493,7 +557,7 @@
         "effect": [
             {
                 "desc": "沉默随机1个敌人{param[1]}回合",
-                "type": "DEF_UP",
+                "type": "SILENCE",
                 "target": {
                     "type": "RAND",
                     "team": 0,
@@ -543,7 +607,7 @@
         "weight": 3,
         "effect": [
             {
-                "desc": "提高自身{param[0]:.0f%}的暴击率，持续{param[1]}回合",
+                "desc": "提高自身{param[0]:.0%}的暴击率，持续{param[1]}回合",
                 "type": "CRIT_CHANCE_BUFF",
                 "target": {
                     "type": "SELF",
@@ -600,8 +664,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 50,
-                        "min": 40
+                        "expect": 60,
+                        "min": 50
                     }
                 ]
             },
@@ -616,8 +680,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 2.4,
-                        "min": 2
+                        "expect": 1.6,
+                        "min": 1.2
                     },
                     3
                 ]

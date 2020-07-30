@@ -11,32 +11,32 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 35,
-        "max": 40
+        "min": 50,
+        "max": 57
     },
     "defence_base": {
         "random": "triangular",
-        "rating_weight": 6,
-        "min": 0.2,
-        "max": 0.3
+        "rating_weight": 7,
+        "min": 3.2,
+        "max": 4.3
     },
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 0.011,
-        "max": 0.013
+        "min": 0.031,
+        "max": 0.033
     },
     "hp_base": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 1000,
-        "max": 1250
+        "min": 700,
+        "max": 650
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 610,
-        "max": 640
+        "min": 410,
+        "max": 340
     },
     "recover_rate": {
         "random": "triangular",
@@ -57,9 +57,9 @@
         "max": 1.3
     },
     "crit_rate": 1.5,
-    "crit_chance": 0.1,
+    "crit_chance": 0.12,
     "life_steal_rate": 0.6,
-    "dodge": 0.05,
+    "dodge": 0.06,
     "skill_1": {
         "chance": 0.2,
         "cooldown": 5,
@@ -78,7 +78,7 @@
                         {
                             "random": "triangular",
                             "rating_weight": 6,
-                            "min": 180,
+                            "min": 200,
                             "max": 240
                         }
                     ]
@@ -108,7 +108,7 @@
                             "max": 0.20
                         }
                     ],
-                    3
+                    4
                 ]
             },
             {
@@ -127,7 +127,7 @@
                             "max": 0.32
                         }
                     ],
-                    3
+                    4
                 ]
             }
         ]

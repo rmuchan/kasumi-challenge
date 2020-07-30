@@ -613,6 +613,8 @@ class GameChar:
         返回护甲减免后的伤害值
         """
         damage_decrease = 1 + numerical['def_rate'] * self.defence
+        if damage_decrease < 0.7:
+            damage_decrease = 0.7
         return damage / damage_decrease
 
     def _attack_buff(self, rate):

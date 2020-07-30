@@ -186,8 +186,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 180,
-                        "min": 150
+                        "expect": 200,
+                        "min": 170
                     }
                 ]
             }
@@ -216,8 +216,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.70,
-                        "min": 0.66
+                        "expect": 0.77,
+                        "min": 0.69
                     },
                     3
                 ]
@@ -248,8 +248,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.95,
-                        "min": 0.80
+                        "expect": 0.99,
+                        "min": 0.88
                     },
                     {
                         "random": "cubic",
@@ -272,7 +272,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "中幅度强化自身{param[0]}点攻击，持续{param[1]}回合",
+                "desc": "小幅度强化自身{param[0]}点攻击，持续{param[1]}回合",
                 "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
@@ -282,8 +282,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 90,
-                        "min": 70
+                        "expect": 30,
+                        "min": 20
                     },
                                         {
                         "random": "cubic",

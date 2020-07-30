@@ -39,23 +39,23 @@
     }
   },
   {
-    "desc": "暴击伤害倍率+40%",
+    "desc": "暴击伤害倍率+30%",
     "buff": {
-      "crit_rate": 0.4
+      "crit_rate": 0.3
     }
   },
   {
-    "desc": "基础生命+50 成长值+0.4",
+    "desc": "基础生命+30 成长值+0.4",
     "buff": {
-      "life_base": 50,
+      "life_base": 30,
       "life_grow": 0.4
     }
   },
   {
-    "desc": "法术倍率+8%",
+    "desc": "法术倍率+9%",
     "buff": {
       "spell_rate": {
-        "multiply": 1.08
+        "multiply": 1.09
       }
     }
   }

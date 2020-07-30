@@ -17,8 +17,8 @@
     "defence_base": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 0.1,
-        "max": 0.6
+        "min": 2.1,
+        "max": 2.6
     },
     "defence_grow": {
         "random": "triangular",
@@ -35,8 +35,8 @@
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 76,
-        "max": 86
+        "min": 66,
+        "max": 76
     },
     "recover_rate": {
         "random": "triangular",
@@ -57,7 +57,7 @@
         "max": 1.14
     },
     "crit_rate": 1.75,
-    "crit_chance": 0.7,
+    "crit_chance": 0.75,
     "life_steal_rate": 0.8,
     "dodge": 0.6,
     "skill_1": {
