@@ -38,8 +38,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 100,
-                        "min": 70
+                        "expect": 140,
+                        "min": 110
                     }
                 ]
             }
@@ -88,8 +88,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 100,
-                        "min": 70
+                        "expect": 150,
+                        "min": 120
                     }
                 ]
             }
@@ -183,8 +183,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 160,
-                        "min": 120
+                        "expect": 180,
+                        "min": 130
                     }
                 ]
             }
@@ -226,8 +226,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 220,
-                        "min": 180
+                        "expect": 240,
+                        "min": 190
                     }
                 ]
             }
@@ -351,7 +351,7 @@
         "weight": 3,
         "effect": [
             {
-                "desc": "强化自身{param[0]:%}的法术强度，持续{param[1]}回合",
+                "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
                 "type": "MGC_BUFF_RATE",
                 "target": {
                     "type": "SELF",

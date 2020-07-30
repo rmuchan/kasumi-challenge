@@ -28,14 +28,14 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
         lv = test_lv
     else:
         lv = lv_calc(chara['exp'])
-    str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0],
-                      numerical['str_grow'] * chara['str_build'][0],
+    str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0] + calc_passive(chara['str_base'][0], chara, 'str_base'),
+                      numerical['str_grow'] * chara['str_build'][0] + calc_passive(chara['str_grow'][0], chara, 'str_grow'),
                       lv)
-    int_ = _attr_calc(numerical['int_base'] * chara['int_build'][0],
-                      numerical['int_grow'] * chara['int_build'][0],
+    int_ = _attr_calc(numerical['int_base'] * chara['int_build'][0] + calc_passive(chara['int_base'][0], chara, 'int_base'),
+                      numerical['int_grow'] * chara['int_build'][0] + calc_passive(chara['int_base'][0], chara, 'int_base'),
                       lv)
-    per_ = _attr_calc(numerical['per_base'] * chara['per_build'][0],
-                      numerical['per_grow'] * chara['per_build'][0],
+    per_ = _attr_calc(numerical['per_base'] * chara['per_build'][0] + calc_passive(chara['per_base'][0], chara, 'per_base'),
+                      numerical['per_grow'] * chara['per_build'][0] + calc_passive(chara['per_base'][0], chara, 'per_base'),
                       lv)
 
     game_char['str'] = str_
@@ -48,8 +48,8 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
     game_char['defence'] = _def_calc(str_, int_, chara['defense_str_rate'],
                                      calc_passive(chara['def_base'][0], chara, 'def_base'))
     game_char['HP'] = hp_calc(str_,
-                              numerical['life_base'] * chara['life_build'][0],
-                              numerical['life_grow'] * chara['life_build'][0],
+                              numerical['life_base'] * chara['life_build'][0] + calc_passive(numerical['life_base'], chara, 'life_base'),
+                              numerical['life_grow'] * chara['life_build'][0] + calc_passive(numerical['life_grow'], chara, 'life_grow'),
                               lv,
                               calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
     game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate'])

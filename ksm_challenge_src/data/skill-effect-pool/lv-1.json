@@ -20,8 +20,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 30,
-                "min": 21
+                "expect": 45,
+                "min": 36
             }
         ]
     },
@@ -50,8 +50,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 30,
-                "min": 21
+                "expect": 50,
+                "min": 40
             }
         ]
     },
@@ -172,7 +172,7 @@
                 "共鸣"
             ]
         },
-        "desc": "提升自身{param[0]:%}的法术强度，持续{param[1]}回合",
+        "desc": "提升自身{param[0]:%}的法术倍率，持续{param[1]}回合",
         "weight": 1,
         "type": "MGC_BUFF_RATE",
         "target": {
