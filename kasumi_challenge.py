@@ -63,7 +63,8 @@ async def _(session: CommandSession):
 
 @_cmd_group.command('log')
 async def _(session: CommandSession):
-    await session.send(show_log())
+    arg = int(session.current_arg) if session.current_arg.isdigit() else 0
+    await session.send(show_log(arg))
 
 
 # 发起pve
@@ -87,7 +88,7 @@ async def _(session: CommandSession):
     ui.append(boss['desc'])
     await ui.send('强度参考值：%.0f' % (boss['power_rating'] * 1000))
 
-    _battles[group_id] = {
+    bat = {
         'can_join': True,
         'is_pvp': False,
         'team_a': {},
@@ -95,10 +96,11 @@ async def _(session: CommandSession):
         'capacity_a': 4,
         'capacity_b': 1
     }
-    _battles[group_id]['team_a'][ui.uid()] = game_char_gen(char)
+    bat['team_a'][ui.uid()] = game_char_gen(char)
+    _battles[group_id] = bat
     await ui.send('你提议开启一场boss战！其他人可以使用ksmgame-join来加入小队')
 
-    asyncio.ensure_future(_remove_battle(session))
+    asyncio.ensure_future(_remove_battle(session, bat))
 
 
 # 发起pvp
@@ -225,10 +227,10 @@ def _get_boss(gid: int, lvl: int):
     return boss, False
 
 
-async def _remove_battle(session: BaseSession):
+async def _remove_battle(session: BaseSession, bat: dict):
     group_id = session.ctx['group_id']
     await asyncio.sleep(600)
-    if group_id in _battles and _battles[group_id]['can_join']:
+    if _battles[group_id] is bat and bat['can_join']:
         del _battles[group_id]
         await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')
 

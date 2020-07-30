@@ -5,7 +5,7 @@ def show_help():
     S = """——-KASUMI CHALLENGE 帮助-——
 当前版本：Alpha %s
 ksmgame-help: 展示此帮助
-ksmgame-log: 展示更新日志
+ksmgame-log: 展示更新日志 (在后面添加数字参数"n"可以查看向前n个版本的日志)
 ksmgame-create: 创建新的角色
 ksmgame-status: 查看角色信息
 ksmgame-boss: 发起一场Boss战
@@ -26,8 +26,10 @@ def show_guide(key_word: str):
     return guide.get(key_word, f'没有"{key_word}"的描述，目前已添加的内容有：\n' + S)
 
 
-def show_log():
-    return "—-———-更新日志-———-—\n" + version.log_file[-1]['log']
+def show_log(selection: int):
+    if selection not in range(len(version.log_file)):
+        return "还没有这么多版本"
+    return version.log_file[-1 - selection]['version'] + "\n—-———-更新日志-———-—\n" + version.log_file[-1 - selection]['log']
 
 
 guide = {}

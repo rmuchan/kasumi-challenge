@@ -19,6 +19,7 @@ class GameChar:
         self.skills = []
         for i in range(3):
             self.skills.append(GameSkill(self.attributes[f'skill_{i + 1}']))
+        self.turn_mp_gain()
 
     # ————————————————————————————
     #           属性信息
