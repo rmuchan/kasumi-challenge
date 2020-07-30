@@ -12,9 +12,8 @@ class NumFormat:
         self._val = val
 
     def __format__(self, format_spec: str):
-        if format_spec and format_spec[-1] == '%':
-            format_spec = format_spec[:-1]
-            return format(self._val * 100, format_spec or '.0f') + '%'
+        if format_spec == '%':
+            format_spec = '.0%'
 
         return format(self._val, format_spec or '.0f')
 

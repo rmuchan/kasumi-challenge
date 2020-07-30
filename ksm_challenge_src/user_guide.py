@@ -1,15 +1,20 @@
+version = '0.0.7'
+
 def show_help():
     S = """——-KASUMI CHALLENGE 帮助-——
+当前版本：Alpha %s
 ksmgame-help: 展示此帮助
+ksmgame-log: 展示更新日志
 ksmgame-create: 创建新的角色
 ksmgame-status: 查看角色信息
 ksmgame-boss: 发起一场Boss战
 ksmgame-join: 加入其它玩家的队伍
 ksmgame-talent: 天赋管理
+ksmgame-rebirth: 删除当前角色并获得天赋币(24小时内只能转生一次)
 ————————————
 在ksmgame-help后面增加下列关键词可以详细了解游戏机制：
 如"ksmgame-help 种族"可以展示种族说明
-"""
+""" % version
     S += ', '.join(['[%s]' % k for k in guide])
 
     return S
@@ -17,6 +22,15 @@ ksmgame-talent: 天赋管理
 def show_guide(key_word: str):
     S = ', '.join(['[%s]' % k for k in guide])
     return guide.get(key_word, f'没有"{key_word}"的描述，目前已添加的内容有：\n' + S)
+
+
+def show_log():
+    return log
+
+log = """—-———-更新日志-————-—
+
+"""
+
 
 
 
@@ -65,4 +79,4 @@ guide['天赋币'] = """使用"ksmgame-rebirth"将你的角色永久化为天赋
 你可以使用"ksmgame-talent"管理天赋进行升级，你之后的角色将会得到这些天赋加成。"""
 
 if __name__ == '__main__':
-    print(show_guide('护盾'))
+    print(show_log())

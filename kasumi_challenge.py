@@ -75,15 +75,15 @@ async def _(session: CommandSession):
         return await ui.send('战斗还在进行中！')
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('先创建一个角色，然后再来挑战吧！')
+        return await ui.send('你还没有一个角色，使用"ksmgame-create"来创建新的角色！\n你还可以使用"ksmgame-help"了解更多的指令！')
 
     boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
     if is_saved:
         ui.append('上次没人打的boss又回来啦！')
     else:
         ui.append('本次的boss是：')
-    ui.append('强度参考值：%.0f' % (boss['power_rating'] * 1000))
-    await ui.send(boss['desc'])
+    ui.append(boss['desc'])
+    await ui.send('强度参考值：%.0f' % (boss['power_rating'] * 1000))
 
     _battles[group_id] = {
         'can_join': True,
@@ -141,7 +141,7 @@ async def _(session: CommandSession):
 
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('先创建一个角色，然后再来加入队伍吧！')
+        return await ui.send('没有角色是无法加入队伍的，使用"ksmgame-create"来创建新的角色！\n你还可以使用"ksmgame-help"了解更多的指令！')
 
     if ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
         return await ui.send('你已经在小队中了！')
@@ -170,13 +170,13 @@ async def _(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('你现在还没有角色，你可以直接新建一个角色！')
+        return await ui.send('你现在还没有角色，你可以使用"ksmgame-create"创建新的角色！、')
 
     last_rebirth = ui.retrieve('last_rebirth') or 0
     current_time = time.time()
     seconds_per_day = 24 * 60 * 60
     if int(current_time / seconds_per_day) - int(last_rebirth / seconds_per_day) < 1:
-        return await ui.send('每天只能进行一次转生！')
+        return await ui.send('每24小时只能进行一次转生')
 
     coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate'))
