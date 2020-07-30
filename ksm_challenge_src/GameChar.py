@@ -43,7 +43,8 @@ class GameChar:
         if 'attack_add' in self.buff.keys():
             for item in self.buff['attack_add']:
                 add += item[0]
-        return self.attributes['attack'] + add
+
+        return max(self.attributes['attack'] + add, 1)
 
     # 暴击率是非线性叠加
     @property
@@ -76,7 +77,11 @@ class GameChar:
 
     @property
     def recover_rate(self):
-        return self.attributes['recover_rate']
+        enhance = 1
+        if 'recover_rate' in self.buff.keys():
+            for item in self.buff['recover_rate']:
+                enhance *= (item[0] + 1)
+        return self.attributes['recover_rate'] * enhance
 
     @property
     def buff_rate(self):
@@ -430,6 +435,24 @@ class GameChar:
                     'param': {'amount': real_added}
                 })
 
+        # 恢复强度提升
+        elif effect['type'] == 'RECOVER_BUFF_RATE':
+            for obj in selector:
+                real_added = obj._add_recover_buff(param[0][0], param[1])
+                ret.append({
+                    'feedback': '提升了{target}{amount:.1%}的恢复强度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+        # 恢复强度降低
+        elif effect['type'] == 'RECOVER_DEC':
+            for obj in selector:
+                real_added = obj._add_recover_buff(param[0][0], param[1], is_debuff=True)
+                ret.append({
+                    'feedback': '降低了{target}{amount:.1%}的恢复强度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
         else:
             raise ValueError('出现了未知的效果类型')
         return ret
@@ -527,13 +550,28 @@ class GameChar:
         这个buff不会会受到角色本身的buff_rate的加成 (主要是考虑到强度问题，后期会很爆炸()
         is_debuff为真时，此时的效果不会受到作用目标的buff_rate的加成，同时自动帮助玩家变为负数添加buff中
         time为持续回合数
-        返回实际强化率(为百分号形式)
+        返回实际强化率
         """
         if is_debuff:
             real_rate = -value
         else:
             real_rate = value
         self._add_buff('spell_enhance', real_rate, time)
+        return abs(real_rate)
+
+    def _add_recover_buff(self, value, time, is_debuff=False):
+        """
+        添加一个魔法伤害提升的buff
+        这个buff不会会受到角色本身的buff_rate的加成 (主要是考虑到强度问题，后期会很爆炸()
+        is_debuff为真时，此时的效果不会受到作用目标的buff_rate的加成，同时自动帮助玩家变为负数添加buff中
+        time为持续回合数
+        返回实际强化率
+        """
+        if is_debuff:
+            real_rate = -value
+        else:
+            real_rate = value
+        self._add_buff('recover_rate', real_rate, time)
         return abs(real_rate)
 
     def _add_crit_chance(self, value, time, is_debuff=False):
@@ -639,6 +677,7 @@ class GameChar:
         S += 'shield: %.0f' % self.shield
         S += 'buff: %s' % str(self.buff)
         return S
+
 
 hp_block_list = '▏▎▍▌▋▊▉'
 mp_block_list = '▁▂▃▄▅▆▇♠'

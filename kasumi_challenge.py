@@ -75,10 +75,10 @@ async def _(session: CommandSession):
         return await ui.send('请不要孤身冒险！前往QQ群中，募集队友，和其他冒险者们一起战斗吧！')
     group_id = session.ctx['group_id']
     if group_id in _battles:
-        return await ui.send('战斗还在进行中！')
+        return await ui.send('冒险正在进行中，你可以使用"ksmgame-join"加入队伍！')
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('你还没有一个角色，使用"ksmgame-create"来创建新的角色！\n你还可以使用"ksmgame-help"了解更多的指令！')
+        return await ui.send('你还未拥有一个角色，使用"ksmgame-create"来创建新的角色！\n你还可以使用"ksmgame-help"了解更多的指令！')
 
     boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
     if is_saved:

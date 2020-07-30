@@ -251,6 +251,26 @@
                         "min": 160
                     }
                 ]
+            },           {
+                "desc": "然后增加其{param[0]:%}的恢复强度，持续{param[1]}回合",
+                "type": "RECOVER_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.20,
+                        "min": 0.10
+                    },
+                    {
+                        "random": "cubic",
+                        "min": 3,
+                        "max": 4
+                    }
+                ]
             }
         ]
     },
@@ -332,6 +352,22 @@
                     "limit": 1
                 },
                 "param": [
+                ]
+            },            {
+                "desc": "降低其{param[0]:%}的恢复强度，持续{param[1]}回合",
+                "type": "RECOVER_DEC",
+                "target": {
+                    "type": "SAME",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.40,
+                        "min": 0.20
+                    },
+                    2
                 ]
             }
         ]
@@ -432,6 +468,26 @@
                         "random": "cubic",
                         "min": 6,
                         "max": 8
+                    }
+                ]
+            },            {
+                "desc": "强化自身{param[0]:%}的恢复强度，持续{param[1]}回合",
+                "type": "RECOVER_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.135,
+                        "min": 0.10
+                    },
+                    {
+                        "random": "cubic",
+                        "min": 3,
+                        "max": 4
                     }
                 ]
             }

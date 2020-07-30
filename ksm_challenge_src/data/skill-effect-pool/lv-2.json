@@ -158,7 +158,7 @@
         "target": {
             "type": "LIFELEAST",
             "team": 1,
-            "limit": 0
+            "limit": 1
         },
         "param": [
             {
@@ -184,7 +184,7 @@
         "target": {
             "type": "SELF",
             "team": 1,
-            "limit": 0
+            "limit": 1
         },
         "param": [
             {
