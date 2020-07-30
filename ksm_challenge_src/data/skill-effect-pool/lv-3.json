@@ -255,7 +255,7 @@
                 "desc": "然后增加其{param[0]:%}的恢复强度，持续{param[1]}回合",
                 "type": "RECOVER_BUFF_RATE",
                 "target": {
-                    "type": "SELF",
+                    "type": "SAME",
                     "team": 1,
                     "limit": 1
                 },

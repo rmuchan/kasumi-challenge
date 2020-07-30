@@ -111,8 +111,9 @@
         "name": {
             "random": "choice",
             "values": [
-                "天使降临",
+                "强效治疗药剂",
                 "复苏之吻",
+                "痊愈喷雾",
                 "强化治疗法术"
             ]
         },
@@ -129,8 +130,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 360,
-                        "min": 300
+                        "expect": 440,
+                        "min": 380
                     }
                 ]
             }
@@ -140,7 +141,7 @@
         "name": {
             "random": "choice",
             "values": [
-                "强效治疗药剂",
+                "天使降临",
                 "觉醒之触",
                 "复苏治疗"
             ]
@@ -158,9 +159,40 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 400,
-                        "min": 370
+                        "expect": 300,
+                        "min": 260
                     }
+                ]
+            },            {
+                "desc": "为其附加{param[0]}点护盾",
+                "type": "SHIELD",
+                "target": {
+                    "type": "SAME",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 200,
+                        "min": 170
+                    }
+                ]
+            },            {
+                "desc": "并在{param[1]}回合内提升其防御{param[0]:.1}点",
+                "type": "DEF_UP",
+                "target": {
+                    "type": "SAME",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 2,
+                        "min": 1
+                    },
+                    2
                 ]
             }
         ]
