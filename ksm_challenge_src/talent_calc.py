@@ -3,14 +3,14 @@ from .data import data
 from .interact import UI
 
 
-async def show_talent(ui: UI):
+def show_talent(ui: UI):
     player_talent = ui.retrieve('talent') or {}
     ordinal = ord('A')
     for attribute, param in data.talent.items():
         lvl = player_talent.get(attribute, 0)
         effect = param['effect']
         value = next(iter(effect.values())) if isinstance(effect, dict) else effect
-        line = '{}.【{}】{}+{}'.format(chr(ordinal), param['name'], param['desc'], format(value * lvl, param['format']))
+        line = '[{}] 【{}】{}+{}'.format(chr(ordinal), param['name'], param['desc'], format(value * lvl, param['format']))
         if lvl < param['max_level']:
             line += ' (+{}) ●▶{}'.format(
                 format(value, param['format']),
@@ -20,16 +20,17 @@ async def show_talent(ui: UI):
             line += ' (MAX)'
         ui.append(line)
         ordinal += 1
-    await ui.send()
 
 
 async def upgrade_talent(ui: UI):
     coin = int(ui.retrieve('talent_coin') or 0)
-    ui.append('你有{}个天赋币'.format(coin))
     ui.append('你现有的天赋为：')
-    await show_talent(ui)
-    selection = await ui.input('选择想要强化的天赋',
-                               is_valid=lambda x: len(x) == 1 and ord(x.upper()) - ord('A') in range(len(data.talent)))
+    show_talent(ui)
+    ui.append('你有{}个天赋币'.format(coin))
+    await ui.send()
+    selection = await ui.input('选择想要强化的天赋（输入选项序号。输入不在上面列表中的选项即可退出，否则无法使用其他指令）',
+                               is_valid=lambda x: len(x) == 1 and ord(x.upper()) - ord('A') in range(len(data.talent)),
+                               attempts=1)
     selection = ord(selection.upper()) - ord('A')
     key = list(data.talent)[selection]
     param = data.talent[key]

@@ -1,4 +1,7 @@
+from .data import data
+
 version = '0.0.7'
+
 
 def show_help():
     S = """——-KASUMI CHALLENGE 帮助-——
@@ -19,19 +22,14 @@ ksmgame-rebirth: 删除当前角色并获得天赋币(24小时内只能转生一
 
     return S
 
+
 def show_guide(key_word: str):
     S = ', '.join(['[%s]' % k for k in guide])
     return guide.get(key_word, f'没有"{key_word}"的描述，目前已添加的内容有：\n' + S)
 
 
 def show_log():
-    return log
-
-log = """—-———-更新日志-————-—
-
-"""
-
-
+    return "—-———-更新日志-———-—\n" + data.version[-1]['log']
 
 
 guide = {}

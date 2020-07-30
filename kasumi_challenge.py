@@ -2,10 +2,10 @@ import asyncio
 import random
 import time
 
-from nonebot import CommandSession, CommandGroup
+from nonebot import CommandSession, CommandGroup, permission
 from nonebot.session import BaseSession
 
-from .ksm_challenge_src.user_guide import show_help, show_guide
+from .ksm_challenge_src.user_guide import *
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
@@ -61,7 +61,9 @@ async def _(session: CommandSession):
         return
 
 
-
+@_cmd_group.command('log')
+async def _(session: CommandSession):
+    await session.send(show_log())
 
 
 # 发起pve
@@ -198,6 +200,15 @@ async def _(session: CommandSession):
 @_cmd_group.command('reload')
 async def _(_: CommandSession):
     data.reload()
+
+
+# 管理员功能：重设所有玩家转生限制
+@_cmd_group.command('reset', permission=permission.SUPERUSER)
+async def _(_: CommandSession):
+    for uid in data.saves.dir():
+        save = data.save[uid]
+        save.pop('last_rebirth')
+        data.save[uid] = save
 
 
 def _get_boss(gid: int, lvl: int):

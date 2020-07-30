@@ -22,10 +22,11 @@ class UI(ABC):
         if send_msg:
             await self.do_send(send_msg)
 
-    async def input(self, prompt: Optional[str] = None, *, is_valid: Callable[[str], bool] = lambda _: True) -> str:
+    async def input(self, prompt: Optional[str] = None, *,
+                    is_valid: Callable[[str], bool] = lambda _: True, attempts: int = 12) -> str:
         if prompt:
             await self.do_send(prompt)
-        for _ in range(12):
+        for _ in range(attempts):
             inp = await self.do_input()
             if is_valid(inp):
                 return inp

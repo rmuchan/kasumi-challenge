@@ -60,10 +60,10 @@ async def _create_step_passive_select(ui: UI, proto: Dict[str, Any]):
     candidate = proto['passive_candidate']
     ui.append('被动加成在下列项目中选择：')
     for idx, val in enumerate(candidate):
-        ui.append('%d. %s' % (idx + 1, val['desc']))
+        ui.append('[%d] %s' % (idx + 1, val['desc']))
     ui.append('—' * 12)
     ui.append('(如果您不清楚这些属性的意义，您可以使用像\n"ksmgame-help 力量"\n这样的指令查询每个属性的意义)')
-    await ui.send(' ↓ 选择被动加成：')
+    await ui.send(' ↓ 选择被动加成（输入选项序号）：')
 
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
     selection = int(selection) - 1
@@ -75,9 +75,9 @@ def _create_step_skill_select(skill_num: int):
         candidate = proto[f'skill_{skill_num}_candidate']
         ui.append(f'第{skill_num}个技能在下列项目中选择：')
         for idx, val in enumerate(candidate):
-            ui.append('%d. %s' % (idx + 1, get_skill_desc(val, False)))
+            ui.append('[%d] %s' % (idx + 1, get_skill_desc(val, False)))
         ui.append('—' * 12)
-        await ui.send(f' ↓ 选择第{skill_num}个技能：')
+        await ui.send(f' ↓ 选择第{skill_num}个技能（输入选项序号）：')
         selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
         selection = int(selection) - 1
         proto[f'skill_{skill_num}'] = candidate[selection]
@@ -89,9 +89,9 @@ async def _create_step_unique_select(ui: UI, proto: Dict[str, Any]):
     candidate = proto['unique_candidate']
     ui.append('终极技能在下列项目中选择：')
     for idx, val in enumerate(candidate):
-        ui.append('%d. %s' % (idx + 1, get_skill_desc(val, True)))
+        ui.append('[%d] %s' % (idx + 1, get_skill_desc(val, True)))
     ui.append('—' * 12)
-    await ui.send(' ↓ 选择终极技能：')
+    await ui.send(' ↓ 选择终极技能（输入选项序号）：')
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
     selection = int(selection) - 1
     proto['unique'] = candidate[selection]
@@ -100,10 +100,10 @@ async def _create_step_unique_select(ui: UI, proto: Dict[str, Any]):
 async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
     ui.append('你的技能有：')
     for idx in range(1, 4):
-        ui.append('%d. %s' % (idx, get_skill_desc(proto[f'skill_{idx}'], False)))
+        ui.append('[%d] %s' % (idx, get_skill_desc(proto[f'skill_{idx}'], False)))
     ui.append('—' * 12)
     ui.append('主技能会提升发动概率，减少冷却时间，并降低MP消耗')
-    await ui.send(' ↓ 选择主技能：')
+    await ui.send(' ↓ 选择主技能（输入选项序号）：')
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(3))
     selection = int(selection)
     primary = proto[f'skill_{selection}']
