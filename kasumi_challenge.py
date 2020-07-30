@@ -206,9 +206,9 @@ async def _(_: CommandSession):
 @_cmd_group.command('reset', permission=permission.SUPERUSER)
 async def _(_: CommandSession):
     for uid in data.saves.dir():
-        save = data.save[uid]
-        save.pop('last_rebirth')
-        data.save[uid] = save
+        save = data.saves[uid]
+        save.pop('last_rebirth', None)
+        data.saves[uid] = save
 
 
 def _get_boss(gid: int, lvl: int):
