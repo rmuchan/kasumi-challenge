@@ -44,7 +44,7 @@ def _init_proto_character(uid: int):
 
 
 async def _create_step_name(ui: UI, proto: Dict[str, Any]):
-    proto['name'] = await ui.input('↓ 请为你的角色命名(12个字符以内)：',
+    proto['name'] = await ui.input('↓ 请为你的角色命名(12个英文字符/6个汉字以内，过长的名字将会被忽略)：',
                                    is_valid=lambda x: len(x) + sum(1 for y in x if ord(y) > 127) <= 12)
 
 

@@ -189,13 +189,13 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.10,
-                "min": 0.086
+                "expect": 0.13,
+                "min": 0.12
             },
             {
                 "random": "cubic",
-                "min": 5,
-                "max": 7
+                "min": 6,
+                "max": 8
             }
         ]
     },
