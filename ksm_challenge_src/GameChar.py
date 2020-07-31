@@ -53,7 +53,7 @@ class GameChar:
 
     @property
     def dodge(self):
-        return self.attributes['dodge'] * self.buff_calc('dodge_enhanced')
+        return self.attributes['dodge'] + self.buff_calc('dodge_enhanced')
 
     @property
     def life_steal_rate(self):

@@ -44,9 +44,8 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
 
     game_char['name'] = chara['name']
     game_char['not_short_hp'] = True
-    game_char['attack'] = _atk_calc(int_)
-    game_char['defence'] = _def_calc(str_, int_, chara['defense_str_rate'],
-                                     calc_passive(chara['def_base'][0], chara, 'def_base'))
+    game_char['attack'] = _atk_calc(str_, int_, chara['defense_str_rate'])
+    game_char['defence'] = _def_calc(int_, calc_passive(chara['def_base'][0], chara, 'def_base'))
     game_char['HP'] = hp_calc(str_,
                               numerical['life_base'] * chara['life_build'][0] + calc_passive(0, chara, 'life_base'),
                               numerical['life_grow'] * chara['life_build'][0] + calc_passive(0, chara, 'life_grow'),
@@ -56,7 +55,7 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
     game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate'],
                                                calc_passive(1.0, chara, 'spell_rate'))
     game_char['buff_rate'] = _buff_rate_calc(per_)
-    game_char['crit_rate'] = crit_rate_calc(str_, int_, chara['defense_str_rate'], calc_passive(0, chara, 'crit_rate'))
+    game_char['crit_rate'] = crit_rate_calc(int_, calc_passive(0, chara, 'crit_rate'))
     game_char['crit_chance'] = numerical['crit_chance']
     game_char['life_steal_rate'] = calc_passive(numerical['life_steal_rate_base'], chara, 'life_steal_rate')
     game_char['dodge'] = _dodge_calc(per_, calc_passive(0, chara, 'dodge'))
@@ -90,8 +89,9 @@ def _attr_calc(attr_base, attr_grow, lv):
 
 
 # 攻击计算
-def _atk_calc(int_cur):
-    return int_cur * numerical['atk_rate']
+def _atk_calc(str_cur, int_cur, defense_str_rate):
+    adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
+    return adj * numerical['atk_rate']
 
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(
@@ -100,15 +100,13 @@ def hp_calc(str_cur, life_base, life_grow, lv, modify):
 
 
 # 防御计算
-def _def_calc(str_cur, int_cur, defense_str_rate, def_base):
-    adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * numerical['def_adj_rate'] + def_base
+def _def_calc(int_cur, def_base):
+    return int_cur * numerical['def_adj_rate'] + def_base
 
 
 # 暴击倍率增益计算
-def crit_rate_calc(str_cur, int_cur, defense_str_rate, extra):
-    adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj / 150 + 1.40 + extra
+def crit_rate_calc(int_cur, extra):
+    return int_cur / 150 + 1.40 + extra
 
 
 # 下面会有三个基于属性的技能强化率的计算会用到这个函数
