@@ -106,52 +106,7 @@
         ]
     },
     "skill_2": {
-        "chance": 0.60,
-        "cooldown": 4,
-        "mp_cost": 60,
-        "name": "布置课堂作业",
-        "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 60,
-                            "max": 80
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "RECOVER_DEC",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 0.5,
-                            "max": 0.6
-                        }
-                    ],
-                    3
-                ]
-            }
-        ]
-    },
-    "skill_3": {
-        "chance": 0.10,
+        "chance": 0.30,
         "cooldown": 4,
         "mp_cost": 80,
         "name": "偷换概念辩论",
@@ -191,6 +146,51 @@
                             "max": 90
                         }
                     ]
+                ]
+            }
+        ]
+    },
+    "skill_3": {
+        "chance": 0.50,
+        "cooldown": 4,
+        "mp_cost": 60,
+        "name": "布置课堂作业",
+        "effect": [
+            {
+                "type": "MGC_DMG",
+                "target": {
+                    "type": "ALL",
+                    "team": 0,
+                    "limit": 2
+                },
+                "param": [
+                    [
+                        {
+                            "random": "triangular",
+                            "rating_weight": 3,
+                            "min": 60,
+                            "max": 80
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "RECOVER_DEC",
+                "target": {
+                    "type": "ALL",
+                    "team": 0,
+                    "limit": 2
+                },
+                "param": [
+                    [
+                        {
+                            "random": "triangular",
+                            "rating_weight": 4,
+                            "min": 0.5,
+                            "max": 0.6
+                        }
+                    ],
+                    3
                 ]
             }
         ]
