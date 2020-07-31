@@ -321,7 +321,7 @@
                 ]
             },
             {
-                "desc": "在{param[1]}回合内提升自己100%的暴击率",
+                "desc": "在{param[1]}回合内使自己必定暴击",
                 "type": "CRIT_CHANCE_BUFF",
                 "target": {
                     "type": "SELF",
@@ -329,7 +329,7 @@
                     "limit": 1
                 },
                 "param": [
-                    [1,"S"],
+                    [2,"S"],
                     2
                 ]
             },            {
