@@ -86,7 +86,7 @@ async def _(session: CommandSession):
     else:
         ui.append('本次的boss是：')
     ui.append(boss['desc'])
-    await ui.send('强度参考值：%.0f' % (boss['final_rating'] * 1000))
+    await ui.send('强度参考值：%.0f' % (boss['final_rating'] * 10))
 
     bat = {
         'can_join': True,
