@@ -86,9 +86,9 @@
   "hp_lv_rate": 1.003,
   "hp_rate": 2.1,
   "attr_rate": 1.012,
-  "damage_fluctuation": 0.5,
-  "random_mp_gain_base": 75,
-  "random_mp_gain_extra": 60,
+  "damage_fluctuation": 0.56,
+  "random_mp_gain_base": 90,
+  "random_mp_gain_extra": 80,
   "primary_skill_chance_rate": 1.9,
   "primary_skill_cooldown_rate": 0.7,
   "primary_skill_cost_decrease": 12,
@@ -109,6 +109,6 @@
   "exp_earn_add": 30,
   "exp_earn_rate": 1.067,
   "talent_coin_earn_index": 0.55,
-  "talent_coin_earn_rate": 0.2
-
+  "talent_coin_earn_rate": 0.2,
+  "life_to_mp": 0.75
 }

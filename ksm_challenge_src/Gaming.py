@@ -24,7 +24,7 @@ class Gaming(ABC):
         self.ui = ui
 
     async def start(self):
-        while self.turn < 30:
+        while True:
             # 获胜状态判断
             if len(self.team_a) == 0 and len(self.team_b) == 0:
                 return 'all_dead', self.turn
@@ -32,6 +32,9 @@ class Gaming(ABC):
                 return 'b_win', self.turn
             if len(self.team_b) == 0:
                 return 'a_win', self.turn
+            # 超时
+            if self.turn > 30:
+                return 'timeout', 30
 
             self.ui.append('回合数：{}'.format(self.turn))
 
@@ -53,7 +56,7 @@ class Gaming(ABC):
 
             await asyncio.sleep(16)
 
-        return 'timeout', 30
+
 
     def selector(self, target, team_name: str, initiator: GameChar):
         type_ = target['type']

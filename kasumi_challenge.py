@@ -86,7 +86,7 @@ async def _(session: CommandSession):
     else:
         ui.append('本次的boss是：')
     ui.append(boss['desc'])
-    await ui.send('强度参考值：%.0f' % (boss['power_rating'] * 1000))
+    await ui.send('强度参考值：%.0f' % (boss['final_rating'] * 1000))
 
     bat = {
         'can_join': True,
@@ -174,13 +174,13 @@ async def _(session: CommandSession):
     ui = BotContextUI(session.bot, session.ctx)
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('你现在还没有角色，你可以使用"ksmgame-create"创建新的角色！、')
+        return await ui.send('你现在还没有角色，你可以使用"ksmgame-create"创建新的角色！')
 
     last_rebirth = ui.retrieve('last_rebirth') or 0
     current_time = time.time()
-    seconds_per_day = 24 * 60 * 60
+    seconds_per_day = 12 * 60 * 60
     if int(current_time / seconds_per_day) - int(last_rebirth / seconds_per_day) < 1:
-        return await ui.send('每24小时只能进行一次转生')
+        return await ui.send('每12小时只能进行一次转生')
 
     coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate'))
@@ -265,9 +265,9 @@ async def _play(ui: UI, gid: int):
         pass
     else:
         if result == 'timeout':
-            await ui.send('战斗超时！挑战失败了……遗憾')
+            await ui.send('战斗超时！挑战失败了……遗憾\n使用指令"ksmgame-help"了解更多的游戏机制吧！')
         elif result == 'b_win':
-            await ui.send('挑战者的队伍全灭，挑战失败……遗憾')
+            await ui.send('挑战者的队伍全灭，挑战失败……遗憾\n使用指令"ksmgame-help"了解更多的游戏机制吧！')
         elif result == 'a_win':
             exp_earn = sum(x['exp_earn'] for x in bat['team_b'].values())
             await ui.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)

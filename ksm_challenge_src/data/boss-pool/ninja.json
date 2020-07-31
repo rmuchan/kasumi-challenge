@@ -238,7 +238,7 @@
             {
                 "type": "NORMAL_ATK",
                 "target": {
-                    "type": "RAND",
+                    "type": "RAND_SAFE",
                     "team": 0,
                     "limit": 2
                 },

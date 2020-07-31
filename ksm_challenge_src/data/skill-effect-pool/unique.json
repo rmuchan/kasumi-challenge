@@ -179,7 +179,7 @@
                     }
                 ]
             },            {
-                "desc": "并在{param[1]}回合内提升其防御{param[0]:.1}点",
+                "desc": "并在{param[1]}回合内提升其防御{param[0]:.1f}点",
                 "type": "DEF_UP",
                 "target": {
                     "type": "SAME",
@@ -314,14 +314,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 30,
-                        "min": 20
+                        "expect": 60,
+                        "min": 40
                     },
-                                        {
-                        "random": "cubic",
-                        "min": 1,
-                        "max": 2
-                    }
+                    2
                 ]
             },
             {

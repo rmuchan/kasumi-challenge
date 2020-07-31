@@ -17,6 +17,7 @@ def boss_gen(template: dict, lv):
     boss['spell_rate'] = boss['spell_rate'] * rates_3_calc(lv)
     boss['buff_rate'] = boss['buff_rate'] * rates_3_calc(lv)
     boss['power_rating'] = rating[0] * 2 / rating[1]
+    boss['final_rating'] = (recurrence(numerical['per_base'], numerical['attr_rate'], numerical['per_grow'], lv)) ** 1.4     * boss['power_rating']
     boss['exp_earn'] = int(boss['power_rating'] * exp_earn_calc(lv))
     return boss
 

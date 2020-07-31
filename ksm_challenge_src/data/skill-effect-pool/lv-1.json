@@ -270,5 +270,28 @@
                 "max": 3
             }
         ]
+    },    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "充能",
+                "智慧"
+            ]
+        },
+        "weight": 1,
+        "desc": "增加自身{param[0]:.0f}点MP",
+        "type": "MP_UP",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 55,
+                "min": 40
+            }
+        ]
     }
 ]

@@ -184,7 +184,7 @@
                 "肾上腺素"
             ]
         },
-        "weight": 2,
+        "weight": 4,
         "effect": [
             {
                 "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
@@ -589,17 +589,17 @@
         "chance": {
             "random": "triangular",
             "min": 0.05,
-            "max": 0.15
+            "max": 0.12
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 3,
-            "max": 5
+            "min": 4,
+            "max": 6
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 120
+            "min": 160,
+            "max": 200
         },
         "name": {
             "random": "choice",
@@ -625,11 +625,7 @@
                         "expect": 233,
                         "min": 610
                     },
-                    {
-                        "random": "cubic",
-                        "min": 2,
-                        "max": 3
-                    }
+                    2
                 ]
             }
         ]
@@ -660,7 +656,7 @@
                 "战术情报"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
                 "desc": "提高自身{param[0]:.0%}的暴击率，持续{param[1]}回合",
@@ -761,6 +757,66 @@
                         "min": 1.2
                     },
                     3
+                ]
+            }
+        ]
+    },{
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.12
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 4,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "灵魂超度",
+                "魔法契约",
+                "能量过载",
+                "魂魄超度"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "随机对我方一名{target[limit]}角色造成{param[0]}点魔法伤害",
+                "type": "MGC_DMG",
+                "target": {
+                    "type": "RAND",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 87,
+                        "min": 60
+                    }
+                ]
+            },
+            {
+                "desc": "并增加其{param[0]:.0f}点MP",
+                "type": "MP_UP",
+                "target": {
+                    "type": "SAME",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 180,
+                        "min": 140
+                    }
                 ]
             }
         ]

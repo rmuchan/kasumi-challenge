@@ -11,8 +11,8 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 170,
-        "max": 200
+        "min": 200,
+        "max": 230
     },
     "defence_base": {
         "random": "triangular",

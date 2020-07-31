@@ -276,5 +276,30 @@
             },
             3
         ]
+    },    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "加油助威",
+                "小组讨论",
+                "头脑风暴",
+                "灵感涌动"
+            ]
+        },
+        "weight": 1,
+        "desc": "增加全队{param[0]:.0f}点MP",
+        "type": "MP_UP",
+        "target": {
+            "type": "ALL",
+            "team": 1,
+            "limit": 1
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 55,
+                "min": 40
+            }
+        ]
     }
 ]
