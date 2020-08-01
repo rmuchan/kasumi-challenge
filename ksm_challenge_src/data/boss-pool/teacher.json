@@ -58,7 +58,7 @@
     },
     "crit_rate": 1.50,
     "crit_chance": 0.1,
-    "life_steal_rate": 0.4,
+    "life_steal_rate": 0.9,
     "dodge": 0.04,
     "skill_1": {
         "chance": 0.5,

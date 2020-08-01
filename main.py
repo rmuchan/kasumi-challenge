@@ -54,7 +54,7 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/gang.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/teacher.json') as FILE:
     boss = json.load(FILE)
 
 
@@ -71,7 +71,7 @@ async def main():
 
 
 async def main2():
-    time_limit = 30
+    time_limit = 31
     test_amount = 200
     lvl_list = [1, 15, 30]
     turn_count = {i:[0 for _ in range(time_limit + 1)] for i in lvl_list}
@@ -106,4 +106,4 @@ async def main2():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main2())
