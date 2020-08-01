@@ -44,7 +44,8 @@
                 ]
             }
         ]
-    }, {
+    },
+    {
         "chance": {
             "random": "triangular",
             "min": 0.04,
@@ -82,11 +83,12 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 110,
-                        "min": 70
+                        "expect": 100,
+                        "min": 90
                     }
                 ]
-            },            {
+            },
+            {
                 "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
                 "type": "MGC_BUFF_RATE",
                 "target": {
@@ -97,13 +99,13 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.125,
-                        "min": 0.085
+                        "expect": 0.205,
+                        "min": 0.185
                     },
                     {
                         "random": "cubic",
-                        "min": 8,
-                        "max": 10
+                        "min": 6,
+                        "max": 8
                     }
                 ]
             }
@@ -251,7 +253,8 @@
                         "min": 160
                     }
                 ]
-            },           {
+            },
+            {
                 "desc": "然后增加其{param[0]:%}的恢复强度，持续{param[1]}回合",
                 "type": "RECOVER_BUFF_RATE",
                 "target": {
@@ -353,7 +356,8 @@
                 },
                 "param": [
                 ]
-            },            {
+            },
+            {
                 "desc": "降低其{param[0]:%}的恢复强度，持续{param[1]}回合",
                 "type": "RECOVER_DEC",
                 "target": {
@@ -461,8 +465,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.295,
-                        "min": 0.265
+                        "expect": 0.42,
+                        "min": 0.36
                     },
                     {
                         "random": "cubic",
@@ -470,7 +474,8 @@
                         "max": 8
                     }
                 ]
-            },            {
+            },
+            {
                 "desc": "强化自身{param[0]:%}的恢复强度，持续{param[1]}回合",
                 "type": "RECOVER_BUFF_RATE",
                 "target": {
@@ -760,7 +765,8 @@
                 ]
             }
         ]
-    },{
+    },
+    {
         "chance": {
             "random": "triangular",
             "min": 0.05,
@@ -818,6 +824,62 @@
                         "min": 140
                     }
                 ]
+            }
+        ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.06,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 1,
+            "max": 3
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "迅猛冲拳",
+                "强力一击",
+                "剑舞",
+                "凌空射击"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "暂时提高自身{param[0]:.0%}的攻击",
+                "type": "PHY_ATK_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.5,
+                        "min": 0.4
+                    },
+                    0
+                ]
+            },
+            {
+                "desc": "然后进行一次普通攻击",
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
             }
         ]
     }

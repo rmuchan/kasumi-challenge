@@ -159,8 +159,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 300,
-                        "min": 260
+                        "expect": 260,
+                        "min": 220
                     }
                 ]
             },            {
@@ -218,8 +218,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 200,
-                        "min": 170
+                        "expect": 160,
+                        "min": 140
                     }
                 ]
             }
@@ -270,7 +270,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "大幅度强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
+                "desc": "超大幅度强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
                 "type": "MGC_BUFF_RATE",
                 "target": {
                     "type": "SELF",
@@ -280,13 +280,24 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.99,
-                        "min": 0.88
+                        "expect": 1.2,
+                        "min": 1.05
                     },
+                    3
+                ]
+            },            {
+                "desc": "为自己附加{param[0]}点护盾",
+                "type": "SHIELD",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
                     {
-                        "random": "cubic",
-                        "min": 3,
-                        "max": 4
+                        "random": "biased",
+                        "expect": 170,
+                        "min": 130
                     }
                 ]
             }
