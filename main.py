@@ -54,7 +54,7 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/teacher.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/gang.json') as FILE:
     boss = json.load(FILE)
 
 
