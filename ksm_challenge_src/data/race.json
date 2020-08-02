@@ -26,11 +26,11 @@
   {
     "name": "Shadoul",
     "desc": "Shadoul诞生在阴影之中，无声无息，难以触摸。尽管Shadoul看起来十分柔弱，但是每当尝试攻击他，似乎都无法触及他的本体。",
-    "info": "闪避+25%，生命最大值-20%",
+    "info": "闪避+21%，生命最大值-15%",
     "buff": {
-      "dodge": 0.25,
+      "dodge": 0.21,
       "hp_rate": {
-        "multiply": 0.8
+        "multiply": 0.85
       }
     }
   },
@@ -72,11 +72,11 @@
   {
     "name": "Eledrin",
     "desc": "Eledrin生活在妖精荒野，她们优雅且智慧，是与自然有着密切感应的魔法生物。Eledrin的教育使你有更加出众的敏捷和感知，然而天生柔弱的体格使你的力量稍显不足。",
-    "info": "敏捷+9，感知+9，力量-6",
+    "info": "敏捷+8，感知+8，力量-4",
     "buff": {
-      "str_base": -6,
-      "int_base": 9,
-      "per_base": 9
+      "str_base": -4,
+      "int_base": 8,
+      "per_base": 8
     }
   },
   {
@@ -96,7 +96,7 @@
       "str_base": 3,
       "int_base": 3,
       "per_base": 3,
-      "life_base": 20
+      "life_base": 27
     }
   }
 ]
