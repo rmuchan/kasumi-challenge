@@ -62,7 +62,7 @@
     "dodge": 0.04,
     "skill_1": {
         "chance": 0.5,
-        "cooldown": 2,
+        "cooldown": 1,
         "mp_cost": 50,
         "name": "错题审判",
         "effect": [
@@ -78,8 +78,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 280,
-                            "max": 320
+                            "min": 210,
+                            "max": 260
                         }
                     ],
                     1.3

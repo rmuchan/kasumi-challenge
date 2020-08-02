@@ -14,7 +14,7 @@ class GameSkill:
         if random.random() < self.data['chance'] * self.last_time:
             # 发动了
             self.last_time = 1
-            self.cooldown = self.data['cooldown']
+            self.cooldown = self.data['cooldown'] + 1
             return self.data
         else:
             self.last_time += 1
