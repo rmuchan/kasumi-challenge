@@ -2,8 +2,10 @@ import asyncio
 import random
 import time
 
-from nonebot import CommandSession, CommandGroup, permission
-from nonebot.session import BaseSession
+import nonebot
+from nonebot import CommandGroup
+from .botTools.config_manager import *
+from .botTools import *
 
 from .ksm_challenge_src.user_guide import *
 from .ksm_challenge_src.Gaming import Gaming
@@ -19,6 +21,61 @@ from .ksm_challenge_src.talent_calc import upgrade_talent
 _battles = {}
 _cmd_group = CommandGroup('ksmgame', only_to_me=False)
 
+this_bot = nonebot.get_bot()
+
+try:
+    config = conf_read('ksmgame')
+except:
+    config = dict(enabled_group=[], pre_version="")
+    conf_write('ksmgame', config)
+
+@on_natural_language(only_to_me=False)
+async def birthday_remind_init(session: NLPSession):   
+    global config
+    if get_ver() != config['pre_version']:
+        for gid in config['enabled_group']:
+            asyncio.sleep(1)
+            await this_bot.send_group_msg(group_id=int(gid), message=show_log())
+        config['pre_version'] = get_ver()
+        conf_write('ksmgame', config)       
+
+
+# 自动推送日志
+@_cmd_group.command('autolog')
+async def _(session: CommandSession, permission=SUPERUSER | GROUP_ADMIN):
+    
+    # 忽略私聊消息
+    if session.ctx['message_type'] != 'group':
+        return
+    
+    param = session.current_arg_text.split()
+    
+    global config
+    
+    gid = str(session.ctx.get('group_id', '000000000'))
+    
+    if len(param) == 0:
+        if gid in config['enabled_group']:
+            config['enabled_group'].remove(gid)
+            conf_write('ksmgame', config)
+            return await session.send('当游戏版本更新时，本群不再自动推动更新日志，您可以使用"ksmgame-log"指令手动查询最新更新日志。')
+        else:
+            config['enabled_group'].append(gid)
+            conf_write('ksmgame', config)
+            return await session.send('当游戏版本更新时，本群将自动推动更新日志，您也可以使用"ksmgame-log"指令手动查询最新更新日志。')
+
+    if len(param) == 1:
+        if param[0] == 'on':
+            config['enabled_group'].append(gid)
+            conf_write('ksmgame', config)
+            return await session.send('当游戏版本更新时，本群将自动推动更新日志，您也可以使用"ksmgame-log"指令手动查询最新更新日志。')
+        elif param == 'off':
+            config['enabled_group'].remove(gid)
+            conf_write('ksmgame', config)
+            return await session.send('当游戏版本更新时，本群不再自动推动更新日志，您可以使用"ksmgame-log"指令手动查询最新更新日志。')
+    
+    return await session.send('指令错误。使用"ksmgame-autolog on/off"来管理更新日志自动推送功能')
+    
 
 # 新建
 @_cmd_group.command('create')
@@ -205,7 +262,7 @@ async def _(_: CommandSession):
 
 
 # 管理员功能：重设所有玩家转生限制
-@_cmd_group.command('reset', permission=permission.SUPERUSER)
+@_cmd_group.command('reset', permission=SUPERUSER)
 async def _(_: CommandSession):
     for uid in data.saves.dir():
         save = data.saves[uid]

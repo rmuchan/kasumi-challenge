@@ -57,18 +57,18 @@ class GameChar:
 
     @property
     def life_steal_rate(self):
-        return self.attributes['life_steal_rate']
+        return self.attributes['life_steal_rate'] + self.buff_calc('life_steal_enhanced')
 
     @property
     def recover_rate(self):
         return self.attributes['recover_rate'] * self.buff_calc('recover_rate_enhanced',
-                                                                is_multi=True) / self.buff_calc('recover_rate_weaken',
-                                                                                                is_multi=True)
+                                                                is_multi=True) / self.buff_calc_spec(
+            'recover_rate_weaken')
 
     @property
     def buff_rate(self):
-        return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) / self.buff_calc(
-            'buff_rate_weaken', is_multi=True)
+        return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) * self.buff_calc_spec(
+            'buff_rate_weaken')
 
     @property
     def hp_percentage(self):
@@ -76,8 +76,9 @@ class GameChar:
 
     @property
     def spell_rate(self):
-        return self.attributes['spell_rate'] * self.buff_calc('spell_rate_enhanced', is_multi=True) / self.buff_calc(
-            'spell_rate_weaken', is_multi=True)
+        return self.attributes['spell_rate'] * self.buff_calc('spell_rate_enhanced',
+                                                              is_multi=True) * self.buff_calc_spec(
+            'spell_rate_weaken')
 
     @property
     def not_dead(self):
@@ -108,6 +109,15 @@ class GameChar:
                 for item in self.buff[buff_type]:
                     add += item[0]
             return add
+
+    # 用于乘法运算的属性，使其数值正常
+    def buff_calc_spec(self, buff_type):
+        enhance = 1
+        if buff_type in self.buff.keys():
+            for item in self.buff[buff_type]:
+                enhance *= max(1 - item[0], 0.00001)
+
+        return enhance
 
     # ————————————————————————————
     #           战斗功能
@@ -307,7 +317,7 @@ class GameChar:
         elif effect['type'] == 'PHY_ATK_BUFF_RATE':
             for obj in selector:
                 real_point = obj._attack_rate_to_pont(param[0][0])
-                real_added = obj.add_buff('attack_enhanced', real_point * fluctuation(), param[1], buff_enhanced=True)
+                real_added = obj.add_buff('attack_enhanced', real_point * fluctuation(), param[1])
                 ret.append({
                     'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -478,8 +488,28 @@ class GameChar:
                         'param': {'amount': stolen_mp, 'gain': gain}
                     })
 
+        # 生命窃取倍率提升
+        elif effect['type'] == 'LIFE_STEAL_UP':
+            for obj in selector:
+                real_added = obj.add_buff('life_steal_enhanced', param[0][0] * fluctuation(), param[1])
+                ret.append({
+                    'feedback': '提升了{target}{amount:.0%}的生命窃取倍率，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
+        # 法术倍率降低
+        elif effect['type'] == 'SPELL_DEC':
+            for obj in selector:
+                real_added = obj.add_buff('spell_rate_weaken', param[0][0] * fluctuation(0.95), param[1])
+                ret.append({
+                    'feedback': '降低了{target}{amount:.1%}的法术倍率，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
         else:
-                raise ValueError('出现了未知的效果类型' + effect['type'])
+            raise ValueError('出现了未知的效果类型' + effect['type'])
         return ret
 
     # ————————————————————————————
@@ -635,8 +665,11 @@ def life_display(hp) -> str:
     return hp_bar
 
 
-def fluctuation():
-    return biased(1, numerical['damage_fluctuation'])[0]
+def fluctuation(rate=False):
+    if rate:
+        return biased(1, rate)[0]
+    else:
+        return biased(1, numerical['damage_fluctuation'])[0]
 
 
 if __name__ == '__main__':

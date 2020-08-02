@@ -410,14 +410,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.36,
-                        "min": 0.25
+                        "expect": 0.30,
+                        "min": 0.24
                     },
-                    {
-                        "random": "triangular_int",
-                        "min": 4,
-                        "max": 5
-                    }
+                    4
                 ]
             }
         ]
@@ -687,8 +683,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 40,
-                        "min": 30
+                        "expect": 27,
+                        "min": 21
                     },
                     {
                         "random": "cubic",

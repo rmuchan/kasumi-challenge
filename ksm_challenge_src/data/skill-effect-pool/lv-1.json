@@ -75,8 +75,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.06,
-                "min": 0.05
+                "expect": 0.10,
+                "min": 0.09
             },
             {
                 "random": "cubic",
@@ -105,8 +105,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.17,
-                "min": 0.12
+                "expect": 0.18,
+                "min": 0.15
             },
             {
                 "random": "cubic",

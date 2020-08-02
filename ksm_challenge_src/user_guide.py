@@ -6,6 +6,7 @@ def show_help():
 当前版本：Alpha %s (记得关注更新日志！)
 ksmgame-help: 展示此帮助
 ksmgame-log: 展示更新日志 (在后面添加数字参数"n"可以查看向前n个版本的日志)
+ksmgame-autolog：切换在版本更新时是否向群内自动推送更新日志的选项(群管理员权限)
 ksmgame-create: 创建新的角色
 ksmgame-status: 查看角色信息
 ksmgame-boss: 发起一场Boss战
@@ -22,6 +23,8 @@ ksmgame-rebirth: 删除当前角色并获得天赋币(12小时内只能转生一
 
     return S
 
+def get_ver():
+    return version.log_file[-1]['version']
 
 def show_guide(key_word: str):
     S = ', '.join(['[%s]' % k for k in guide])
@@ -80,5 +83,4 @@ guide['天赋币'] = """使用"ksmgame-rebirth"将你的角色永久化为天赋
 当前角色的养成度越高，获得的天赋币数量越多。
 你可以使用"ksmgame-talent"管理天赋进行升级，你之后的角色将会得到这些天赋加成。"""
 
-if __name__ == '__main__':
-    print(show_log())
+
