@@ -54,7 +54,7 @@ class Gaming(ABC):
 
             self.turn += 1
 
-            await asyncio.sleep(16)
+            # await asyncio.sleep(16)
 
 
 
@@ -117,7 +117,7 @@ class Gaming(ABC):
                         for m in merged:
                             if m['feedback'] == f['feedback'] and m['merge_key'] == f['merge_key']:
                                 for k, v in f['param'].items():
-                                    m['param'][k] += v
+                                    m['param'][k] += f'、{v}' if isinstance(v, str) else v
                                 break
                         else:
                             merged.append(f)

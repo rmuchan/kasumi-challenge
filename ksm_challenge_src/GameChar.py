@@ -354,8 +354,8 @@ class GameChar:
                 obj.add_buff('silence', True, param[1])
                 ret.append({
                     'feedback': '沉默{target}{duration}回合',
-                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
-                    'param': {}
+                    'merge_key': {'duration': param[1]},
+                    'param': {'target': self._self_replace(obj.name)}
                 })
 
         # 净化
@@ -364,8 +364,8 @@ class GameChar:
                 obj.buff = {}
                 ret.append({
                     'feedback': '清除了{target}所有的状态',
-                    'merge_key': {'target': self._self_replace(obj.name)},
-                    'param': {}
+                    'merge_key': {},
+                    'param': {'target': self._self_replace(obj.name)}
                 })
 
         # 攻击削弱

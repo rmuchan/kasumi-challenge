@@ -114,7 +114,7 @@
             {
                 "type": "SILENCE",
                 "target": {
-                    "type": "RAND",
+                    "type": "RAND_SAFE",
                     "team": 0,
                     "limit": 3
                 },
