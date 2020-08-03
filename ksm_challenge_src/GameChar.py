@@ -374,7 +374,7 @@ class GameChar:
         # 攻击削弱
         elif effect['type'] == 'ATK_DEBUFF':
             for obj in selector:
-                oppo_to_decrease_atk_point = obj._attack_rate_to_pont(param[0][0]) * self.buff_rate
+                oppo_to_decrease_atk_point = obj._attack_rate_to_pont(param[0][0])
                 real_minus = obj.add_buff('attack_weaken', oppo_to_decrease_atk_point * fluctuation(rate=0.95), param[1])
                 ret.append({
                     'feedback': '削弱了{target}{minus_value:.0f}点攻击，持续{duration}回合',
@@ -385,7 +385,7 @@ class GameChar:
         # 法术增强
         elif effect['type'] == 'MGC_BUFF_RATE':
             for obj in selector:
-                real_added = obj.add_buff('spell_rate_enhanced', param[0][0] * fluctuation(), param[1])
+                real_added = obj.add_buff('spell_rate_enhanced', param[0][0] * fluctuation(rate=0.95), param[1])
                 ret.append({
                     'feedback': '强化了{target}{amount:.0%}的法术强度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -395,7 +395,7 @@ class GameChar:
         # 护甲衰减
         elif effect['type'] == 'DEF_DEC':
             for obj in selector:
-                real_added = obj.add_buff('defence_weaken', param[0][0] * self.buff_rate * fluctuation(), param[1])
+                real_added = obj.add_buff('defence_weaken', param[0][0] * self.buff_rate * fluctuation(rate=0.8), param[1])
                 ret.append({
                     'feedback': '削弱了{target}{amount:.1f}点防御，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -405,7 +405,7 @@ class GameChar:
         # 护甲提升
         elif effect['type'] == 'DEF_UP':
             for obj in selector:
-                real_added = obj.add_buff('defence_enhanced', param[0][0] * fluctuation(), param[1], buff_enhanced=True)
+                real_added = obj.add_buff('defence_enhanced', param[0][0] * fluctuation(rate=0.8), param[1], buff_enhanced=True)
                 ret.append({
                     'feedback': '强化了{target}{amount:.1f}点防御，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -426,7 +426,7 @@ class GameChar:
         # 暴击率提升
         elif effect['type'] == 'CRIT_CHANCE_BUFF':
             for obj in selector:
-                real_added = obj.add_buff('crit_chance_enhanced', param[0][0] * fluctuation(), param[1])
+                real_added = obj.add_buff('crit_chance_enhanced', param[0][0] * fluctuation(0.9), param[1])
                 ret.append({
                     'feedback': '提升了{target}{amount:.1%}的暴击率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -436,7 +436,7 @@ class GameChar:
         # 闪避率提升
         elif effect['type'] == 'DODGE_BUFF':
             for obj in selector:
-                real_added = obj.add_buff('dodge_enhanced', param[0][0] * fluctuation(), param[1])
+                real_added = obj.add_buff('dodge_enhanced', param[0][0] * fluctuation(0.9), param[1])
                 ret.append({
                     'feedback': '提升了{target}{amount:.0%}的闪避率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
