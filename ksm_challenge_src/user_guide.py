@@ -3,24 +3,27 @@ from . import version
 
 def show_help():
     S = """——-KASUMI CHALLENGE 帮助-——
-当前版本：Alpha %s (记得关注更新日志！)
-ksmgame-help: 展示此帮助
-ksmgame-log: 展示更新日志 (在后面添加数字参数"n"可以查看向前n个版本的日志)
-ksmgame-autolog：切换在版本更新时是否向群内自动推送更新日志的选项(群管理员权限)
-ksmgame-create: 创建新的角色
-ksmgame-status: 查看角色信息
-ksmgame-boss: 发起一场Boss战
-ksmgame-join: 加入其它玩家的队伍
-ksmgame-talent: 天赋管理
-ksmgame-rebirth: 删除当前角色并获得天赋币(5小时内只能转生一次)
+> 当前版本：Alpha %s
+> 指令列表
+    前缀："ksmgame"*无*空*格*间*隔*后接
+    -help:      展示此帮助
+    -log:        展示更新日志(在后面加数字"n"查看向前n版本的日志)
+    -create:   创建新的角色
+    -status:   查看角色信息
+    -boss:     发起一场Boss战
+    -join:       加入其它玩家的队伍
+    -talent:    天赋管理
+    -rebirth:   删除当前角色并获得天赋币(5小时内只能转生一次)
 ————————————
-如果您发现了任何文字、战斗数值等错误，或是对平衡性有任何建议，请发送邮件到"610@ice0.xyz"给开发者反馈，或者直接在GitHub中发起Issue或PR，感谢您的支持！
+> 高级功能：
+    -autolog：版本更新时向群内推送更新日志(权限\Toggle用法)
+    -help [关键词]: 查询有关游戏机制的详细解释(关键词前有空格)
+————————————
+❗️邀请bot进入您的群聊请发送邮件到"610@ice0.xyz"进行申请，否则不会通过。
+————————————
+👤如果您发现了任何文字、战斗数值等错误，或是对平衡性有任何建议，请发送邮件到"610@ice0.xyz"给开发者反馈，或者直接在GitHub中发起Issue或PR，感谢您的支持！
 项目地址：https://github.com/rMuchan/kasumi-challenge
-————————————
-在ksmgame-help后面增加下列关键词可以详细了解游戏机制：
-如"ksmgame-help 种族"可以展示种族说明
 """ % version.log_file[-1]['version']
-    S += ', '.join(['[%s]' % k for k in guide])
 
     return S
 
@@ -80,6 +83,8 @@ guide['生命窃取'] = """角色普通攻击造成伤害后，根据造成伤�
 对护盾造成的伤害无法触发生命窃取。"""
 guide['护盾'] = """角色一次只能拥有一个护盾，护盾无法叠加。
 护盾优先于角色自身受到伤害，物理攻击会对护盾造成完全的伤害，不会受到角色防御的减值。"""
+guide['天赋'] = """使用"ksmgame-talent"管理天赋，天赋是永久生效的。
+注意，在已经拥有角色的情况下，升级天赋并不能为您当前的角色带来提升。"""
 guide['天赋币'] = """使用"ksmgame-rebirth"将你的角色永久化为天赋币，这一操作不可逆。
 当前角色的养成度越高，获得的天赋币数量越多。
 你可以使用"ksmgame-talent"管理天赋进行升级，你之后的角色将会得到这些天赋加成。"""
