@@ -21,28 +21,43 @@ from .ksm_challenge_src.talent_calc import upgrade_talent
 _battles = {}
 _cmd_group = CommandGroup('ksmgame', only_to_me=False)
 
-this_bot = nonebot.get_bot()
-
 try:
     config = conf_read('ksmgame')
 except:
     config = dict(enabled_group=[], pre_version="")
     conf_write('ksmgame', config)
 
+
 @on_natural_language(only_to_me=False)
-async def birthday_remind_init(session: NLPSession):   
+async def _(session: NLPSession):
     global config
     if get_ver() != config['pre_version']:
-        for gid in config['enabled_group']:
-            asyncio.sleep(1)
-            await this_bot.send_group_msg(group_id=int(gid), message=show_log())
+        await send_to_all(session.bot, show_log(0))
         config['pre_version'] = get_ver()
-        conf_write('ksmgame', config)       
+        conf_write('ksmgame', config)
+
+
+@_cmd_group.command('warn', permission=SUPERUSER)
+async def _(session: CommandSession):
+    await send_to_all(session.bot, '提示：bot即将进入功能维护，所有功能将会暂时中止。')
+    await session.send('发送完成')
+
+
+@_cmd_group.command('done', permission=SUPERUSER)
+async def _(session: CommandSession):
+    await send_to_all(session.bot, 'bot维护完成，角色创建被中断的玩家可以再次使用create命令继续创建进程。')
+    await session.send('发送完成')
+
+
+async def send_to_all(bot, msg):
+    for gid in config['enabled_group']:
+        await asyncio.sleep(1)
+        await bot.send_group_msg(group_id=int(gid), message=msg)
 
 
 # 自动推送日志
-@_cmd_group.command('autolog')
-async def _(session: CommandSession, permission=SUPERUSER | GROUP_ADMIN):
+@_cmd_group.command('autolog', permission=SUPERUSER | GROUP_ADMIN)
+async def _(session: CommandSession):
     
     # 忽略私聊消息
     if session.ctx['message_type'] != 'group':
