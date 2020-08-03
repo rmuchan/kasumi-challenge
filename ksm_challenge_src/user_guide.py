@@ -12,9 +12,10 @@ ksmgame-status: 查看角色信息
 ksmgame-boss: 发起一场Boss战
 ksmgame-join: 加入其它玩家的队伍
 ksmgame-talent: 天赋管理
-ksmgame-rebirth: 删除当前角色并获得天赋币(12小时内只能转生一次)
+ksmgame-rebirth: 删除当前角色并获得天赋币(5小时内只能转生一次)
 ————————————
-如果您发现了任何文字、战斗数值等错误，或是对平衡性有任何建议，请发送邮件到"610@ice0.xyz"给开发者反馈，感谢您的支持！
+如果您发现了任何文字、战斗数值等错误，或是对平衡性有任何建议，请发送邮件到"610@ice0.xyz"给开发者反馈，或者直接在GitHub中发起Issue或PR，感谢您的支持！
+项目地址：https://github.com/rMuchan/kasumi-challenge
 ————————————
 在ksmgame-help后面增加下列关键词可以详细了解游戏机制：
 如"ksmgame-help 种族"可以展示种族说明

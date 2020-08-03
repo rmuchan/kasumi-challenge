@@ -1,11 +1,12 @@
 import asyncio
+import json
+import os
 import random
 import time
 
-import nonebot
-from nonebot import CommandGroup
-from .botTools.config_manager import *
-from .botTools import *
+from nonebot import CommandGroup, on_natural_language, NLPSession, CommandSession
+from nonebot.permission import SUPERUSER, GROUP_ADMIN
+from nonebot.session import BaseSession
 
 from .ksm_challenge_src.user_guide import *
 from .ksm_challenge_src.Gaming import Gaming
@@ -17,6 +18,20 @@ from .ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.data import data
 from .ksm_challenge_src.interact import UI
 from .ksm_challenge_src.talent_calc import upgrade_talent
+
+
+def conf_read(name):
+    # 读配置文件
+    with open('%s/configs/%s' % (os.path.dirname(__file__), f'{name}_config.json')) as FILE:
+        config_dict = json.loads(FILE.read())
+    return config_dict
+
+
+def conf_write(name, dict_):
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'configs'), 0o755, exist_ok=True)
+    with open('%s/configs/%s' % (os.path.dirname(__file__), f'{name}_config.json'), 'w+', encoding='utf-8') as f:
+        f.write(json.dumps(dict_, sort_keys=False, indent=4, ensure_ascii=False))
+
 
 _battles = {}
 _cmd_group = CommandGroup('ksmgame', only_to_me=False)
@@ -73,21 +88,21 @@ async def _(session: CommandSession):
         if gid in config['enabled_group']:
             config['enabled_group'].remove(gid)
             conf_write('ksmgame', config)
-            return await session.send('当游戏版本更新时，本群不再自动推动更新日志，您可以使用"ksmgame-log"指令手动查询最新更新日志。')
+            return await session.send('🔴当游戏版本更新时，本群不再自动推动更新日志，您可以使用"ksmgame-log"指令手动查询最新更新日志。')
         else:
             config['enabled_group'].append(gid)
             conf_write('ksmgame', config)
-            return await session.send('当游戏版本更新时，本群将自动推动更新日志，您也可以使用"ksmgame-log"指令手动查询最新更新日志。')
+            return await session.send('🟢当游戏版本更新时，本群将自动推动更新日志，您也可以使用"ksmgame-log"指令手动查询最新更新日志。')
 
     if len(param) == 1:
         if param[0] == 'on':
             config['enabled_group'].append(gid)
             conf_write('ksmgame', config)
-            return await session.send('当游戏版本更新时，本群将自动推动更新日志，您也可以使用"ksmgame-log"指令手动查询最新更新日志。')
-        elif param == 'off':
+            return await session.send('🟢当游戏版本更新时，本群将自动推动更新日志，您也可以使用"ksmgame-log"指令手动查询最新更新日志。')
+        elif param[0] == 'off':
             config['enabled_group'].remove(gid)
             conf_write('ksmgame', config)
-            return await session.send('当游戏版本更新时，本群不再自动推动更新日志，您可以使用"ksmgame-log"指令手动查询最新更新日志。')
+            return await session.send('🔴当游戏版本更新时，本群不再自动推动更新日志，您可以使用"ksmgame-log"指令手动查询最新更新日志。')
     
     return await session.send('指令错误。使用"ksmgame-autolog on/off"来管理更新日志自动推送功能')
     
@@ -250,9 +265,9 @@ async def _(session: CommandSession):
 
     last_rebirth = ui.retrieve('last_rebirth') or 0
     current_time = time.time()
-    seconds_per_day = 12 * 60 * 60
-    if int(current_time / seconds_per_day) - int(last_rebirth / seconds_per_day) < 1:
-        return await ui.send('每12小时只能进行一次转生')
+    rebirth_interval = 5 * 60 * 60
+    if int(current_time / rebirth_interval) - int(last_rebirth / rebirth_interval) < 1:
+        return await ui.send('每5小时只能进行一次转生')
 
     coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate'))
