@@ -165,7 +165,7 @@ async def _(session: CommandSession):
         return await ui.send('冒险正在进行中，你可以使用"ksmgame-join"加入队伍！')
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('你还未拥有一个角色，使用"ksmgame-create"来创建新的角色！\n你还可以使用"ksmgame-help"了解更多的指令！')
+        return await ui.send('你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
 
     boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
     if is_saved:
@@ -232,7 +232,7 @@ async def _(session: CommandSession):
 
     char = ui.retrieve('character')
     if char is None:
-        return await ui.send('没有角色是无法加入队伍的，使用"ksmgame-create"来创建新的角色！\n你还可以使用"ksmgame-help"了解更多的指令！')
+        return await ui.send('没有角色是无法加入队伍的！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
 
     if ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
         return await ui.send('你已经在小队中了！')
@@ -344,8 +344,10 @@ async def _play(ui: UI, gid: int):
             data.saves.group[str(gid)] = save
 
     game = Gaming(bat['team_a'].values(), bat['team_b'].values(), ui)
-    result, _ = await game.start()
-    del _battles[gid]
+    try:
+        result, _ = await game.start()
+    finally:
+        del _battles[gid]
 
     if bat['is_pvp']:
         # TODO pvp结果反馈
@@ -370,6 +372,7 @@ async def _play(ui: UI, gid: int):
 
 def _give_exp(uid: int, amount: int):
     save = data.saves[str(uid)] or {}
-    char = save['character']
-    char['exp'] += int(amount * calc_passive(1, char, 'exp_earn_rate'))
-    data.saves[str(uid)] = save
+    char = save.get('character')
+    if isinstance(char, dict):
+        char['exp'] += int(amount * calc_passive(1, char, 'exp_earn_rate'))
+        data.saves[str(uid)] = save

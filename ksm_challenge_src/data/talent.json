@@ -2,7 +2,7 @@
   "str_base": {
     "name": "肌肉强化",
     "desc": "力量基础",
-    "format": ".1f",
+    "format": ".2f",
     "effect": 0.75,
     "max_level": 10,
     "cost_base": 10,
@@ -12,7 +12,7 @@
   "int_base": {
     "name": "协调训练",
     "desc": "敏捷基础",
-    "format": ".1f",
+    "format": ".2f",
     "effect": 0.75,
     "max_level": 10,
     "cost_base": 10,
@@ -22,7 +22,7 @@
   "per_base": {
     "name": "精神统一",
     "desc": "感知基础",
-    "format": ".1f",
+    "format": ".2f",
     "effect": 0.75,
     "max_level": 10,
     "cost_base": 10,

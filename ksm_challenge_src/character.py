@@ -62,7 +62,6 @@ async def _create_step_passive_select(ui: UI, proto: Dict[str, Any]):
     for idx, val in enumerate(candidate):
         ui.append('[%d] %s' % (idx + 1, val['desc']))
     ui.append('—' * 12)
-    ui.append('(如果您不清楚这些属性的意义，您可以使用像\n"ksmgame-help 力量"\n这样的指令查询每个属性的意义)')
     await ui.send(' ↓ 选择被动加成（输入选项序号）：')
 
     selection = await ui.input(is_valid=lambda x: x.isdigit() and int(x) - 1 in range(len(candidate)))
@@ -115,13 +114,13 @@ async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
 
 _CREATE_STEPS = {
     'name': (_create_step_name, 'skill_candidate', False),
-    'skill_candidate': (_create_step_skill_candidate, 'passive', True),
-    'passive': (_create_step_passive_select, 'skill_1', False),
+    'skill_candidate': (_create_step_skill_candidate, 'skill_1', True),
     'skill_1': (_create_step_skill_select(1), 'skill_2', False),
     'skill_2': (_create_step_skill_select(2), 'skill_3', False),
     'skill_3': (_create_step_skill_select(3), 'unique', False),
     'unique': (_create_step_unique_select, 'main_skill', False),
-    'main_skill': (_create_step_main_skill, 'full', False),
+    'main_skill': (_create_step_main_skill, 'passive', False),
+    'passive': (_create_step_passive_select, 'full', False),
 }
 
 
@@ -175,10 +174,11 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
               )
     ui.append('基础物防: %.2f (%s)' % (calc_passive(char['def_base'][0], char, 'def_base'), char['def_base'][1]))
     ui.append('攻击倍率: %.2f (%s)' % (char['attack_rate'][0], char['attack_rate'][1]))
+    ui.append('(如果您不清楚这些属性的意义，您可以使用像\n"ksmgame-help 力量"\n这样的指令查询每个属性的意义)')
 
 
 def _print_step_passive(ui: UI, char: Dict[str, Any]):
-    ui.append(char['passive']['desc'])
+    ui.append('被动加成: %s' % char['passive']['desc'])
 
 
 def _print_step_skill(skill_num: int):

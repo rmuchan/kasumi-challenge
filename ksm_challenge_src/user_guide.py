@@ -3,7 +3,7 @@ from . import version
 
 def show_help():
     S = """——-KASUMI CHALLENGE 帮助-——
-> 当前版本：Alpha %s
+> 当前版本：%s
 > 指令列表
     前缀："ksmgame"*无*空*格*间*隔*后接
     -help:      展示此帮助

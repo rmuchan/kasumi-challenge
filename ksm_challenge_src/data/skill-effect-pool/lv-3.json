@@ -400,7 +400,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "小幅度降低敌方全体色{param[0]:%}的攻击力，持续{param[1]}回合",
+                "desc": "小幅度降低敌方全体角色{param[0]:%}的攻击力，持续{param[1]}回合",
                 "type": "ATK_DEBUFF",
                 "target": {
                     "type": "ATKMOST",
