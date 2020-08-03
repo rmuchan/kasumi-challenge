@@ -44,7 +44,7 @@ def game_char_gen(chara: dict, test_lv=False) -> dict:
 
     game_char['name'] = chara['name']
     game_char['not_short_hp'] = True
-    game_char['attack'] = _atk_calc(str_, int_, chara['defense_str_rate'])
+    game_char['attack'] = _atk_calc(str_, int_, chara['defense_str_rate'], chara['attack_rate'][0])
     game_char['defence'] = _def_calc(int_, calc_passive(chara['def_base'][0], chara, 'def_base'))
     game_char['HP'] = hp_calc(str_,
                               numerical['life_base'] * chara['life_build'][0] + calc_passive(0, chara, 'life_base'),
@@ -89,9 +89,9 @@ def _attr_calc(attr_base, attr_grow, lv):
 
 
 # 攻击计算
-def _atk_calc(str_cur, int_cur, defense_str_rate):
+def _atk_calc(str_cur, int_cur, defense_str_rate, atk_rate):
     adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * numerical['atk_rate']
+    return adj * atk_rate
 
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(
@@ -106,7 +106,7 @@ def _def_calc(int_cur, def_base):
 
 # 暴击倍率增益计算
 def crit_rate_calc(int_cur, extra):
-    return int_cur / 150 + 1.40 + extra
+    return int_cur / 150 + numerical['crit_base'] + extra
 
 
 # 下面会有三个基于属性的技能强化率的计算会用到这个函数

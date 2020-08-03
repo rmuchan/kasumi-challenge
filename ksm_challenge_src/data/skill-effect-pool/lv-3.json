@@ -2,13 +2,13 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.04,
-            "max": 0.10
+            "min": 0.05,
+            "max": 0.14
         },
         "cooldown": {
             "random": "triangular_int",
             "min": 1,
-            "max": 4
+            "max": 3
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -38,8 +38,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 140,
-                        "min": 110
+                        "expect": 130,
+                        "min": 120
                     }
                 ]
             }
@@ -400,7 +400,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "大幅度降低敌方攻击最高的角色{param[0]:%}的攻击力，持续{param[1]}回合",
+                "desc": "小幅度降低敌方全体色{param[0]:%}的攻击力，持续{param[1]}回合",
                 "type": "ATK_DEBUFF",
                 "target": {
                     "type": "ATKMOST",
@@ -410,8 +410,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.30,
-                        "min": 0.24
+                        "expect": 0.15,
+                        "min": 0.12
                     },
                     4
                 ]

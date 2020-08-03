@@ -151,7 +151,8 @@
                     ],
                     2
                 ]
-            },            {
+            },
+            {
                 "type": "SHIELD",
                 "target": {
                     "type": "SELF",
@@ -239,7 +240,61 @@
                 "target": {
                     "type": "RAND",
                     "team": 0,
-                    "limit": 7
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
                 },
                 "param": []
             }

@@ -216,7 +216,7 @@
                     ]
                 ]
             },            {
-                "type": "HEAL",
+                "type": "SHIELD",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -226,9 +226,9 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 330,
-                            "max": 380
+                            "rating_weight": 5,
+                            "min": 380,
+                            "max": 440
                         }
                     ]
                 ]

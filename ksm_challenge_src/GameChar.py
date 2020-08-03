@@ -8,6 +8,9 @@ from .rand import biased
 numerical = data.numerical
 
 
+class NoTargetSelected(RuntimeError):
+    pass
+
 class GameChar:
     def __init__(self, chara: dict, name: str):
         self.attributes = chara
@@ -62,7 +65,7 @@ class GameChar:
     @property
     def recover_rate(self):
         return self.attributes['recover_rate'] * self.buff_calc('recover_rate_enhanced',
-                                                                is_multi=True) / self.buff_calc_spec(
+                                                                is_multi=True) * self.buff_calc_spec(
             'recover_rate_weaken')
 
     @property
@@ -245,7 +248,7 @@ class GameChar:
         :return: {角色名: {feedback: 返回信息, param: {返回信息需要用到的参数}}}
         """
         if len(selector) == 0:
-            return None
+            raise NoTargetSelected('选择器没有选到任何的目标！效果信息：%s' % str(effect))
 
         param = effect['param']
 
@@ -372,7 +375,7 @@ class GameChar:
         elif effect['type'] == 'ATK_DEBUFF':
             for obj in selector:
                 oppo_to_decrease_atk_point = obj._attack_rate_to_pont(param[0][0]) * self.buff_rate
-                real_minus = obj.add_buff('attack_weaken', oppo_to_decrease_atk_point * fluctuation(), param[1])
+                real_minus = obj.add_buff('attack_weaken', oppo_to_decrease_atk_point * fluctuation(rate=0.95), param[1])
                 ret.append({
                     'feedback': '削弱了{target}{minus_value:.0f}点攻击，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -620,8 +623,8 @@ class GameChar:
         返回护甲减免后的伤害值
         """
         damage_decrease = 1 + numerical['def_rate'] * self.defence
-        if damage_decrease < 0.7:
-            damage_decrease = 0.7
+        if damage_decrease < 0.4:
+            damage_decrease = 0.4
         return damage / damage_decrease
 
     def _attack_rate_to_pont(self, rate):
@@ -665,7 +668,7 @@ def life_display(hp) -> str:
     return hp_bar
 
 
-def fluctuation(rate=False):
+def fluctuation(rate=None):
     if rate:
         return biased(1, rate)[0]
     else:
