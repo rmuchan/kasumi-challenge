@@ -58,7 +58,7 @@
     },
     "crit_rate": 1.40,
     "crit_chance": 0.08,
-    "life_steal_rate": 0.36,
+    "life_steal_rate": 0.21,
     "dodge": 0.05,
     "skill_1": {
         "chance": 0.15,
@@ -142,8 +142,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 4,
-                            "min": 0.78,
-                            "max": 0.80
+                            "min": 0.93,
+                            "max": 0.95
                         }
                     ],
                     1
@@ -206,8 +206,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 233,
-                            "max": 250
+                            "min": 243,
+                            "max": 260
                         }
                     ]
                 ]

@@ -41,7 +41,7 @@
     "recover_rate": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 0.9,
+        "min": 1.0,
         "max": 1.2
     },
     "spell_rate": {
@@ -57,7 +57,7 @@
         "max": 1.14
     },
     "crit_rate": 1.75,
-    "crit_chance": 0.75,
+    "crit_chance": 0.79,
     "life_steal_rate": 0.8,
     "dodge": 0.6,
     "skill_1": {
@@ -174,16 +174,16 @@
                 "type": "HEAL",
                 "target": {
                     "type": "SELF",
-                    "team": 100,
-                    "limit": 120
+                    "team": 1,
+                    "limit": 1
                 },
                 "param": [
                     [
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 10,
-                            "max": 11
+                            "min": 100,
+                            "max": 110
                         }
                     ]
                 ]

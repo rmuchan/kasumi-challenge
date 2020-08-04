@@ -39,7 +39,7 @@ class GameChar:
 
     @property
     def attack(self):
-        return max(self.attributes['attack'] + self.buff_calc('attack_enhanced') - self.buff_calc('attack_weaken'), 1)
+        return max((self.attributes['attack'] + self.buff_calc('attack_enhanced')) * self.buff_calc_spec('attack_weaken'), 1)
 
     # 暴击率是非线性叠加
     @property
@@ -374,10 +374,9 @@ class GameChar:
         # 攻击削弱
         elif effect['type'] == 'ATK_DEBUFF':
             for obj in selector:
-                oppo_to_decrease_atk_point = obj._attack_rate_to_pont(param[0][0])
-                real_minus = obj.add_buff('attack_weaken', oppo_to_decrease_atk_point * fluctuation(rate=0.95), param[1])
+                real_minus = obj.add_buff('attack_weaken', param[0][0] * fluctuation(rate=0.95), param[1])
                 ret.append({
-                    'feedback': '削弱了{target}{minus_value:.0f}点攻击，持续{duration}回合',
+                    'feedback': '削弱了{target}{minus_value:.0%}的攻击，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'minus_value': real_minus}
                 })

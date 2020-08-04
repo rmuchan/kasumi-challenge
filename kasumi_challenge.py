@@ -47,9 +47,9 @@ except:
 async def _(session: NLPSession):
     global config
     if get_ver() != config['pre_version']:
-        await send_to_all(session.bot, show_log(0))
         config['pre_version'] = get_ver()
         conf_write('ksmgame', config)
+        await send_to_all(session.bot, show_log(0))
 
 
 @_cmd_group.command('warn', permission=SUPERUSER)
