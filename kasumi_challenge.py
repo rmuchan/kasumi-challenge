@@ -237,6 +237,9 @@ async def _(session: CommandSession):
     if ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
         return await ui.send('你已经在小队中了！')
 
+    if time.time() - (ui.retrieve('last_join') or 0) < 1120:
+        return await ui.send('你同时只能参与一场战斗！')
+
     team = session.current_arg.lower()
     if bat['is_pvp']:
         if team not in ('a', 'b'):
@@ -286,7 +289,8 @@ async def _(session: CommandSession):
         await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
 
 
-@_cmd_group.command('reload')
+# 管理员功能：重新加载数据
+@_cmd_group.command('reload', permission=SUPERUSER)
 async def _(_: CommandSession):
     data.reload()
 
@@ -317,7 +321,11 @@ def _get_boss(gid: int, lvl: int):
 async def _remove_battle(session: BaseSession, bat: dict):
     group_id = session.ctx['group_id']
     await asyncio.sleep(600)
-    if _battles[group_id] is bat and bat['can_join']:
+    if _battles.get(group_id) is bat and bat['can_join']:
+        for uid in _battles[group_id]['team_a']:
+            _reset_join_time(uid)
+        for uid in _battles[group_id]['team_b']:
+            _reset_join_time(uid)
         del _battles[group_id]
         await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')
 
@@ -325,6 +333,7 @@ async def _remove_battle(session: BaseSession, bat: dict):
 async def _join(ui: BotContextUI, gid: int, team: str, char: dict):
     bat = _battles[gid]
     bat[f'team_{team}'][ui.uid()] = game_char_gen(char)
+    ui.store('last_join', time.time())
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
         return await ui.send(f'你加入了小队')
 
@@ -353,6 +362,8 @@ async def _play(ui: UI, gid: int):
         # TODO pvp结果反馈
         pass
     else:
+        for uid in bat['team_a']:
+            _reset_join_time(uid)
         if result == 'timeout':
             await ui.send('战斗超时！挑战失败了……遗憾\n使用指令"ksmgame-help"了解更多的游戏机制吧！')
         elif result == 'b_win':
@@ -375,4 +386,10 @@ def _give_exp(uid: int, amount: int):
     char = save.get('character')
     if isinstance(char, dict):
         char['exp'] += int(amount * calc_passive(1, char, 'exp_earn_rate'))
+        data.saves[str(uid)] = save
+
+
+def _reset_join_time(uid: int):
+    save = data.saves[str(uid)] or {}
+    if save.pop('last_join', None) is not None:
         data.saves[str(uid)] = save
