@@ -41,10 +41,9 @@ class Gaming(ABC):
             # 技能发动、攻击、效果执行
             # 然后buff结算、减冷却
             self._skill_check('a')
-            self._status_manage('a')
-
             self._skill_check('b')
             self._status_manage('b')
+            self._status_manage('a')
             self.ui.append('')
             self.team_a = self._death_check('a')
             self.team_b = self._death_check('b')
