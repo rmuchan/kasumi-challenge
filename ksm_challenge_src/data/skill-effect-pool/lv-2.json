@@ -66,7 +66,7 @@
             ]
         },
         "desc": "强化我方全体，提升{param[0]:.1%}的攻击，持续{param[1]}回合",
-        "weight": 1,
+        "weight": 2,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
             "type": "ALL",
@@ -96,7 +96,7 @@
             ]
         },
         "desc": "提升自身{param[0]:.1%}的攻击，持续{param[1]}回合",
-        "weight": 3,
+        "weight": 4,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
             "type": "SELF",
