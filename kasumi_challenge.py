@@ -185,6 +185,7 @@ async def _(session: CommandSession):
         'capacity_b': 1
     }
     bat['team_a'][ui.uid()] = game_char_gen(char)
+    ui.store('last_join', time.time())
     _battles[group_id] = bat
     await ui.send('你提议开启一场boss战！其他人可以使用ksmgame-join来加入小队')
 
