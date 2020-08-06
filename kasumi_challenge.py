@@ -1,4 +1,5 @@
 import asyncio
+import atexit
 import json
 import os
 import random
@@ -393,3 +394,12 @@ def _reset_join_time(uid: int):
     save = data.saves[str(uid)] or {}
     if save.pop('last_join', None) is not None:
         data.saves[str(uid)] = save
+
+
+@atexit.register
+def _():
+    for bat in _battles.values():
+        for uid in bat['team_a']:
+            _reset_join_time(uid)
+        for uid in bat['team_b']:
+            _reset_join_time(uid)
