@@ -168,6 +168,9 @@ async def _(session: CommandSession):
     if char is None:
         return await ui.send('你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
 
+    if time.time() - (ui.retrieve('last_join') or 0) < 1120:
+        return await ui.send('你同时只能参与一场战斗！')
+
     boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
     if is_saved:
         ui.append('上次没人打的boss又回来啦！')
