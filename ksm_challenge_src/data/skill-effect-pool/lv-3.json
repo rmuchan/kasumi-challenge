@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 100,
-                        "min": 90
+                        "expect": 65,
+                        "min": 50
                     }
                 ]
             },
@@ -99,8 +99,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.255,
-                        "min": 0.225
+                        "expect": 0.265,
+                        "min": 0.245
                     },
                     3
                 ]
@@ -198,11 +198,7 @@
                         "expect": 106,
                         "min": 93
                     },
-                    {
-                        "random": "cubic",
-                        "min": 2,
-                        "max": 3
-                    }
+                    3
                 ]
             }
         ]
@@ -457,14 +453,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.42,
-                        "min": 0.36
+                        "expect": 0.43,
+                        "min": 0.38
                     },
-                    {
-                        "random": "cubic",
-                        "min": 6,
-                        "max": 8
-                    }
+                    5
                 ]
             },
             {
@@ -686,11 +678,7 @@
                         "expect": 27,
                         "min": 21
                     },
-                    {
-                        "random": "cubic",
-                        "min": 2,
-                        "max": 3
-                    }
+                    3
                 ]
             }
         ]
@@ -865,6 +853,61 @@
             },
             {
                 "desc": "然后进行一次普通攻击",
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            }
+        ]
+    },{
+        "chance": {
+            "random": "triangular",
+            "min": 0.06,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 1,
+            "max": 3
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "瞄准弱点",
+                "肾击",
+                "重拳出击",
+                "胜利一击"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "瞬间地强化自身暴击率",
+                "type": "CRIT_CHANCE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 2,
+                        "min": 1.99
+                    },
+                    0
+                ]
+            },
+            {
+                "desc": "然后进行一次必定暴击的普通攻击",
                 "type": "NORMAL_ATK",
                 "target": {
                     "type": "RAND",

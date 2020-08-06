@@ -85,7 +85,7 @@
                 ]
             },
             {
-                "type": "ATK_DEBUFF",
+                "type": "SPELL_DEC",
                 "target": {
                     "type": "SAME",
                     "team": 0,
@@ -96,8 +96,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 4,
-                            "min": 0.41,
-                            "max": 0.47
+                            "min": 0.48,
+                            "max": 0.51
                         }
                     ],
                     2

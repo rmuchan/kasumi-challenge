@@ -558,7 +558,7 @@ class GameChar:
         护盾不会叠加，只会取最大值
         返回实际护盾添加量
         """
-        value *= self.recover_rate
+        value *= self.buff_rate
         if self.shield >= value:
             return 0
         else:

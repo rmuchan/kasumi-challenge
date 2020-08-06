@@ -105,5 +105,9 @@ async def main2():
     plt.show()
 
 
+#TODO 物理减自己血两次攻击
+#TODO 破盾一击
+#TODO 使攻击最高的队友加攻击并沉默
+
 if __name__ == '__main__':
     asyncio.run(main2())
