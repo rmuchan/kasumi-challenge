@@ -99,8 +99,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.265,
-                        "min": 0.245
+                        "expect": 0.295,
+                        "min": 0.275
                     },
                     3
                 ]
@@ -569,7 +569,7 @@
                         "expect": 1.8,
                         "min": 1.4
                     },
-                    5
+                    4
                 ]
             }
         ]
@@ -866,17 +866,17 @@
         "chance": {
             "random": "triangular",
             "min": 0.06,
-            "max": 0.15
+            "max": 0.14
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 1,
-            "max": 3
+            "min": 4,
+            "max": 5
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 120
+            "min": 120,
+            "max": 180
         },
         "name": {
             "random": "choice",
@@ -887,7 +887,7 @@
                 "胜利一击"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "瞬间地强化自身暴击率",

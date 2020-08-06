@@ -64,8 +64,8 @@
                 "战术"
             ]
         },
-        "desc": "强化我方全体，提升{param[0]:.0f}的攻击，持续{param[1]}回合",
-        "weight": 2,
+        "desc": "强化我方全体，提升{param[0]:.0f}点攻击，持续{param[1]}回合",
+        "weight": 1,
         "type": "PHY_ATK_BUFF_CONST",
         "target": {
             "type": "ALL",
@@ -75,8 +75,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 24,
-                "min": 21
+                "expect": 16,
+                "min": 15
             },
             3
         ]
@@ -104,11 +104,7 @@
                 "expect": 0.18,
                 "min": 0.15
             },
-            {
-                "random": "cubic",
-                "min": 3,
-                "max": 4
-            }
+            3
         ]
     },
     {

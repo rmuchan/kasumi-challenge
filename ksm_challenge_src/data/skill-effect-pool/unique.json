@@ -147,7 +147,7 @@
                 "复苏治疗"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "治疗生命最低的一名队友{param[0]}点生命",
@@ -317,7 +317,7 @@
                 "致命精准"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "小幅度强化自身{param[0]}点攻击，持续{param[1]}回合",
@@ -330,8 +330,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 42,
-                        "min": 35
+                        "expect": 52,
+                        "min": 45
                     },
                     2
                 ]
@@ -381,7 +381,7 @@
                 "饮血之刃"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "小幅度强化自身{param[0]}点攻击，持续{param[1]}回合",
@@ -415,6 +415,32 @@
                         "min": 1.7
                     },
                     3
+                ]
+            }
+        ]
+    },{
+        "name": {
+            "random": "choice",
+            "values": [
+                "火焰附魔",
+                "烈焰刀刃",
+                "燃烧箭矢",
+                "火焰之拳"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内附带等同于自己攻击的魔法伤害。",
+                "type": "FIRE_ENCHANT",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    0.7,
+                    2
                 ]
             }
         ]

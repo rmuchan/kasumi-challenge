@@ -65,7 +65,7 @@
                 "战术协调"
             ]
         },
-        "desc": "强化我方全体，提升{param[0]:.0f}的攻击，持续{param[1]}回合",
+        "desc": "强化我方全体，提升{param[0]:.0f}点攻击，持续{param[1]}回合",
         "weight": 2,
         "type": "PHY_ATK_BUFF_CONST",
         "target": {
@@ -76,8 +76,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 45,
-                "min": 39
+                "expect": 36,
+                "min": 32
             },
             3
         ]
@@ -105,11 +105,7 @@
                 "expect": 0.36,
                 "min": 0.28
             },
-            {
-                "random": "cubic",
-                "min": 4,
-                "max": 5
-            }
+            3
         ]
     },
     {

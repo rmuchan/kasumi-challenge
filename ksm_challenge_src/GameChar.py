@@ -11,6 +11,7 @@ numerical = data.numerical
 class NoTargetSelected(RuntimeError):
     pass
 
+
 class GameChar:
     def __init__(self, chara: dict, name: str):
         self.attributes = chara
@@ -39,7 +40,8 @@ class GameChar:
 
     @property
     def attack(self):
-        return max((self.attributes['attack'] + self.buff_calc('attack_enhanced')) * self.buff_calc_spec('attack_weaken'), 1)
+        return max(
+            (self.attributes['attack'] + self.buff_calc('attack_enhanced')) * self.buff_calc_spec('attack_weaken'), 1)
 
     # 暴击率是非线性叠加
     @property
@@ -93,10 +95,13 @@ class GameChar:
 
     @property
     def is_silence(self):
-        if 'silence' in self.buff.keys():
-            return True
-        else:
-            return False
+        return 'silence' in self.buff.keys()
+
+
+    @property
+    def fire_enchanted(self):
+        return 'fire_enchant' in self.buff.keys()
+
 
     def buff_calc(self, buff_type, is_multi=False):
         if is_multi:
@@ -254,12 +259,46 @@ class GameChar:
 
         ret = []
 
+        def do_phy_damage():
+            feedback = ''
+            if is_crit:
+                feedback += '暴击！'
+            feedback += '对{target}'
+            # 未击破
+            if atk_status == 2:
+                feedback += '的护盾'
+
+            feedback += '造成了{amount:.0f}点伤害'
+            # 击破护盾了
+            if atk_status == 1:
+                feedback += '，破坏了护盾'
+            ret.append({
+                'feedback': feedback,
+                'merge_key': {'target': self._self_replace(obj.name)},
+                'param': {'amount': real_damage}
+            })
+
+        def do_magic_damage(damage):
+            magic_damage = damage * self.spell_rate * fluctuation()
+            real_damage, atk_status, _ = obj.take_damage(magic_damage, magic=True)
+            feedback = '对{target}'
+            if atk_status == 2:
+                feedback += '的护盾'
+            feedback += '造成了{amount:.0f}点魔法伤害'
+            if atk_status == 1:
+                feedback += '，破坏了护盾'
+            ret.append({
+                'feedback': feedback,
+                'merge_key': {'target': self._self_replace(obj.name)},
+                'param': {'amount': real_damage}
+            })
+
         # 普通攻击
         if effect['type'] == 'NORMAL_ATK':
             for obj in selector:
                 atk_damage, is_crit = self.do_attack()
                 real_damage, atk_status, hp_damage = obj.take_damage(atk_damage)
-
+                # magic_enchant
                 # 吸血
                 self.recover(hp_damage * self.life_steal_rate)
 
@@ -271,40 +310,16 @@ class GameChar:
                         'param': {}
                     })
                 else:
-                    feedback = ''
-                    if is_crit:
-                        feedback += '暴击！'
-                    feedback += '对{target}'
-                    # 未击破
-                    if atk_status == 2:
-                        feedback += '的护盾'
-
-                    feedback += '造成了{amount:.0f}点伤害'
-                    # 击破护盾了
-                    if atk_status == 1:
-                        feedback += '，破坏了护盾'
-                    ret.append({
-                        'feedback': feedback,
-                        'merge_key': {'target': self._self_replace(obj.name)},
-                        'param': {'amount': real_damage}
-                    })
+                    if self.fire_enchanted:
+                        do_magic_damage(self.attack)
+                        do_phy_damage()
+                    else:
+                        do_phy_damage()
 
         # 魔法伤害
         elif effect['type'] == 'MGC_DMG':
             for obj in selector:
-                magic_damage = param[0][0] * self.spell_rate * fluctuation()
-                real_damage, atk_status, _ = obj.take_damage(magic_damage, magic=True)
-                feedback = '对{target}'
-                if atk_status == 2:
-                    feedback += '的护盾'
-                feedback += '造成了{amount:.0f}点魔法伤害'
-                if atk_status == 1:
-                    feedback += '，破坏了护盾'
-                ret.append({
-                    'feedback': feedback,
-                    'merge_key': {'target': self._self_replace(obj.name)},
-                    'param': {'amount': real_damage}
-                })
+                do_magic_damage(param[0][0])
 
         # 固定值攻击强化
         elif effect['type'] == 'PHY_ATK_BUFF_CONST':
@@ -394,7 +409,8 @@ class GameChar:
         # 护甲衰减
         elif effect['type'] == 'DEF_DEC':
             for obj in selector:
-                real_added = obj.add_buff('defence_weaken', param[0][0] * self.buff_rate * fluctuation(rate=0.8), param[1])
+                real_added = obj.add_buff('defence_weaken', param[0][0] * self.buff_rate * fluctuation(rate=0.8),
+                                          param[1])
                 ret.append({
                     'feedback': '削弱了{target}{amount:.1f}点防御，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -404,7 +420,8 @@ class GameChar:
         # 护甲提升
         elif effect['type'] == 'DEF_UP':
             for obj in selector:
-                real_added = obj.add_buff('defence_enhanced', param[0][0] * fluctuation(rate=0.8), param[1], buff_enhanced=True)
+                real_added = obj.add_buff('defence_enhanced', param[0][0] * fluctuation(rate=0.8), param[1],
+                                          buff_enhanced=True)
                 ret.append({
                     'feedback': '强化了{target}{amount:.1f}点防御，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -508,6 +525,16 @@ class GameChar:
                     'feedback': '降低了{target}{amount:.1%}的法术倍率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
+                })
+
+        # 火焰附魔 (反正是一回事儿)
+        elif effect['type'] == 'FIRE_ENCHANT':
+            for obj in selector:
+                real_added = obj.add_buff('fire_enchant', True, param[1])
+                ret.append({
+                    'feedback': '为{target}添加了火焰附魔，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {}
                 })
 
         else:
