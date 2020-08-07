@@ -10,7 +10,7 @@
                 "灭亡之影"
             ]
         },
-        "weight": 4,
+        "weight": 3,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -41,7 +41,7 @@
                 "虚空暗蚀"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "对敌方全体造成{param[0]}点魔法伤害",

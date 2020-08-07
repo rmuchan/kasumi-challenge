@@ -311,7 +311,7 @@ class GameChar:
                     })
                 else:
                     if self.fire_enchanted:
-                        do_magic_damage(self.attack)
+                        do_magic_damage(self.attack * numerical['fire_enchant_rate'])
                         do_phy_damage()
                     else:
                         do_phy_damage()
