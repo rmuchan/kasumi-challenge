@@ -75,7 +75,7 @@
   "life_grow": 3.6,
   "crit_base": 1.25,
   "crit_chance": 0.11,
-  "life_steal_rate_base":0.4,
+  "life_steal_rate_base":0.3,
   "def_adj_rate": 0.05,
   "def_rate": 0.26,
   "dodge_base": 0.04,

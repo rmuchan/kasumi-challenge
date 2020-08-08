@@ -57,9 +57,9 @@
         }
     },
     {
-        "desc": "【嗜血渴望】生命窃取+60%",
+        "desc": "【嗜血渴望】生命窃取+45%",
         "buff": {
-            "life_steal_rate": 0.5
+            "life_steal_rate": 0.45
         }
     },
     {

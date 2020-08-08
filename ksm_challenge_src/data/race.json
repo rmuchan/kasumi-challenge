@@ -37,11 +37,11 @@
     {
         "name": "Vunpire",
         "desc": "Vunpire历代嗜血为生，他们是优雅的猎手，能够从猎物身上汲取力量。Vunpire嗜血习性使你有天生的攻击吸血和更强的生命力。",
-        "info": "基础物理吸血+30%，恢复倍率增加15%",
+        "info": "基础物理吸血+25%，恢复倍率增加12%",
         "buff": {
-            "life_steal_rate": 0.3,
+            "life_steal_rate": 0.25,
             "recover_rate": {
-                "multiply": 1.15
+                "multiply": 1.12
             }
         }
     },

@@ -48,18 +48,18 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.04,
-            "max": 0.10
+            "min": 0.1,
+            "max": 0.2
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 1,
-            "max": 4
+            "min": 2,
+            "max": 3
         },
         "mp_cost": {
             "random": "triangular_int",
             "min": 60,
-            "max": 120
+            "max": 80
         },
         "name": {
             "random": "choice",
@@ -70,7 +70,7 @@
                 "能量涌动"
             ]
         },
-        "weight": 2,
+        "weight": 3,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",

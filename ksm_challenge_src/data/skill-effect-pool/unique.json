@@ -378,7 +378,7 @@
                 "嗜血渴望",
                 "恶魔之力",
                 "血之盛宴",
-                "饮血之刃"
+                "吸血光环"
             ]
         },
         "weight": 1,
@@ -394,14 +394,30 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 25,
-                        "min": 18
+                        "expect": 50,
+                        "min": 40
                     },
                     2
                 ]
             },
             {
-                "desc": "大幅度提升自身{param[0]:.0%}的生命窃取倍率，持续{param[1]}回合",
+                "desc": "大幅度提升全队{param[0]:.0%}的生命窃取倍率",
+                "type": "LIFE_STEAL_UP",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.60,
+                        "min": 0.56
+                    },
+                    3
+                ]
+            },            {
+                "desc": "额外提升自身{param[0]:.0%}的生命窃取倍率，持续{param[1]}回合",
                 "type": "LIFE_STEAL_UP",
                 "target": {
                     "type": "SELF",
@@ -411,8 +427,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.9,
-                        "min": 1.7
+                        "expect": 0.50,
+                        "min": 0.45
                     },
                     3
                 ]
