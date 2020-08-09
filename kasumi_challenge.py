@@ -74,17 +74,16 @@ async def send_to_all(bot, msg):
 # 自动推送日志
 @_cmd_group.command('autolog', permission=SUPERUSER | GROUP_ADMIN)
 async def _(session: CommandSession):
-    
     # 忽略私聊消息
     if session.ctx['message_type'] != 'group':
         return
-    
+
     param = session.current_arg_text.split()
-    
+
     global config
-    
+
     gid = str(session.ctx.get('group_id', '000000000'))
-    
+
     if len(param) == 0:
         if gid in config['enabled_group']:
             config['enabled_group'].remove(gid)
@@ -104,9 +103,9 @@ async def _(session: CommandSession):
             config['enabled_group'].remove(gid)
             conf_write('ksmgame', config)
             return await session.send('🔴当游戏版本更新时，本群不再自动推动更新日志，您可以使用"ksmgame-log"指令手动查询最新更新日志。')
-    
+
     return await session.send('指令错误。使用"ksmgame-autolog on/off"来管理更新日志自动推送功能')
-    
+
 
 # 新建
 @_cmd_group.command('create')
@@ -172,12 +171,6 @@ async def _(session: CommandSession):
         return await ui.send('你同时只能参与一场战斗！')
 
     boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
-    if is_saved:
-        ui.append('上次没人打的boss又回来啦！')
-    else:
-        ui.append('本次的boss是：')
-    ui.append(boss['desc'])
-    await ui.send('强度参考值：%.0f' % (boss['final_rating'] * 10))
 
     bat = {
         'can_join': True,
@@ -190,6 +183,13 @@ async def _(session: CommandSession):
     bat['team_a'][ui.uid()] = game_char_gen(char)
     ui.store('last_join', time.time())
     _battles[group_id] = bat
+
+    if is_saved:
+        ui.append('上次没人打的boss又回来啦！')
+    else:
+        ui.append('本次的boss是：')
+    ui.append(boss['desc'])
+    await ui.send('强度参考值：%.0f' % (boss['final_rating'] * 10))
     await ui.send('你提议开启一场boss战！其他人可以使用ksmgame-join来加入小队')
 
     asyncio.ensure_future(_remove_battle(session, bat))
