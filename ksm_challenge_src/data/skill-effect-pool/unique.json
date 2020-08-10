@@ -416,7 +416,8 @@
                     },
                     3
                 ]
-            },            {
+            },
+            {
                 "desc": "额外提升自身{param[0]:.0%}的生命窃取倍率，持续{param[1]}回合",
                 "type": "LIFE_STEAL_UP",
                 "target": {
@@ -434,7 +435,8 @@
                 ]
             }
         ]
-    },{
+    },
+    {
         "name": {
             "random": "choice",
             "values": [
@@ -458,6 +460,43 @@
                     0.7,
                     2
                 ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "碎裂拳",
+                "流水之刃",
+                "万箭齐发",
+                "箭雨"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "进行6次快速的普通攻击",
+                "type": "ATK_DEBUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": [
+                    [0.6,"S"],
+                    0
+                ]
+            },
+            {
+                "desc": "然而每次攻击的伤害降低60%",
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 5
+                },
+                "param": []
             }
         ]
     }
