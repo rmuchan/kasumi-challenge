@@ -9,6 +9,7 @@ from ksm_challenge_src.boss_gen import boss_gen
 from ksm_challenge_src.character import create_character, print_character
 from ksm_challenge_src.interact import UI
 from ksm_challenge_src.talent_calc import show_talent, upgrade_talent
+from ksm_challenge_src.version import log_file
 
 
 class CLI(UI):
@@ -104,10 +105,18 @@ async def main2():
     plt.legend()
     plt.show()
 
+def gen_log():
+    with open('doc/更新日志.md', 'w') as F:
+        for item in log_file:
+            F.write(f'### {item["version"]}\n')
+            F.write(f'  {item["log"]}\n\n')
+
 
 #TODO 物理减自己血两次攻击
 #TODO 破盾一击
 #TODO 使攻击最高的队友加攻击并沉默
 
 if __name__ == '__main__':
-    asyncio.run(main2())
+    #asyncio.run(main2())
+    gen_log()
+
