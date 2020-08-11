@@ -387,5 +387,12 @@ Vunpire种族基础生命窃取倍率和回复倍率轻微下调
 ——错误修复——
 修复了[魔力增幅]技能组增益强度始终为100%的错误
 """
+    }, {
+        "version": "Alpha 0.4.10",
+        "log": """
+——小推送——
+把历史更新日志做成了markdown的版本，可以在这里方便地查看：
+https://github.com/rMuchan/kasumi-challenge/blob/master/doc/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.md
+"""
     }
 ]

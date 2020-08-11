@@ -109,7 +109,8 @@ def gen_log():
     with open('doc/更新日志.md', 'w') as F:
         for item in log_file:
             F.write(f'### {item["version"]}\n')
-            F.write(f'  {item["log"]}\n\n')
+            extra = item["log"].replace('\n', '  \n')
+            F.write(f'  {extra}\n\n')
 
 
 #TODO 物理减自己血两次攻击
