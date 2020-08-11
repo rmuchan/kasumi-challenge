@@ -275,8 +275,8 @@ async def _(session: CommandSession):
     last_rebirth = ui.retrieve('last_rebirth') or 0
     current_time = time.time()
     rebirth_interval = 5 * 60 * 60
-    if int(current_time / rebirth_interval) - int(last_rebirth / rebirth_interval) < 1:
-        next_rebirth = (int(last_rebirth / rebirth_interval) + 1) * rebirth_interval
+    if current_time - last_rebirth < rebirth_interval:
+        next_rebirth = last_rebirth + rebirth_interval
         next_rebirth_str = time.strftime('%H:%M', time.localtime(next_rebirth))
         return await ui.send(f'每5小时只能进行一次转生\n你可以在{next_rebirth_str}之后再次转生')
 

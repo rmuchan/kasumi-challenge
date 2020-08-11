@@ -397,7 +397,7 @@ https://github.com/rMuchan/kasumi-challenge/blob/master/doc/%E6%9B%B4%E6%96%B0%E
     }, {
         "version": "Alpha 0.4.11",
         "log": """
-——小推送——
+——新特性——
 现在转生功能会提示下一次允许转生的时间了。
 """
     }
