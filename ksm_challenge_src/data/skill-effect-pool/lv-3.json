@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 75,
-                        "min": 70
+                        "expect": 70,
+                        "min": 66
                     }
                 ]
             },
@@ -99,10 +99,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.16,
-                        "min": 0.12
+                        "expect": 0.18,
+                        "min": 0.15
                     },
-                    9
+                    7
                 ]
             }
         ]
@@ -654,8 +654,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.30,
-                        "min": 0.22
+                        "expect": 0.22,
+                        "min": 0.20
                     },
                     4
                 ]
@@ -871,8 +871,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 200,
-            "max": 250
+            "min": 180,
+            "max": 220
         },
         "name": {
             "random": "choice",
