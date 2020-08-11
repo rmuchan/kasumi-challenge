@@ -537,6 +537,16 @@ class GameChar:
                     'param': {}
                 })
 
+        # 增益幅度
+        elif effect['type'] == 'BUFF_RATE_UP':
+            for obj in selector:
+                real_added = obj.add_buff('buff_rate_enhanced', True, param[1])
+                ret.append({
+                    'feedback': '强化了{target}{amount:.0%}的增益幅度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
         else:
             raise ValueError('出现了未知的效果类型' + effect['type'])
         return ret

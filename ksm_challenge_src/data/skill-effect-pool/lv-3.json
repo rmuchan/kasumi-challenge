@@ -53,8 +53,8 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 2,
-            "max": 3
+            "min": 1,
+            "max": 2
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 65,
-                        "min": 50
+                        "expect": 75,
+                        "min": 70
                     }
                 ]
             },
@@ -99,10 +99,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.295,
-                        "min": 0.275
+                        "expect": 0.16,
+                        "min": 0.12
                     },
-                    3
+                    9
                 ]
             }
         ]
@@ -422,8 +422,8 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 1,
-            "max": 3
+            "min": 3,
+            "max": 5
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -453,15 +453,15 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.43,
-                        "min": 0.38
+                        "expect": 0.36,
+                        "min": 0.32
                     },
-                    5
+                    4
                 ]
             },
             {
-                "desc": "强化自身{param[0]:%}的恢复强度，持续{param[1]}回合",
-                "type": "RECOVER_BUFF_RATE",
+                "desc": "强化自身{param[0]:%}的增益幅度，持续{param[1]}回合",
+                "type": "BUFF_RATE_UP",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -470,14 +470,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.135,
-                        "min": 0.10
+                        "expect": 0.36,
+                        "min": 0.32
                     },
-                    {
-                        "random": "cubic",
-                        "min": 3,
-                        "max": 4
-                    }
+                    4
                 ]
             }
         ]
@@ -875,8 +871,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 120,
-            "max": 180
+            "min": 200,
+            "max": 250
         },
         "name": {
             "random": "choice",

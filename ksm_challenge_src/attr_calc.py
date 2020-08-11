@@ -91,7 +91,7 @@ def _attr_calc(attr_base, attr_grow, lv):
 # 攻击计算
 def _atk_calc(str_cur, int_cur, defense_str_rate, atk_rate):
     adj = str_cur * defense_str_rate + int_cur * (1 - defense_str_rate)
-    return adj * atk_rate
+    return (adj * atk_rate / numerical['atk_avr']) ** numerical['atk_index'] * numerical['atk_avr']
 
 
 # 血量计算  -  modify基本上就是给Shadoul用的了(

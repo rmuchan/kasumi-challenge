@@ -330,8 +330,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 52,
-                        "min": 45
+                        "expect": 96,
+                        "min": 81
                     },
                     2
                 ]
@@ -457,8 +457,8 @@
                     "limit": 1
                 },
                 "param": [
-                    0.7,
-                    2
+                    233333333,
+                    3
                 ]
             }
         ]
@@ -485,6 +485,21 @@
                 },
                 "param": [
                     [0.6,"S"],
+                    0
+                ]
+            },            {
+                "desc": "每击拥有更高的暴击率",
+                "type": "CRIT_CHANCE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        0.27,
+                        "S"
+                    ],
                     0
                 ]
             },

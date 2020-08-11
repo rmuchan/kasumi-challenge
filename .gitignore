@@ -2,3 +2,4 @@
 venv/
 *.pyc
 store.json
+.DS_store

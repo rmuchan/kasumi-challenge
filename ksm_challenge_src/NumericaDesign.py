@@ -11,7 +11,7 @@ level = [1, 10, 20, 30, 40]
 """
 attr_rate = 1.012
 attr_add = 1.00
-attr_base = 50
+attr_base = 55
 
 hp_base = 160
 hp_add = 3.6
@@ -25,9 +25,9 @@ atk_rate = 3.2
 def_base = 1.2
 
 
-def atkCalc(int_):
+def atkCalc(lv):
     # print('atkCalc', int_* atk_rate)
-    return int_ * atk_rate
+    return ((attrCalc(lv) * atk_rate) / 175) ** 1.25 * 175
 
 
 def hpCalc(lv):
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     # dm = 100
     # crit_chance = 0.16
     for i in [1, 10, 20, 30]:
-        print(hpCalc(i))
+        print(atkCalc(i))
         #print(recurrence(attrCalc(i), 1.004, 10, i) + 200 * numerical['hp_rate'])
 
         # print(crit_rate_calc(attrCalc(i), attrCalc(i), 0.5, 0))
