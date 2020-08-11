@@ -1,6 +1,7 @@
 import asyncio
 import atexit
 import json
+import math
 import os
 import random
 import time
@@ -275,7 +276,9 @@ async def _(session: CommandSession):
     current_time = time.time()
     rebirth_interval = 5 * 60 * 60
     if int(current_time / rebirth_interval) - int(last_rebirth / rebirth_interval) < 1:
-        return await ui.send('每5小时只能进行一次转生')
+        next_rebirth = (int(last_rebirth / rebirth_interval) + 1) * rebirth_interval
+        next_rebirth_str = time.strftime('%H:%M', time.localtime(next_rebirth))
+        return await ui.send(f'每5小时只能进行一次转生\n你可以在{next_rebirth_str}之后再次转生')
 
     coin = int(ui.retrieve('talent_coin') or 0)
     acquire_coin = int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate'))

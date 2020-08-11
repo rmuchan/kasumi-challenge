@@ -394,5 +394,11 @@ Vunpire种族基础生命窃取倍率和回复倍率轻微下调
 把历史更新日志做成了markdown的版本，可以在这里方便地查看：
 https://github.com/rMuchan/kasumi-challenge/blob/master/doc/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.md
 """
+    }, {
+        "version": "Alpha 0.4.11",
+        "log": """
+——小推送——
+现在转生功能会提示下一次允许转生的时间了。
+"""
     }
 ]
