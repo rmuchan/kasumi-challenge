@@ -3,3 +3,10 @@ venv/
 *.pyc
 store.json
 .DS_store
+temp
+request_handle.py
+speak.py
+saves/
+configs/
+botTools/
+main.py
