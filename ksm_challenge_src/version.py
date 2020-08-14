@@ -424,5 +424,17 @@ https://github.com/rMuchan/kasumi-challenge/issues
 感谢您的支持！
 使用"ksmgame-help"获取更多帮助。
 """
+    }, {
+        "version": "Alpha 0.5.1",
+        "log": """
+——错误修复——
+修复了异常导致满员的错误
+PVP现在默认为fair模式
+
+*PVP功能的加入对原代码结构有较大的影响，如果出现任何不符合预期的异常或是错误，请来项目地址提交Issue：
+https://github.com/rMuchan/kasumi-challenge/issues
+感谢您的支持！
+使用"ksmgame-help"获取更多帮助。
+"""
     }
 ]

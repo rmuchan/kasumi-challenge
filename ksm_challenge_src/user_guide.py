@@ -11,7 +11,7 @@ def show_help():
     -create:   创建新的角色
     -status:   查看角色信息
     -boss:     发起一场Boss战
-    -pvp:       发起一场PVP，添加参数"fair"会调整玩家等级到相同等级
+    -pvp:       发起一场PVP，添加参数"real"会保留等级
     -join:       加入其它玩家的队伍
     -talent:    天赋管理
     -rebirth:   删除当前角色并获得天赋币(5小时内只能转生一次)
@@ -91,7 +91,7 @@ guide['天赋币'] = """使用"ksmgame-rebirth"将你的角色永久化为天赋
 你可以使用"ksmgame-talent"管理天赋进行升级，你之后的角色将会得到这些天赋加成。"""
 guide['PVP'] = """玩家对抗模式，使用指令"ksmgame-pvp"发起。
 发起者会自动加入A队，其他玩家可以使用"ksmgame-join a"或"ksmgame-join b"加入不同的队伍。
-此外，可以使用"ksmgame-pvp fair"发起一场公平的PVP挑战，此时所有玩家等级会调整到同一等级(不会影响到存档)。
+此外，可以使用"ksmgame-pvp real"发起一场不公平的PVP挑战，所有玩家会以当前等级加入PVP。
 *PVP不会获得任何经验"""
 
 

@@ -218,7 +218,7 @@ async def _(session: CommandSession):
     if time.time() - (ui.retrieve('last_join') or 0) < 1120:
         return await ui.send('你同时只能参与一场战斗！')
 
-    is_fair = session.current_arg.lower() == 'fair'
+    is_real = session.current_arg.lower() == 'real'
 
     bat = {
         'can_join': True,
@@ -227,10 +227,10 @@ async def _(session: CommandSession):
         'team_b': {},
         'capacity_a': 4,
         'capacity_b': 4,
-        'is_fair': is_fair
+        'is_real': is_real
     }
 
-    bat['team_a'][ui.uid()] = game_char_gen(char, fair_mode=is_fair)
+    bat['team_a'][ui.uid()] = game_char_gen(char, real_mode=is_real)
 
     ui.store('last_join', time.time())
     _battles[group_id] = bat
@@ -364,7 +364,7 @@ async def _remove_battle(session: BaseSession, bat: dict):
 
 async def _join(ui: BotContextUI, gid: int, team: str, char: dict, show_team: bool):
     bat = _battles[gid]
-    bat[f'team_{team}'][ui.uid()] = game_char_gen(char, fair_mode=bat.get('is_fair', False))
+    bat[f'team_{team}'][ui.uid()] = game_char_gen(char, real_mode=bat.get('is_real', False))
     ui.store('last_join', time.time())
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
         return await ui.send(f'你加入了{team}队' if show_team else '你加入了小队')
