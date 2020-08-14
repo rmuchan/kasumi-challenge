@@ -364,7 +364,7 @@ async def _remove_battle(session: BaseSession, bat: dict):
 
 async def _join(ui: BotContextUI, gid: int, team: str, char: dict, show_team: bool):
     bat = _battles[gid]
-    bat[f'team_{team}'][ui.uid()] = game_char_gen(char, real_mode=bat.get('is_real', False))
+    bat[f'team_{team}'][ui.uid()] = game_char_gen(char, real_mode=bat.get('is_real', True))
     ui.store('last_join', time.time())
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
         return await ui.send(f'你加入了{team}队' if show_team else '你加入了小队')
