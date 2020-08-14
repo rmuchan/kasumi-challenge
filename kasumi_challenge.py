@@ -163,7 +163,10 @@ async def _(session: CommandSession):
         return await ui.send('请不要孤身冒险！前往QQ群中，募集队友，和其他冒险者们一起战斗吧！')
     group_id = session.ctx['group_id']
     if group_id in _battles:
-        return await ui.send('冒险正在进行中，你可以使用"ksmgame-join"加入队伍！')
+        if _battles[group_id].get('is_pvp'):
+            return await ui.send('对决正在进行中，你可以使用"ksmgame-join a/b"加入队伍！')
+        else:
+            return await ui.send('冒险正在进行中，你可以使用"ksmgame-join"加入队伍！')
     char = ui.retrieve('character')
     if char is None:
         return await ui.send('你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
@@ -197,30 +200,44 @@ async def _(session: CommandSession):
 
 
 # 发起pvp
-# @_cmd_group.command('pvp')
-# async def _(session: CommandSession):
-#     ui = BotContextUI(session.bot, session.ctx)
-#     if session.ctx['message_type'] != 'group':
-#         return await ui.send('只能在群里用（')
-#     group_id = session.ctx['group_id']
-#     if group_id in _battles:
-#         return await ui.send('正打着呢（')
-#     char = ui.retrieve('character')
-#     if char is None:
-#         return await ui.send('建角色，请（')
+@_cmd_group.command('pvp')
+async def _(session: CommandSession):
+    ui = BotContextUI(session.bot, session.ctx)
+    if session.ctx['message_type'] != 'group':
+        return
+    group_id = session.ctx['group_id']
+    if group_id in _battles:
+        if _battles[group_id].get('is_pvp'):
+            return await ui.send('对决正在进行中，你可以使用"ksmgame-join a/b"加入队伍！')
+        else:
+            return await ui.send('冒险正在进行中，你可以使用"ksmgame-join"加入队伍！')
+    char = ui.retrieve('character')
+    if char is None:
+        return await ui.send('你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
 
-#     _battles[group_id] = {
-#         'can_join': True,
-#         'is_pvp': True,
-#         'team_a': {},
-#         'team_b': {},
-#         'capacity_a': 4,
-#         'capacity_b': 4
-#     }
-#     _battles[group_id]['team_a'][ui.uid()] = game_char_gen(char)
-#     await ui.send('你发起了一场决斗，并加入了a队（')
+    if time.time() - (ui.retrieve('last_join') or 0) < 1120:
+        return await ui.send('你同时只能参与一场战斗！')
 
-#     asyncio.ensure_future(_remove_battle(session))
+    is_fair = session.current_arg.lower() == 'fair'
+
+    bat = {
+        'can_join': True,
+        'is_pvp': False,
+        'team_a': {},
+        'team_b': {},
+        'capacity_a': 4,
+        'capacity_b': 4,
+        'is_fair': is_fair
+    }
+
+    bat['team_a'][ui.uid()] = game_char_gen(char, fair_mode=is_fair)
+
+    ui.store('last_join', time.time())
+    _battles[group_id] = bat
+
+    await ui.send('你提议开启一场PVP并自动加入了a队！其他人可以使用"ksmgame-join a"来和发起者组队，或是使用"ksmgame-join b"加入对面阵营。')
+
+    asyncio.ensure_future(_remove_battle(session, bat))
 
 
 # 加入战斗
@@ -248,15 +265,22 @@ async def _(session: CommandSession):
 
     team = session.current_arg.lower()
     if bat['is_pvp']:
-        if team not in ('a', 'b'):
-            return await ui.send('只有a和b队（')
+        if not team:
+            can_join_a = len(bat['team_a']) < bat['capacity_a']
+            can_join_b = len(bat['team_b']) < bat['capacity_b']
+            if can_join_a and can_join_b:
+                team = random.choice(('a', 'b'))
+            elif can_join_a:
+                team = 'a'
+            else:
+                team = 'b'
+        elif team not in ('a', 'b'):
+            return await ui.send('参数只支持a或b，不要当测试工程师了！')
     else:
-        if team not in ('', 'a'):
-            return await ui.send('只能加入a队（')
         team = 'a'
 
     if len(bat[f'team_{team}']) >= bat[f'capacity_{team}']:
-        return await ui.send('队伍满员')
+        return await ui.send('这个队伍已经满员了')
 
     try:
         ui.run(_join, mutex_mode='group', args=(group_id, team, char))
@@ -340,7 +364,7 @@ async def _remove_battle(session: BaseSession, bat: dict):
 
 async def _join(ui: BotContextUI, gid: int, team: str, char: dict):
     bat = _battles[gid]
-    bat[f'team_{team}'][ui.uid()] = game_char_gen(char)
+    bat[f'team_{team}'][ui.uid()] = game_char_gen(char, fair_mode=bat.get('is_fair', False))
     ui.store('last_join', time.time())
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
         return await ui.send(f'你加入了小队')
@@ -367,8 +391,18 @@ async def _play(ui: UI, gid: int):
         del _battles[gid]
 
     if bat['is_pvp']:
-        # TODO pvp结果反馈
-        pass
+        for uid in bat['team_a']:
+            _reset_join_time(uid)
+        for uid in bat['team_b']:
+            _reset_join_time(uid)
+        if result == 'timeout':
+            await ui.send('战斗超时！你们不要再打啦，这样是打不死人的！')
+        elif result == 'b_win':
+            await ui.send('恭喜B队获胜！')
+        elif result == 'a_win':
+            await ui.send('恭喜A队获胜！')
+        elif result == 'all_dead':
+            await ui.send('可以说战斗是很惨烈了。无人生还……')
     else:
         for uid in bat['team_a']:
             _reset_join_time(uid)

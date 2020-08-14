@@ -22,12 +22,16 @@ def _exp_overlay_gen() -> list:
 exp_overlay_list = _exp_overlay_gen()
 
 
-def game_char_gen(chara: dict, test_lv=False) -> dict:
+def game_char_gen(chara: dict, test_lv=False, fair_mode=False) -> dict:
     game_char = {}
     if test_lv:
         lv = test_lv
     else:
         lv = lv_calc(chara['exp'])
+
+    if fair_mode:
+        lv = numerical['fair_mode']
+
     str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0] + calc_passive(0, chara, 'str_base'),
                       numerical['str_grow'] * chara['str_build'][0] + calc_passive(0, chara, 'str_grow'),
                       lv)

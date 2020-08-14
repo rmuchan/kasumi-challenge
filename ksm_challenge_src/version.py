@@ -413,5 +413,16 @@ https://github.com/rMuchan/kasumi-challenge/blob/master/doc/%E6%9B%B4%E6%96%B0%E
 lv1中[共鸣]组词缀的法术倍率增益持续时间由6回合上调至9回合
 lv2中[魔法药剂]组技能的法术倍率增益持续时间由6回合上调至8回合
 """
+    }, {
+        "version": "Alpha 0.5.0",
+        "log": """
+——大更新——
+PVP功能解锁，现在可以使用"ksmgame-pvp"发起PVP！
+PVP无法获得经验。
+*PVP功能的加入对原代码结构有较大的影响，如果出现任何不符合预期的异常或是错误，请来项目地址提交Issue：
+https://github.com/rMuchan/kasumi-challenge/issues
+感谢您的支持！
+使用"ksmgame-help"获取更多帮助。
+"""
     }
 ]
