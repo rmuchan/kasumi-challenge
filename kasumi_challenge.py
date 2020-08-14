@@ -222,7 +222,7 @@ async def _(session: CommandSession):
 
     bat = {
         'can_join': True,
-        'is_pvp': False,
+        'is_pvp': True,
         'team_a': {},
         'team_b': {},
         'capacity_a': 4,
@@ -283,7 +283,7 @@ async def _(session: CommandSession):
         return await ui.send('这个队伍已经满员了')
 
     try:
-        ui.run(_join, mutex_mode='group', args=(group_id, team, char))
+        ui.run(_join, mutex_mode='group', args=(group_id, team, char, bat['is_pvp']))
     except BotContextUI.RunningException:
         await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
 
@@ -362,12 +362,12 @@ async def _remove_battle(session: BaseSession, bat: dict):
         await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')
 
 
-async def _join(ui: BotContextUI, gid: int, team: str, char: dict):
+async def _join(ui: BotContextUI, gid: int, team: str, char: dict, show_team: bool):
     bat = _battles[gid]
     bat[f'team_{team}'][ui.uid()] = game_char_gen(char, fair_mode=bat.get('is_fair', False))
     ui.store('last_join', time.time())
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
-        return await ui.send(f'你加入了小队')
+        return await ui.send(f'你加入了{team}队' if show_team else '你加入了小队')
 
     bat['can_join'] = False
     ui.at_sender = False
