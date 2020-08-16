@@ -102,7 +102,7 @@
                         "expect": 0.18,
                         "min": 0.15
                     },
-                    8
+                    6
                 ]
             }
         ]
@@ -423,7 +423,7 @@
         "cooldown": {
             "random": "triangular_int",
             "min": 3,
-            "max": 5
+            "max": 4
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -453,8 +453,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.18,
-                        "min": 0.16
+                        "expect": 0.20,
+                        "min": 0.17
                     },
                     30
                 ]
@@ -597,12 +597,12 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "沉默随机1个敌人{param[1]}回合",
+                "desc": "沉默随机2个敌人{param[1]}回合",
                 "type": "SILENCE",
                 "target": {
-                    "type": "RAND",
+                    "type": "RAND_SAFE",
                     "team": 0,
-                    "limit": 1
+                    "limit": 2
                 },
                 "param": [
                     {
