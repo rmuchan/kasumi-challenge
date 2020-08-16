@@ -10,7 +10,7 @@
             ]
         },
         "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
-        "weight": 3,
+        "weight": 4,
         "type": "MGC_DMG",
         "target": {
             "type": "RAND",

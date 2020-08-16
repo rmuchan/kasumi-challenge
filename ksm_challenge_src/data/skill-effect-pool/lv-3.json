@@ -25,7 +25,7 @@
                 "暗影腐蚀"
             ]
         },
-        "weight": 2,
+        "weight": 4,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
