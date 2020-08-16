@@ -6,6 +6,7 @@ from .data import data
 from .interact import UI
 from .skill import get_skill_desc, create_skill
 from .talent_calc import build_talent_buff
+from .user_guide import get_ver
 
 
 async def create_character(ui: UI):
@@ -40,6 +41,7 @@ def _init_proto_character(uid: int):
     race_id = uid % len(data.race)
     proto['race_id'] = race_id
     proto['race'] = data.race[race_id]['name']
+    proto['game_version'] = get_ver()
     return proto
 
 
@@ -127,7 +129,7 @@ _CREATE_STEPS = {
 def _build_character_from_proto(proto: Dict[str, Any]) -> Dict[str, Any]:
     assert proto['progress'] == 'full'
     fields_to_copy = [
-        'name', 'race', 'race_id', 'talent', 'exp',
+        'name', 'race', 'race_id', 'game_version', 'talent', 'exp',
         'str_build', 'int_build', 'per_build', 'life_build', 'def_base',
         'defense_str_rate', 'magic_int_rate', 'health_per_rate', 'attack_rate',
         'passive', 'skill_1', 'skill_2', 'skill_3', 'unique',

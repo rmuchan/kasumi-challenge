@@ -1,17 +1,14 @@
 import asyncio
 import atexit
 import json
-import math
 import os
 import random
 import time
-from typing import Optional, Awaitable
 
 from nonebot import CommandGroup, on_natural_language, NLPSession, CommandSession
 from nonebot.permission import SUPERUSER, GROUP_ADMIN
 from nonebot.session import BaseSession
 
-from .ksm_challenge_src.user_guide import *
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
@@ -21,6 +18,7 @@ from .ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.data import data
 from .ksm_challenge_src.interact import UI
 from .ksm_challenge_src.talent_calc import upgrade_talent
+from .ksm_challenge_src.user_guide import *
 
 
 def conf_read(name):
@@ -353,6 +351,10 @@ def _check_join(ui: BotContextUI, bat: dict = None, set_join: bool = True):
     char = ui.retrieve('character')
     if char is None:
         return None, '你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！'
+    create_ver = get_ver_idx(char.get('game_version')) or 0
+    min_ver = get_ver_idx('Alpha 0.0.7')
+    if create_ver < min_ver:
+        return None, '你的角色可能不适应现在的版本，请重新创建角色后再加入游戏吧！'
     if bat is None or ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
         return None, '你已经在小队中了！'
     if time.time() - (ui.retrieve('last_join') or 0) < 1120:

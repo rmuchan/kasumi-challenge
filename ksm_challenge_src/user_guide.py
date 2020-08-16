@@ -2,8 +2,8 @@ from . import version
 
 
 def show_help():
-    S = """——-KASUMI CHALLENGE 帮助-——
-> 当前版本：%s
+    return rf"""——-KASUMI CHALLENGE 帮助-——
+> 当前版本：{get_ver()}
 > 指令列表
     前缀："ksmgame"*无*空*格*间*隔*后接
     -help:      展示此帮助
@@ -24,12 +24,18 @@ def show_help():
 ————————————
 👤如果您发现了任何文字、战斗数值等错误，或是对平衡性有任何建议，请发送邮件到"610@ice0.xyz"给开发者反馈，或者直接在GitHub中发起Issue或PR，感谢您的支持！
 项目地址：https://github.com/rMuchan/kasumi-challenge
-""" % version.log_file[-1]['version']
+"""
 
-    return S
 
 def get_ver():
     return version.log_file[-1]['version']
+
+
+def get_ver_idx(ver: str):
+    for i in range(len(version.log_file) - 1, -1, -1):
+        if ver == version.log_file['version']:
+            return i
+
 
 def show_guide(key_word: str):
     S = ', '.join(['[%s]' % k for k in guide])
