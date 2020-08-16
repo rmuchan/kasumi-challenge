@@ -38,8 +38,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 130,
-                        "min": 120
+                        "expect": 100,
+                        "min": 95
                     }
                 ]
             }
@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 70,
-                        "min": 66
+                        "expect": 50,
+                        "min": 45
                     }
                 ]
             },
@@ -102,7 +102,7 @@
                         "expect": 0.18,
                         "min": 0.15
                     },
-                    7
+                    8
                 ]
             }
         ]
@@ -150,8 +150,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 150,
-                        "min": 120
+                        "expect": 100,
+                        "min": 90
                     }
                 ]
             }
@@ -453,10 +453,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.36,
-                        "min": 0.32
+                        "expect": 0.18,
+                        "min": 0.16
                     },
-                    4
+                    30
                 ]
             },
             {
@@ -517,8 +517,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 3,
-                        "min": 2.4
+                        "expect": 5,
+                        "min": 4
                     },
                     5
                 ]
@@ -562,8 +562,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.8,
-                        "min": 1.4
+                        "expect": 3,
+                        "min": 2.5
                     },
                     4
                 ]
@@ -718,8 +718,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 60,
-                        "min": 50
+                        "expect": 36,
+                        "min": 30
                     }
                 ]
             },
@@ -780,8 +780,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 87,
-                        "min": 60
+                        "expect": 70,
+                        "min": 64
                     }
                 ]
             },
@@ -858,7 +858,8 @@
                 "param": []
             }
         ]
-    },{
+    },
+    {
         "chance": {
             "random": "triangular",
             "min": 0.06,
@@ -908,6 +909,45 @@
                 "target": {
                     "type": "RAND",
                     "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            }
+        ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.12
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 4,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 150,
+            "max": 200
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "攻击辅助",
+                "战术信息",
+                "猎杀之商",
+                "胜利之手"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "为攻击最高的队友添加攻击标记，使其在下次行动时必定进行2次普通攻击",
+                "type": "ATK_ASSIS",
+                "target": {
+                    "type": "ATKMOST",
+                    "team": 1,
                     "limit": 1
                 },
                 "param": []

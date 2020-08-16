@@ -10,33 +10,33 @@
     },
     "attack": {
         "random": "triangular",
-        "rating_weight": 6,
-        "min": 48,
-        "max": 54
+        "rating_weight": 5,
+        "min": 43,
+        "max": 50
     },
     "defence_base": {
         "random": "triangular",
-        "rating_weight": 7,
-        "min": 2.7,
-        "max": 3.4
+        "rating_weight": 3,
+        "min": 2.2,
+        "max": 2.5
     },
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 0.031,
-        "max": 0.033
+        "min": 0.1,
+        "max": 0.11
     },
     "hp_base": {
         "random": "triangular",
-        "rating_weight": 6,
-        "min": 700,
-        "max": 650
+        "rating_weight": 4,
+        "min": 430,
+        "max": 460
     },
     "life_base": {
         "random": "triangular",
-        "rating_weight": 4,
-        "min": 410,
-        "max": 340
+        "rating_weight": 6,
+        "min": 600,
+        "max": 650
     },
     "recover_rate": {
         "random": "triangular",
@@ -54,7 +54,7 @@
         "random": "triangular",
         "rating_weight": 8,
         "min": 1.0,
-        "max": 1.2
+        "max": 1.1
     },
     "crit_rate": 2.1,
     "crit_chance": 0.14,
@@ -78,8 +78,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 6,
-                            "min": 170,
-                            "max": 210
+                            "min": 130,
+                            "max": 150
                         }
                     ]
                 ]
@@ -147,7 +147,7 @@
                 },
                 "param": [
                     [
-                        0.50
+                        0.30
                     ],
                     2
                 ]
@@ -163,7 +163,7 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 2,
+                            "rating_weight": 4,
                             "min": 200,
                             "max": 240
                         }
@@ -181,9 +181,9 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 4,
-                            "max": 5
+                            "rating_weight": 2,
+                            "min": 3,
+                            "max": 3.2
                         }
                     ],
                     2
@@ -205,9 +205,9 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 6,
-                            "min": 330,
-                            "max": 380
+                            "rating_weight": 2,
+                            "min": 220,
+                            "max": 230
                         }
                     ]
                 ]
@@ -224,8 +224,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 1,
-                            "min": 350,
-                            "max": 380
+                            "min": 250,
+                            "max": 251
                         }
                     ]
                 ]
@@ -235,15 +235,6 @@
     "normal_attack": {
         "name": "机枪扫射",
         "effect": [
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            },
             {
                 "type": "NORMAL_ATK",
                 "target": {

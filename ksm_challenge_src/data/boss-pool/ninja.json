@@ -11,8 +11,8 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 8,
-        "min": 120,
-        "max": 150
+        "min": 90,
+        "max": 110
     },
     "defence_base": {
         "random": "triangular",
@@ -23,26 +23,26 @@
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 0.020,
-        "max": 0.026
+        "min": 0.050,
+        "max": 0.056
     },
     "hp_base": {
         "random": "triangular",
-        "rating_weight": 7,
-        "min": 220,
-        "max": 270
+        "rating_weight": 3,
+        "min": 190,
+        "max": 210
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 66,
-        "max": 76
+        "min": 136,
+        "max": 146
     },
     "recover_rate": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 1.0,
-        "max": 1.2
+        "min": 0.9,
+        "max": 1.0
     },
     "spell_rate": {
         "random": "triangular",
@@ -53,12 +53,12 @@
     "buff_rate": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 1,
-        "max": 1.14
+        "min": 0.9,
+        "max": 1.0
     },
-    "crit_rate": 1.75,
-    "crit_chance": 0.79,
-    "life_steal_rate": 0.8,
+    "crit_rate": 1.5,
+    "crit_chance": 0.70,
+    "life_steal_rate": 0.66,
     "dodge": 0.6,
     "skill_1": {
         "chance": 0.8,
@@ -78,8 +78,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 9,
-                            "min": 550,
-                            "max": 650
+                            "min": 450,
+                            "max": 500
                         }
                     ]
                 ]
@@ -141,8 +141,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 0.55,
-                            "max": 0.65
+                            "min": 0.85,
+                            "max": 0.95
                         }
                     ],
                     30
@@ -200,8 +200,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 5,
-                            "min": 3.7,
-                            "max": 4.3
+                            "min": 2.3,
+                            "max": 3
                         }
                     ],
                     3
@@ -224,8 +224,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 5,
-                            "min": 370,
-                            "max": 430
+                            "min": 260,
+                            "max": 300
                         }
                     ]
                 ]
@@ -256,8 +256,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 5,
-                            "min": 0.30,
-                            "max": 0.37
+                            "min": 0.20,
+                            "max": 0.24
                         }
                     ],
                     30

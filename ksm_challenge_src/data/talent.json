@@ -3,7 +3,7 @@
     "name": "肌肉强化",
     "desc": "力量基础",
     "format": ".1f",
-    "effect": 0.5,
+    "effect": 0.2,
     "max_level": 10,
     "cost_base": 10,
     "cost_ratio": 1.3,
@@ -13,7 +13,7 @@
     "name": "协调训练",
     "desc": "敏捷基础",
     "format": ".1f",
-    "effect": 0.5,
+    "effect": 0.2,
     "max_level": 10,
     "cost_base": 10,
     "cost_ratio": 1.3,
@@ -23,7 +23,7 @@
     "name": "精神统一",
     "desc": "感知基础",
     "format": ".1f",
-    "effect": 0.5,
+    "effect": 0.2,
     "max_level": 10,
     "cost_base": 10,
     "cost_ratio": 1.3,
@@ -33,8 +33,8 @@
     "name": "蛋白冲剂",
     "desc": "力量成长",
     "format": ".2f",
-    "effect": 0.05,
-    "max_level": 7,
+    "effect": 0.01,
+    "max_level": 10,
     "cost_base": 15,
     "cost_ratio": 1.4,
     "cost_grow": 4.2
@@ -43,8 +43,8 @@
     "name": "敏捷训练",
     "desc": "敏捷成长",
     "format": ".2f",
-    "effect": 0.05,
-    "max_level": 7,
+    "effect": 0.01,
+    "max_level": 10,
     "cost_base": 15,
     "cost_ratio": 1.4,
     "cost_grow": 4.2
@@ -53,8 +53,8 @@
     "name": "心灵强化",
     "desc": "感知成长",
     "format": ".2f",
-    "effect": 0.05,
-    "max_level": 7,
+    "effect": 0.01,
+    "max_level": 10,
     "cost_base": 15,
     "cost_ratio": 1.4,
     "cost_grow": 4.2
@@ -63,7 +63,7 @@
     "name": "硬化皮肤",
     "desc": "物防基础",
     "format": ".1f",
-    "effect": 0.3,
+    "effect": 0.2,
     "max_level": 9,
     "cost_base": 5,
     "cost_ratio": 1.21,
@@ -84,7 +84,7 @@
     "desc": "生命提升",
     "format": ".1%",
     "effect": {
-      "madd": 0.015
+      "madd": 0.01
     },
     "max_level": 10,
     "cost_base": 15,
@@ -94,9 +94,9 @@
   "recover_rate": {
     "name": "自然祝福",
     "desc": "恢复强度",
-    "format": ".0%",
+    "format": ".1%",
     "effect": {
-      "madd": 0.01
+      "madd": 0.006
     },
     "max_level": 10,
     "cost_base": 6,
@@ -106,9 +106,9 @@
   "spell_rate": {
     "name": "法术精通",
     "desc": "法术倍率",
-    "format": ".0%",
+    "format": ".1%",
     "effect": {
-      "madd": 0.01
+      "madd": 0.006
     },
     "max_level": 10,
     "cost_base": 6,
@@ -118,9 +118,9 @@
   "buff_rate": {
     "name": "战斗灵感",
     "desc": "增益幅度",
-    "format": ".0%",
+    "format": ".1%",
     "effect": {
-      "madd": 0.01
+      "madd": 0.006
     },
     "max_level": 10,
     "cost_base": 6,
@@ -130,7 +130,7 @@
     "name": "战术精进",
     "desc": "攻击倍率",
     "format": ".3f",
-    "effect": 0.024,
+    "effect": 0.021,
     "max_level": 10,
     "cost_base": 5,
     "cost_ratio": 1.2,

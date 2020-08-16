@@ -64,7 +64,7 @@ class Gaming(ABC):
         if type_ == 'SELF':
             return [initiator]
         if type_ == 'OTHER':
-            return list(filter(lambda x: x is not initiator, self._get_team(team_name)))
+            return list(filter(lambda x: x is not initiator, self._get_team(team_name))) or [initiator]
 
         if target['team'] == 0:
             team_name = {'a': 'b', 'b': 'a'}[team_name]
@@ -79,12 +79,15 @@ class Gaming(ABC):
         if type_ == 'RAND_SAFE':
             return random.sample(team, min(target['limit'], len(team)))
 
-        key, reverse = {
-            'LIFEMOST': (lambda x: x.hp_percentage, True),
-            'LIFELEAST': (lambda x: x.hp_percentage, False),
-            'ATKMOST': (lambda x: x.attack, True),
-            'ATKLEAST': (lambda x: x.attack, False)
-        }[type_]
+        try:
+            key, reverse = {
+                'LIFEMOST': (lambda x: x.hp_percentage, True),
+                'LIFELEAST': (lambda x: x.hp_percentage, False),
+                'ATKMOST': (lambda x: x.attack, True),
+                'ATKLEAST': (lambda x: x.attack, False)
+            }[type_]
+        except KeyError:
+            raise KeyError('未知的选择器类型:' + type_)
         return sorted(team, key=key, reverse=reverse)[:target['limit']]
 
     def _death_check(self, team_name):

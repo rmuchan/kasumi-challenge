@@ -10,33 +10,33 @@
     },
     "attack": {
         "random": "triangular",
-        "rating_weight": 6,
-        "min": 230,
-        "max": 250
+        "rating_weight": 4,
+        "min": 190,
+        "max": 210
     },
     "defence_base": {
         "random": "triangular",
         "rating_weight": 5,
-        "min": 2.5,
-        "max": 2.9
+        "min": 3.0,
+        "max": 3.5
     },
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 3,
-        "min": 0.05,
-        "max": 0.07
+        "min": 0.09,
+        "max": 0.11
     },
     "hp_base": {
         "random": "triangular",
         "rating_weight": 5,
-        "min": 640,
-        "max": 680
+        "min": 470,
+        "max": 500
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 140,
-        "max": 150
+        "min": 250,
+        "max": 270
     },
     "recover_rate": {
         "random": "triangular",
@@ -78,8 +78,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 240,
-                            "max": 270
+                            "min": 180,
+                            "max": 200
                         }
                     ]
                 ]
@@ -122,9 +122,9 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 5.6,
-                            "max": 6
+                            "rating_weight": 6,
+                            "min": 3.6,
+                            "max": 4.4
                         }
                     ],
                     1
@@ -206,8 +206,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 243,
-                            "max": 260
+                            "min": 200,
+                            "max": 230
                         }
                     ]
                 ]
@@ -226,7 +226,7 @@
                 },
                 "param": [
                     [
-                        2
+                        0.8
                     ],
                     2
                 ]
@@ -244,7 +244,8 @@
                     ],
                     2
                 ]
-            },            {
+            },
+            {
                 "type": "SILENCE",
                 "target": {
                     "type": "SELF",
@@ -266,9 +267,18 @@
             {
                 "type": "NORMAL_ATK",
                 "target": {
-                    "type": "RAND_SAFE",
+                    "type": "RAND",
                     "team": 0,
-                    "limit": 2
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
                 },
                 "param": []
             },

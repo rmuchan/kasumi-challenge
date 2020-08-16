@@ -9,9 +9,9 @@ level = [1, 10, 20, 30, 40]
 """
 属性
 """
-attr_rate = 1.012
+attr_rate = 1.01
 attr_add = 1.00
-attr_base = 55
+attr_base = 50
 
 hp_base = 160
 hp_add = 3.6
@@ -63,7 +63,7 @@ def defCalc(str_, int_, tend, lv):
 def damageCalc(lv):
     str_ = int_ = attrCalc(lv)
     dec = 1 + defCalc(str_, int_, 0.5, lv) * def_rate
-    dc = atkCalc(int_) / dec
+    dc = atkCalc(lv) / dec
     # print('decreace', 1/dec)
     # print('damageCalc', dc)
     return dc
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     # dm = 100
     # crit_chance = 0.16
     for i in [1, 10, 20, 30]:
-        print(atkCalc(i))
+        print(atkToDeathTime(i))
         #print(recurrence(attrCalc(i), 1.004, 10, i) + 200 * numerical['hp_rate'])
 
         # print(crit_rate_calc(attrCalc(i), attrCalc(i), 0.5, 0))

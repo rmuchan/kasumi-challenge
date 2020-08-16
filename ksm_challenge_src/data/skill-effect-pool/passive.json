@@ -1,85 +1,88 @@
 [
     {
-        "desc": "【力量崇拜】力量+11 成长值+0.1",
+        "desc": "【力量崇拜】力量+5 成长值+0.06",
         "buff": {
-            "str_base": 11,
-            "str_grow": 0.1
+            "str_base": 5,
+            "str_grow": 0.06
         }
     },
     {
-        "desc": "【矫健身形】敏捷+11 成长值+0.1",
+        "desc": "【矫健身形】敏捷+5 成长值+0.06",
         "buff": {
-            "int_base": 11,
-            "int_grow": 0.1
+            "int_base": 5,
+            "int_grow": 0.06
         }
     },
     {
-        "desc": "【灵感源泉】感知+11 成长值+0.1",
+        "desc": "【灵感源泉】感知+5 成长值+0.06",
         "buff": {
-            "per_base": 11,
-            "per_grow": 0.1
+            "per_base": 5,
+            "per_grow": 0.06
         }
     },
     {
-        "desc": "【兵刃解读】力量+6 敏捷+6",
+        "desc": "【兵刃解读】力量+2.7 敏捷+2.7",
         "buff": {
-            "int_base": 6,
-            "str_base": 6
+            "int_base": 2.7,
+            "str_base": 2.7
         }
     },
     {
-        "desc": "【法术学院】感知+6 敏捷+6",
+        "desc": "【法术学院】感知+2.7 敏捷+2.7",
         "buff": {
-            "int_base": 6,
-            "per_base": 6
+            "int_base": 2.7,
+            "per_base": 2.7
         }
     },
     {
-        "desc": "【冥想之力】力量+6 感知+6 增益幅度提升4%",
+        "desc": "【冥想之力】力量+2.7 感知+2.7 增益幅度提升3%",
         "buff": {
-            "per_base": 6,
-            "str_base": 6,
+            "per_base": 2.7,
+            "str_base": 2.7,
+            "buff_rate": {
+                "multiply": 1.03
+            }
+        }
+    },
+    {
+        "desc": "【闪避大师】闪避+8%",
+        "buff": {
+            "dodge": 0.8
+        }
+    },
+    {
+        "desc": "【护甲强固】基础防御+1.8",
+        "buff": {
+            "def_base": 1.8
+        }
+    },
+    {
+        "desc": "【嗜血渴望】生命窃取+25% 恢复强度+4%",
+        "buff": {
+            "life_steal_rate": 0.25,
             "recover_rate": {
                 "multiply": 1.04
             }
         }
     },
     {
-        "desc": "【闪避大师】闪避+16%",
+        "desc": "【致命精准】暴击伤害倍率+36%",
         "buff": {
-            "dodge": 0.16
+            "crit_rate": 0.36
         }
     },
     {
-        "desc": "【护甲强固】基础防御+2.7",
+        "desc": "【生生不息】基础生命+21 成长值+0.3",
         "buff": {
-            "def_base": 2.7
+            "life_base": 21,
+            "life_grow": 0.3
         }
     },
     {
-        "desc": "【嗜血渴望】生命窃取+45%",
-        "buff": {
-            "life_steal_rate": 0.45
-        }
-    },
-    {
-        "desc": "【致命精准】暴击伤害倍率+65%",
-        "buff": {
-            "crit_rate": 0.65
-        }
-    },
-    {
-        "desc": "【生生不息】基础生命+42 成长值+0.7",
-        "buff": {
-            "life_base": 42,
-            "life_grow": 0.7
-        }
-    },
-    {
-        "desc": "【大魔法师】法术倍率+21%",
+        "desc": "【大魔法师】法术倍率+10%",
         "buff": {
             "spell_rate": {
-                "multiply": 1.21
+                "multiply": 1.1
             }
         }
     }

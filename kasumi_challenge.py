@@ -9,6 +9,7 @@ from nonebot import CommandGroup, on_natural_language, NLPSession, CommandSessio
 from nonebot.permission import SUPERUSER, GROUP_ADMIN
 from nonebot.session import BaseSession
 
+from .ksm_challenge_src.version import great_update_ver
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
@@ -67,7 +68,7 @@ async def _(session: CommandSession):
 
 async def send_to_all(bot, msg):
     for gid in config['enabled_group']:
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.1)
         await bot.send_group_msg(group_id=int(gid), message=msg)
 
 
@@ -352,7 +353,7 @@ def _check_join(ui: BotContextUI, bat: dict = None, set_join: bool = True):
     if char is None:
         return None, '你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！'
     create_ver = get_ver_idx(char.get('game_version')) or 0
-    min_ver = get_ver_idx('Alpha 0.0.7')
+    min_ver = get_ver_idx(great_update_ver)
     if create_ver < min_ver:
         return None, '你的角色可能不适应现在的版本，请重新创建角色后再加入游戏吧！'
     if bat is None or ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:

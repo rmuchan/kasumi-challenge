@@ -32,7 +32,7 @@ def hp_calc(hp_base, life_base, lv):
 
 
 def rates_3_calc(lv):
-    virtual_attr = recurrence(numerical['per_base'], numerical['attr_rate'], numerical['per_grow'], lv)
+    virtual_attr = recurrence(numerical['boss_virtual_attr'], numerical['attr_rate'], numerical['per_grow'], lv)
     return numerical['enhance_constant'] * (virtual_attr ** numerical['enhance_exponent'])
 
 

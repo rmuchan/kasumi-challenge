@@ -10,7 +10,7 @@
                 "灭亡之影"
             ]
         },
-        "weight": 3,
+        "weight": 4,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -23,8 +23,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 280,
-                        "min": 270
+                        "expect": 220,
+                        "min": 200
                     }
                 ]
             }
@@ -41,7 +41,7 @@
                 "虚空暗蚀"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
                 "desc": "对敌方全体造成{param[0]}点魔法伤害",
@@ -54,8 +54,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 150,
-                        "min": 142
+                        "expect": 110,
+                        "min": 100
                     }
                 ]
             }
@@ -241,7 +241,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "超大幅度降低敌方攻击最高的角色{param[0]:%}的攻击力，持续3回合",
+                "desc": "超大幅度降低敌方攻击最高的角色{param[0]:%}的攻击力，持续2回合",
                 "type": "ATK_DEBUFF",
                 "target": {
                     "type": "ATKMOST",
@@ -449,7 +449,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内附带等同于自己攻击的魔法伤害。",
+                "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内附带魔法伤害。",
                 "type": "FIRE_ENCHANT",
                 "target": {
                     "type": "SELF",
@@ -512,6 +512,36 @@
                     "limit": 5
                 },
                 "param": []
+            }
+        ]
+    },{
+        "name": {
+            "random": "choice",
+            "values": [
+                "乘风前行",
+                "闪避光环",
+                "团队掩护",
+                "烟雾弹"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "大幅度提升全队{param[0]:.0%}的闪避率，持续2回合",
+                "type": "DODGE_BUFF",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.50,
+                        "min": 0.55
+                    },
+                    2
+                ]
             }
         ]
     }

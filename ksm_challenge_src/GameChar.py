@@ -21,6 +21,7 @@ class GameChar:
         self.buff = {}
         self.MP = 0
         self.skills = []
+        self.token = set()
         for i in range(3):
             self.skills.append(GameSkill(self.attributes[f'skill_{i + 1}']))
         self.turn_mp_gain()
@@ -97,11 +98,9 @@ class GameChar:
     def is_silence(self):
         return 'silence' in self.buff.keys()
 
-
     @property
     def fire_enchanted(self):
         return 'fire_enchant' in self.buff.keys()
-
 
     def buff_calc(self, buff_type, is_multi=False):
         if is_multi:
@@ -201,6 +200,10 @@ class GameChar:
         发动技能。顺序依次为终极技能，技能123，最后普通攻击作为一个技能
         :return: 技能的dict模板
         """
+        # 攻击标记
+        if self.use_token('attack_assis'):
+            return [self.normal_attack, self.normal_attack]
+
         if self.is_silence:
             return [self.normal_attack]
 
@@ -245,6 +248,7 @@ class GameChar:
     #         技能效果执行
     # ————————————————————————————
 
+    # ******使用技能/**88888**
     def use_effect(self, selector: List['GameChar'], effect: dict) -> Optional[list]:
         """
         角色行动时一定会调用这个函数，发动技能效果。
@@ -274,7 +278,7 @@ class GameChar:
                 feedback += '，破坏了护盾'
             ret.append({
                 'feedback': feedback,
-                'merge_key': {'target': self._self_replace(obj.name),'amount': real_damage},
+                'merge_key': {'target': self._self_replace(obj.name), 'amount': real_damage},
                 'param': {}
             })
 
@@ -305,9 +309,9 @@ class GameChar:
                 # miss
                 if atk_status == -1:
                     ret.append({
-                        'feedback': '{target}闪避了攻击',
+                        'feedback': '{target}闪避了{count}次攻击',
                         'merge_key': {'target': self._self_replace(obj.name)},
-                        'param': {}
+                        'param': {'count': 1}
                     })
                 else:
                     if self.fire_enchanted:
@@ -345,7 +349,7 @@ class GameChar:
         # 治疗
         elif effect['type'] == 'HEAL':
             for obj in selector:
-                real_heal = obj.recover(param[0][0] * fluctuation())
+                real_heal = obj.heal(param[0][0] * fluctuation(), self.buff_rate)
                 ret.append({
                     'feedback': '恢复了{target}{heal:.0f}点生命',
                     'merge_key': {'target': self._self_replace(obj.name)},
@@ -547,6 +551,15 @@ class GameChar:
                     'param': {'amount': real_added}
                 })
 
+        elif effect['type'] == 'ATK_ASSIS':
+            for obj in selector:
+                obj.add_token('attack_assis')
+                ret.append({
+                    'feedback': '为{target}附加了攻击标记',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {}
+                })
+
         else:
             raise ValueError('出现了未知的效果类型' + effect['type'])
         return ret
@@ -573,6 +586,16 @@ class GameChar:
         self.buff[buff_type].append((value, time))
         return value
 
+    def add_token(self, token_type: str):
+        self.token.add(token_type)
+
+    def use_token(self, token_type: str):
+        if token_type in self.token:
+            self.token.remove(token_type)
+            return True
+        else:
+            return False
+
     def recover(self, recovery):
         """
         生命恢复。传入恢复量
@@ -580,6 +603,22 @@ class GameChar:
         返回实际恢复量
         """
         to_recover = recovery * self.recover_rate
+        pre_hp = self.HP
+        self.HP += to_recover
+        if self.HP <= self.attributes['HP']:
+            return to_recover
+        else:
+            diff = self.attributes['HP'] - pre_hp
+            self.HP = self.attributes['HP']
+            return diff
+
+    def heal(self, recovery, buff_rate):
+        """
+        被治疗时调用的函数
+        返回实际回复量。
+        """
+        real_rate = (self.recover_rate * buff_rate) ** 0.5
+        to_recover = recovery * real_rate
         pre_hp = self.HP
         self.HP += to_recover
         if self.HP <= self.attributes['HP']:

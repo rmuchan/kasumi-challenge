@@ -11,32 +11,32 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 200,
-        "max": 230
+        "min": 150,
+        "max": 180
     },
     "defence_base": {
         "random": "triangular",
         "rating_weight": 3,
-        "min": 3,
-        "max": 3.4
+        "min": 2.1,
+        "max": 2.4
     },
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 0.12,
-        "max": 0.16
+        "min": 0.062,
+        "max": 0.066
     },
     "hp_base": {
         "random": "triangular",
-        "rating_weight": 7,
-        "min": 740,
-        "max": 800
+        "rating_weight": 3,
+        "min": 320,
+        "max": 350
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 40,
-        "max": 50
+        "min": 440,
+        "max": 450
     },
     "recover_rate": {
         "random": "triangular",
@@ -48,7 +48,7 @@
         "random": "triangular",
         "rating_weight": 4,
         "min": 1,
-        "max": 1.11
+        "max": 1.1
     },
     "buff_rate": {
         "random": "triangular",
@@ -58,7 +58,7 @@
     },
     "crit_rate": 1.75,
     "crit_chance": 0.16,
-    "life_steal_rate": 0.6,
+    "life_steal_rate": 0.5,
     "dodge": 0.14,
     "skill_1": {
         "chance": 0.13,
@@ -71,15 +71,15 @@
                 "target": {
                     "type": "RAND_SAFE",
                     "team": 0,
-                    "limit": 2
+                    "limit": 3
                 },
                 "param": [
                     [
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 100,
-                            "max": 120
+                            "min": 70,
+                            "max": 80
                         }
                     ]
                 ]
@@ -123,8 +123,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 140,
-                            "max": 150
+                            "min": 110,
+                            "max": 130
                         }
                     ]
                 ]
@@ -141,8 +141,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 4,
-                            "min": 3.4,
-                            "max": 3.9
+                            "min": 2.4,
+                            "max": 2.9
                         }
                     ],
                     3
@@ -152,7 +152,7 @@
     },
     "skill_3": {
         "chance": 0.18,
-        "cooldown": 5,
+        "cooldown": 4,
         "mp_cost": 80,
         "name": "羽栖",
         "effect": [
@@ -168,8 +168,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 5,
-                            "min": 420,
-                            "max": 480
+                            "min": 520,
+                            "max": 580
                         }
                     ]
                 ]
@@ -185,11 +185,11 @@
                         {
                             "random": "triangular",
                             "rating_weight": 2,
-                            "min": 4,
-                            "max": 4.2
+                            "min": 3,
+                            "max": 3.5
                         }
                     ],
-                    3
+                    2
                 ]
             }
         ]
@@ -209,8 +209,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 100,
-                            "max": 120
+                            "min": 80,
+                            "max": 100
                         }
                     ]
                 ]
@@ -227,8 +227,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 3,
-                            "min": 220,
-                            "max": 250
+                            "min": 150,
+                            "max": 180
                         }
                     ]
                 ]
