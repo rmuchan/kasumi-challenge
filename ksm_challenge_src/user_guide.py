@@ -33,7 +33,7 @@ def get_ver():
 
 def get_ver_idx(ver: str):
     for i in range(len(version.log_file) - 1, -1, -1):
-        if ver == version.log_file['version']:
+        if ver == version.log_file[i]['version']:
             return i
 
 
