@@ -5,6 +5,7 @@ import math
 import os
 import random
 import time
+from typing import Optional, Awaitable
 
 from nonebot import CommandGroup, on_natural_language, NLPSession, CommandSession
 from nonebot.permission import SUPERUSER, GROUP_ADMIN
@@ -167,12 +168,10 @@ async def _(session: CommandSession):
             return await ui.send('对决正在进行中，你可以使用"ksmgame-join a/b"加入队伍！')
         else:
             return await ui.send('冒险正在进行中，你可以使用"ksmgame-join"加入队伍！')
-    char = ui.retrieve('character')
-    if char is None:
-        return await ui.send('你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
 
-    if time.time() - (ui.retrieve('last_join') or 0) < 1120:
-        return await ui.send('你同时只能参与一场战斗！')
+    char, err = _check_join(ui)
+    if err is not None:
+        return await ui.send(err)
 
     boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
 
@@ -185,7 +184,6 @@ async def _(session: CommandSession):
         'capacity_b': 1
     }
     bat['team_a'][ui.uid()] = game_char_gen(char)
-    ui.store('last_join', time.time())
     _battles[group_id] = bat
 
     if is_saved:
@@ -211,12 +209,10 @@ async def _(session: CommandSession):
             return await ui.send('对决正在进行中，你可以使用"ksmgame-join a/b"加入队伍！')
         else:
             return await ui.send('冒险正在进行中，你可以使用"ksmgame-join"加入队伍！')
-    char = ui.retrieve('character')
-    if char is None:
-        return await ui.send('你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
 
-    if time.time() - (ui.retrieve('last_join') or 0) < 1120:
-        return await ui.send('你同时只能参与一场战斗！')
+    char, err = _check_join(ui)
+    if err is not None:
+        return await ui.send(err)
 
     is_real = session.current_arg.lower() == 'real'
 
@@ -229,10 +225,7 @@ async def _(session: CommandSession):
         'capacity_b': 4,
         'is_real': is_real
     }
-
     bat['team_a'][ui.uid()] = game_char_gen(char, real_mode=is_real)
-
-    ui.store('last_join', time.time())
     _battles[group_id] = bat
 
     await ui.send('你提议开启一场PVP并自动加入了a队！其他人可以使用"ksmgame-join a"来和发起者组队，或是使用"ksmgame-join b"加入对面阵营。')
@@ -253,15 +246,9 @@ async def _(session: CommandSession):
     if not bat['can_join']:
         return await ui.send('战斗已经开始，让我们期待他们的胜利归来！')
 
-    char = ui.retrieve('character')
-    if char is None:
-        return await ui.send('没有角色是无法加入队伍的！\n你可以使用"ksmgame-help"了解游戏的使用方法！')
-
-    if ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
-        return await ui.send('你已经在小队中了！')
-
-    if time.time() - (ui.retrieve('last_join') or 0) < 1120:
-        return await ui.send('你同时只能参与一场战斗！')
+    char, err = _check_join(ui, bat, False)
+    if err is not None:
+        return await ui.send(err)
 
     team = session.current_arg.lower()
     if bat['is_pvp']:
@@ -360,6 +347,19 @@ async def _remove_battle(session: BaseSession, bat: dict):
             _reset_join_time(uid)
         del _battles[group_id]
         await session.send('在限定时间内没有募集齐成员……另择时间开启吧！')
+
+
+def _check_join(ui: BotContextUI, bat: dict = None, set_join: bool = True):
+    char = ui.retrieve('character')
+    if char is None:
+        return None, '你还未拥有一个角色！\n你可以使用"ksmgame-help"了解游戏的使用方法！'
+    if bat is None or ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
+        return None, '你已经在小队中了！'
+    if time.time() - (ui.retrieve('last_join') or 0) < 1120:
+        return None, '你同时只能参与一场战斗！'
+    if set_join:
+        ui.store('last_join', time.time())
+    return char, None
 
 
 async def _join(ui: BotContextUI, gid: int, team: str, char: dict, show_team: bool):
