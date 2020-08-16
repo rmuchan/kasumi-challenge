@@ -4,22 +4,22 @@
     "str_build": {
       "random": "biased",
       "expect": 1,
-      "min": 0.73
+      "min": 0.45
     },
     "int_build": {
       "random": "biased",
       "expect": 1,
-      "min": 0.73
+      "min": 0.45
     },
     "per_build": {
       "random": "biased",
       "expect": 1,
-      "min": 0.73
+      "min": 0.45
     },
     "life_build": {
       "random": "biased",
       "expect": 1,
-      "min": 0.6
+      "min": 0.5
     },
     "def_base": {
       "random": "biased",
