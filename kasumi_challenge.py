@@ -356,7 +356,7 @@ def _check_join(ui: BotContextUI, bat: dict = None, set_join: bool = True):
     min_ver = get_ver_idx(great_update_ver)
     if create_ver < min_ver:
         return None, '你的角色可能不适应现在的版本，请重新创建角色后再加入游戏吧！'
-    if bat is None or ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']:
+    if bat is not None and (ui.uid() in bat['team_a'] or ui.uid() in bat['team_b']):
         return None, '你已经在小队中了！'
     if time.time() - (ui.retrieve('last_join') or 0) < 1120:
         return None, '你同时只能参与一场战斗！'
