@@ -293,8 +293,8 @@ class GameChar:
                 feedback += '，破坏了护盾'
             ret.append({
                 'feedback': feedback,
-                'merge_key': {'target': self._self_replace(obj.name)},
-                'param': {'amount': real_damage}
+                'merge_key': {'target': self._self_replace(obj.name),'amount': real_damage},
+                'param': {}
             })
 
         # 普通攻击

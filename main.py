@@ -55,9 +55,10 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/ahriman.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/bee.json') as FILE:
     boss = json.load(FILE)
 
+test_level = 30
 
 async def main():
     chars = []
@@ -66,8 +67,8 @@ async def main():
         c = await create_character(ui)
         chars.append(c)
         await print_character(ui, c)
-    gcs = [game_char_gen(x) for x in chars]
-    game = Gaming(gcs[:4], [boss_gen(boss, 1)], CLI(0))
+    gcs = [game_char_gen(x, test_lv=test_level) for x in chars]
+    game = Gaming(gcs[:4], [boss_gen(boss, test_level)], CLI(0))
     print(await game.start())
 
 
@@ -118,6 +119,6 @@ def gen_log():
 #TODO 使攻击最高的队友加攻击并沉默
 
 if __name__ == '__main__':
-    #asyncio.run(main2())
+    #asyncio.run(main())
     gen_log()
 
