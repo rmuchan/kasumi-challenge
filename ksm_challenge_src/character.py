@@ -171,7 +171,7 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
                 data.numerical['life_grow'] * char['life_build'][0], 1,
                 calc_passive(data.numerical['hp_rate'], char, 'hp_rate')),
         calc_passive(data.numerical['life_grow'] * char['life_build'][0], char, 'life_grow') * data.numerical['hp_rate'],
-        char['def_base'][1]
+        char['life_build'][1]
     )
               )
     ui.append('基础物防: %.2f (%s)' % (calc_passive(char['def_base'][0], char, 'def_base'), char['def_base'][1]))
