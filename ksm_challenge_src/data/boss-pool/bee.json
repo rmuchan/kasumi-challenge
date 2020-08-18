@@ -1,7 +1,7 @@
 {
     "name": "魔化蜂王",
     "not_short_hp": false,
-    "desc": "受命于腐化领主的【魔化蜂王】所经之处，没有鲜花盛开。它会在作战开始时借助秘宝[蜂王作战浓浆]的力量让自己处于绝佳状态，召唤蜂群对敌人进行[蜂群之噬]和[工蜂尖刺]，蜂群会在作战中精进自己的战斗力，蜂群同时可以[全蜂出动]形成强大的屏障阻碍敌人的反击。然而遗憾的是，我们对其的了解并不充分……",
+    "desc": "受命于腐化领主的【魔化蜂王】所经之处，没有鲜花盛开。它会在作战开始时借助秘宝[蜂王作战浓浆]的力量让自己处于绝佳状态，召唤蜂群对敌人进行[蜂群之噬]和[工蜂尖刺]，以不同地方式攻击敌人。蜂群同时可以[全蜂出动]形成强大的屏障阻碍敌人的反击，[蜂群战术]的应用让战士们无法紧握手中的武器……",
     "weight_water_injection": {
         "random": "triangular",
         "rating_weight": 3,
@@ -11,32 +11,32 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 5,
-        "min": 270,
-        "max": 240
+        "min": 280,
+        "max": 300
     },
     "defence_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 4.5,
-        "max": 4.8
+        "min": 8.5,
+        "max": 8.8
     },
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 1,
-        "min": 0.5,
-        "max": 0.51
+        "min": 0.9,
+        "max": 0.91
     },
     "hp_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 240,
-        "max": 260
+        "min": 270,
+        "max": 290
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 320,
-        "max": 360
+        "min": 240,
+        "max": 270
     },
     "recover_rate": {
         "random": "triangular",
@@ -46,23 +46,23 @@
     },
     "spell_rate": {
         "random": "triangular",
-        "rating_weight": 4,
-        "min": 1.2,
-        "max": 1.3
+        "rating_weight": 1,
+        "min": 1.7,
+        "max": 1.72
     },
     "buff_rate": {
         "random": "triangular",
-        "rating_weight": 2,
+        "rating_weight": 1,
         "min": 1,
-        "max": 1.1
+        "max": 1.01
     },
     "crit_rate": 1.6,
     "crit_chance": 0.16,
-    "life_steal_rate": 0.7,
+    "life_steal_rate": 0.55,
     "dodge": 0.1,
     "skill_1": {
-        "chance": 0.5,
-        "cooldown": 16,
+        "chance": 0.34,
+        "cooldown": 30,
         "mp_cost": 0,
         "name": "蜂王作战浓浆",
         "effect": [
@@ -114,15 +114,33 @@
         ]
     },
     "skill_2": {
-        "chance": 0.008,
-        "cooldown": 3,
+        "chance": 0.3,
+        "cooldown": 4,
         "mp_cost": 200,
-        "name": "毁灭蜂群",
+        "name": "蜂群战术",
         "effect": [
             {
                 "type": "MGC_DMG",
                 "target": {
-                    "type": "ALL",
+                    "type": "ATKMOST",
+                    "team": 0,
+                    "limit": 2
+                },
+                "param": [
+                    [
+                        {
+                            "random": "triangular",
+                            "rating_weight": 1,
+                            "min": 100,
+                            "max": 110
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "ATK_DEBUFF",
+                "target": {
+                    "type": "SAME",
                     "team": 0,
                     "limit": 1
                 },
@@ -130,11 +148,11 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 1,
-                            "min": 200,
-                            "max": 220
+                            "rating_weight": 3,
+                            "min": 0.7,
+                            "max": 0.76
                         }
-                    ]
+                    ], 3
                 ]
             }
         ]
@@ -290,25 +308,6 @@
                     "limit": 1
                 },
                 "param": []
-            },
-            {
-                "type": "MGC_BUFF_RATE",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 0.21,
-                            "max": 0.24
-                        }
-                    ],
-                    15
-                ]
             }
         ]
     }

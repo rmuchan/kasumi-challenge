@@ -73,8 +73,7 @@ class GameChar:
 
     @property
     def buff_rate(self):
-        return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) * self.buff_calc_spec(
-            'buff_rate_weaken')
+        return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) * self.buff_calc_spec('buff_rate_weaken')
 
     @property
     def hp_percentage(self):

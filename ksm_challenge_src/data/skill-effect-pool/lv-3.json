@@ -320,8 +320,8 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 3,
-            "max": 5
+            "min": 5,
+            "max": 6
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -339,12 +339,12 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "清除一名敌人身上全部的状态效果",
+                "desc": "清除两个敌方目标身上全部的状态效果",
                 "type": "PURIFY",
                 "target": {
-                    "type": "RAND",
+                    "type": "RAND_SAFE",
                     "team": 0,
-                    "limit": 1
+                    "limit": 2
                 },
                 "param": [
                 ]
@@ -361,9 +361,9 @@
                     {
                         "random": "biased",
                         "expect": 0.40,
-                        "min": 0.20
+                        "min": 0.30
                     },
-                    2
+                    3
                 ]
             }
         ]
