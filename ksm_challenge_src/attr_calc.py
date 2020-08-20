@@ -110,7 +110,7 @@ def _def_calc(int_cur, def_base):
 
 # 暴击倍率增益计算
 def crit_rate_calc(int_cur, extra):
-    return int_cur / 150 + numerical['crit_base'] + extra
+    return int_cur * numerical['crit_int_convert_rate'] + numerical['crit_base'] + extra
 
 
 # 下面会有三个基于属性的技能强化率的计算会用到这个函数

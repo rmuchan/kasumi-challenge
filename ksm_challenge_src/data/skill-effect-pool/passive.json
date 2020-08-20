@@ -57,11 +57,11 @@
         }
     },
     {
-        "desc": "【嗜血渴望】生命窃取+32% 恢复强度+5%",
+        "desc": "【嗜血渴望】生命窃取+32% 恢复强度+7%",
         "buff": {
             "life_steal_rate": 0.32,
             "recover_rate": {
-                "multiply": 1.05
+                "multiply": 1.07
             }
         }
     },

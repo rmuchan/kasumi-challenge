@@ -185,8 +185,8 @@
         "weight": 4,
         "effect": [
             {
-                "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_CONST",
+                "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_RATE",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -195,8 +195,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 106,
-                        "min": 93
+                        "expect": 0.75,
+                        "min": 0.66
                     },
                     3
                 ]
@@ -228,7 +228,7 @@
                 "医护之触"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
                 "desc": "治疗生命最低的队友{param[0]}点生命",
@@ -388,9 +388,7 @@
             "random": "choice",
             "values": [
                 "致残",
-                "攻击削弱",
-                "衰弱巫术",
-                "虚弱魔术"
+                "攻击削弱"
             ]
         },
         "weight": 1,
@@ -406,10 +404,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.15,
-                        "min": 0.12
+                        "expect": 0.18,
+                        "min": 0.15
                     },
-                    4
+                    5
                 ]
             }
         ]
@@ -504,7 +502,7 @@
                 "构建防御"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "大幅度强化自身防御{param[0]:.1f}点，持续{param[1]}回合",
@@ -661,8 +659,8 @@
                 ]
             },
             {
-                "desc": "强化自身{param[0]}点攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_CONST",
+                "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_RATE",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -671,8 +669,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 27,
-                        "min": 21
+                        "expect": 0.2,
+                        "min": 0.16
                     },
                     3
                 ]

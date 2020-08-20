@@ -69,7 +69,7 @@ async def main():
         await print_character(ui, c)
     gcs = [game_char_gen(x, test_lv=test_level) for x in chars]
     game = Gaming(gcs[:4], [boss_gen(boss, test_level)], CLI(0))
-    print(await game.start())
+    print(await game.start(testing_mode=True))
 
 
 async def main2():
@@ -91,7 +91,7 @@ async def main2():
                 await print_character(ui, c)
             gcs = [game_char_gen(x, test_lv=lvl) for x in chars]
             game = Gaming(gcs[:4], [boss_gen(boss, lvl)], CLI(0,debug_mode=True))
-            result, turn = await game.start()
+            result, turn = await game.start(testing_mode=True)
             turn_count[lvl][turn] += 1
             if result == 'timeout':
                 time_out[lvl] += 1
@@ -119,6 +119,6 @@ def gen_log():
 #TODO 使攻击最高的队友加攻击并沉默
 
 if __name__ == '__main__':
-    #asyncio.run(main())
+    #asyncio.run(main2())
     gen_log()
 

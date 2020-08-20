@@ -11,7 +11,7 @@
             ]
         },
         "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
-        "weight": 4,
+        "weight": 3,
         "type": "MGC_DMG",
         "target": {
             "type": "RAND",
@@ -76,34 +76,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 36,
-                "min": 32
-            },
-            3
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
-                "荣誉之手",
-                "暗示",
-                "战吼"
-            ]
-        },
-        "desc": "提升自身{param[0]:.1%}的攻击，持续{param[1]}回合",
-        "weight": 4,
-        "type": "PHY_ATK_BUFF_RATE",
-        "target": {
-            "type": "SELF",
-            "team": 1,
-            "limit": 0
-        },
-        "param": [
-            {
-                "random": "biased",
-                "expect": 0.36,
-                "min": 0.28
+                "expect": 50,
+                "min": 45
             },
             3
         ]
@@ -129,8 +103,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 38,
-                "min": 30
+                "expect": 50,
+                "min": 42
             }
         ]
     },
@@ -197,7 +171,7 @@
             ]
         },
         "desc": "为自身添加{param[0]}点护盾",
-        "weight": 1,
+        "weight": 2,
         "type": "SHIELD",
         "target": {
             "type": "SELF",
@@ -235,7 +209,7 @@
                 "expect": 3.6,
                 "min": 3.2
             },
-            3
+            4
         ]
     },
     {
@@ -285,8 +259,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 70,
-                "min": 60
+                "expect": 80,
+                "min": 70
             }
         ]
     }

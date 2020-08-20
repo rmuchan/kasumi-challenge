@@ -23,7 +23,7 @@ class Gaming(ABC):
         self.turn = 1
         self.ui = ui
 
-    async def start(self):
+    async def start(self, testing_mode=False):
         while True:
             # 获胜状态判断
             if len(self.team_a) == 0 and len(self.team_b) == 0:
@@ -53,7 +53,8 @@ class Gaming(ABC):
 
             self.turn += 1
 
-            await asyncio.sleep(16)
+            if not testing_mode:
+                await asyncio.sleep(16)
 
 
 
