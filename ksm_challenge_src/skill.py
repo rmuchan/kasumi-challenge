@@ -62,14 +62,27 @@ def get_skill_desc(skill: Dict[str, Any], is_unique: bool) -> str:
             desc='；'.join(get_effect_desc(x) for x in skill['effect'])
         )
     else:
-        return '【{name}】\n ├ 冷却回合：{cd}\n ├ 动态概率：{chance:.1%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'.format(
+        return '【{name}】\n ├ 冷却回合：{cd}\n ├ 概率：{chance:.1%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'.format(
             name=skill['name'],
             cd=skill['cooldown'],
-            chance=skill['chance'],
+            chance=real_chance_calc(skill['chance']),
             mp=skill['mp_cost'],
             desc='；'.join(get_effect_desc(x) for x in skill['effect'])
         )
 
+
+def real_chance_calc(chance):
+    last_time = 1
+    Sum = 0
+    sample_count = 1000
+    for i in range(sample_count):
+        if random.random() < chance * last_time:
+            # 发动了
+            last_time = 1
+            Sum += 1
+        else:
+            last_time += 1
+    return Sum / sample_count
 
 def get_effect_desc(effect: Dict[str, Any]) -> str:
     """生成技能效果描述。

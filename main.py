@@ -63,7 +63,7 @@ test_level = 30
 async def main():
     chars = []
     for i in range(8):
-        ui = CLI(i, debug_mode=True)
+        ui = CLI(i)
         c = await create_character(ui)
         chars.append(c)
         await print_character(ui, c)
@@ -114,11 +114,11 @@ def gen_log():
             F.write(f'  {extra}\n\n')
 
 
+# TODO 减攻击调查一下
 #TODO 物理减自己血两次攻击
 #TODO 破盾一击
-#TODO 使攻击最高的队友加攻击并沉默
 
 if __name__ == '__main__':
-    #asyncio.run(main2())
+    #asyncio.run(main())
     gen_log()
 

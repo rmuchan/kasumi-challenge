@@ -13,10 +13,10 @@ attr_rate = 1.01
 attr_add = 1.2
 attr_base = 50
 
-hp_base = 160
-hp_add = 3.6
-hp_lv_rate = 1.003
-hp_rate = 2.4
+hp_base = numerical['life_base']
+hp_add = numerical['life_grow']
+hp_lv_rate = numerical['hp_lv_rate']
+hp_rate = numerical['hp_rate']
 """
 伤害公式
 """
@@ -71,7 +71,7 @@ def damageCalc(lv):
 
 # 基于属性的技能强化(护盾治疗、法术强度、增益强度)
 def attrBaseEnhance(attr):
-    adj = 0.0367 * (attr ** 0.845)
+    adj = 0.0402 * (attr ** 0.821)
     return adj
 
 
@@ -115,7 +115,7 @@ if __name__ == '__main__':
     # dm = 100
     # crit_chance = 0.16
     for i in [1, 10, 20, 30]:
-        print(atkCalc(i))
+        print(attrBaseEnhance(110))
         #print(recurrence(attrCalc(i), 1.004, 10, i) + 200 * numerical['hp_rate'])
 
         # print(crit_rate_calc(attrCalc(i), attrCalc(i), 0.5, 0))
