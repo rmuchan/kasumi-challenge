@@ -1,9 +1,11 @@
+import _thread
 import asyncio
 import atexit
 import json
 import os
 import random
 import time
+from flask import *
 
 from nonebot import CommandGroup, on_natural_language, NLPSession, CommandSession
 from nonebot.permission import SUPERUSER, GROUP_ADMIN
@@ -17,9 +19,24 @@ from .ksm_challenge_src.bot_ui import BotContextUI
 from .ksm_challenge_src.character import create_character, print_character, exp_to_talent_coin, calc_passive
 from .ksm_challenge_src.character_show import show_chara_info
 from .ksm_challenge_src.data import data
-from .ksm_challenge_src.interact import UI
+from .ksm_challenge_src.interact import UI, output
 from .ksm_challenge_src.talent_calc import upgrade_talent
 from .ksm_challenge_src.user_guide import *
+
+
+app = Flask(__name__)
+@app.route('/create_info', methods=['GET','POST'])
+def create_info():
+    if request.method == 'GET':
+        print(request.form)
+        return '<p>' + output.get(int(request.args.get('qid', 0)), ' ').replace('\n', '</br>') + '</p>'
+
+
+def web_server(arg):
+    app.run(host='127.0.0.1', port=9286)
+
+
+_thread.start_new_thread(web_server, (None,))
 
 
 def conf_read(name):
@@ -70,6 +87,12 @@ async def send_to_all(bot, msg):
     for gid in config['enabled_group']:
         await asyncio.sleep(0.1)
         await bot.send_group_msg(group_id=int(gid), message=msg)
+
+
+# 查看消息记录
+@_cmd_group.command('check')
+async def _(session: CommandSession):
+    await session.send(f'http://ksmgame-check.ice0.xyz/create_info?qid={session.ctx["user_id"]}')
 
 
 # 自动推送日志

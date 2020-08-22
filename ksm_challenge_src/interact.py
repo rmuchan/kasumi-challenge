@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Any, Callable
 
+output = {}
 
 class UI(ABC):
     def __init__(self):
@@ -20,6 +21,7 @@ class UI(ABC):
         send_msg = self._pending_msg.rstrip()
         self._pending_msg = ''
         if send_msg:
+            output[self.uid()] = send_msg
             await self.do_send(send_msg)
 
     async def input(self, prompt: Optional[str] = None, *,
