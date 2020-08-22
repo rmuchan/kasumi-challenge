@@ -55,6 +55,8 @@ def conf_write(name, dict_):
 _battles = {}
 _cmd_group = CommandGroup('ksmgame', only_to_me=False)
 
+_anonymous_alert = '不要匿名' * 6
+
 try:
     config = conf_read('ksmgame')
 except:
@@ -92,6 +94,8 @@ async def send_to_all(bot, msg):
 # 查看消息记录
 @_cmd_group.command('check')
 async def _(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
     await session.send(f'http://ksmgame-check.ice0.xyz/create_info?qid={session.ctx["user_id"]}')
 
 
@@ -134,6 +138,9 @@ async def _(session: CommandSession):
 # 新建
 @_cmd_group.command('create')
 async def _(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
+
     async def create(ui: UI):
         if ui.retrieve('character') is not None:
             await ui.send('你已经拥有了一个角色！你可以使用ksmgame-status来查看属性')
@@ -153,6 +160,8 @@ async def _(session: CommandSession):
 # 查询角色信息
 @_cmd_group.command('status')
 async def _query(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
     ui = BotContextUI(session.bot, session.ctx)
     await show_chara_info(ui)
 
@@ -181,6 +190,9 @@ async def _(session: CommandSession):
 # 发起pve
 @_cmd_group.command('boss')
 async def _(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
+
     ui = BotContextUI(session.bot, session.ctx)
     if session.ctx['message_type'] != 'group':
         return await ui.send('请不要孤身冒险！前往QQ群中，募集队友，和其他冒险者们一起战斗吧！')
@@ -222,6 +234,9 @@ async def _(session: CommandSession):
 # 发起pvp
 @_cmd_group.command('pvp')
 async def _(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
+
     ui = BotContextUI(session.bot, session.ctx)
     if session.ctx['message_type'] != 'group':
         return
@@ -258,6 +273,9 @@ async def _(session: CommandSession):
 # 加入战斗
 @_cmd_group.command('join')
 async def _(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
+
     ui = BotContextUI(session.bot, session.ctx)
     if session.ctx['message_type'] != 'group':
         return
@@ -300,6 +318,9 @@ async def _(session: CommandSession):
 # 转生
 @_cmd_group.command('rebirth')
 async def _(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
+
     ui = BotContextUI(session.bot, session.ctx)
     char = ui.retrieve('character')
     if char is None:
@@ -324,6 +345,9 @@ async def _(session: CommandSession):
 # 天赋管理
 @_cmd_group.command('talent')
 async def _(session: CommandSession):
+    if session.ctx['user_id'] == 80000000:
+        return await session.send(_anonymous_alert)
+
     try:
         BotContextUI(session.bot, session.ctx).run(upgrade_talent, mutex_mode='user')
     except BotContextUI.RunningException:
