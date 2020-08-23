@@ -76,6 +76,11 @@ async def _(session: NLPSession):
 @_cmd_group.command('warn', permission=SUPERUSER)
 async def _(session: CommandSession):
     await send_to_all(session.bot, '提示：bot即将进入功能维护，所有功能将会暂时中止。')
+    for bat in _battles.values():
+        for uid in bat['team_a']:
+            _reset_join_time(uid)
+        for uid in bat['team_b']:
+            _reset_join_time(uid)
     await session.send('发送完成')
 
 
