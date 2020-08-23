@@ -33,13 +33,13 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
         lv = numerical['fair_mode']
 
     str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0] + calc_passive(0, chara, 'str_base'),
-                      numerical['str_grow'] * chara['str_build'][0] + calc_passive(0, chara, 'str_grow'),
+                      numerical['str_grow'] * ((chara['str_build'][0] - 1) * numerical['attr_grow_compress'] + 1) + calc_passive(0, chara, 'str_grow'),
                       lv)
     int_ = _attr_calc(numerical['int_base'] * chara['int_build'][0] + calc_passive(0, chara, 'int_base'),
-                      numerical['int_grow'] * chara['int_build'][0] + calc_passive(0, chara, 'int_grow'),
+                      numerical['int_grow'] * ((chara['int_build'][0] - 1) * numerical['attr_grow_compress'] + 1) + calc_passive(0, chara, 'int_grow'),
                       lv)
     per_ = _attr_calc(numerical['per_base'] * chara['per_build'][0] + calc_passive(0, chara, 'per_base'),
-                      numerical['per_grow'] * chara['per_build'][0] + calc_passive(0, chara, 'per_grow'),
+                      numerical['per_grow'] * ((chara['per_build'][0] - 1) * numerical['attr_grow_compress'] + 1) + calc_passive(0, chara, 'per_grow'),
                       lv)
 
     game_char['str'] = str_
@@ -49,7 +49,7 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
     game_char['name'] = chara['name']
     game_char['not_short_hp'] = True
     game_char['attack'] = _atk_calc(str_, int_, chara['defense_str_rate'], chara['attack_rate'][0])
-    game_char['defence'] = _def_calc(int_, calc_passive(chara['def_base'][0], chara, 'def_base'))
+    game_char['defence'] = _def_calc(per_, calc_passive(chara['def_base'][0], chara, 'def_base'))
     game_char['HP'] = hp_calc(str_,
                               numerical['life_base'] * chara['life_build'][0] + calc_passive(0, chara, 'life_base'),
                               numerical['life_grow'] * chara['life_build'][0] + calc_passive(0, chara, 'life_grow'),
@@ -59,10 +59,10 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
     game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate'],
                                                calc_passive(1.0, chara, 'spell_rate'))
     game_char['buff_rate'] = _buff_rate_calc(per_)
-    game_char['crit_rate'] = crit_rate_calc(int_, calc_passive(0, chara, 'crit_rate'))
+    game_char['crit_rate'] = crit_rate_calc(str_, calc_passive(0, chara, 'crit_rate'))
     game_char['crit_chance'] = numerical['crit_chance']
     game_char['life_steal_rate'] = calc_passive(numerical['life_steal_rate_base'], chara, 'life_steal_rate')
-    game_char['dodge'] = _dodge_calc(per_, calc_passive(0, chara, 'dodge'))
+    game_char['dodge'] = _dodge_calc(int_, calc_passive(0, chara, 'dodge'))
 
     for i in range(1, 4):
         game_char[f'skill_{i}'] = chara[f'skill_{i}']
@@ -104,13 +104,13 @@ def hp_calc(str_cur, life_base, life_grow, lv, modify):
 
 
 # 防御计算
-def _def_calc(int_cur, def_base):
-    return int_cur * numerical['def_adj_rate'] + def_base
+def _def_calc(per_cur, def_base):
+    return per_cur * numerical['def_adj_rate'] + def_base
 
 
 # 暴击倍率增益计算
-def crit_rate_calc(int_cur, extra):
-    return int_cur * numerical['crit_int_convert_rate'] + numerical['crit_base'] + extra
+def crit_rate_calc(str_cur, extra):
+    return str_cur * numerical['crit_int_convert_rate'] + numerical['crit_base'] + extra
 
 
 # 下面会有三个基于属性的技能强化率的计算会用到这个函数
@@ -134,8 +134,8 @@ def _buff_rate_calc(per_cur):
 
 
 # 闪避
-def _dodge_calc(per_cur, extra):
-    return numerical['dodge_base'] + extra + per_cur * numerical['dodge_rate']
+def _dodge_calc(int_cur, extra):
+    return numerical['dodge_base'] + extra + int_cur * numerical['dodge_rate']
 
 
 # 根据经验等级计算
