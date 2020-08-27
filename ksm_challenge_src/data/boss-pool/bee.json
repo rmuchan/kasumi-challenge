@@ -140,7 +140,7 @@
             {
                 "type": "ATK_DEBUFF",
                 "target": {
-                    "type": "SAME",
+                    "type": "ATKMOST",
                     "team": 0,
                     "limit": 1
                 },
@@ -305,8 +305,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 2,
-                            "min": 15,
-                            "max": 15.1
+                            "min": 20,
+                            "max": 20.1
                         }
                     ],
                     3

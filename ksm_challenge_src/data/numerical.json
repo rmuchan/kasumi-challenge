@@ -87,7 +87,7 @@
   "hp_lv_rate": 1.003,
   "hp_rate": 2.1,
   "attr_rate": 1.01,
-  "damage_fluctuation": 0.56,
+  "damage_fluctuation": 0.7,
   "random_mp_gain_base": 90,
   "random_mp_gain_extra": 60,
   "primary_skill_chance_rate": 1.9,

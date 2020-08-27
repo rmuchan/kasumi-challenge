@@ -263,5 +263,32 @@
                 "min": 70
             }
         ]
+    },    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "不稳定混合物",
+                "随机魔术",
+                "异能爆破",
+                "恶魔之诺"
+            ]
+        },
+        "weight": 1,
+        "desc": "使用不稳定的魔法攻击一个敌人，成功则造成{param[1]}点魔法伤害，否则对自己造成{param[2]}点魔法伤害",
+        "type": "MGC_RAND",
+        "target": {
+            "type": "RAND",
+            "team": 0,
+            "limit": 1
+        },
+        "param": [
+            0.70,
+            {
+                "random": "biased",
+                "expect": 120,
+                "min": 110
+            },
+            70
+        ]
     }
 ]

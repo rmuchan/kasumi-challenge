@@ -550,6 +550,7 @@ class GameChar:
                     'param': {'amount': real_added}
                 })
 
+        # 攻击标记
         elif effect['type'] == 'ATK_ASSIS':
             for obj in selector:
                 obj.add_token('attack_assis')
@@ -558,6 +559,26 @@ class GameChar:
                     'merge_key': {'target': self._self_replace(obj.name)},
                     'param': {}
                 })
+
+        # 随机魔法
+        elif effect['type'] == 'MGC_RAND':
+            for obj in selector:
+                if random.random() < param[0]:
+                    do_magic_damage(param[1][0])
+                else:
+                    magic_damage = param[2] * self.spell_rate * fluctuation()
+                    real_damage, atk_status, _ = self.take_damage(magic_damage, magic=True)
+                    feedback = '失败！对{target}'
+                    if atk_status == 2:
+                        feedback += '的护盾'
+                    feedback += '造成了{amount:.0f}点魔法伤害'
+                    if atk_status == 1:
+                        feedback += '，破坏了护盾'
+                    ret.append({
+                        'feedback': feedback,
+                        'merge_key': {'target': self._self_replace(self.name)},
+                        'param': {'amount': real_damage}
+                    })
 
         else:
             raise ValueError('出现了未知的效果类型' + effect['type'])

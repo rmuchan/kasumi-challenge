@@ -35,8 +35,8 @@
     "life_base": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 600,
-        "max": 650
+        "min": 590,
+        "max": 640
     },
     "recover_rate": {
         "random": "triangular",
@@ -56,9 +56,9 @@
         "min": 1.0,
         "max": 1.1
     },
-    "crit_rate": 2.1,
+    "crit_rate": 2.4,
     "crit_chance": 0.14,
-    "life_steal_rate": 0.6,
+    "life_steal_rate": 0.56,
     "dodge": 0.06,
     "skill_1": {
         "chance": 0.2,
@@ -77,8 +77,8 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 6,
-                            "min": 130,
+                            "rating_weight": 5,
+                            "min": 120,
                             "max": 150
                         }
                     ]
@@ -206,8 +206,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 2,
-                            "min": 220,
-                            "max": 230
+                            "min": 240,
+                            "max": 255
                         }
                     ]
                 ]
