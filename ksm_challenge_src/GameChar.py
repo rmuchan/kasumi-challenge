@@ -1,7 +1,7 @@
 import random
 from typing import Tuple, List, Optional
 
-from ksm_challenge_src.enums import PercentageType
+from .enums import PercentageType
 from .GameSkill import GameSkill
 from .data import data
 from .rand import biased
