@@ -23,8 +23,8 @@
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 0.18,
-        "max": 0.24
+        "min": 0.2,
+        "max": 0.25
     },
     "hp_base": {
         "random": "triangular",
@@ -35,8 +35,8 @@
     "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 190,
-        "max": 210
+        "min": 210,
+        "max": 240
     },
     "recover_rate": {
         "random": "triangular",
@@ -47,8 +47,8 @@
     "spell_rate": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 1,
-        "max": 1.11
+        "min": 1.06,
+        "max": 1.2
     },
     "buff_rate": {
         "random": "triangular",

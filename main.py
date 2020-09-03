@@ -12,6 +12,7 @@ from ksm_challenge_src.talent_calc import show_talent, upgrade_talent
 from ksm_challenge_src.version import log_file
 
 
+
 class CLI(UI):
     def __init__(self, uid: int, debug_mode=False):
         super().__init__()
@@ -55,15 +56,15 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/bee.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/pedestrian.json') as FILE:
     boss = json.load(FILE)
 
-test_level = 30
+test_level = 1
 
 async def main():
     chars = []
     for i in range(8):
-        ui = CLI(i)
+        ui = CLI(i,debug_mode=True)
         c = await create_character(ui)
         chars.append(c)
         await print_character(ui, c)
@@ -119,6 +120,6 @@ def gen_log():
 #TODO 破盾一击
 
 if __name__ == '__main__':
-    #asyncio.run(main())
+    #asyncio.run(main2())
     gen_log()
 

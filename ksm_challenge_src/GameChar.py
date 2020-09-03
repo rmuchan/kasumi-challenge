@@ -1,6 +1,7 @@
 import random
 from typing import Tuple, List, Optional
 
+from ksm_challenge_src.enums import PercentageType
 from .GameSkill import GameSkill
 from .data import data
 from .rand import biased
@@ -73,7 +74,8 @@ class GameChar:
 
     @property
     def buff_rate(self):
-        return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) * self.buff_calc_spec('buff_rate_weaken')
+        return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) * self.buff_calc_spec(
+            'buff_rate_weaken')
 
     @property
     def hp_percentage(self):
@@ -580,8 +582,40 @@ class GameChar:
                         'param': {'amount': real_damage}
                     })
 
+        # 生命交换
+        elif effect['type'] == 'LIFE_SWAP':
+            for obj in selector:
+                # 如果目标的生命百分比小于自己的则造成伤害
+                if obj.hp_percentage < self.hp_percentage:
+                    do_magic_damage(param[0][0])
+                else:
+                    #交换生命
+                    pre_self_life = self.hp_percentage
+                    recovered = self.recover(obj.hp_percentage, percentage_type=PercentageType.SET)
+                    damage = obj._life_hurt(pre_self_life, percentage_type=PercentageType.SET, deadly=False)
+                    ret.append({
+                        'feedback': '对{target}造成了{damage:.0f}点穿刺伤害，恢复了自身{recover:.0f}点生命',
+                        'merge_key': {'target': self._self_replace(obj.name)},
+                        'param': {'damage': damage, 'recover': recovered}
+                    })
+
+        # 穿刺伤害
+        elif effect['type'] == 'PIERCE':
+            for obj in selector:
+
+                # 造成穿刺伤害 param[1]决定是否致死
+                damage = obj._life_hurt(param[0][0], percentage_type=PercentageType.DEC, deadly=param[1])
+
+
+                ret.append({
+                    'feedback': '对{target}造成了{damage:.0f}点穿刺伤害',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'damage': damage}
+                })
+
+
         else:
-            raise ValueError('出现了未知的效果类型' + effect['type'])
+            raise ValueError('出现了未知的效果类型：' + effect['type'])
         return ret
 
     # ————————————————————————————
@@ -616,21 +650,32 @@ class GameChar:
         else:
             return False
 
-    def recover(self, recovery):
+    def recover(self, param, percentage_type=None):
         """
         生命恢复。传入恢复量
         超过最大值的将会被舍弃
         返回实际恢复量
+
+        可选参数：
+        percentage_type: 参考enums.py中PercentageType的描述。当这个参数不为空的时候，param会另作他用。
         """
-        to_recover = recovery * self.recover_rate
+
         pre_hp = self.HP
-        self.HP += to_recover
-        if self.HP <= self.attributes['HP']:
-            return to_recover
+
+        if not percentage_type:
+            to_recover = param * self.recover_rate
+            self.HP += to_recover
+        elif percentage_type == PercentageType.SET:
+            if self.hp_percentage < param:
+                self.HP = param * self.attributes['HP']
+
         else:
-            diff = self.attributes['HP'] - pre_hp
+            raise ValueError('在recover函数中传入了未知的PercentageType类型')
+        # 恢复溢出的情况
+        if self.HP > self.attributes['HP']:
             self.HP = self.attributes['HP']
-            return diff
+
+        return self.HP - pre_hp
 
     def heal(self, recovery, buff_rate):
         """
@@ -699,18 +744,51 @@ class GameChar:
             self.shield = 0
             return damage
 
-    def _life_hurt(self, damage):
+    def _life_hurt(self, param, percentage_type=None, deadly=True):
         """
         角色扣血时，需要传入伤害量。
         返回实际造成的伤害，同时增加TP值
         最小伤害为1
+
+        param为参数，通常来说为伤害量。但是其作用可能会和可选参数有关
+
+        可选参数：
+        deadly：是否致死。为真时，此次攻击可以将生命降低到0以下。
+        percentage_type: 参考enums.py中PercentageType的描述。当这个参数不为空的时候，param会另作他用。
         """
-        if damage <= 0:
-            damage = 1
-        self.HP -= damage
-        damage_percent = damage / self.attributes['HP']
+        pre_hp = self.HP
+
+        # 传入的是伤害
+        if not percentage_type:
+            if param <= 0:
+                param = 1
+            self.HP -= param
+        # 传入的是SET类型
+        elif percentage_type == PercentageType.SET:
+            # 检查当前生命百分比 只有当前生命百分比大于param时才会造成伤害
+            if self.hp_percentage > param:
+                self.HP = self.attributes['HP'] * param
+        # 传入的是DEC类型
+        elif percentage_type == PercentageType.DEC:
+            if param < 0:
+                raise ValueError('百分比穿刺伤害的参数不可为负数！')
+            self.HP -= param * self.attributes['HP']
+
+        else:
+            raise ValueError('在_life_hurt函数中传入了未知的PercentageType类型')
+
+        # 如果是非致死攻击，但伤害致死 将生命值恢复到1
+        if not deadly and self.HP < 1:
+            self.HP = 1
+
+        # 计算实际伤害量
+        real_damage = pre_hp - self.HP
+
+        # 计算此次伤害的百分比并以此为根据增加角色的MP值
+        damage_percent = real_damage / self.attributes['HP']
         self.gain_mp(damage_percent * 1000 * numerical['life_to_mp'])
-        return damage
+
+        return real_damage
 
     def _damage_reduce(self, damage):
         """

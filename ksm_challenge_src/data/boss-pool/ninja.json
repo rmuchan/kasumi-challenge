@@ -22,15 +22,15 @@
     },
     "defence_grow": {
         "random": "triangular",
-        "rating_weight": 2,
-        "min": 0.050,
-        "max": 0.056
+        "rating_weight": 3,
+        "min": 0.070,
+        "max": 0.086
     },
     "hp_base": {
         "random": "triangular",
         "rating_weight": 3,
-        "min": 190,
-        "max": 210
+        "min": 220,
+        "max": 250
     },
     "life_base": {
         "random": "triangular",
