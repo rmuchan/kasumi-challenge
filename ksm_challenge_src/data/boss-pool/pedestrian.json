@@ -11,20 +11,20 @@
     "attack": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 140,
-        "max": 150
+        "min": 160,
+        "max": 170
     },
     "defence_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 1.6,
-        "max": 1.9
+        "min": 1.9,
+        "max": 2.1
     },
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 5,
-        "min": 0.1,
-        "max": 0.14
+        "min": 0.11,
+        "max": 0.15
     },
     "hp_base": {
         "random": "triangular",
@@ -35,8 +35,8 @@
     "life_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 180,
-        "max": 190
+        "min": 200,
+        "max": 210
     },
     "recover_rate": {
         "random": "triangular",
@@ -97,8 +97,8 @@
                         {
                             "random": "triangular",
                             "rating_weight": 4,
-                            "min": 340,
-                            "max": 370
+                            "min": 380,
+                            "max": 420
                         }
                     ]
                 ]
@@ -136,9 +136,9 @@
                     [
                         {
                             "random": "triangular",
-                            "rating_weight": 6,
-                            "min": 200,
-                            "max": 250
+                            "rating_weight": 4,
+                            "min": 170,
+                            "max": 210
                         }
                     ]
                 ]

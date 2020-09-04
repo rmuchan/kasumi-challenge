@@ -592,13 +592,16 @@ class GameChar:
         # 生命交换
         elif effect['type'] == 'LIFE_SWAP':
             for obj in selector:
+                # 生命值恢复到目标生命值半分比的的75%
+                rate = 0.85
+
                 # 如果目标的生命百分比小于自己的则造成伤害
-                if obj.hp_percentage < self.hp_percentage:
+                if obj.hp_percentage < self.hp_percentage * rate:
                     do_magic_damage(param[0][0])
                 else:
                     #交换生命
                     pre_self_life = self.hp_percentage
-                    recovered = self.recover(obj.hp_percentage, percentage_type=PercentageType.SET)
+                    recovered = self.recover(obj.hp_percentage * rate, percentage_type=PercentageType.SET)
                     damage = obj._life_hurt(pre_self_life, percentage_type=PercentageType.SET, deadly=False)
                     ret.append({
                         'feedback': '对{target}造成了{damage:.0f}点穿刺伤害，恢复了自身{recover:.0f}点生命',
