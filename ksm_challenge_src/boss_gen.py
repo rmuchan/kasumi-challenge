@@ -19,6 +19,7 @@ def boss_gen(template: dict, lv):
     boss['power_rating'] = (rating[0] * 2 / rating[1] - 1) * 0.4 + 1
     boss['final_rating'] = (recurrence(numerical['per_base'], numerical['attr_rate'], numerical['per_grow'], lv)) ** 1.4 * (boss['power_rating'])
     boss['exp_earn'] = int(boss['power_rating'] * exp_earn_calc(lv))
+    boss['is_boss'] = True
     return boss
 
 

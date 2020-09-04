@@ -205,12 +205,19 @@ class GameChar:
         if self.use_token('attack_assis'):
             return [self.normal_attack, self.normal_attack]
 
-        if self.is_silence:
-            return [self.normal_attack]
+        if self.attributes.get('is_boss', False):
+            if self.MP >= 1000:
+                self.MP = 0
+                return [self.attributes['unique']]
+            if self.is_silence:
+                return [self.normal_attack]
+        else:
+            if self.is_silence:
+                return [self.normal_attack]
+            if self.MP >= 1000:
+                self.MP = 0
+                return [self.attributes['unique']]
 
-        if self.MP >= 1000:
-            self.MP = 0
-            return [self.attributes['unique']]
         for i in range(3):
             ret = self.skills[i].can_be_used()
             if ret:

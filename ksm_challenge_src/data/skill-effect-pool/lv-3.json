@@ -581,8 +581,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 160,
-            "max": 200
+            "min": 120,
+            "max": 150
         },
         "name": {
             "random": "choice",

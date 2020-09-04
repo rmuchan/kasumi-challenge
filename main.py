@@ -120,6 +120,6 @@ def gen_log():
 #TODO 破盾一击
 
 if __name__ == '__main__':
-    #asyncio.run(main2())
+    asyncio.run(main())
     gen_log()
 
