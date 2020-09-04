@@ -20,6 +20,7 @@ def boss_gen(template: dict, lv):
         boss['recover_rate'] *= rates_3_calc(lv)
         boss['spell_rate'] *= rates_3_calc(lv)
         boss['buff_rate'] *= rates_3_calc(lv)
+        boss['is_boss'] = True
         boss['exp_earn'] = 0
         bosses.append(boss)
         weight = boss.get('weight', 1)

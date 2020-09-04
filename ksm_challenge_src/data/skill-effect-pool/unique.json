@@ -318,8 +318,8 @@
         "weight": 3,
         "effect": [
             {
-                "desc": "小幅度强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_RATE",
+                "desc": "小幅度强化自身{param[0]:.0f}的攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -328,8 +328,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.56,
-                        "min": 0.50
+                        "expect": 93,
+                        "min": 85
                     },
                     2
                 ]

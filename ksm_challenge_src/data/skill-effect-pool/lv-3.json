@@ -581,8 +581,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 160,
-            "max": 200
+            "min": 120,
+            "max": 150
         },
         "name": {
             "random": "choice",
@@ -659,8 +659,8 @@
                 ]
             },
             {
-                "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_RATE",
+                "desc": "强化自身{param[0]:.0f}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -669,8 +669,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.2,
-                        "min": 0.16
+                        "expect": 45,
+                        "min": 38
                     },
                     3
                 ]
