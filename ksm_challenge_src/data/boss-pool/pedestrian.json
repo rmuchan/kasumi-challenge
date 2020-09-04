@@ -1,249 +1,256 @@
 {
-    "name": "灵魂行者",
-    "not_short_hp": true,
-    "desc": "【灵魂行者】与冥界签订了数条契约，就我们所知的信息来看，这些契约包括献祭自己的生命以获得护盾、闪避、伤害加成等增益，有的契约会有恐怖的破坏力。然而我们对这些契约的运作原理还是知之甚少，恐怕冥界——这未知的国度带来的威胁也更为巨大。",
-    "weight_water_injection": {
+  "desc": "【灵魂行者】与冥界签订了数条契约，就我们所知的信息来看，这些契约包括献祭自己的生命以获得护盾、闪避、伤害加成等增益，有的契约会有恐怖的破坏力。然而我们对这些契约的运作原理还是知之甚少，恐怕冥界——这未知的国度带来的威胁也更为巨大。",
+  "bosses": [
+    {
+      "name": "灵魂行者",
+      "not_short_hp": true,
+      "weight_water_injection": {
         "random": "triangular",
         "rating_weight": 6,
         "min": 233,
         "max": 810
-    },
-    "attack": {
+      },
+      "attack": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 160,
         "max": 170
-    },
-    "defence_base": {
+      },
+      "defence_base": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 1.9,
         "max": 2.1
-    },
-    "defence_grow": {
+      },
+      "defence_grow": {
         "random": "triangular",
         "rating_weight": 5,
         "min": 0.11,
         "max": 0.15
-    },
-    "hp_base": {
+      },
+      "hp_base": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 260,
         "max": 280
-    },
-    "life_base": {
+      },
+      "life_base": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 200,
         "max": 210
-    },
-    "recover_rate": {
+      },
+      "recover_rate": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 0.9,
         "max": 1.1
-    },
-    "spell_rate": {
+      },
+      "spell_rate": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 0.9,
         "max": 1.1
-    },
-    "buff_rate": {
+      },
+      "buff_rate": {
         "random": "triangular",
         "rating_weight": 5,
         "min": 0.9,
         "max": 1.1
-    },
-    "crit_rate": 1.50,
-    "crit_chance": 0.1,
-    "life_steal_rate": 0.2,
-    "dodge": 0.2,
-    "skill_1": {
-        "chance": 0.60,
-        "cooldown": 3,
-        "mp_cost": 50,
-        "name": "守护契约",
-        "effect": [
-            {
-                "type": "PIERCE",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 0.26,
-                            "max": 0.30
-                        }
-                    ],
-                    false
-                ]
-            },
-            {
-                "type": "SHIELD",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 380,
-                            "max": 420
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "DODGE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        0.3
-                    ],
-                    2
-                ]
-            }
-        ]
-    },
-    "skill_2": {
-        "chance": 0.22,
-        "cooldown": 3,
-        "mp_cost": 60,
-        "name": "毁灭契约",
-        "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 170,
-                            "max": 210
-                        }
-                    ]
-                ]
-            }
-        ]
-    },
-    "skill_3": {
-        "chance": 0.25,
-        "cooldown": 4,
-        "mp_cost": 80,
-        "name": "亢奋契约",
-        "effect": [
-            {
-                "type": "PIERCE",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 0.12,
-                            "max": 0.13
-                        }
-                    ],
-                    false
-                ]
-            },
-            {
-                "type": "PHY_ATK_BUFF_RATE",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 7,
-                            "min": 0.4,
-                            "max": 0.5
-                        }
-                    ],
-                    3
-                ]
-            },
-            {
-                "type": "MP_UP",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 200,
-                            "max": 249
-                        }
-                    ]
-                ]
-            }
-        ]
-    },
-    "unique": {
+      },
+      "crit_rate": 1.5,
+      "crit_chance": 0.1,
+      "life_steal_rate": 0.2,
+      "dodge": 0.2,
+      "unique": {
         "name": "灵魂契约",
         "effect": [
-            {
-                "type": "LIFE_SWAP",
-                "target": {
-                    "type": "LIFEMOST",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 400,
-                            "max": 440
-                        }
-                    ]
-                ]
-            }
+          {
+            "type": "LIFE_SWAP",
+            "target": {
+              "type": "LIFEMOST",
+              "team": 0,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 4,
+                  "min": 400,
+                  "max": 440
+                }
+              ]
+            ]
+          }
         ]
-    },
-    "normal_attack": {
+      },
+      "normal_attack": {
         "name": "破坏契约",
         "effect": [
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            }
+          {
+            "type": "NORMAL_ATK",
+            "target": {
+              "type": "ALL",
+              "team": 0,
+              "limit": 1
+            },
+            "param": []
+          }
         ]
+      },
+      "skills": [
+        {
+          "chance": 0.6,
+          "cooldown": 3,
+          "mp_cost": 50,
+          "name": "守护契约",
+          "effect": [
+            {
+              "type": "PIERCE",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 4,
+                    "min": 0.26,
+                    "max": 0.3
+                  }
+                ],
+                false
+              ]
+            },
+            {
+              "type": "SHIELD",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 4,
+                    "min": 380,
+                    "max": 420
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "DODGE_BUFF",
+              "target": {
+                "type": "SELF",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  0.3
+                ],
+                2
+              ]
+            }
+          ]
+        },
+        {
+          "chance": 0.22,
+          "cooldown": 3,
+          "mp_cost": 60,
+          "name": "毁灭契约",
+          "effect": [
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "ALL",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 4,
+                    "min": 170,
+                    "max": 210
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "chance": 0.25,
+          "cooldown": 4,
+          "mp_cost": 80,
+          "name": "亢奋契约",
+          "effect": [
+            {
+              "type": "PIERCE",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 4,
+                    "min": 0.12,
+                    "max": 0.13
+                  }
+                ],
+                false
+              ]
+            },
+            {
+              "type": "PHY_ATK_BUFF_RATE",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 7,
+                    "min": 0.4,
+                    "max": 0.5
+                  }
+                ],
+                3
+              ]
+            },
+            {
+              "type": "MP_UP",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 200,
+                    "max": 249
+                  }
+                ]
+              ]
+            }
+          ]
+        }
+      ],
+      "weight": 1
     }
+  ]
 }
