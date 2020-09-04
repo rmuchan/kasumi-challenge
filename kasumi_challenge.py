@@ -5,13 +5,12 @@ import json
 import os
 import random
 import time
-from flask import *
 
+from flask import Flask, request
 from nonebot import CommandGroup, on_natural_language, NLPSession, CommandSession
-from nonebot.permission import SUPERUSER, GROUP_ADMIN
+from nonebot import permission as perm
 from nonebot.session import BaseSession
 
-from .ksm_challenge_src.version import great_update_ver
 from .ksm_challenge_src.Gaming import Gaming
 from .ksm_challenge_src.attr_calc import game_char_gen, lv_calc
 from .ksm_challenge_src.boss_gen import boss_gen
@@ -22,21 +21,22 @@ from .ksm_challenge_src.data import data
 from .ksm_challenge_src.interact import UI, output
 from .ksm_challenge_src.talent_calc import upgrade_talent
 from .ksm_challenge_src.user_guide import *
-
+from .ksm_challenge_src.version import great_update_ver
 
 app = Flask(__name__)
-@app.route('/create_info', methods=['GET','POST'])
+
+
+@app.route('/create_info', methods=['GET'])
 def create_info():
-    if request.method == 'GET':
-        print(request.form)
-        return '<p>' + output.get(int(request.args.get('qid', 0)), ' ').replace('\n', '</br>') + '</p>'
+    print(request.form)
+    return '<p>' + output.get(int(request.args.get('qid', 0)), ' ').replace('\n', '</br>') + '</p>'
 
 
-def web_server(arg):
+def web_server():
     app.run(host='127.0.0.1', port=9286)
 
 
-_thread.start_new_thread(web_server, (None,))
+_thread.start_new_thread(web_server, ())
 
 
 def conf_read(name):
@@ -73,7 +73,7 @@ async def _(session: NLPSession):
         await send_to_all(session.bot, show_log(0))
 
 
-@_cmd_group.command('warn', permission=SUPERUSER)
+@_cmd_group.command('warn', permission=perm.SUPERUSER)
 async def _(session: CommandSession):
     await send_to_all(session.bot, '提示：bot即将进入功能维护，所有功能将会暂时中止。')
     for bat in _battles.values():
@@ -84,7 +84,7 @@ async def _(session: CommandSession):
     await session.send('发送完成')
 
 
-@_cmd_group.command('done', permission=SUPERUSER)
+@_cmd_group.command('done', permission=perm.SUPERUSER)
 async def _(session: CommandSession):
     await send_to_all(session.bot, 'bot维护完成，角色创建被中断的玩家可以再次使用create命令继续创建进程。')
     await session.send('发送完成')
@@ -105,7 +105,7 @@ async def _(session: CommandSession):
 
 
 # 自动推送日志
-@_cmd_group.command('autolog', permission=SUPERUSER | GROUP_ADMIN)
+@_cmd_group.command('autolog', permission=perm.SUPERUSER | perm.GROUP_ADMIN)
 async def _(session: CommandSession):
     # 忽略私聊消息
     if session.ctx['message_type'] != 'group':
@@ -212,13 +212,18 @@ async def _(session: CommandSession):
     if err is not None:
         return await ui.send(err)
 
-    boss, is_saved = _get_boss(group_id, lv_calc(char['exp']))
+    if session.current_arg_text and await perm.check_permission(session.bot, session.event, perm.SUPERUSER):
+        force_boss = session.current_arg_text
+    else:
+        force_boss = None
+
+    boss, is_saved = _get_boss(group_id, lv_calc(char['exp']), force_boss)
 
     bat = {
         'can_join': True,
         'is_pvp': False,
         'team_a': {},
-        'team_b': {0: boss},
+        'team_b': {-idx: item for idx, item in enumerate(boss['bosses'])},
         'capacity_a': 4,
         'capacity_b': 1
     }
@@ -360,13 +365,13 @@ async def _(session: CommandSession):
 
 
 # 管理员功能：重新加载数据
-@_cmd_group.command('reload', permission=SUPERUSER)
+@_cmd_group.command('reload', permission=perm.SUPERUSER)
 async def _(_: CommandSession):
     data.reload()
 
 
 # 管理员功能：重设所有玩家转生限制
-@_cmd_group.command('reset', permission=SUPERUSER)
+@_cmd_group.command('reset', permission=perm.SUPERUSER)
 async def _(_: CommandSession):
     for uid in data.saves.dir():
         save = data.saves[uid]
@@ -374,14 +379,15 @@ async def _(_: CommandSession):
         data.saves[uid] = save
 
 
-def _get_boss(gid: int, lvl: int):
+def _get_boss(gid: int, lvl: int, force_boss: str):
     save = data.saves.group[str(gid)] or {}
-    boss = save.get('boss')
-    if boss is not None:
-        return boss, True
+    if not force_boss:
+        boss = save.get('boss')
+        if boss is not None:
+            return boss, True
 
     pool = data.boss_pool
-    template = pool[random.choice(pool.dir())]
+    template = pool[force_boss or random.choice(pool.dir())]
     boss = boss_gen(template, lvl)
     save['boss'] = boss
     data.saves.group[str(gid)] = save
@@ -466,12 +472,12 @@ async def _play(ui: UI, gid: int):
         elif result == 'b_win':
             await ui.send('挑战者的队伍全灭，挑战失败……遗憾\n使用指令"ksmgame-help"了解更多的游戏机制吧！')
         elif result == 'a_win':
-            exp_earn = sum(x['exp_earn'] for x in bat['team_b'].values())
+            exp_earn = sum(x.get('exp_earn', 0) for x in bat['team_b'].values())
             await ui.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
             for uid in bat['team_a']:
                 _give_exp(uid, exp_earn)
         elif result == 'all_dead':
-            exp_earn = int(sum(x['exp_earn'] for x in bat['team_b'].values()) * 1.5)
+            exp_earn = int(sum(x.get('exp_earn', 0) for x in bat['team_b'].values()) * 1.5)
             await ui.send('挑战者与Boss无一生还，这份舍己为人的精神被人们所歌颂，获得的经验值额外增加50%%！\n'
                           '每个人获得了%d点经验！' % exp_earn)
             for uid in bat['team_a']:

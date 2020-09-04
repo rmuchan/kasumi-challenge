@@ -1,268 +1,275 @@
 {
-    "name": "幽灵忍者",
-    "not_short_hp": true,
-    "desc": "属于Shadoul的【幽灵忍者】是种族的骄傲，然而它自甘堕落，成为了冷血的杀手。杀手的训练使得普通的武器很难打中他，同时在战斗中，随着不断了解敌人的弱点，他会愈发致命。特制的[暗影斗篷]在阻挡攻击的同时也隐藏了他的动作，让他的攻击更加致命；通过[刃舞]，他可以在伤害敌人的同时寻找敌人的弱点，在暴击时更加致命；在危险的时候，他会[遁入暗影]，隐藏自己的身形，同时包扎伤口，准备随时在暗影中偷袭没有防备的目标；时机成熟时，对目标使用[锁喉]，精确地完成收割的任务。",
-    "weight_water_injection": {
+  "desc": "属于Shadoul的【幽灵忍者】是种族的骄傲，然而它自甘堕落，成为了冷血的杀手。杀手的训练使得普通的武器很难打中他，同时在战斗中，随着不断了解敌人的弱点，他会愈发致命。特制的[暗影斗篷]在阻挡攻击的同时也隐藏了他的动作，让他的攻击更加致命；通过[刃舞]，他可以在伤害敌人的同时寻找敌人的弱点，在暴击时更加致命；在危险的时候，他会[遁入暗影]，隐藏自己的身形，同时包扎伤口，准备随时在暗影中偷袭没有防备的目标；时机成熟时，对目标使用[锁喉]，精确地完成收割的任务。",
+  "bosses": [
+    {
+      "name": "幽灵忍者",
+      "not_short_hp": true,
+      "weight_water_injection": {
         "random": "triangular",
         "rating_weight": 6,
         "min": 233,
         "max": 810
-    },
-    "attack": {
+      },
+      "attack": {
         "random": "triangular",
         "rating_weight": 8,
         "min": 90,
         "max": 110
-    },
-    "defence_base": {
+      },
+      "defence_base": {
         "random": "triangular",
         "rating_weight": 6,
         "min": 2.1,
         "max": 2.6
-    },
-    "defence_grow": {
+      },
+      "defence_grow": {
         "random": "triangular",
         "rating_weight": 3,
-        "min": 0.070,
+        "min": 0.07,
         "max": 0.086
-    },
-    "hp_base": {
+      },
+      "hp_base": {
         "random": "triangular",
         "rating_weight": 3,
         "min": 220,
         "max": 250
-    },
-    "life_base": {
+      },
+      "life_base": {
         "random": "triangular",
         "rating_weight": 4,
         "min": 136,
         "max": 146
-    },
-    "recover_rate": {
+      },
+      "recover_rate": {
         "random": "triangular",
         "rating_weight": 4,
         "min": 0.9,
         "max": 1.0
-    },
-    "spell_rate": {
+      },
+      "spell_rate": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 0.9,
         "max": 1.1
-    },
-    "buff_rate": {
+      },
+      "buff_rate": {
         "random": "triangular",
         "rating_weight": 6,
         "min": 0.9,
         "max": 1.0
-    },
-    "crit_rate": 1.5,
-    "crit_chance": 0.70,
-    "life_steal_rate": 0.66,
-    "dodge": 0.6,
-    "skill_1": {
-        "chance": 0.8,
-        "cooldown": 7,
-        "mp_cost": 0,
-        "name": "暗影斗篷",
-        "effect": [
-            {
-                "type": "SHIELD",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 9,
-                            "min": 450,
-                            "max": 500
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "PHY_ATK_BUFF_RATE",
-                "target": {
-                    "type": "SELF",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 6,
-                            "min": 0.4,
-                            "max": 0.5
-                        }
-                    ],
-                    3
-                ]
-            }
-        ]
-    },
-    "skill_2": {
-        "chance": 0.18,
-        "cooldown": 0,
-        "mp_cost": 60,
-        "name": "刃舞",
-        "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 0
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 1,
-                            "min": 40,
-                            "max": 50
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "CRIT_RATE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 0.85,
-                            "max": 0.95
-                        }
-                    ],
-                    30
-                ]
-            }
-        ]
-    },
-    "skill_3": {
-        "chance": 0.16,
-        "cooldown": 4,
-        "mp_cost": 80,
-        "name": "遁入暗影",
-        "effect": [
-            {
-                "type": "DODGE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        0.2
-                    ],
-                    2
-                ]
-            },
-            {
-                "type": "HEAL",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 100,
-                            "max": 110
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "DEF_DEC",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 2.3,
-                            "max": 3
-                        }
-                    ],
-                    3
-                ]
-            }
-        ]
-    },
-    "unique": {
+      },
+      "crit_rate": 1.5,
+      "crit_chance": 0.7,
+      "life_steal_rate": 0.66,
+      "dodge": 0.6,
+      "unique": {
         "name": "锁喉",
         "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 260,
-                            "max": 300
-                        }
-                    ]
-                ]
-            }
+          {
+            "type": "MGC_DMG",
+            "target": {
+              "type": "RAND",
+              "team": 0,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 5,
+                  "min": 260,
+                  "max": 300
+                }
+              ]
+            ]
+          }
         ]
-    },
-    "normal_attack": {
+      },
+      "normal_attack": {
         "name": "突刺",
         "effect": [
+          {
+            "type": "NORMAL_ATK",
+            "target": {
+              "type": "RAND_SAFE",
+              "team": 0,
+              "limit": 2
+            },
+            "param": []
+          },
+          {
+            "type": "CRIT_RATE_BUFF",
+            "target": {
+              "type": "SELF",
+              "team": 1,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 5,
+                  "min": 0.2,
+                  "max": 0.24
+                }
+              ],
+              30
+            ]
+          }
+        ]
+      },
+      "skills": [
+        {
+          "chance": 0.8,
+          "cooldown": 7,
+          "mp_cost": 0,
+          "name": "暗影斗篷",
+          "effect": [
             {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND_SAFE",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": []
+              "type": "SHIELD",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 9,
+                    "min": 450,
+                    "max": 500
+                  }
+                ]
+              ]
             },
             {
-                "type": "CRIT_RATE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 0.20,
-                            "max": 0.24
-                        }
-                    ],
-                    30
-                ]
+              "type": "PHY_ATK_BUFF_RATE",
+              "target": {
+                "type": "SELF",
+                "team": 0,
+                "limit": 2
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 6,
+                    "min": 0.4,
+                    "max": 0.5
+                  }
+                ],
+                3
+              ]
             }
-        ]
+          ]
+        },
+        {
+          "chance": 0.18,
+          "cooldown": 0,
+          "mp_cost": 60,
+          "name": "刃舞",
+          "effect": [
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "ALL",
+                "team": 0,
+                "limit": 0
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 1,
+                    "min": 40,
+                    "max": 50
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "CRIT_RATE_BUFF",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 0.85,
+                    "max": 0.95
+                  }
+                ],
+                30
+              ]
+            }
+          ]
+        },
+        {
+          "chance": 0.16,
+          "cooldown": 4,
+          "mp_cost": 80,
+          "name": "遁入暗影",
+          "effect": [
+            {
+              "type": "DODGE_BUFF",
+              "target": {
+                "type": "SELF",
+                "team": 0,
+                "limit": 2
+              },
+              "param": [
+                [
+                  0.2
+                ],
+                2
+              ]
+            },
+            {
+              "type": "HEAL",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 100,
+                    "max": 110
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "DEF_DEC",
+              "target": {
+                "type": "ALL",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 5,
+                    "min": 2.3,
+                    "max": 3
+                  }
+                ],
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "weight": 1
     }
+  ]
 }

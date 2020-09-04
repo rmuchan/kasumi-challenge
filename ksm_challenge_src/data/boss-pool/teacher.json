@@ -1,271 +1,279 @@
 {
-    "name": "堕落教师",
-    "not_short_hp": false,
-    "desc": "【堕落教师】绝对不是什么德高望重的家伙，它在魔界之中占有一席之地。它的[腐化粉笔飞弹]会削弱玩家的恢复强度，通过[偷换概念辩论]和[布置课堂作业]让玩家在无法恢复和沉默中迎来死亡。它会[点名批评]生命值最低的玩家，使其最早地堕入死亡的深渊。而[错题审判]将会是每个学生，永 恒 的 噩 梦。",
-    "weight_water_injection": {
+  "desc": "【堕落教师】绝对不是什么德高望重的家伙，它在魔界之中占有一席之地。它的[腐化粉笔飞弹]会削弱玩家的恢复强度，通过[偷换概念辩论]和[布置课堂作业]让玩家在无法恢复和沉默中迎来死亡。它会[点名批评]生命值最低的玩家，使其最早地堕入死亡的深渊。而[错题审判]将会是每个学生，永 恒 的 噩 梦。",
+  "bosses": [
+    {
+      "name": "堕落教师",
+      "not_short_hp": false,
+      "weight_water_injection": {
         "random": "triangular",
         "rating_weight": 4,
         "min": 233,
         "max": 810
-    },
-    "attack": {
+      },
+      "attack": {
         "random": "triangular",
         "rating_weight": 3,
         "min": 180,
         "max": 200
-    },
-    "defence_base": {
+      },
+      "defence_base": {
         "random": "triangular",
         "rating_weight": 4,
         "min": 2.3,
         "max": 2.8
-    },
-    "defence_grow": {
+      },
+      "defence_grow": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 0.09,
         "max": 0.1
-    },
-    "hp_base": {
+      },
+      "hp_base": {
         "random": "triangular",
         "rating_weight": 4,
         "min": 210,
         "max": 240
-    },
-    "life_base": {
+      },
+      "life_base": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 280,
         "max": 300
-    },
-    "recover_rate": {
+      },
+      "recover_rate": {
         "random": "triangular",
         "rating_weight": 3,
         "min": 1.0,
         "max": 1.1
-    },
-    "spell_rate": {
+      },
+      "spell_rate": {
         "random": "triangular",
         "rating_weight": 4,
         "min": 0.9,
         "max": 1
-    },
-    "buff_rate": {
+      },
+      "buff_rate": {
         "random": "triangular",
         "rating_weight": 2,
         "min": 0.9,
         "max": 1.1
-    },
-    "crit_rate": 1.50,
-    "crit_chance": 0.1,
-    "life_steal_rate": 0.6,
-    "dodge": 0.04,
-    "skill_1": {
-        "chance": 0.5,
-        "cooldown": 1,
-        "mp_cost": 50,
-        "name": "错题审判",
-        "effect": [
-            {
-                "type": "MP_STEAL",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 170,
-                            "max": 200
-                        }
-                    ],
-                    1.5
-                ]
-            },
-            {
-                "type": "SHIELD",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 260,
-                            "max": 300
-                        }
-                    ]
-                ]
-            }
-        ]
-    },
-    "skill_2": {
-        "chance": 0.30,
-        "cooldown": 4,
-        "mp_cost": 80,
-        "name": "偷换概念辩论",
-        "effect": [
-            {
-                "type": "SILENCE",
-                "target": {
-                    "type": "RAND_SAFE",
-                    "team": 0,
-                    "limit": 3
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 233,
-                            "max": 610
-                        }
-                    ],
-                    2
-                ]
-            },
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "SAME",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 50,
-                            "max": 90
-                        }
-                    ]
-                ]
-            }
-        ]
-    },
-    "skill_3": {
-        "chance": 0.50,
-        "cooldown": 4,
-        "mp_cost": 60,
-        "name": "布置课堂作业",
-        "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 110,
-                            "max": 140
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "RECOVER_DEC",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 0.5,
-                            "max": 0.6
-                        }
-                    ],
-                    3
-                ]
-            }
-        ]
-    },
-    "unique": {
+      },
+      "crit_rate": 1.5,
+      "crit_chance": 0.1,
+      "life_steal_rate": 0.6,
+      "dodge": 0.04,
+      "unique": {
         "name": "点名批评",
         "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "LIFELEAST",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 6,
-                            "min": 320,
-                            "max": 360
-                        }
-                    ]
-                ]
-            },            {
-                "type": "HEAL",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 360,
-                            "max": 390
-                        }
-                    ]
-                ]
-            }
+          {
+            "type": "MGC_DMG",
+            "target": {
+              "type": "LIFELEAST",
+              "team": 0,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 6,
+                  "min": 320,
+                  "max": 360
+                }
+              ]
+            ]
+          },
+          {
+            "type": "HEAL",
+            "target": {
+              "type": "SELF",
+              "team": 1,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 3,
+                  "min": 360,
+                  "max": 390
+                }
+              ]
+            ]
+          }
         ]
-    },
-    "normal_attack": {
+      },
+      "normal_attack": {
         "name": "腐化粉笔飞弹",
         "effect": [
+          {
+            "type": "NORMAL_ATK",
+            "target": {
+              "type": "RAND_SAFE",
+              "team": 0,
+              "limit": 3
+            },
+            "param": []
+          },
+          {
+            "type": "RECOVER_DEC",
+            "target": {
+              "type": "SAME",
+              "team": 0,
+              "limit": 2
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 4,
+                  "min": 0.2,
+                  "max": 0.25
+                }
+              ],
+              30
+            ]
+          }
+        ]
+      },
+      "skills": [
+        {
+          "chance": 0.5,
+          "cooldown": 1,
+          "mp_cost": 50,
+          "name": "错题审判",
+          "effect": [
             {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND_SAFE",
-                    "team": 0,
-                    "limit": 3
-                },
-                "param": []
+              "type": "MP_STEAL",
+              "target": {
+                "type": "RAND",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 170,
+                    "max": 200
+                  }
+                ],
+                1.5
+              ]
             },
             {
-                "type": "RECOVER_DEC",
-                "target": {
-                    "type": "SAME",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 0.20,
-                            "max": 0.25
-                        }
-                    ],
-                    30
+              "type": "SHIELD",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 5,
+                    "min": 260,
+                    "max": 300
+                  }
                 ]
+              ]
             }
-        ]
+          ]
+        },
+        {
+          "chance": 0.3,
+          "cooldown": 4,
+          "mp_cost": 80,
+          "name": "偷换概念辩论",
+          "effect": [
+            {
+              "type": "SILENCE",
+              "target": {
+                "type": "RAND_SAFE",
+                "team": 0,
+                "limit": 3
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 233,
+                    "max": 610
+                  }
+                ],
+                2
+              ]
+            },
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "SAME",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 5,
+                    "min": 50,
+                    "max": 90
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "chance": 0.5,
+          "cooldown": 4,
+          "mp_cost": 60,
+          "name": "布置课堂作业",
+          "effect": [
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "ALL",
+                "team": 0,
+                "limit": 2
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 110,
+                    "max": 140
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "RECOVER_DEC",
+              "target": {
+                "type": "ALL",
+                "team": 0,
+                "limit": 2
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 4,
+                    "min": 0.5,
+                    "max": 0.6
+                  }
+                ],
+                3
+              ]
+            }
+          ]
+        }
+      ],
+      "weight": 1
     }
+  ]
 }
