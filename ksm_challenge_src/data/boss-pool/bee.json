@@ -1,353 +1,358 @@
 {
-  "name": "魔化蜂王",
-  "not_short_hp": false,
   "desc": "受命于腐化领主的【魔化蜂王】所经之处，没有鲜花盛开。蜂群会时刻成为它最坚固的屏障。它会在作战开始时借助秘宝[蜂王作战浓浆]的力量让自己处于绝佳状态，通过释放[蜂群之噬]对所有敌人造成巨大的伤害；利用[蜂群战术]，它可以阻碍最具有威胁的敌人的攻击；它还会派出[工蜂追杀]最为脆弱的目标。抓住时机，在它[全蜂出动]的时候给予致命一击。",
-  "weight_water_injection": {
-    "random": "triangular",
-    "rating_weight": 3,
-    "min": 233,
-    "max": 810
-  },
-  "attack": {
-    "random": "triangular",
-    "rating_weight": 7,
-    "min": 350,
-    "max": 400
-  },
-  "defence_base": {
-    "random": "triangular",
-    "rating_weight": 2,
-    "min": 8.5,
-    "max": 8.8
-  },
-  "defence_grow": {
-    "random": "triangular",
-    "rating_weight": 1,
-    "min": 0.9,
-    "max": 0.91
-  },
-  "hp_base": {
-    "random": "triangular",
-    "rating_weight": 2,
-    "min": 210,
-    "max": 230
-  },
-  "life_base": {
-    "random": "triangular",
-    "rating_weight": 4,
-    "min": 150,
-    "max": 170
-  },
-  "recover_rate": {
-    "random": "triangular",
-    "rating_weight": 3,
-    "min": 1.2,
-    "max": 1.3
-  },
-  "spell_rate": {
-    "random": "triangular",
-    "rating_weight": 3,
-    "min": 1.36,
-    "max": 1.42
-  },
-  "buff_rate": {
-    "random": "triangular",
-    "rating_weight": 1,
-    "min": 0.9,
-    "max": 1.0
-  },
-  "crit_rate": 1.9,
-  "crit_chance": 0.05,
-  "life_steal_rate": 0.5,
-  "dodge": 0.1,
-  "unique": {
-    "name": "全蜂出动",
-    "effect": [
-      {
-        "type": "SHIELD",
-        "target": {
-          "type": "SELF",
-          "team": 1,
-          "limit": 1
-        },
-        "param": [
-          [
-            {
-              "random": "triangular",
-              "rating_weight": 1,
-              "min": 500,
-              "max": 510
-            }
-          ]
+  "bosses": [
+    {
+      "name": "魔化蜂王",
+      "not_short_hp": false,
+      "weight_water_injection": {
+        "random": "triangular",
+        "rating_weight": 3,
+        "min": 233,
+        "max": 810
+      },
+      "attack": {
+        "random": "triangular",
+        "rating_weight": 7,
+        "min": 350,
+        "max": 400
+      },
+      "defence_base": {
+        "random": "triangular",
+        "rating_weight": 2,
+        "min": 8.5,
+        "max": 8.8
+      },
+      "defence_grow": {
+        "random": "triangular",
+        "rating_weight": 1,
+        "min": 0.9,
+        "max": 0.91
+      },
+      "hp_base": {
+        "random": "triangular",
+        "rating_weight": 2,
+        "min": 210,
+        "max": 230
+      },
+      "life_base": {
+        "random": "triangular",
+        "rating_weight": 4,
+        "min": 150,
+        "max": 170
+      },
+      "recover_rate": {
+        "random": "triangular",
+        "rating_weight": 3,
+        "min": 1.2,
+        "max": 1.3
+      },
+      "spell_rate": {
+        "random": "triangular",
+        "rating_weight": 3,
+        "min": 1.36,
+        "max": 1.42
+      },
+      "buff_rate": {
+        "random": "triangular",
+        "rating_weight": 1,
+        "min": 0.9,
+        "max": 1.0
+      },
+      "crit_rate": 1.9,
+      "crit_chance": 0.05,
+      "life_steal_rate": 0.5,
+      "dodge": 0.1,
+      "unique": {
+        "name": "全蜂出动",
+        "effect": [
+          {
+            "type": "SHIELD",
+            "target": {
+              "type": "SELF",
+              "team": 1,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 1,
+                  "min": 500,
+                  "max": 510
+                }
+              ]
+            ]
+          },
+          {
+            "type": "DEF_DEC",
+            "target": {
+              "type": "SELF",
+              "team": 1,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 2,
+                  "min": 20,
+                  "max": 20.1
+                }
+              ],
+              3
+            ]
+          }
         ]
       },
-      {
-        "type": "DEF_DEC",
-        "target": {
-          "type": "SELF",
-          "team": 1,
-          "limit": 1
-        },
-        "param": [
-          [
-            {
-              "random": "triangular",
-              "rating_weight": 2,
-              "min": 20,
-              "max": 20.1
-            }
-          ],
-          3
+      "normal_attack": {
+        "name": "工蜂追杀",
+        "effect": [
+          {
+            "type": "NORMAL_ATK",
+            "target": {
+              "type": "LIFELEAST",
+              "team": 0,
+              "limit": 1
+            },
+            "param": []
+          },
+          {
+            "type": "SHIELD",
+            "target": {
+              "type": "SELF",
+              "team": 1,
+              "limit": 1
+            },
+            "param": [
+              [
+                {
+                  "random": "triangular",
+                  "rating_weight": 4,
+                  "min": 30,
+                  "max": 35
+                }
+              ]
+            ]
+          }
         ]
-      }
-    ]
-  },
-  "normal_attack": {
-    "name": "工蜂追杀",
-    "effect": [
-      {
-        "type": "NORMAL_ATK",
-        "target": {
-          "type": "LIFELEAST",
-          "team": 0,
-          "limit": 1
-        },
-        "param": []
       },
-      {
-        "type": "SHIELD",
-        "target": {
-          "type": "SELF",
-          "team": 1,
-          "limit": 1
-        },
-        "param": [
-          [
+      "skills": [
+        {
+          "chance": 0.34,
+          "cooldown": 30,
+          "mp_cost": 0,
+          "name": "蜂王作战浓浆",
+          "effect": [
             {
-              "random": "triangular",
-              "rating_weight": 4,
-              "min": 30,
-              "max": 35
+              "type": "HEAL",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  23333
+                ]
+              ]
+            },
+            {
+              "type": "DODGE_BUFF",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  0.7
+                ],
+                3
+              ]
+            },
+            {
+              "type": "SHIELD",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 300,
+                    "max": 350
+                  }
+                ]
+              ]
             }
           ]
-        ]
-      }
-    ]
-  },
-  "skills": [
-    {
-      "chance": 0.34,
-      "cooldown": 30,
-      "mp_cost": 0,
-      "name": "蜂王作战浓浆",
-      "effect": [
+        },
         {
-          "type": "HEAL",
-          "target": {
-            "type": "SELF",
-            "team": 1,
-            "limit": 1
-          },
-          "param": [
-            [
-              23333
-            ]
+          "chance": 0.4,
+          "cooldown": 4,
+          "mp_cost": 200,
+          "name": "蜂群战术",
+          "effect": [
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "ATKMOST",
+                "team": 0,
+                "limit": 2
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 80,
+                    "max": 90
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "ATK_DEBUFF",
+              "target": {
+                "type": "ATKMOST",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 0.65,
+                    "max": 0.7
+                  }
+                ],
+                3
+              ]
+            }
           ]
         },
         {
-          "type": "DODGE_BUFF",
-          "target": {
-            "type": "SELF",
-            "team": 1,
-            "limit": 1
-          },
-          "param": [
-            [
-              0.7
-            ],
-            3
-          ]
-        },
-        {
-          "type": "SHIELD",
-          "target": {
-            "type": "SELF",
-            "team": 1,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 3,
-                "min": 300,
-                "max": 350
-              }
-            ]
+          "chance": 0.27,
+          "cooldown": 3,
+          "mp_cost": 120,
+          "name": "蜂群之噬",
+          "effect": [
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "RAND",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 2,
+                    "min": 50,
+                    "max": 55
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "RAND",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 40,
+                    "max": 45
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "RAND",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 30,
+                    "max": 35
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "RAND",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 3,
+                    "min": 25,
+                    "max": 30
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "RAND",
+                "team": 0,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 2,
+                    "min": 20,
+                    "max": 25
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "SHIELD",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 1,
+                    "min": 70,
+                    "max": 77
+                  }
+                ]
+              ]
+            }
           ]
         }
-      ]
-    },
-    {
-      "chance": 0.4,
-      "cooldown": 4,
-      "mp_cost": 200,
-      "name": "蜂群战术",
-      "effect": [
-        {
-          "type": "MGC_DMG",
-          "target": {
-            "type": "ATKMOST",
-            "team": 0,
-            "limit": 2
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 3,
-                "min": 80,
-                "max": 90
-              }
-            ]
-          ]
-        },
-        {
-          "type": "ATK_DEBUFF",
-          "target": {
-            "type": "ATKMOST",
-            "team": 0,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 3,
-                "min": 0.65,
-                "max": 0.7
-              }
-            ],
-            3
-          ]
-        }
-      ]
-    },
-    {
-      "chance": 0.27,
-      "cooldown": 3,
-      "mp_cost": 120,
-      "name": "蜂群之噬",
-      "effect": [
-        {
-          "type": "MGC_DMG",
-          "target": {
-            "type": "RAND",
-            "team": 0,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 2,
-                "min": 50,
-                "max": 55
-              }
-            ]
-          ]
-        },
-        {
-          "type": "MGC_DMG",
-          "target": {
-            "type": "RAND",
-            "team": 0,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 3,
-                "min": 40,
-                "max": 45
-              }
-            ]
-          ]
-        },
-        {
-          "type": "MGC_DMG",
-          "target": {
-            "type": "RAND",
-            "team": 0,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 3,
-                "min": 30,
-                "max": 35
-              }
-            ]
-          ]
-        },
-        {
-          "type": "MGC_DMG",
-          "target": {
-            "type": "RAND",
-            "team": 0,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 3,
-                "min": 25,
-                "max": 30
-              }
-            ]
-          ]
-        },
-        {
-          "type": "MGC_DMG",
-          "target": {
-            "type": "RAND",
-            "team": 0,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 2,
-                "min": 20,
-                "max": 25
-              }
-            ]
-          ]
-        },
-        {
-          "type": "SHIELD",
-          "target": {
-            "type": "SELF",
-            "team": 1,
-            "limit": 1
-          },
-          "param": [
-            [
-              {
-                "random": "triangular",
-                "rating_weight": 1,
-                "min": 70,
-                "max": 77
-              }
-            ]
-          ]
-        }
-      ]
+      ],
+      "weight": 1
     }
   ]
 }

@@ -223,7 +223,7 @@ async def _(session: CommandSession):
         'can_join': True,
         'is_pvp': False,
         'team_a': {},
-        'team_b': {0: boss},
+        'team_b': {-idx: item for idx, item in enumerate(boss['bosses'])},
         'capacity_a': 4,
         'capacity_b': 1
     }
@@ -472,12 +472,12 @@ async def _play(ui: UI, gid: int):
         elif result == 'b_win':
             await ui.send('挑战者的队伍全灭，挑战失败……遗憾\n使用指令"ksmgame-help"了解更多的游戏机制吧！')
         elif result == 'a_win':
-            exp_earn = sum(x['exp_earn'] for x in bat['team_b'].values())
+            exp_earn = sum(x.get('exp_earn', 0) for x in bat['team_b'].values())
             await ui.send('精彩的战斗！你们共同击败了boss！\n每个人获得了%d点经验！' % exp_earn)
             for uid in bat['team_a']:
                 _give_exp(uid, exp_earn)
         elif result == 'all_dead':
-            exp_earn = int(sum(x['exp_earn'] for x in bat['team_b'].values()) * 1.5)
+            exp_earn = int(sum(x.get('exp_earn', 0) for x in bat['team_b'].values()) * 1.5)
             await ui.send('挑战者与Boss无一生还，这份舍己为人的精神被人们所歌颂，获得的经验值额外增加50%%！\n'
                           '每个人获得了%d点经验！' % exp_earn)
             for uid in bat['team_a']:
