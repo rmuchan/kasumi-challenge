@@ -1,252 +1,255 @@
 {
-    "name": "血色之鹰",
-    "not_short_hp": false,
-    "desc": "【血色之鹰】生活在妖精荒野，它的鹰爪会大范围地伤害入侵者；它扇动翅膀引发[狂怒龙卷]，在狂乱的风中，没有人可以牢牢地抓住武器；它的[刺耳鹰唳]会瓦解敌人防御的意志；[羽栖]可以让它回复生命并提升防御；在[血色凋零]中，没有人会逃过死亡，而其中最不幸的那个，将会最早迎来死亡。",
-    "weight_water_injection": {
-        "random": "triangular",
-        "rating_weight": 6,
-        "min": 233,
-        "max": 810
-    },
-    "attack": {
-        "random": "triangular",
-        "rating_weight": 6,
-        "min": 150,
-        "max": 180
-    },
-    "defence_base": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 2.9,
-        "max": 3.3
-    },
-    "defence_grow": {
-        "random": "triangular",
-        "rating_weight": 2,
-        "min": 0.062,
-        "max": 0.066
-    },
-    "hp_base": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 320,
-        "max": 350
-    },
-    "life_base": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 440,
-        "max": 450
-    },
-    "recover_rate": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 0.8,
-        "max": 1
-    },
-    "spell_rate": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 1,
-        "max": 1.1
-    },
-    "buff_rate": {
-        "random": "triangular",
-        "rating_weight": 2,
-        "min": 0.9,
-        "max": 1.1
-    },
-    "crit_rate": 1.75,
-    "crit_chance": 0.16,
-    "life_steal_rate": 0.5,
-    "dodge": 0.14,
-    "skill_1": {
-        "chance": 0.13,
-        "cooldown": 1,
-        "mp_cost": 70,
-        "name": "狂怒龙卷",
-        "effect": [
+  "name": "血色之鹰",
+  "not_short_hp": false,
+  "desc": "【血色之鹰】生活在妖精荒野，它的鹰爪会大范围地伤害入侵者；它扇动翅膀引发[狂怒龙卷]，在狂乱的风中，没有人可以牢牢地抓住武器；它的[刺耳鹰唳]会瓦解敌人防御的意志；[羽栖]可以让它回复生命并提升防御；在[血色凋零]中，没有人会逃过死亡，而其中最不幸的那个，将会最早迎来死亡。",
+  "weight_water_injection": {
+    "random": "triangular",
+    "rating_weight": 6,
+    "min": 233,
+    "max": 810
+  },
+  "attack": {
+    "random": "triangular",
+    "rating_weight": 6,
+    "min": 150,
+    "max": 180
+  },
+  "defence_base": {
+    "random": "triangular",
+    "rating_weight": 4,
+    "min": 2.9,
+    "max": 3.3
+  },
+  "defence_grow": {
+    "random": "triangular",
+    "rating_weight": 2,
+    "min": 0.062,
+    "max": 0.066
+  },
+  "hp_base": {
+    "random": "triangular",
+    "rating_weight": 3,
+    "min": 320,
+    "max": 350
+  },
+  "life_base": {
+    "random": "triangular",
+    "rating_weight": 4,
+    "min": 440,
+    "max": 450
+  },
+  "recover_rate": {
+    "random": "triangular",
+    "rating_weight": 3,
+    "min": 0.8,
+    "max": 1
+  },
+  "spell_rate": {
+    "random": "triangular",
+    "rating_weight": 4,
+    "min": 1,
+    "max": 1.1
+  },
+  "buff_rate": {
+    "random": "triangular",
+    "rating_weight": 2,
+    "min": 0.9,
+    "max": 1.1
+  },
+  "crit_rate": 1.75,
+  "crit_chance": 0.16,
+  "life_steal_rate": 0.5,
+  "dodge": 0.14,
+  "unique": {
+    "name": "血色凋零",
+    "effect": [
+      {
+        "type": "MGC_DMG",
+        "target": {
+          "type": "ALL",
+          "team": 0,
+          "limit": 4
+        },
+        "param": [
+          [
             {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "RAND_SAFE",
-                    "team": 0,
-                    "limit": 3
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 70,
-                            "max": 80
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "SPELL_DEC",
-                "target": {
-                    "type": "SAME",
-                    "team": 0,
-                    "limit": 0
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 0.48,
-                            "max": 0.51
-                        }
-                    ],
-                    2
-                ]
+              "random": "triangular",
+              "rating_weight": 3,
+              "min": 80,
+              "max": 100
             }
+          ]
         ]
-    },
-    "skill_2": {
-        "chance": 0.14,
-        "cooldown": 3,
-        "mp_cost": 60,
-        "name": "刺耳鹰唳",
-        "effect": [
+      },
+      {
+        "type": "MGC_DMG",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": [
+          [
             {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "RAND_SAFE",
-                    "team": 0,
-                    "limit": 3
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 110,
-                            "max": 130
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "DEF_DEC",
-                "target": {
-                    "type": "SAME",
-                    "team": 0,
-                    "limit": 3
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 2.4,
-                            "max": 2.9
-                        }
-                    ],
-                    3
-                ]
+              "random": "triangular",
+              "rating_weight": 3,
+              "min": 150,
+              "max": 180
             }
+          ]
         ]
+      }
+    ]
+  },
+  "normal_attack": {
+    "name": "爪击",
+    "effect": [
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND_SAFE",
+          "team": 0,
+          "limit": 3
+        },
+        "param": []
+      }
+    ]
+  },
+  "skills": [
+    {
+      "chance": 0.13,
+      "cooldown": 1,
+      "mp_cost": 70,
+      "name": "狂怒龙卷",
+      "effect": [
+        {
+          "type": "MGC_DMG",
+          "target": {
+            "type": "RAND_SAFE",
+            "team": 0,
+            "limit": 3
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 70,
+                "max": 80
+              }
+            ]
+          ]
+        },
+        {
+          "type": "SPELL_DEC",
+          "target": {
+            "type": "SAME",
+            "team": 0,
+            "limit": 0
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 0.48,
+                "max": 0.51
+              }
+            ],
+            2
+          ]
+        }
+      ]
     },
-    "skill_3": {
-        "chance": 0.18,
-        "cooldown": 4,
-        "mp_cost": 80,
-        "name": "羽栖",
-        "effect": [
-            {
-                "type": "HEAL",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 520,
-                            "max": 580
-                        }
-                    ]
-                ]
-            },            {
-                "type": "DEF_UP",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 2,
-                            "min": 3,
-                            "max": 3.5
-                        }
-                    ],
-                    2
-                ]
-            }
-        ]
+    {
+      "chance": 0.14,
+      "cooldown": 3,
+      "mp_cost": 60,
+      "name": "刺耳鹰唳",
+      "effect": [
+        {
+          "type": "MGC_DMG",
+          "target": {
+            "type": "RAND_SAFE",
+            "team": 0,
+            "limit": 3
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 110,
+                "max": 130
+              }
+            ]
+          ]
+        },
+        {
+          "type": "DEF_DEC",
+          "target": {
+            "type": "SAME",
+            "team": 0,
+            "limit": 3
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 2.4,
+                "max": 2.9
+              }
+            ],
+            3
+          ]
+        }
+      ]
     },
-    "unique": {
-        "name": "血色凋零",
-        "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 4
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 80,
-                            "max": 100
-                        }
-                    ]
-                ]
-            },
-                        {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 3,
-                            "min": 150,
-                            "max": 180
-                        }
-                    ]
-                ]
-            }
-        ]
-    },
-    "normal_attack": {
-        "name": "爪击",
-        "effect": [
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND_SAFE",
-                    "team": 0,
-                    "limit": 3
-                },
-                "param": []
-            }
-        ]
+    {
+      "chance": 0.18,
+      "cooldown": 4,
+      "mp_cost": 80,
+      "name": "羽栖",
+      "effect": [
+        {
+          "type": "HEAL",
+          "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 520,
+                "max": 580
+              }
+            ]
+          ]
+        },
+        {
+          "type": "DEF_UP",
+          "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 3,
+                "max": 3.5
+              }
+            ],
+            2
+          ]
+        }
+      ]
     }
+  ]
 }

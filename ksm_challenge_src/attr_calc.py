@@ -64,9 +64,7 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
     game_char['life_steal_rate'] = calc_passive(numerical['life_steal_rate_base'], chara, 'life_steal_rate')
     game_char['dodge'] = _dodge_calc(int_, calc_passive(0, chara, 'dodge'))
 
-    for i in range(1, 4):
-        game_char[f'skill_{i}'] = chara[f'skill_{i}']
-
+    game_char['skills'] = [chara[f'skill_{i}'] for i in range(1, 4)]
     game_char['unique'] = chara['unique']
 
     game_char['normal_attack'] = {

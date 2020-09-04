@@ -20,10 +20,8 @@ class GameChar:
         self.shield = 0
         self.buff = {}
         self.MP = 0
-        self.skills = []
+        self.skills = [GameSkill(x) for x in self.attributes['skills']]
         self.token = set()
-        for i in range(3):
-            self.skills.append(GameSkill(self.attributes[f'skill_{i + 1}']))
         self.turn_mp_gain()
 
     # ————————————————————————————

@@ -1,294 +1,296 @@
 {
-    "name": "黑帮老大",
-    "not_short_hp": false,
-    "desc": "【黑帮老大】拥有极其好的身体素质，他常常手持一把重型机枪，使用[机枪扫射]大范围地伤害敌人。他有一箱[高爆手雷]，可以范围杀伤对手；在[高精度瞄准镜]的帮助下，他的攻击会更加致命；危险时刻，他会[寻找掩体]，保护自己不被攻击到。最后，为了守护秘密，他会把自己做成[人肉炸弹]，与敌人同归于尽。",
-    "weight_water_injection": {
-        "random": "triangular",
-        "rating_weight": 6,
-        "min": 233,
-        "max": 810
-    },
-    "attack": {
-        "random": "triangular",
-        "rating_weight": 5,
-        "min": 43,
-        "max": 50
-    },
-    "defence_base": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 2.2,
-        "max": 2.5
-    },
-    "defence_grow": {
-        "random": "triangular",
-        "rating_weight": 2,
-        "min": 0.1,
-        "max": 0.11
-    },
-    "hp_base": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 430,
-        "max": 460
-    },
-    "life_base": {
-        "random": "triangular",
-        "rating_weight": 6,
-        "min": 590,
-        "max": 640
-    },
-    "recover_rate": {
-        "random": "triangular",
-        "rating_weight": 1,
-        "min": 0.9,
-        "max": 1.1
-    },
-    "spell_rate": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 1,
-        "max": 1.1
-    },
-    "buff_rate": {
-        "random": "triangular",
-        "rating_weight": 8,
-        "min": 1.0,
-        "max": 1.1
-    },
-    "crit_rate": 2.4,
-    "crit_chance": 0.14,
-    "life_steal_rate": 0.56,
-    "dodge": 0.06,
-    "skill_1": {
-        "chance": 0.2,
-        "cooldown": 5,
-        "mp_cost": 120,
-        "name": "高爆手雷",
-        "effect": [
+  "name": "黑帮老大",
+  "not_short_hp": false,
+  "desc": "【黑帮老大】拥有极其好的身体素质，他常常手持一把重型机枪，使用[机枪扫射]大范围地伤害敌人。他有一箱[高爆手雷]，可以范围杀伤对手；在[高精度瞄准镜]的帮助下，他的攻击会更加致命；危险时刻，他会[寻找掩体]，保护自己不被攻击到。最后，为了守护秘密，他会把自己做成[人肉炸弹]，与敌人同归于尽。",
+  "weight_water_injection": {
+    "random": "triangular",
+    "rating_weight": 6,
+    "min": 233,
+    "max": 810
+  },
+  "attack": {
+    "random": "triangular",
+    "rating_weight": 5,
+    "min": 43,
+    "max": 50
+  },
+  "defence_base": {
+    "random": "triangular",
+    "rating_weight": 3,
+    "min": 2.2,
+    "max": 2.5
+  },
+  "defence_grow": {
+    "random": "triangular",
+    "rating_weight": 2,
+    "min": 0.1,
+    "max": 0.11
+  },
+  "hp_base": {
+    "random": "triangular",
+    "rating_weight": 4,
+    "min": 430,
+    "max": 460
+  },
+  "life_base": {
+    "random": "triangular",
+    "rating_weight": 6,
+    "min": 590,
+    "max": 640
+  },
+  "recover_rate": {
+    "random": "triangular",
+    "rating_weight": 1,
+    "min": 0.9,
+    "max": 1.1
+  },
+  "spell_rate": {
+    "random": "triangular",
+    "rating_weight": 3,
+    "min": 1,
+    "max": 1.1
+  },
+  "buff_rate": {
+    "random": "triangular",
+    "rating_weight": 8,
+    "min": 1.0,
+    "max": 1.1
+  },
+  "crit_rate": 2.4,
+  "crit_chance": 0.14,
+  "life_steal_rate": 0.56,
+  "dodge": 0.06,
+  "unique": {
+    "name": "人肉炸弹",
+    "effect": [
+      {
+        "type": "MGC_DMG",
+        "target": {
+          "type": "ALL",
+          "team": 0,
+          "limit": 1
+        },
+        "param": [
+          [
             {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 0
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 5,
-                            "min": 120,
-                            "max": 150
-                        }
-                    ]
-                ]
+              "random": "triangular",
+              "rating_weight": 2,
+              "min": 240,
+              "max": 255
             }
+          ]
         ]
-    },
-    "skill_2": {
-        "chance": 0.11,
-        "cooldown": 4,
-        "mp_cost": 60,
-        "name": "高精度瞄准镜",
-        "effect": [
+      },
+      {
+        "type": "MGC_DMG",
+        "target": {
+          "type": "SELF",
+          "team": 1,
+          "limit": 1
+        },
+        "param": [
+          [
             {
-                "type": "CRIT_CHANCE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 8,
-                            "min": 0.50,
-                            "max": 0.60
-                        }
-                    ],
-                    4
-                ]
-            },
-            {
-                "type": "PHY_ATK_BUFF_RATE",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 2,
-                            "min": 0.3,
-                            "max": 0.32
-                        }
-                    ],
-                    4
-                ]
+              "random": "triangular",
+              "rating_weight": 1,
+              "min": 250,
+              "max": 251
             }
+          ]
         ]
+      }
+    ]
+  },
+  "normal_attack": {
+    "name": "机枪扫射",
+    "effect": [
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": []
+      },
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": []
+      },
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": []
+      },
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": []
+      },
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": []
+      },
+      {
+        "type": "NORMAL_ATK",
+        "target": {
+          "type": "RAND",
+          "team": 0,
+          "limit": 1
+        },
+        "param": []
+      }
+    ]
+  },
+  "skills": [
+    {
+      "chance": 0.2,
+      "cooldown": 5,
+      "mp_cost": 120,
+      "name": "高爆手雷",
+      "effect": [
+        {
+          "type": "MGC_DMG",
+          "target": {
+            "type": "ALL",
+            "team": 0,
+            "limit": 0
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 120,
+                "max": 150
+              }
+            ]
+          ]
+        }
+      ]
     },
-    "skill_3": {
-        "chance": 0.14,
-        "cooldown": 5,
-        "mp_cost": 80,
-        "name": "寻找掩体",
-        "effect": [
-            {
-                "type": "DODGE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    [
-                        0.30
-                    ],
-                    2
-                ]
-            },
-            {
-                "type": "SHIELD",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 4,
-                            "min": 200,
-                            "max": 240
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "DEF_UP",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 2,
-                            "min": 3,
-                            "max": 3.2
-                        }
-                    ],
-                    2
-                ]
-            }
-        ]
+    {
+      "chance": 0.11,
+      "cooldown": 4,
+      "mp_cost": 60,
+      "name": "高精度瞄准镜",
+      "effect": [
+        {
+          "type": "CRIT_CHANCE_BUFF",
+          "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 8,
+                "min": 0.5,
+                "max": 0.6
+              }
+            ],
+            4
+          ]
+        },
+        {
+          "type": "PHY_ATK_BUFF_RATE",
+          "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.3,
+                "max": 0.32
+              }
+            ],
+            4
+          ]
+        }
+      ]
     },
-    "unique": {
-        "name": "人肉炸弹",
-        "effect": [
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "ALL",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 2,
-                            "min": 240,
-                            "max": 255
-                        }
-                    ]
-                ]
-            },
-            {
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 1,
-                            "min": 250,
-                            "max": 251
-                        }
-                    ]
-                ]
-            }
-        ]
-    },
-    "normal_attack": {
-        "name": "机枪扫射",
-        "effect": [
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            },
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            },
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            },
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            },
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            },
-            {
-                "type": "NORMAL_ATK",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": []
-            }
-        ]
+    {
+      "chance": 0.14,
+      "cooldown": 5,
+      "mp_cost": 80,
+      "name": "寻找掩体",
+      "effect": [
+        {
+          "type": "DODGE_BUFF",
+          "target": {
+            "type": "SELF",
+            "team": 0,
+            "limit": 2
+          },
+          "param": [
+            [
+              0.3
+            ],
+            2
+          ]
+        },
+        {
+          "type": "SHIELD",
+          "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 200,
+                "max": 240
+              }
+            ]
+          ]
+        },
+        {
+          "type": "DEF_UP",
+          "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+          },
+          "param": [
+            [
+              {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 3,
+                "max": 3.2
+              }
+            ],
+            2
+          ]
+        }
+      ]
     }
+  ]
 }
