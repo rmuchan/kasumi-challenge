@@ -91,7 +91,7 @@ async def main2():
                 chars.append(c)
                 await print_character(ui, c)
             gcs = [game_char_gen(x, test_lv=lvl) for x in chars]
-            game = Gaming(gcs[:4], [boss_gen(boss, lvl)], CLI(0,debug_mode=True))
+            game = Gaming(gcs[:4], boss_gen(boss, lvl)['bosses'], CLI(0,debug_mode=True))
             result, turn = await game.start(testing_mode=True)
             turn_count[lvl][turn] += 1
             if result == 'timeout':
@@ -120,6 +120,6 @@ def gen_log():
 #TODO 破盾一击
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    #asyncio.run(main2())
     gen_log()
 

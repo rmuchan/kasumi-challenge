@@ -590,8 +590,8 @@ class GameChar:
         # 生命交换
         elif effect['type'] == 'LIFE_SWAP':
             for obj in selector:
-                # 生命值恢复到目标生命值半分比的的75%
-                rate = 0.85
+                # 生命值恢复到目标生命值百分比
+                rate = 0.90
 
                 # 如果目标的生命百分比小于自己的则造成伤害
                 if obj.hp_percentage < self.hp_percentage * rate:
@@ -765,6 +765,7 @@ class GameChar:
         percentage_type: 参考enums.py中PercentageType的描述。当这个参数不为空的时候，param会另作他用。
         """
         pre_hp = self.HP
+        already_dead = self.HP < 0
 
         # 传入的是伤害
         if not percentage_type:
@@ -785,8 +786,8 @@ class GameChar:
         else:
             raise ValueError('在_life_hurt函数中传入了未知的PercentageType类型')
 
-        # 如果是非致死攻击，但伤害致死 将生命值恢复到1
-        if not deadly and self.HP < 1:
+        # 如果是非致死攻击，但伤害致死。并且在受击前也没有被杀死。 将生命值恢复到1
+        if not deadly and self.HP < 1 and not already_dead:
             self.HP = 1
 
         # 计算实际伤害量
@@ -829,7 +830,7 @@ class GameChar:
 
 
 hp_block_list = '▏▎▍▌▋▊▉'
-mp_block_list = '▁▂▃▄▅▆▇♠'
+mp_block_list = '▁▂▃▄▅▆▇★'
 
 
 def hp_block(value):
