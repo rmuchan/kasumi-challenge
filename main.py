@@ -59,17 +59,17 @@ class CLI(UI):
 with open('ksm_challenge_src/data/boss-pool/pedestrian.json') as FILE:
     boss = json.load(FILE)
 
-test_level = 1
+test_level = 30
 
 async def main():
     chars = []
     for i in range(8):
-        ui = CLI(i,debug_mode=True)
+        ui = CLI(i)
         c = await create_character(ui)
         chars.append(c)
         await print_character(ui, c)
     gcs = [game_char_gen(x, test_lv=test_level) for x in chars]
-    game = Gaming(gcs[:4], [boss_gen(boss, test_level)], CLI(0))
+    game = Gaming(gcs[:4], boss_gen(boss, test_level)['bosses'], CLI(0))
     print(await game.start(testing_mode=True))
 
 
@@ -120,6 +120,6 @@ def gen_log():
 #TODO 破盾一击
 
 if __name__ == '__main__':
-    #asyncio.run(main2())
+    #asyncio.run(main())
     gen_log()
 

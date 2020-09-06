@@ -23,8 +23,8 @@
     },
     "def_base": {
       "random": "biased",
-      "expect": 1.4,
-      "min": 0.4
+      "expect": 2.0,
+      "min": 0.7
     },
     "defense_str_rate": {
       "random": "uniform",
@@ -66,14 +66,15 @@
   },
   "single_effect_chance": 0.6,
   "str_base": 48.5,
-  "str_grow": 1,
+  "str_grow": 1.06,
   "int_base": 48.5,
-  "int_grow": 1,
+  "int_grow": 1.06,
   "per_base": 48.5,
-  "per_grow": 1,
+  "per_grow": 1.06,
   "life_base": 160,
   "life_grow": 3.6,
   "attr_grow_compress": 0.4,
+  "attr_grow_expend": 1.23,
   "crit_base": 1.25,
   "crit_chance": 0.11,
   "crit_int_convert_rate": 0.007,
@@ -113,7 +114,7 @@
   "talent_coin_earn_rate": 0.2,
   "life_to_mp": 0.66,
   "fire_enchant_rate": 0.66,
-  "atk_index":1.15,
+  "atk_index":1.11,
   "atk_avr": 175,
   "fair_mode": 9,
   "boss_virtual_attr": 70

@@ -163,7 +163,7 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
         ui.append('%s: %.0f + %.2f (%s)' %
                   (v,
                    calc_passive(data.numerical[f'{k}_base'] * char[f'{k}_build'][0], char, f'{k}_base'),
-                   calc_passive(data.numerical[f'{k}_grow'] * ((char[f'{k}_build'][0] - 1) * numerical['attr_grow_compress'] + 1), char, f'{k}_grow'),
+                   calc_passive(data.numerical[f'{k}_grow'] * ((1 - char[f'{k}_build'][0]) * numerical['attr_grow_expend'] + 1), char, f'{k}_grow'),
                    char[f'{k}_build'][1]))
     from .attr_calc import hp_calc
     ui.append('生命: %.0f + %.1f (%s)' % (

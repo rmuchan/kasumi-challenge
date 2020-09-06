@@ -3,7 +3,7 @@
     "bosses": [
         {
             "name": "灵魂行者",
-            "not_short_hp": true,
+            "not_short_hp": false,
             "weight_water_injection": {
                 "random": "triangular",
                 "rating_weight": 6,

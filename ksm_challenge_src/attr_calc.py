@@ -33,13 +33,13 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
         lv = numerical['fair_mode']
 
     str_ = _attr_calc(numerical['str_base'] * chara['str_build'][0] + calc_passive(0, chara, 'str_base'),
-                      numerical['str_grow'] * ((chara['str_build'][0] - 1) * numerical['attr_grow_compress'] + 1) + calc_passive(0, chara, 'str_grow'),
+                      numerical['str_grow'] * ((1 - chara['str_build'][0]) * numerical['attr_grow_expend'] + 1) + calc_passive(0, chara, 'str_grow'),
                       lv)
     int_ = _attr_calc(numerical['int_base'] * chara['int_build'][0] + calc_passive(0, chara, 'int_base'),
-                      numerical['int_grow'] * ((chara['int_build'][0] - 1) * numerical['attr_grow_compress'] + 1) + calc_passive(0, chara, 'int_grow'),
+                      numerical['int_grow'] * ((1 - chara['int_build'][0]) * numerical['attr_grow_expend'] + 1) + calc_passive(0, chara, 'int_grow'),
                       lv)
     per_ = _attr_calc(numerical['per_base'] * chara['per_build'][0] + calc_passive(0, chara, 'per_base'),
-                      numerical['per_grow'] * ((chara['per_build'][0] - 1) * numerical['attr_grow_compress'] + 1) + calc_passive(0, chara, 'per_grow'),
+                      numerical['per_grow'] * ((1 - chara['per_build'][0]) * numerical['attr_grow_expend'] + 1) + calc_passive(0, chara, 'per_grow'),
                       lv)
 
     game_char['str'] = str_
@@ -142,3 +142,4 @@ def lv_calc(exp: int):
         if exp_overlay_list[i - 1] <= exp < exp_overlay_list[i]:
             return i
     return 30
+
