@@ -101,8 +101,8 @@
             },
             "skills": [
                 {
-                    "chance": 0.6,
-                    "cooldown": 3,
+                    "chance": 0.8,
+                    "cooldown": 4,
                     "mp_cost": 50,
                     "name": "守护契约",
                     "effect": [
