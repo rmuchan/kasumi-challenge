@@ -148,7 +148,7 @@ class GameChar:
         """
         角色受到伤害，需要传入伤害量，可选是否为法术伤害。
         伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
-        返回一个tuple，[0]为实际伤害量，[1]为攻击状态(-1: 闪避了, 0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破), [2]为对生命本身而非护盾造成的伤害
+        返回一个tuple，[0]为实际伤害量，[1]为攻击状态(-1: 闪避了, 0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破, 3: 伤害抵抗), [2]为对生命本身而非护盾造成的伤害
         """
         shield_break = 0
         shield_damage = 0
@@ -156,6 +156,9 @@ class GameChar:
         # 考虑闪避
         if random.random() < self.dodge and not magic:
             return 0, -1, 0
+
+        if self.use_token('damage_resist'):
+            return 0, 3, 0
 
         # 护盾将会被优先攻击
         if self.shield > 0:
@@ -269,6 +272,8 @@ class GameChar:
 
         ret = []
 
+        # —————————————————————
+        # 物理伤害
         def do_phy_damage():
             feedback = ''
             if is_crit:
@@ -288,9 +293,20 @@ class GameChar:
                 'param': {}
             })
 
+        # ————————————————————
+        # 魔法伤害
         def do_magic_damage(damage):
             magic_damage = damage * self.spell_rate * fluctuation()
             real_damage, atk_status, _ = obj.take_damage(magic_damage, magic=True)
+
+            if atk_status == 3:
+                ret.append({
+                    'feedback': '{target}抵抗了{count}次攻击',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'count': 1}
+                })
+                return
+
             feedback = '对{target}'
             if atk_status == 2:
                 feedback += '的护盾'
@@ -316,6 +332,12 @@ class GameChar:
                 if atk_status == -1:
                     ret.append({
                         'feedback': '{target}闪避了{count}次攻击',
+                        'merge_key': {'target': self._self_replace(obj.name)},
+                        'param': {'count': 1}
+                    })
+                elif atk_status == 3:
+                    ret.append({
+                        'feedback': '{target}抵抗了{count}次攻击',
                         'merge_key': {'target': self._self_replace(obj.name)},
                         'param': {'count': 1}
                     })
@@ -563,6 +585,16 @@ class GameChar:
                 obj.add_token('attack_assis')
                 ret.append({
                     'feedback': '为{target}附加了攻击标记',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {}
+                })
+
+        # 伤害抵抗标记
+        elif effect['type'] == 'DMG_RESIST':
+            for obj in selector:
+                obj.add_token('damage_resist')
+                ret.append({
+                    'feedback': '为{target}附加了伤害抵抗标记',
                     'merge_key': {'target': self._self_replace(obj.name)},
                     'param': {}
                 })

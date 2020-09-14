@@ -137,8 +137,8 @@
                                     {
                                         "random": "triangular",
                                         "rating_weight": 4,
-                                        "min": 580,
-                                        "max": 620
+                                        "min": 510,
+                                        "max": 580
                                     }
                                 ]
                             ]

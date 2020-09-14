@@ -951,6 +951,60 @@
                 "param": []
             }
         ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.12
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 4
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "灵感涌动",
+                "看破",
+                "守护之诺"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "为自身添加伤害抵抗标记，完全抵抗下一次受到的伤害",
+                "type": "DMG_RESIST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": []
+            },
+            {
+                "desc": "增加自身{param[0]:.0f}点MP",
+                "type": "MP_UP",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 100,
+                        "min": 85
+                    }
+                ]
+            }
+        ]
     }
 ]
 
