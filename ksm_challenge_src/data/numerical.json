@@ -44,7 +44,7 @@
     "attack_rate": {
       "random": "biased",
       "expect": 3.2,
-      "min": 2.76
+      "min": 2.95
     }
   },
   "skill_template": {
@@ -65,11 +65,11 @@
     }
   },
   "single_effect_chance": 0.6,
-  "str_base": 48.5,
+  "str_base": 49,
   "str_grow": 1.06,
-  "int_base": 48.5,
+  "int_base": 49,
   "int_grow": 1.06,
-  "per_base": 48.5,
+  "per_base": 49,
   "per_grow": 1.06,
   "life_base": 160,
   "life_grow": 3.6,
@@ -97,10 +97,10 @@
   "aoe_separate_rate": [
     0,
     1,
-    0.52,
-    0.36,
-    0.28,
-    0.22
+    0.53,
+    0.37,
+    0.29,
+    0.24
   ],
   "hp_display_unit": 100,
   "boss_display_shorten": 2,

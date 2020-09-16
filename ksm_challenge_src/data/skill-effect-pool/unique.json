@@ -192,8 +192,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 2,
-                        "min": 1
+                        "expect": 10,
+                        "min": 8
                     },
                     2
                 ]
@@ -221,8 +221,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 180,
-                        "min": 170
+                        "expect": 200,
+                        "min": 175
                     }
                 ]
             }
@@ -444,7 +444,7 @@
                 "火焰之拳"
             ]
         },
-        "weight": 2,
+        "weight": 3,
         "effect": [
             {
                 "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内附带魔法伤害。",

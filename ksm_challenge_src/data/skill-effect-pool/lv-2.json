@@ -130,7 +130,7 @@
             {
                 "random": "biased",
                 "expect": 150,
-                "min": 115
+                "min": 125
             }
         ]
     },
@@ -181,8 +181,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 200,
-                "min": 170
+                "expect": 220,
+                "min": 180
             }
         ]
     },
@@ -209,7 +209,7 @@
                 "expect": 3.6,
                 "min": 3.2
             },
-            4
+            5
         ]
     },
     {
@@ -273,7 +273,7 @@
                 "恶魔之诺"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "desc": "使用不稳定的魔法攻击一个敌人，成功则造成{param[1]}点魔法伤害，否则对自己造成{param[2]}点魔法伤害",
         "type": "MGC_RAND",
         "target": {

@@ -154,8 +154,8 @@
                   {
                     "random": "triangular",
                     "rating_weight": 4,
-                    "min": 0.48,
-                    "max": 0.51
+                    "min": 0.68,
+                    "max": 0.71
                   }
                 ],
                 2

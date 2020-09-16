@@ -160,8 +160,8 @@
                   {
                     "random": "triangular",
                     "rating_weight": 3,
-                    "min": 180,
-                    "max": 200
+                    "min": 200,
+                    "max": 225
                   }
                 ]
               ]

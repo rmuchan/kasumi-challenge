@@ -3,62 +3,6 @@
         "name": {
             "random": "choice",
             "values": [
-                "燃烧",
-                "电击",
-                "冰刺",
-                "暗影"
-            ]
-        },
-        "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
-        "weight": 3,
-        "type": "MGC_DMG",
-        "target": {
-            "type": "RAND",
-            "team": 0,
-            "limit": 1
-        },
-        "param": [
-            {
-                "random": "biased",
-                "expect": 36,
-                "min": 30
-            }
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
-                "暖风",
-                "寒风",
-                "覆雪",
-                "暗能"
-            ]
-        },
-        "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
-        "weight": 2,
-        "type": "MGC_DMG",
-        "target": {
-            "type": "RAND",
-            "team": 0,
-            "limit": {
-                "random": "cubic",
-                "min": 2,
-                "max": 4
-            }
-        },
-        "param": [
-            {
-                "random": "biased",
-                "expect": 36,
-                "min": 30
-            }
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
                 "激励",
                 "鼓舞",
                 "战术"
@@ -124,8 +68,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 80,
-                "min": 70
+                "expect": 95,
+                "min": 80
             }
         ]
     },
@@ -201,7 +145,7 @@
                 "expect": 1.8,
                 "min": 1.5
             },
-            4
+            5
         ]
     },
     {
