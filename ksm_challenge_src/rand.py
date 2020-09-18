@@ -1,5 +1,6 @@
+import heapq
 import random
-from typing import Tuple, Any, List
+from typing import Tuple, Any, List, Iterable, Callable
 
 
 def biased(expect: float, min_: float) -> Tuple[float, str]:
@@ -66,3 +67,30 @@ def randomize(template: Any, rating: List[float] = None):
         return value
     else:
         return template
+
+
+def a_res(population: Iterable[Any], weight_func: Callable[[int, Any], float], count: int):
+    """在总体中带权重地不重复选取若干个元素。
+
+    :param population: 总体
+    :param weight_func: (下标, 元素) -> 权重
+    :param count: 选取的最大数量，当总体数量不足时只会返回等同于总体数量的元素
+
+    :return: 选取的元素列表
+    """
+
+    heap = []  # [(new_weight, item), ...]
+    for idx, item in enumerate(population):
+        wi = weight_func(idx, item)
+        ui = random.random()
+        ki = ui ** (1 / wi)
+
+        if len(heap) < count:
+            heapq.heappush(heap, (ki, item))
+        elif ki > heap[0][0]:
+            heapq.heappush(heap, (ki, item))
+
+            if len(heap) > count:
+                heapq.heappop(heap)
+
+    return [item[1] for item in heap]

@@ -5,7 +5,7 @@ from . import rand
 from .GameChar import numerical
 from .data import data
 from .interact import UI
-from .skill import get_skill_desc, create_skill
+from .skill import get_skill_desc, create_skill, create_unique_skill
 from .talent_calc import build_talent_buff
 from .user_guide import get_ver
 
@@ -52,10 +52,10 @@ async def _create_step_name(ui: UI, proto: Dict[str, Any]):
 
 
 async def _create_step_skill_candidate(_: UI, proto: Dict[str, Any]):
-    proto['skill_1_candidate'] = [create_skill(False) for _ in range(3)]
-    proto['skill_2_candidate'] = [create_skill(False) for _ in range(3)]
-    proto['skill_3_candidate'] = [create_skill(False) for _ in range(3)]
-    proto['unique_candidate'] = [create_skill(True) for _ in range(3)]
+    proto['skill_1_candidate'] = [create_skill() for _ in range(3)]
+    proto['skill_2_candidate'] = [create_skill() for _ in range(3)]
+    proto['skill_3_candidate'] = [create_skill() for _ in range(3)]
+    proto['unique_candidate'] = create_unique_skill(3)
     proto['passive_candidate'] = random.sample(data.skill_effect_pool.passive, 3)
 
 
@@ -117,11 +117,11 @@ async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
 
 _CREATE_STEPS = {
     'name': (_create_step_name, 'skill_candidate', False),
-    'skill_candidate': (_create_step_skill_candidate, 'skill_1', True),
+    'skill_candidate': (_create_step_skill_candidate, 'unique', True),
+    'unique': (_create_step_unique_select, 'skill_1', False),
     'skill_1': (_create_step_skill_select(1), 'skill_2', False),
     'skill_2': (_create_step_skill_select(2), 'skill_3', False),
-    'skill_3': (_create_step_skill_select(3), 'unique', False),
-    'unique': (_create_step_unique_select, 'main_skill', False),
+    'skill_3': (_create_step_skill_select(3), 'main_skill', False),
     'main_skill': (_create_step_main_skill, 'passive', False),
     'passive': (_create_step_passive_select, 'full', False),
 }

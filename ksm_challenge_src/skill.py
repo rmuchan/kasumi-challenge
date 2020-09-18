@@ -1,14 +1,14 @@
 import random
-from typing import Dict, Any, Iterable
+from typing import Dict, Any, Iterable, List
 
-from . import util
+from . import util, rand
 from .data import data
 from .rand import randomize
 
 
-def create_skill(is_unique: bool) -> Dict[str, Any]:
-    if is_unique or random.random() < data.numerical['single_effect_chance']:
-        pool = data.skill_effect_pool['unique' if is_unique else 'lv-3']
+def create_skill() -> Dict[str, Any]:
+    if random.random() < data.numerical['single_effect_chance']:
+        pool = data.skill_effect_pool['lv-3']
         template = random.choices(pool, [x['weight'] for x in pool])[0]
         skill = randomize(template)
         for effect in skill['effect']:
@@ -21,6 +21,18 @@ def create_skill(is_unique: bool) -> Dict[str, Any]:
         skill['name'] = '·'.join(x['name'] for x in effect)
         skill['effect'] = effect
     return skill
+
+
+def create_unique_skill(count: int) -> List[Dict[str, Any]]:
+    skills = []
+    pool = data.skill_effect_pool['unique']
+    selected_templates = rand.a_res(pool, lambda _, x: x['weight'], count)
+    for template in selected_templates:
+        skill = randomize(template)
+        for effect in skill['effect']:
+            _process_effect(effect)
+        skills.append(skill)
+    return skills
 
 
 def _create_skill_effect(level: int, forbidden_type: Iterable[str]) -> Dict[str, Any]:
