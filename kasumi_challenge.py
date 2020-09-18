@@ -93,7 +93,11 @@ async def _(session: CommandSession):
 async def send_to_all(bot, msg):
     for gid in config['enabled_group']:
         await asyncio.sleep(0.1)
-        await bot.send_group_msg(group_id=int(gid), message=msg)
+        try:
+            await bot.send_group_msg(group_id=int(gid), message=msg)
+        except:
+            print(f'这个群已经不在了！:{gid}')
+
 
 
 # 查看消息记录
