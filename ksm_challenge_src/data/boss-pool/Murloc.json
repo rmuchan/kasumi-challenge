@@ -1,0 +1,640 @@
+{
+    "desc": "4只分工不同的鱼人组成了特种行动小队【潮汐猎手】，烧杀抢掠无恶不作。它们分工明确：两只鱼人分别钻研极致的战斗机巧和极致的魔法力量，而另外两只鱼人则分别研究能够削弱猎物的诅咒魔法和海洋的治愈力量。【潮汐猎手】为城市带来的巨大的麻烦，而它们也将会成为冒险者们冒险路途上最大的阻碍。",
+    "bosses": [
+        {
+            "name": "鱼人牧师",
+            "not_short_hp": true,
+            "weight_water_injection": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 233,
+                "max": 810
+            },
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 80,
+                "max": 90
+            },
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 1.2,
+                "max": 1.8
+            },
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 0.08,
+                "max": 0.1
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 110,
+                "max": 123
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 85,
+                "max": 90
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 1.6,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.32,
+            "dodge": 0.07,
+            "unique": {
+                "name": "巨浪庇护",
+                "effect": [
+                    {
+                        "type": "DMG_RESIST",
+                        "target": {
+                            "type": "ALL",
+                            "team": 1,
+                            "limit": 1
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "潜水投掷",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    },
+                    {
+                        "type": "SHIELD",
+                        "target": {
+                            "type": "SELF",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": [
+                            [
+                                {
+                                    "random": "triangular",
+                                    "rating_weight": 1,
+                                    "min": 30,
+                                    "max": 35
+                                }
+                            ]
+                        ]
+                    }
+                ]
+            },
+            "skills": [
+                {
+                    "chance": 0.5,
+                    "cooldown": 0,
+                    "mp_cost": 120,
+                    "name": "鱼人祝福",
+                    "effect": [
+                        {
+                            "type": "HEAL",
+                            "target": {
+                                "type": "LIFELEAST",
+                                "team": 1,
+                                "limit": 2
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 2,
+                                        "min": 60,
+                                        "max": 70
+                                    }
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 1
+        },
+        {
+            "name": "鱼人猎杀者",
+            "not_short_hp": true,
+            "weight_water_injection": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 233,
+                "max": 810
+            },
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 1,
+                "min": 165,
+                "max": 175
+            },
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 3.2,
+                "max": 3.5
+            },
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 0.17,
+                "max": 0.19
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 150,
+                "max": 160
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 106,
+                "max": 116
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 1.6,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.32,
+            "dodge": 0.07,
+            "unique": {
+                "name": "撕裂巨浪",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "ALL",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "鱼人尖矛",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "skills": [
+                {
+                    "chance": 0.25,
+                    "cooldown": 1,
+                    "mp_cost": 160,
+                    "name": "裂甲投枪",
+                    "effect": [
+                        {
+                            "type": "DEF_DEC",
+                            "target": {
+                                "type": "RAND",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 2,
+                                        "min": 1.7,
+                                        "max": 1.95
+                                    }
+                                ],
+                                4
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 1
+        },
+        {
+            "name": "鱼人魔巫",
+            "not_short_hp": true,
+            "weight_water_injection": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 233,
+                "max": 810
+            },
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 1,
+                "min": 60,
+                "max": 66
+            },
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 1.6,
+                "max": 1.9
+            },
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 0.08,
+                "max": 0.07
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 110,
+                "max": 120
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 85,
+                "max": 95
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 1.6,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.32,
+            "dodge": 0.07,
+            "unique": {
+                "name": "鱼人再生",
+                "effect": [
+                    {
+                        "type": "PURIFY",
+                        "target": {
+                            "type": "ALL",
+                            "team": 1,
+                            "limit": 1
+                        },
+                        "param": []
+                    },
+                    {
+                        "type": "RECOVER_BUFF_RATE",
+                        "target": {
+                            "type": "ALL",
+                            "team": 1,
+                            "limit": 1
+                        },
+                        "param": [
+                            [
+                                {
+                                    "random": "triangular",
+                                    "rating_weight": 2,
+                                    "min": 0.45,
+                                    "max": 0.5
+                                }
+                            ],
+                            4
+                        ]
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "骨刺飞射",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 2
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "skills": [
+                {
+                    "chance": 0.3,
+                    "cooldown": 1,
+                    "mp_cost": 90,
+                    "name": "攻击诅咒",
+                    "effect": [
+                        {
+                            "type": "ATK_DEBUFF",
+                            "target": {
+                                "type": "RAND",
+                                "team": 0,
+                                "limit": 2
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 1,
+                                        "min": 0.4,
+                                        "max": 0.41
+                                    }
+                                ],
+                                2
+                            ]
+                        }
+                    ]
+                },{
+                    "chance": 0.3,
+                    "cooldown": 2,
+                    "mp_cost": 90,
+                    "name": "鱼人狂热",
+                    "effect": [
+                        {
+                            "type": "MP_UP",
+                            "target": {
+                                "type": "RAND",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 1,
+                                        "min": 100,
+                                        "max": 110
+                                    }
+                                ]
+                            ]
+                        },{
+                            "type": "MP_UP",
+                            "target": {
+                                "type": "RAND",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 1,
+                                        "min": 60,
+                                        "max": 66
+                                    }
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "chance": 0.3,
+                    "cooldown": 1,
+                    "mp_cost": 90,
+                    "name": "生命诅咒",
+                    "effect": [
+                        {
+                            "type": "RECOVER_DEC",
+                            "target": {
+                                "type": "ALL",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 1,
+                                        "min": 0.4,
+                                        "max": 0.41
+                                    }
+                                ],
+                                2
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 1
+        },
+        {
+            "name": "鱼人黑魔师",
+            "not_short_hp": true,
+            "weight_water_injection": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 233,
+                "max": 810
+            },
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 1,
+                "min": 75,
+                "max": 80
+            },
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 2.2,
+                "max": 2.5
+            },
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 1,
+                "min": 0.1,
+                "max": 0.11
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 135,
+                "max": 145
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 101,
+                "max": 110
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 1.6,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.32,
+            "dodge": 0.07,
+            "unique": {
+                "name": "海啸",
+                "effect": [
+                    {
+                        "type": "MGC_DMG",
+                        "target": {
+                            "type": "ALL",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": [
+                            [
+                                {
+                                    "random": "triangular",
+                                    "rating_weight": 2,
+                                    "min": 175,
+                                    "max": 190
+                                }
+                            ]
+                        ]
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "棍棒敲击",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "skills": [
+                {
+                    "chance": 0.3,
+                    "cooldown": 1,
+                    "mp_cost": 40,
+                    "name": "魔法反制",
+                    "effect": [
+                        {
+                            "type": "MGC_DMG",
+                            "target": {
+                                "type": "RAND",
+                                "team": 0,
+                                "limit": 2
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 2,
+                                        "min": 50,
+                                        "max": 57
+                                    }
+                                ]
+                            ]
+                        },                        {
+                            "type": "SPELL_DEC",
+                            "target": {
+                                "type": "SAME",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 1,
+                                        "min": 0.4,
+                                        "max": 0.45
+                                    }
+                                ],2
+                            ]
+                        }
+                    ]
+                },{
+                    "chance": 0.5,
+                    "cooldown": 0,
+                    "mp_cost": 40,
+                    "name": "鬼火",
+                    "effect": [
+                        {
+                            "type": "MGC_DMG",
+                            "target": {
+                                "type": "RAND",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    {
+                                        "random": "triangular",
+                                        "rating_weight": 2,
+                                        "min": 90,
+                                        "max": 97
+                                    }
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 1
+        }
+    ]
+}

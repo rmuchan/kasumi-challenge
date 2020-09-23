@@ -56,15 +56,15 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/pedestrian.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/Murloc.json') as FILE:
     boss = json.load(FILE)
 
-test_level = 30
+test_level = 1
 
 async def main():
     chars = []
     for i in range(8):
-        ui = CLI(i)
+        ui = CLI(i, debug_mode=True)
         c = await create_character(ui)
         chars.append(c)
         await print_character(ui, c)
@@ -120,6 +120,6 @@ def gen_log():
 #TODO 破盾一击
 
 if __name__ == '__main__':
-    asyncio.run(main2())
-    gen_log()
+    asyncio.run(main())
+    #gen_log()
 

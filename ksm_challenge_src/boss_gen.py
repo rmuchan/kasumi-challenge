@@ -37,7 +37,7 @@ def boss_gen(template: dict, lv):
 
 
 def attack_calc(atk, lv):
-    return recurrence(atk, numerical['attr_rate'], atk*0.02, lv)
+    return recurrence(atk, numerical['attr_rate'], atk*0.022, lv)
 
 
 def hp_calc(hp_base, life_base, lv):

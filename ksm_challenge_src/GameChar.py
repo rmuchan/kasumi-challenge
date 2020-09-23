@@ -219,8 +219,8 @@ class GameChar:
                 self.MP = 0
                 return [self.attributes['unique']]
 
-        for i in range(3):
-            ret = self.skills[i].can_be_used()
+        for sk in self.skills:
+            ret = sk.can_be_used()
             if ret:
                 if self.MP < ret['mp_cost']:
                     return [self.normal_attack]
