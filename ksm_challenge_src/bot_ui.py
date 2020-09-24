@@ -1,10 +1,10 @@
 import asyncio
 from typing import Optional, Any, Dict, Set
 
+import aiocqhttp
 from nonebot import NoneBot, context_id
 from nonebot import on_command, CommandSession
 from nonebot import on_natural_language, NLPSession, IntentCommand
-from nonebot.typing import Context_T
 
 from .data import data
 from .interact import UI
@@ -20,7 +20,7 @@ _mutex: Dict[str, Set[str]] = {
 
 
 class BotContextUI(UI):
-    def __init__(self, bot: NoneBot, ctx: Context_T):
+    def __init__(self, bot: NoneBot, ctx: aiocqhttp.Event):
         super().__init__()
         self._bot = bot
         self._ctx = ctx
@@ -140,7 +140,7 @@ async def _(session: CommandSession):
 
 @on_natural_language(only_to_me=False)
 async def _(session: NLPSession):
-    msg = session.msg_text
+    msg = session.msg_text.replace('\u202d', '').replace('\u202e', '')  # LRO, RLO
     ctx_id = context_id(session.ctx)
     ui = _running.get(ctx_id)
     if msg and ui is not None and ui.input_pending:
