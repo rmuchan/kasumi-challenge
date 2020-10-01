@@ -379,7 +379,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "中幅度强化自身{param[0]:.0}点攻击，持续{param[1]}回合",
+                "desc": "中幅度强化自身{param[0]:.0f}点攻击，持续{param[1]}回合",
                 "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
