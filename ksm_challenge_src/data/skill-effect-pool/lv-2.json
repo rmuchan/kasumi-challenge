@@ -86,6 +86,32 @@
         "name": {
             "random": "choice",
             "values": [
+                "战吼",
+                "磨剑",
+                "怒吼"
+            ]
+        },
+        "desc": "提升自身{param[0]:.0f}点攻击，持续{param[1]}回合",
+        "weight": 2,
+        "type": "PHY_ATK_BUFF_CONST",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 110,
+                "min": 100
+            },
+            3
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
                 "群体治疗",
                 "团队治疗",
                 "群体医护",
@@ -145,7 +171,7 @@
             ]
         },
         "desc": "提升自身{param[0]:%}的法术倍率，持续{param[1]}回合",
-        "weight": 3,
+        "weight": 2,
         "type": "MGC_BUFF_RATE",
         "target": {
             "type": "SELF",

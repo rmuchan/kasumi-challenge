@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.1,
-                        "min": 1
+                        "expect": 1.25,
+                        "min": 1.15
                     },
                     3
                 ]
@@ -281,43 +281,23 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.15,
-                        "min": 1.05
+                        "expect": 1.35,
+                        "min": 1.19
                     },
                     4
                 ]
             },
             {
-                "desc": "为自己附加{param[0]}点护盾",
-                "type": "SHIELD",
+                "desc": "进入急速冷却状态，持续{param[1]}回合",
+                "type": "FAST_COOLDOWN",
                 "target": {
                     "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
-                    {
-                        "random": "biased",
-                        "expect": 200,
-                        "min": 170
-                    }
-                ]
-            },
-            {
-                "desc": "大幅度强化自身{param[0]:%}的增益幅度，持续{param[1]}回合",
-                "type": "BUFF_RATE_UP",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.9,
-                        "min": 0.76
-                    },
-                    4
+                    {},
+                    3
                 ]
             }
         ]
@@ -345,8 +325,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 93,
-                        "min": 85
+                        "expect": 105,
+                        "min": 94
                     },
                     2
                 ]
@@ -399,8 +379,8 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "中幅度强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_RATE",
+                "desc": "中幅度强化自身{param[0]:.0}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -409,8 +389,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.5,
-                        "min": 0.4
+                        "expect": 112,
+                        "min": 100
                     },
                     4
                 ]
@@ -426,8 +406,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.60,
-                        "min": 0.56
+                        "expect": 0.30,
+                        "min": 0.24
                     },
                     3
                 ]
@@ -488,7 +468,7 @@
                 "箭雨"
             ]
         },
-        "weight": 2,
+        "weight": 3,
         "effect": [
             {
                 "desc": "进行5次快速的普通攻击",
@@ -561,6 +541,30 @@
                         "min": 0.55
                     },
                     2
+                ]
+            }
+        ]
+    },    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "技能过载",
+                "主技能爆发"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "在{param[1]}回合内每回合无视冷却时间、无视概率地使用主技能",
+                "type": "SKILL_OVERLOAD",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {},
+                    3
                 ]
             }
         ]

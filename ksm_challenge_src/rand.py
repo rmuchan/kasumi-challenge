@@ -93,4 +93,5 @@ def a_res(population: Iterable[Any], weight_func: Callable[[int, Any], float], c
             if len(heap) > count:
                 heapq.heappop(heap)
 
+    random.shuffle(heap)
     return [item[1] for item in heap]

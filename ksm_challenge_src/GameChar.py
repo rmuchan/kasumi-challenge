@@ -197,11 +197,20 @@ class GameChar:
         for skill in self.skills:
             skill.dec_cooldown()
 
+        if 'fast_cooldown' in self.buff.keys():
+            for skill in self.skills:
+                skill.dec_cooldown()
+
     def skill_activate(self):
         """
         发动技能。顺序依次为终极技能，技能123，最后普通攻击作为一个技能
         :return: 技能的dict模板
         """
+        if 'skill_overload' in self.buff.keys():
+            if self.MP > self.skills[0].mp_cost:
+                self.MP -= self.skills[0].mp_cost
+                return [self.skills[0].data]
+
         # 攻击标记
         if self.use_token('attack_assis'):
             return [self.normal_attack, self.normal_attack]
@@ -629,7 +638,7 @@ class GameChar:
                 if obj.hp_percentage < self.hp_percentage * rate:
                     do_magic_damage(param[0][0])
                 else:
-                    #交换生命
+                    # 交换生命
                     pre_self_life = self.hp_percentage
                     recovered = self.recover(obj.hp_percentage * rate, percentage_type=PercentageType.SET)
                     damage = obj._life_hurt(pre_self_life, percentage_type=PercentageType.SET, deadly=False)
@@ -642,10 +651,8 @@ class GameChar:
         # 穿刺伤害
         elif effect['type'] == 'PIERCE':
             for obj in selector:
-
                 # 造成穿刺伤害 param[1]决定是否致死
                 damage = obj._life_hurt(param[0][0], percentage_type=PercentageType.DEC, deadly=param[1])
-
 
                 ret.append({
                     'feedback': '对{target}造成了{damage:.0f}点穿刺伤害',
@@ -653,6 +660,25 @@ class GameChar:
                     'param': {'damage': damage}
                 })
 
+        # 急速冷却
+        elif effect['type'] == 'FAST_COOLDOWN':
+            for obj in selector:
+                real_added = obj.add_buff('fast_cooldown', True, param[1])
+                ret.append({
+                    'feedback': '使{target}进入了加速冷却状态，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {}
+                })
+
+        # 技能过载
+        elif effect['type'] == 'SKILL_OVERLOAD':
+            for obj in selector:
+                real_added = obj.add_buff('skill_overload', True, param[1])
+                ret.append({
+                    'feedback': '使{target}进入了技能过载状态，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {}
+                })
 
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])

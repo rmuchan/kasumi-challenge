@@ -38,7 +38,7 @@ class CLI(UI):
         if self._is_first:
             self._is_first = False
             return f'甲乙丙丁戊己庚辛'[self._uid]
-        return '1'
+        return '2'
         # return input()
 
     def store(self, key: str, value: Any) -> None:
@@ -56,7 +56,7 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/Murloc.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/magician.json') as FILE:
     boss = json.load(FILE)
 
 test_level = 1
@@ -64,7 +64,7 @@ test_level = 1
 async def main():
     chars = []
     for i in range(8):
-        ui = CLI(i, debug_mode=True)
+        ui = CLI(i, debug_mode=False)
         c = await create_character(ui)
         chars.append(c)
         await print_character(ui, c)
