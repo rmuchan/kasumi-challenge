@@ -198,8 +198,9 @@ class GameChar:
             skill.dec_cooldown()
 
         if 'fast_cooldown' in self.buff.keys():
-            for skill in self.skills:
-                skill.dec_cooldown()
+            for _ in range(2):
+                for skill in self.skills:
+                    skill.dec_cooldown()
 
     def skill_activate(self):
         """

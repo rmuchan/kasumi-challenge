@@ -115,11 +115,7 @@ def gen_log():
             F.write(f'  {extra}\n\n')
 
 
-# TODO 减攻击调查一下
-#TODO 物理减自己血两次攻击
-#TODO 破盾一击
-
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main2())
     #gen_log()
 

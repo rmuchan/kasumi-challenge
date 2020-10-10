@@ -99,10 +99,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.28,
-                        "min": 0.25
+                        "expect": 0.23,
+                        "min": 0.20
                     },
-                    3
+                    4
                 ]
             }
         ]
@@ -397,7 +397,7 @@
                 "desc": "小幅度降低敌方全体角色{param[0]:%}的攻击力，持续{param[1]}回合",
                 "type": "ATK_DEBUFF",
                 "target": {
-                    "type": "ATKMOST",
+                    "type": "ALL",
                     "team": 0,
                     "limit": 1
                 },
@@ -861,53 +861,45 @@
         "chance": {
             "random": "triangular",
             "min": 0.06,
-            "max": 0.14
+            "max": 0.17
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 4,
-            "max": 5
+            "min": 1,
+            "max": 4
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 180,
-            "max": 220
+            "min": 10,
+            "max": 20
         },
         "name": {
             "random": "choice",
             "values": [
-                "瞄准弱点",
-                "肾击",
-                "重拳出击",
-                "胜利一击"
+                "混乱攻击",
+                "夺命强击",
+                "血之献祭"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
-                "desc": "瞬间地强化自身暴击率",
-                "type": "CRIT_CHANCE_BUFF",
+                "desc": "以攻击自己一次为献祭",
+                "type": "NORMAL_ATK",
                 "target": {
                     "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 2,
-                        "min": 1.99
-                    },
-                    0
-                ]
+                "param": []
             },
             {
-                "desc": "然后进行一次必定暴击的普通攻击",
+                "desc": "进行两次普通攻击",
                 "type": "NORMAL_ATK",
                 "target": {
                     "type": "RAND",
                     "team": 0,
-                    "limit": 1
+                    "limit": 2
                 },
                 "param": []
             }

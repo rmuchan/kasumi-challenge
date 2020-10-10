@@ -10,7 +10,7 @@
                 "灭亡之影"
             ]
         },
-        "weight": 3,
+        "weight": 4,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -44,18 +44,51 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "对敌方全体造成{param[0]}点魔法伤害",
+                "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
                 "type": "MGC_DMG",
                 "target": {
-                    "type": "ALL",
+                    "type": "RAND",
                     "team": 0,
                     "limit": 1
                 },
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 110,
-                        "min": 100
+                        "expect": 135,
+                        "min": 125
+                    }
+                ]
+            },
+            {
+                "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
+                "type": "MGC_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.21,
+                        "min": 0.17
+                    },
+                    12
+                ]
+            },
+            {
+                "desc": "并恢复自身{param[0]:.0f}点MP",
+                "type": "MP_UP",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 450,
+                        "min": 390
                     }
                 ]
             }
@@ -441,7 +474,7 @@
                 "火焰之拳"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
                 "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内附带魔法伤害。",
@@ -544,7 +577,8 @@
                 ]
             }
         ]
-    },    {
+    },
+    {
         "name": {
             "random": "choice",
             "values": [
@@ -566,6 +600,63 @@
                     {},
                     3
                 ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "扼杀",
+                "狂野挥砍",
+                "穿越射击",
+                "精准猛刺"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "瞬间强化自身{param[0]:.0f}点攻击",
+                "type": "PHY_ATK_BUFF_CONST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 70,
+                        "min": 60
+                    },
+                    0
+                ]
+            },
+            {
+                "desc": "进行一次普通攻击",
+                "type": "CRIT_CHANCE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        2,
+                        "S"
+                    ],
+                    0
+                ]
+            },
+            {
+                "desc": "此次攻击必定暴击",
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
             }
         ]
     }
