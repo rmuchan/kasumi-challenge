@@ -1,4 +1,4 @@
-from ksm_challenge_src.attr_calc import _attr_calc, numerical
+from ksm_challenge_src.attr_calc import attr_calc, numerical
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -27,7 +27,7 @@ for build in ['high', 'mid','low']:
             color = 'blue'
             grow = numerical['str_grow'] * ((1 - b) * compress + 1)
 
-        y = [_attr_calc(numerical['str_base'] * b, grow, i) for i in x]
+        y = [attr_calc(numerical['str_base'] * b, grow, i) for i in x]
 
         print(build + edition, y[0], y[14], y[29])
         plt.plot(x, y, label=build + edition, color = color)

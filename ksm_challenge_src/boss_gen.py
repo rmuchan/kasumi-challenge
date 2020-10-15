@@ -1,5 +1,6 @@
 import json
 
+from .attr_calc import attr_based_enhance, attr_calc
 from .GameChar import numerical
 from .rand import randomize
 from .util import recurrence
@@ -20,6 +21,7 @@ def boss_gen(template: dict, lv):
         boss['recover_rate'] *= rates_3_calc(lv)
         boss['spell_rate'] *= rates_3_calc(lv)
         boss['buff_rate'] *= rates_3_calc(lv)
+        boss['std_rate'] = attr_based_enhance(attr_calc(numerical['std_attr'], numerical['std_attr_grow'], lv))
         boss['is_boss'] = True
         boss['exp_earn'] = 0
         bosses.append(boss)

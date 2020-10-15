@@ -101,6 +101,11 @@ class GameChar:
     def fire_enchanted(self):
         return 'fire_enchant' in self.buff.keys()
 
+    def adj_spell_rate(self, rate):
+        base = self.attributes['spell_rate'] / self.attributes['std_rate']
+        enhance = ((self.buff_calc('spell_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec('spell_rate_weaken')
+        return base * enhance
+
     def buff_calc(self, buff_type, is_multi=False):
         if is_multi:
             enhance = 1
@@ -305,11 +310,11 @@ class GameChar:
 
         # ————————————————————
         # 魔法伤害
-        def do_magic_damage(damage):
-            magic_damage = damage * self.spell_rate * fluctuation()
-            real_damage, atk_status, _ = obj.take_damage(magic_damage, magic=True)
+        def do_magic_damage(damage, enhance=self.spell_rate):
+            magic_damage = damage * enhance * fluctuation()
+            magic_real_damage, magic_atk_status, _ = obj.take_damage(magic_damage, magic=True)
 
-            if atk_status == 3:
+            if magic_atk_status == 3:
                 ret.append({
                     'feedback': '{target}抵抗了{count}次攻击',
                     'merge_key': {'target': self._self_replace(obj.name)},
@@ -318,15 +323,15 @@ class GameChar:
                 return
 
             feedback = '对{target}'
-            if atk_status == 2:
+            if magic_atk_status == 2:
                 feedback += '的护盾'
             feedback += '造成了{amount:.0f}点魔法伤害'
-            if atk_status == 1:
+            if magic_atk_status == 1:
                 feedback += '，破坏了护盾'
             ret.append({
                 'feedback': feedback,
                 'merge_key': {'target': self._self_replace(obj.name)},
-                'param': {'amount': real_damage}
+                'param': {'amount': magic_real_damage}
             })
 
         # 普通攻击
@@ -353,7 +358,7 @@ class GameChar:
                     })
                 else:
                     if self.fire_enchanted:
-                        do_magic_damage(self.attack * numerical['fire_enchant_rate'])
+                        do_magic_damage(self.attack * numerical['fire_enchant_rate'], self.adj_spell_rate(numerical['fire_enchant_spell_enchance_rate']))
                         do_phy_damage()
                     else:
                         do_phy_damage()
@@ -884,6 +889,7 @@ class GameChar:
         S = self.name + ', '
         S += '%.0f/%.0f, ' % (self.HP, self.attributes['HP'])
         S += 'shield: %.0f, ' % self.shield
+        S += 'test: %s' % str(self.adj_spell_rate(1))
         S += 'buff: %s' % str(self.buff)
         return S
 

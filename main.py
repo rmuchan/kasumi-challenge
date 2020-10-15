@@ -38,7 +38,7 @@ class CLI(UI):
         if self._is_first:
             self._is_first = False
             return f'甲乙丙丁戊己庚辛'[self._uid]
-        return '2'
+        return '1'
         # return input()
 
     def store(self, key: str, value: Any) -> None:
@@ -59,11 +59,11 @@ class CLI(UI):
 with open('ksm_challenge_src/data/boss-pool/magician.json') as FILE:
     boss = json.load(FILE)
 
-test_level = 1
+test_level = 30
 
 async def main():
     chars = []
-    for i in range(8):
+    for i in range(4):
         ui = CLI(i, debug_mode=False)
         c = await create_character(ui)
         chars.append(c)
@@ -116,6 +116,6 @@ def gen_log():
 
 
 if __name__ == '__main__':
-    asyncio.run(main2())
+    asyncio.run(main())
     #gen_log()
 

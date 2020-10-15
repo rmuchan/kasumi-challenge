@@ -1,121 +1,124 @@
 {
-  "character_template": {
-    "exp": 1,
-    "str_build": {
-      "random": "biased",
-      "expect": 1,
-      "min": 0.45
+    "character_template": {
+        "exp": 1,
+        "str_build": {
+            "random": "biased",
+            "expect": 1,
+            "min": 0.45
+        },
+        "int_build": {
+            "random": "biased",
+            "expect": 1,
+            "min": 0.45
+        },
+        "per_build": {
+            "random": "biased",
+            "expect": 1,
+            "min": 0.45
+        },
+        "life_build": {
+            "random": "biased",
+            "expect": 1,
+            "min": 0.8
+        },
+        "def_base": {
+            "random": "biased",
+            "expect": 2.0,
+            "min": 0.7
+        },
+        "defense_str_rate": {
+            "random": "uniform",
+            "min": 0,
+            "max": 1
+        },
+        "magic_int_rate": {
+            "random": "uniform",
+            "min": 0,
+            "max": 1
+        },
+        "health_per_rate": {
+            "random": "uniform",
+            "min": 0,
+            "max": 1
+        },
+        "attack_rate": {
+            "random": "biased",
+            "expect": 3.2,
+            "min": 2.95
+        }
     },
-    "int_build": {
-      "random": "biased",
-      "expect": 1,
-      "min": 0.45
+    "skill_template": {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 1,
+            "max": 4
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        }
     },
-    "per_build": {
-      "random": "biased",
-      "expect": 1,
-      "min": 0.45
-    },
-    "life_build": {
-      "random": "biased",
-      "expect": 1,
-      "min": 0.8
-    },
-    "def_base": {
-      "random": "biased",
-      "expect": 2.0,
-      "min": 0.7
-    },
-    "defense_str_rate": {
-      "random": "uniform",
-      "min": 0,
-      "max": 1
-    },
-    "magic_int_rate": {
-      "random": "uniform",
-      "min": 0,
-      "max": 1
-    },
-    "health_per_rate": {
-      "random": "uniform",
-      "min": 0,
-      "max": 1
-    },
-    "attack_rate": {
-      "random": "biased",
-      "expect": 3.2,
-      "min": 2.95
-    }
-  },
-  "skill_template": {
-    "chance": {
-      "random": "triangular",
-      "min": 0.05,
-      "max": 0.15
-    },
-    "cooldown": {
-      "random": "triangular_int",
-      "min": 1,
-      "max": 4
-    },
-    "mp_cost": {
-      "random": "triangular_int",
-      "min": 60,
-      "max": 120
-    }
-  },
-  "single_effect_chance": 0.6,
-  "str_base": 49,
-  "str_grow": 1.06,
-  "int_base": 49,
-  "int_grow": 1.06,
-  "per_base": 49,
-  "per_grow": 1.06,
-  "life_base": 160,
-  "life_grow": 3.6,
-  "attr_grow_compress": 0.4,
-  "attr_grow_expend": 1.23,
-  "crit_base": 1.25,
-  "crit_chance": 0.11,
-  "crit_int_convert_rate": 0.007,
-  "life_steal_rate_base":0.36,
-  "def_adj_rate": 0.05,
-  "def_rate": 0.27,
-  "dodge_base": 0.04,
-  "dodge_rate": 0.0008,
-  "enhance_constant": 0.0402,
-  "enhance_exponent": 0.821,
-  "hp_lv_rate": 1.003,
-  "hp_rate": 2.1,
-  "attr_rate": 1.01,
-  "damage_fluctuation": 0.7,
-  "random_mp_gain_base": 90,
-  "random_mp_gain_extra": 60,
-  "primary_skill_chance_rate": 1.9,
-  "primary_skill_cooldown_rate": 0.7,
-  "primary_skill_cost_decrease": 30,
-  "aoe_separate_rate": [
-    0,
-    1,
-    0.53,
-    0.37,
-    0.29,
-    0.24
-  ],
-  "hp_display_unit": 100,
-  "boss_display_shorten": 2,
-  "exp_add_rate": 1.2,
-  "exp_add_point": 100,
-  "exp_base": 1000,
-  "exp_earn_base": 450,
-  "exp_earn_add": 30,
-  "exp_earn_rate": 1.067,
-  "talent_coin_earn_index": 0.55,
-  "talent_coin_earn_rate": 0.2,
-  "life_to_mp": 0.66,
-  "fire_enchant_rate": 0.75,
-  "atk_index":1.11,
-  "atk_avr": 175,
-  "fair_mode": 9,
-  "boss_virtual_attr": 70
+    "single_effect_chance": 0.6,
+    "str_base": 49,
+    "str_grow": 1.06,
+    "int_base": 49,
+    "int_grow": 1.06,
+    "per_base": 49,
+    "per_grow": 1.06,
+    "life_base": 160,
+    "life_grow": 3.6,
+    "attr_grow_compress": 0.4,
+    "attr_grow_expend": 1.23,
+    "crit_base": 1.25,
+    "crit_chance": 0.11,
+    "crit_int_convert_rate": 0.007,
+    "life_steal_rate_base": 0.36,
+    "def_adj_rate": 0.05,
+    "def_rate": 0.27,
+    "dodge_base": 0.04,
+    "dodge_rate": 0.0008,
+    "enhance_constant": 0.0402,
+    "enhance_exponent": 0.821,
+    "hp_lv_rate": 1.003,
+    "hp_rate": 2.1,
+    "attr_rate": 1.01,
+    "damage_fluctuation": 0.78,
+    "random_mp_gain_base": 90,
+    "random_mp_gain_extra": 60,
+    "primary_skill_chance_rate": 1.9,
+    "primary_skill_cooldown_rate": 0.7,
+    "primary_skill_cost_decrease": 30,
+    "aoe_separate_rate": [
+        0,
+        1,
+        0.53,
+        0.37,
+        0.29,
+        0.24
+    ],
+    "hp_display_unit": 100,
+    "boss_display_shorten": 2,
+    "exp_add_rate": 1.2,
+    "exp_add_point": 100,
+    "exp_base": 1000,
+    "exp_earn_base": 450,
+    "exp_earn_add": 30,
+    "exp_earn_rate": 1.067,
+    "talent_coin_earn_index": 0.55,
+    "talent_coin_earn_rate": 0.2,
+    "life_to_mp": 0.66,
+    "fire_enchant_rate": 1.12,
+    "fire_enchant_spell_enchance_rate": 1.36,
+    "atk_index": 1.11,
+    "atk_avr": 175,
+    "fair_mode": 9,
+    "boss_virtual_attr": 70,
+    "std_attr": 50,
+    "std_attr_grow": 1.06
 }
