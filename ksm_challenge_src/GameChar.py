@@ -278,7 +278,7 @@ class GameChar:
         角色行动时一定会调用这个函数，发动技能效果。
         :param selector: 选择到的角色数组
         :param effect: 技能的dict信息
-        :return: {角色名: {feedback: 返回信息, param: {返回信息需要用到的参数}}}
+        :return: [{feedback: 返回信息, merge_key: {判断是否可合并}, param: {返回信息需要用到的参数}}, ...]
         """
         if len(selector) == 0:
             raise NoTargetSelected('选择器没有选到任何的目标！效果信息：%s' % str(effect))

@@ -24,6 +24,7 @@ def boss_gen(template: dict, lv):
         boss['std_rate'] = attr_based_enhance(attr_calc(numerical['std_attr'], numerical['std_attr_grow'], lv))
         boss['is_boss'] = True
         boss['exp_earn'] = 0
+        boss['lv'] = lv
         bosses.append(boss)
         weight = boss.get('weight', 1)
         total_weight += weight

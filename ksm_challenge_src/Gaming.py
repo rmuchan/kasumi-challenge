@@ -3,6 +3,8 @@ import random
 from abc import ABC
 from typing import List
 from .GameChar import GameChar
+from .boss_gen import boss_gen
+from .data import data
 from .interact import UI
 import asyncio
 
@@ -56,8 +58,6 @@ class Gaming(ABC):
             if not testing_mode:
                 await asyncio.sleep(16)
 
-
-
     def selector(self, target, team_name: str, initiator: GameChar):
         type_ = target['type']
         if type_ == 'SAME':
@@ -69,7 +69,7 @@ class Gaming(ABC):
 
         if target['team'] == 0:
             team_name = {'a': 'b', 'b': 'a'}[team_name]
-        team = self._get_team(team_name)
+        team: list = self._get_team(team_name)
 
         if type_ == 'ALL':
             return team
@@ -112,9 +112,14 @@ class Gaming(ABC):
                     self.ui.append(f'[{chara.name}] 使用了 "{skill["name"]}"')
                     feedback = []
                     for effect in skill['effect']:
-                        # 这里把selected变为类变量，以便SAME选择器的正常使用
-                        self.selected = self.selector(effect['target'], team_name, chara)
-                        feedback.extend(chara.use_effect(self.selected, effect))
+                        if effect['type'] == 'SUMMON':
+                            tgt_team_name = team_name if effect['target']['team'] else {'a': 'b', 'b': 'a'}[team_name]
+                            for summoned_name in effect['param']:
+                                feedback.append(self._summon(tgt_team_name, summoned_name, chara.attributes['lv']))
+                        else:
+                            # 这里把selected变为类变量，以便SAME选择器的正常使用
+                            self.selected = self.selector(effect['target'], team_name, chara)
+                            feedback.extend(chara.use_effect(self.selected, effect))
                     merged = []
                     for f in feedback:
                         for m in merged:
@@ -129,6 +134,24 @@ class Gaming(ABC):
                         for line in lines[:-1]:
                             self.ui.append(' ├ ' + line)
                         self.ui.append(' └ ' + lines[-1])
+
+    def _summon(self, team_name, summoned_name, lv):
+        team = self._get_team(team_name)
+        template = data.summoned_pool[summoned_name]
+        summoned = boss_gen(template, lv)
+
+        used_names = {x.name for x in self.team_a}
+        used_names.update(x.name for x in self.team_b)
+        name = summoned_name.name
+        if name in used_names:
+            summoned_name.name = next(f'{name}-{i}' for i in itertools.count(2) if f'{name}-{i}' not in used_names)
+
+        team.append(summoned)
+        return {
+            'feedback': '召唤了[{name}]',
+            'merge_key': {},
+            'param': {'name': name}
+        }
 
     def _status_manage(self, team_name):
         team = self._get_team(team_name)

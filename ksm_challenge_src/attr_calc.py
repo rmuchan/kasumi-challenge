@@ -69,6 +69,8 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
     game_char['skills'] = [chara[f'skill_{i}'] for i in range(1, 4)]
     game_char['unique'] = chara['unique']
 
+    game_char['lv'] = lv
+
     game_char['normal_attack'] = {
         'name': '普通攻击',
         'effect': [
