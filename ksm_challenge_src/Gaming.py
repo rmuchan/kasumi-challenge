@@ -142,9 +142,9 @@ class Gaming(ABC):
 
         used_names = {x.name for x in self.team_a}
         used_names.update(x.name for x in self.team_b)
-        name = summoned_name.name
+        name = summoned.name
         if name in used_names:
-            summoned_name.name = next(f'{name}-{i}' for i in itertools.count(2) if f'{name}-{i}' not in used_names)
+            summoned.name = next(f'{name}-{i}' for i in itertools.count(2) if f'{name}-{i}' not in used_names)
 
         team.append(summoned)
         return {
