@@ -3,7 +3,7 @@ import random
 from abc import ABC
 from typing import List
 from .GameChar import GameChar
-from .boss_gen import boss_gen
+from .boss_gen import creature_gen
 from .data import data
 from .interact import UI
 import asyncio
@@ -138,19 +138,19 @@ class Gaming(ABC):
     def _summon(self, team_name, summoned_name, lv):
         team = self._get_team(team_name)
         template = data.summoned_pool[summoned_name]
-        summoned = boss_gen(template, lv)
+        summoned, _ = creature_gen(template, lv)
 
         used_names = {x.name for x in self.team_a}
         used_names.update(x.name for x in self.team_b)
-        name = summoned_name.name
+        name = summoned['name']
         if name in used_names:
-            summoned_name.name = next(f'{name}-{i}' for i in itertools.count(2) if f'{name}-{i}' not in used_names)
+            name = next(f'{name}-{i}' for i in itertools.count(2) if f'{name}-{i}' not in used_names)
 
-        team.append(summoned)
+        team.append(GameChar(summoned, name))
         return {
-            'feedback': '召唤了[{name}]',
-            'merge_key': {},
-            'param': {'name': name}
+            'feedback': '为{team}队召唤了{name}',
+            'merge_key': {'team': team_name.upper()},
+            'param': {'name': f'[{name}]'}
         }
 
     def _status_manage(self, team_name):
