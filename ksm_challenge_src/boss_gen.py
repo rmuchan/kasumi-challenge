@@ -11,20 +11,7 @@ def boss_gen(template: dict, lv):
     total_weight = 0
     power_rating = 0
     for boss_template in template['bosses']:
-        rating = [0, 0]
-        boss = randomize(boss_template, rating)
-        boss['attack'] = attack_calc(boss['attack'], lv)
-        boss['defence'] = boss['defence_base'] + lv * boss['defence_grow']
-        del boss['defence_base'], boss['defence_grow']
-        boss['HP'] = hp_calc(boss['hp_base'], boss['life_base'], lv)
-        del boss['hp_base'], boss['life_base']
-        boss['recover_rate'] *= rates_3_calc(lv)
-        boss['spell_rate'] *= rates_3_calc(lv)
-        boss['buff_rate'] *= rates_3_calc(lv)
-        boss['std_rate'] = attr_based_enhance(attr_calc(numerical['std_attr'], numerical['std_attr_grow'], lv))
-        boss['is_boss'] = True
-        boss['exp_earn'] = 0
-        boss['lv'] = lv
+        boss, rating = creature_gen(boss_template, lv)
         bosses.append(boss)
         weight = boss.get('weight', 1)
         total_weight += weight
@@ -37,6 +24,24 @@ def boss_gen(template: dict, lv):
         'bosses': bosses,
         'final_rating': final_rating
     }
+
+
+def creature_gen(template: dict, lv):
+    rating = [0, 0]
+    creature = randomize(template, rating)
+    creature['attack'] = attack_calc(creature['attack'], lv)
+    creature['defence'] = creature['defence_base'] + lv * creature['defence_grow']
+    del creature['defence_base'], creature['defence_grow']
+    creature['HP'] = hp_calc(creature['hp_base'], creature['life_base'], lv)
+    del creature['hp_base'], creature['life_base']
+    creature['recover_rate'] *= rates_3_calc(lv)
+    creature['spell_rate'] *= rates_3_calc(lv)
+    creature['buff_rate'] *= rates_3_calc(lv)
+    creature['std_rate'] = attr_based_enhance(attr_calc(numerical['std_attr'], numerical['std_attr_grow'], lv))
+    creature['is_boss'] = True
+    creature['exp_earn'] = 0
+    creature['lv'] = lv
+    return creature, rating
 
 
 def attack_calc(atk, lv):

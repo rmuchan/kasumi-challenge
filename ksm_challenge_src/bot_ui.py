@@ -34,7 +34,14 @@ class BotContextUI(UI):
     async def do_send(self, msg: str) -> None:
         if self.at_sender and self._ctx['message_type'] != 'private':
             msg = '\n' + msg
-        await self._bot.send(self._ctx, msg, at_sender=self.at_sender)
+        for retry in range(3):
+            if retry != 0:
+                await asyncio.sleep(3)
+            try:
+                await self._bot.send(self._ctx, msg, at_sender=self.at_sender)
+                return
+            except aiocqhttp.ActionFailed:
+                self._bot.logger.error('Failed to send message', exc_info=True)
 
     async def do_input(self) -> str:
         """
