@@ -113,9 +113,11 @@ class Gaming(ABC):
                     feedback = []
                     for effect in skill['effect']:
                         if effect['type'] == 'SUMMON':
-                            tgt_team_name = team_name if effect['target']['team'] else {'a': 'b', 'b': 'a'}[team_name]
+                            is_ally = bool(effect['target']['team'])
+                            tgt_team_name = team_name if is_ally else {'a': 'b', 'b': 'a'}[team_name]
                             for summoned_name in effect['param']:
-                                feedback.append(self._summon(tgt_team_name, summoned_name, chara.attributes['lv']))
+                                fb = self._summon(tgt_team_name, is_ally, summoned_name, chara.attributes['lv'])
+                                feedback.append(fb)
                         else:
                             # 这里把selected变为类变量，以便SAME选择器的正常使用
                             self.selected = self.selector(effect['target'], team_name, chara)
@@ -135,7 +137,7 @@ class Gaming(ABC):
                             self.ui.append(' ├ ' + line)
                         self.ui.append(' └ ' + lines[-1])
 
-    def _summon(self, team_name, summoned_name, lv):
+    def _summon(self, team_name, is_ally, summoned_name, lv):
         team = self._get_team(team_name)
         template = data.summoned_pool[summoned_name]
         summoned, _ = creature_gen(template, lv)
@@ -148,8 +150,8 @@ class Gaming(ABC):
 
         team.append(GameChar(summoned, name))
         return {
-            'feedback': '为{team}队召唤了{name}',
-            'merge_key': {'team': team_name.upper()},
+            'feedback': '为{side}召唤了{name}',
+            'merge_key': {'side': '友方' if is_ally else '敌方'},
             'param': {'name': f'[{name}]'}
         }
 
