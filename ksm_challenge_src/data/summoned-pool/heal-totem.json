@@ -1,0 +1,136 @@
+{
+    "name": "治愈图腾",
+    "not_short_hp": false,
+    "attack": {
+        "random": "triangular",
+        "rating_weight": 1,
+        "min": 10,
+        "max": 11
+    },
+    "defence_base": {
+        "random": "triangular",
+        "rating_weight": 6,
+        "min": 1.5,
+        "max": 2
+    },
+    "defence_grow": {
+        "random": "triangular",
+        "rating_weight": 4,
+        "min": 0.1,
+        "max": 0.15
+    },
+    "hp_base": {
+        "random": "triangular",
+        "rating_weight": 3,
+        "min": 120,
+        "max": 140
+    },
+    "life_base": {
+        "random": "triangular",
+        "rating_weight": 2,
+        "min": 30,
+        "max": 40
+    },
+    "recover_rate": {
+        "random": "triangular",
+        "rating_weight": 3,
+        "min": 1,
+        "max": 1.1
+    },
+    "spell_rate": {
+        "random": "triangular",
+        "rating_weight": 4,
+        "min": 1.0,
+        "max": 1.1
+    },
+    "buff_rate": {
+        "random": "triangular",
+        "rating_weight": 2,
+        "min": 0.9,
+        "max": 1.1
+    },
+    "crit_rate": 1.6,
+    "crit_chance": 0,
+    "life_steal_rate": 0,
+    "dodge": 0.00,
+    "unique": {
+        "name": "护盾之祈求",
+        "effect": [
+            {
+                "type": "SHIELD",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 4
+                },
+                "param": [
+                    [
+                        {
+                            "random": "triangular",
+                            "rating_weight": 2,
+                            "min": 120,
+                            "max": 100
+                        }
+                    ]
+                ]
+            },
+            {
+                "type": "PIERCE",
+                "target": {
+                    "type": "SELF",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        2
+                    ],
+                    true
+                ]
+            }
+        ]
+    },
+    "normal_attack": {
+        "name": "虚弱冲击",
+        "effect": [
+            {
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
+            }
+        ]
+    },
+    "skills": [
+        {
+            "chance": 1,
+            "cooldown": 0,
+            "mp_cost": 0,
+            "name": "治疗咏唱",
+            "effect": [
+                {
+                    "type": "HEAL",
+                    "target": {
+                        "type": "RAND",
+                        "team": 1,
+                        "limit": 2
+                    },
+                    "param": [
+                        [
+                            {
+                                "random": "triangular",
+                                "rating_weight": 6,
+                                "min": 30,
+                                "max": 40
+                            }
+                        ]
+                    ]
+                }
+            ]
+        }
+    ],
+    "weight": 1
+}

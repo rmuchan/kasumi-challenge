@@ -232,8 +232,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 3.6,
-                "min": 3.2
+                "expect": 7,
+                "min": 6
             },
             5
         ]

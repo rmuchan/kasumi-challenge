@@ -56,15 +56,15 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/magician.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/Shaman.json') as FILE:
     boss = json.load(FILE)
 
-test_level = 30
+test_level = 1
 
 async def main():
     chars = []
     for i in range(4):
-        ui = CLI(i, debug_mode=False)
+        ui = CLI(i, debug_mode=not False)
         c = await create_character(ui)
         chars.append(c)
         await print_character(ui, c)
@@ -105,7 +105,7 @@ async def main2():
         print(lvl, (a_win[lvl] / test_amount) * 100, '%')
         plt.plot(list(range(time_limit + 1)), turn_count[lvl],label=str(lvl) + ('[%.0f%%]' % (a_win[lvl] / test_amount * 100)))
     plt.legend()
-    plt.show()
+    #plt.show()
 
 def gen_log():
     with open('doc/更新日志.md', 'w') as F:
@@ -116,6 +116,6 @@ def gen_log():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main2())
     #gen_log()
 
