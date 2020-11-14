@@ -613,25 +613,8 @@
                 "精准猛刺"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
-            {
-                "desc": "瞬间强化自身{param[0]:.0f}点攻击",
-                "type": "PHY_ATK_BUFF_CONST",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 70,
-                        "min": 60
-                    },
-                    0
-                ]
-            },
             {
                 "desc": "进行一次普通攻击",
                 "type": "CRIT_CHANCE_BUFF",
@@ -657,6 +640,23 @@
                     "limit": 1
                 },
                 "param": []
+            },
+            {
+                "desc": "并在{param[1]}回合内提升自身{param[0]:.0%}的MP获取速度",
+                "type": "MP_GAIN_UP",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 1.4,
+                        "min": 1.3
+                    },
+                    2
+                ]
             }
         ]
     }

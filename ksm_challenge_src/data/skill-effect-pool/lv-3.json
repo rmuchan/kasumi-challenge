@@ -515,8 +515,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 5,
-                        "min": 4
+                        "expect": 11,
+                        "min": 9
                     },
                     5
                 ]
@@ -560,8 +560,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 3,
-                        "min": 2.5
+                        "expect": 4.5,
+                        "min": 4
                     },
                     4
                 ]

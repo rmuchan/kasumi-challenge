@@ -86,6 +86,11 @@ class GameChar:
             'spell_rate_weaken')
 
     @property
+    def mp_gain_rate(self):
+        return 1 + self.buff_calc('mp_gain_enhanced')
+
+
+    @property
     def not_dead(self):
         return self.HP > 0
 
@@ -684,6 +689,16 @@ class GameChar:
                     'feedback': '使{target}进入了技能过载状态，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {}
+                })
+
+        # MP增速
+        elif effect['type'] == 'MP_GAIN_UP':
+            for obj in selector:
+                real_added = obj.add_buff('mp_gain_enhanced', param[0][0], param[1])
+                ret.append({
+                    'feedback': '加快了{target}{amount:.0%}的MP获取速度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
                 })
 
         else:
