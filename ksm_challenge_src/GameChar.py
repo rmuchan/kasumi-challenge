@@ -809,6 +809,7 @@ class GameChar:
         返回(实际增加量, 溢出量)的tuple
         """
         cur_mp = self.MP
+        value *= self.mp_gain_rate
         self.MP += value
         if self.MP > 1000:
             overflow = self.MP - 1000
