@@ -4,41 +4,35 @@
     {
       "name": "魔化蜂王",
       "not_short_hp": false,
-      "weight_water_injection": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 233,
-        "max": 810
-      },
       "attack": {
         "random": "triangular",
         "rating_weight": 7,
-        "min": 350,
-        "max": 400
+        "min": 380,
+        "max": 420
       },
       "defence_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 8.5,
-        "max": 8.8
+        "min": 10.5,
+        "max": 10.8
       },
       "defence_grow": {
         "random": "triangular",
         "rating_weight": 1,
-        "min": 0.9,
-        "max": 0.91
+        "min": 1.1,
+        "max": 1.11
       },
       "hp_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 210,
-        "max": 230
+        "min": 230,
+        "max": 240
       },
       "life_base": {
         "random": "triangular",
         "rating_weight": 4,
         "min": 150,
-        "max": 170
+        "max": 160
       },
       "recover_rate": {
         "random": "triangular",
@@ -77,8 +71,8 @@
                 {
                   "random": "triangular",
                   "rating_weight": 1,
-                  "min": 500,
-                  "max": 510
+                  "min": 710,
+                  "max": 740
                 }
               ]
             ]
@@ -95,11 +89,23 @@
                 {
                   "random": "triangular",
                   "rating_weight": 2,
-                  "min": 20,
-                  "max": 20.1
+                  "min": 18.5,
+                  "max": 18.6
                 }
               ],
               3
+            ]
+          },
+          {
+            "type": "SILENCE",
+            "target": {
+              "type": "ALL",
+              "team": 0,
+              "limit": 1
+            },
+            "param": [
+              [],
+              2
             ]
           }
         ]

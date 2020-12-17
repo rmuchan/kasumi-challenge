@@ -177,8 +177,8 @@
                                     {
                                         "random": "triangular",
                                         "rating_weight": 4,
-                                        "min": 220,
-                                        "max": 250
+                                        "min": 210,
+                                        "max": 230
                                     }
                                 ]
                             ]

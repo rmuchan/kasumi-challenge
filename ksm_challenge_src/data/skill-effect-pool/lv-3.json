@@ -25,7 +25,7 @@
                 "暗影腐蚀"
             ]
         },
-        "weight": 4,
+        "weight": 5,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 56,
-                        "min": 48
+                        "expect": 62,
+                        "min": 57
                     }
                 ]
             },
@@ -99,8 +99,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.23,
-                        "min": 0.20
+                        "expect": 0.20,
+                        "min": 0.19
                     },
                     4
                 ]

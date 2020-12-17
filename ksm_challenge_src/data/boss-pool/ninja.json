@@ -32,13 +32,13 @@
         "random": "triangular",
         "rating_weight": 3,
         "min": 220,
-        "max": 250
+        "max": 235
       },
       "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 136,
-        "max": 146
+        "min": 145,
+        "max": 155
       },
       "recover_rate": {
         "random": "triangular",

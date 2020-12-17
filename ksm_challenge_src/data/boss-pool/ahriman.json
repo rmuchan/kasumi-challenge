@@ -31,14 +31,14 @@
       "hp_base": {
         "random": "triangular",
         "rating_weight": 5,
-        "min": 470,
-        "max": 500
+        "min": 490,
+        "max": 520
       },
       "life_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 250,
-        "max": 270
+        "min": 230,
+        "max": 250
       },
       "recover_rate": {
         "random": "triangular",
@@ -117,25 +117,7 @@
             "target": {
               "type": "RAND",
               "team": 0,
-              "limit": 1
-            },
-            "param": []
-          },
-          {
-            "type": "NORMAL_ATK",
-            "target": {
-              "type": "RAND",
-              "team": 0,
-              "limit": 1
-            },
-            "param": []
-          },
-          {
-            "type": "NORMAL_ATK",
-            "target": {
-              "type": "RAND",
-              "team": 0,
-              "limit": 1
+              "limit": 3
             },
             "param": []
           }

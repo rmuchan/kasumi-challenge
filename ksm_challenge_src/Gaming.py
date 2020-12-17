@@ -40,12 +40,15 @@ class Gaming(ABC):
 
             self.ui.append('回合数：{}'.format(self.turn))
 
-            # 技能发动、攻击、效果执行
-            # 然后buff结算、减冷却
-            self._skill_check('a')
-            self._skill_check('b')
-            self._status_manage('b')
-            self._status_manage('a')
+            living_player = [(p, 'a') for p in self.team_a] + [(p, 'b') for p in self.team_b]
+
+            for chara_info in living_player:
+                # 先buff结算、减冷却
+                # 然后技能发动、攻击、效果执行
+                self._status_manage(chara_info[0])
+                self._skill_check(chara_info[0], chara_info[1])
+
+
             self.ui.append('')
             self.team_a = self._death_check('a')
             self.team_b = self._death_check('b')
@@ -102,40 +105,37 @@ class Gaming(ABC):
 
         return now_team
 
-    def _skill_check(self, team_name):
-        team = self._get_team(team_name)
-
-        for chara in team:
-            skill_gotten = chara.skill_activate()
-            if skill_gotten is not None:
-                for skill in skill_gotten:
-                    self.ui.append(f'[{chara.name}] 使用了 "{skill["name"]}"')
-                    feedback = []
-                    for effect in skill['effect']:
-                        if effect['type'] == 'SUMMON':
-                            is_ally = bool(effect['target']['team'])
-                            tgt_team_name = team_name if is_ally else {'a': 'b', 'b': 'a'}[team_name]
-                            for summoned_name in effect['param']:
-                                fb = self._summon(tgt_team_name, is_ally, summoned_name, chara.attributes['lv'])
-                                feedback.append(fb)
-                        else:
-                            # 这里把selected变为类变量，以便SAME选择器的正常使用
-                            self.selected = self.selector(effect['target'], team_name, chara)
-                            feedback.extend(chara.use_effect(self.selected, effect))
-                    merged = []
-                    for f in feedback:
-                        for m in merged:
-                            if m['feedback'] == f['feedback'] and m['merge_key'] == f['merge_key']:
-                                for k, v in f['param'].items():
-                                    m['param'][k] += f'、{v}' if isinstance(v, str) else v
-                                break
-                        else:
-                            merged.append(f)
-                    if merged:
-                        lines = [x['feedback'].format(**x['merge_key'], **x['param']) for x in merged]
-                        for line in lines[:-1]:
-                            self.ui.append(' ├ ' + line)
-                        self.ui.append(' └ ' + lines[-1])
+    def _skill_check(self, chara, team_name):
+        skill_gotten = chara.skill_activate()
+        if skill_gotten is not None:
+            for skill in skill_gotten:
+                self.ui.append(f'[{chara.name}] 使用了 "{skill["name"]}"')
+                feedback = []
+                for effect in skill['effect']:
+                    if effect['type'] == 'SUMMON':
+                        is_ally = bool(effect['target']['team'])
+                        tgt_team_name = team_name if is_ally else {'a': 'b', 'b': 'a'}[team_name]
+                        for summoned_name in effect['param']:
+                            fb = self._summon(tgt_team_name, is_ally, summoned_name, chara.attributes['lv'])
+                            feedback.append(fb)
+                    else:
+                        # 这里把selected变为类变量，以便SAME选择器的正常使用
+                        self.selected = self.selector(effect['target'], team_name, chara)
+                        feedback.extend(chara.use_effect(self.selected, effect))
+                merged = []
+                for f in feedback:
+                    for m in merged:
+                        if m['feedback'] == f['feedback'] and m['merge_key'] == f['merge_key']:
+                            for k, v in f['param'].items():
+                                m['param'][k] += f'、{v}' if isinstance(v, str) else v
+                            break
+                    else:
+                        merged.append(f)
+                if merged:
+                    lines = [x['feedback'].format(**x['merge_key'], **x['param']) for x in merged]
+                    for line in lines[:-1]:
+                        self.ui.append(' ├ ' + line)
+                    self.ui.append(' └ ' + lines[-1])
 
     def _summon(self, team_name, is_ally, summoned_name, lv):
         team = self._get_team(team_name)
@@ -155,13 +155,10 @@ class Gaming(ABC):
             'param': {'name': f'[{name}]'}
         }
 
-    def _status_manage(self, team_name):
-        team = self._get_team(team_name)
-
-        for chara in team:
-            chara.buff_fade()
-            chara.skill_cooldown()
-            chara.turn_mp_gain()
+    def _status_manage(self, chara):
+        chara.buff_fade()
+        chara.skill_cooldown()
+        chara.turn_mp_gain()
 
     def _display_status(self):
         self.ui.append('—' * 12)
