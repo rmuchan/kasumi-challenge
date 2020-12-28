@@ -58,8 +58,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 80
+            "min": 35,
+            "max": 50
         },
         "name": {
             "random": "choice",
@@ -320,7 +320,7 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 5,
+            "min": 4,
             "max": 6
         },
         "mp_cost": {
@@ -331,22 +331,31 @@
         "name": {
             "random": "choice",
             "values": [
-                "净化",
-                "状态重置",
-                "驱散魔法"
+                "能量汲取",
+                "魔法转移"
             ]
         },
         "weight": 1,
         "effect": [
             {
-                "desc": "清除两个敌方目标身上全部的状态效果",
-                "type": "PURIFY",
+                "desc": "窃取目标{param[0]}点MP，并以{param[1]}的倍率恢复自身MP",
+                "type": "MP_STEAL",
                 "target": {
-                    "type": "RAND_SAFE",
+                    "type": "RAND",
                     "team": 0,
-                    "limit": 2
+                    "limit": 1
                 },
                 "param": [
+                    {
+                        "random": "biased",
+                        "expect": 102,
+                        "min": 70
+                    },
+                    {
+                        "random": "triangular",
+                        "min": 1.25,
+                        "max": 2
+                    }
                 ]
             },
             {
@@ -360,10 +369,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.40,
-                        "min": 0.30
+                        "expect": 0.24,
+                        "min": 0.20
                     },
-                    3
+                    2
                 ]
             }
         ]

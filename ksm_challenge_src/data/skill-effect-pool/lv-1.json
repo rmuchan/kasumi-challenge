@@ -4,8 +4,7 @@
             "random": "choice",
             "values": [
                 "激励",
-                "鼓舞",
-                "战术"
+                "鼓舞"
             ]
         },
         "desc": "强化我方全体，提升{param[0]:.0f}点攻击，持续{param[1]}回合",
@@ -23,6 +22,29 @@
                 "min": 20
             },
             3
+        ]
+    },    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "战术"
+            ]
+        },
+        "desc": "强化自身{param[0]:.0f}点攻击，持续{param[1]}回合",
+        "weight": 1,
+        "type": "PHY_ATK_BUFF_CONST",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 0
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 66,
+                "min": 58
+            },
+            2
         ]
     },
     {
@@ -96,7 +118,7 @@
                 "expect": 0.12,
                 "min": 0.11
             },
-            10
+            7
         ]
     },
     {
@@ -191,8 +213,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 100,
-                "min": 80
+                "expect": 170,
+                "min": 120
             }
         ]
     }
