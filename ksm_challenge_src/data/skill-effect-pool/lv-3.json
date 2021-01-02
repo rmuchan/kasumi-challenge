@@ -206,13 +206,13 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.05,
-            "max": 0.15
+            "min": 0.3,
+            "max": 0.35
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 2,
-            "max": 3
+            "min": 1,
+            "max": 5
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -241,8 +241,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 184,
-                        "min": 160
+                        "expect": 164,
+                        "min": 158
                     }
                 ]
             },
@@ -257,10 +257,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.4,
-                        "min": 0.36
+                        "expect": 0.10,
+                        "min": 0.09
                     },
-                    3
+                    10
                 ]
             }
         ]
