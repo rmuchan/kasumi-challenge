@@ -241,30 +241,26 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 175,
-                        "min": 140
+                        "expect": 184,
+                        "min": 160
                     }
                 ]
             },
             {
-                "desc": "然后增加其{param[0]:%}的恢复强度，持续{param[1]}回合",
-                "type": "RECOVER_BUFF_RATE",
+                "desc": "强化自身{param[0]:%}的增益幅度，持续{param[1]}回合",
+                "type": "BUFF_RATE_UP",
                 "target": {
-                    "type": "SAME",
+                    "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.45,
+                        "expect": 0.4,
                         "min": 0.36
                     },
-                    {
-                        "random": "cubic",
-                        "min": 3,
-                        "max": 4
-                    }
+                    3
                 ]
             }
         ]
@@ -348,13 +344,13 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 102,
-                        "min": 70
+                        "expect": 51,
+                        "min": 35
                     },
                     {
                         "random": "triangular",
-                        "min": 1.25,
-                        "max": 2
+                        "min": 4.5,
+                        "max": 6
                     }
                 ]
             },
@@ -429,13 +425,13 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 4,
-            "max": 5
+            "min": 5,
+            "max": 6
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 90,
-            "max": 120
+            "min": 130,
+            "max": 160
         },
         "name": {
             "random": "choice",
@@ -460,27 +456,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.30,
-                        "min": 0.27
+                        "expect": 0.41,
+                        "min": 0.385
                     },
                     15
-                ]
-            },
-            {
-                "desc": "强化自身{param[0]:%}的增益幅度，持续{param[1]}回合",
-                "type": "BUFF_RATE_UP",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.4,
-                        "min": 0.36
-                    },
-                    4
                 ]
             }
         ]
@@ -990,8 +969,8 @@
                 "param": []
             },
             {
-                "desc": "增加自身{param[0]:.0f}点MP",
-                "type": "MP_UP",
+                "desc": "增加自身{param[0]:%}的恢复强度，持续{param[1]}回合",
+                "type": "RECOVER_BUFF_RATE",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -1000,8 +979,13 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 100,
-                        "min": 85
+                        "expect": 0.45,
+                        "min": 0.36
+                    },
+                    {
+                        "random": "cubic",
+                        "min": 3,
+                        "max": 4
                     }
                 ]
             }
