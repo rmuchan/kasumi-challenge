@@ -429,10 +429,12 @@ def _check_join(ui: BotContextUI, bat: dict = None, set_join: bool = True):
 
 async def _join(ui: BotContextUI, gid: int, team: str, char: dict, show_team: bool):
     bat = _battles[gid]
-    bat[f'team_{team}'][ui.uid()] = game_char_gen(char, real_mode=bat.get('is_real', True))
+    game_char = game_char_gen(char, real_mode=bat.get('is_real', True))
+    bat[f'team_{team}'][ui.uid()] = game_char
     ui.store('last_join', time.time())
     if len(bat['team_a']) < bat['capacity_a'] or len(bat['team_b']) < bat['capacity_b']:
-        return await ui.send(f'你加入了{team}队' if show_team else '你加入了小队')
+        name = game_char['name']
+        return await ui.send('你的角色"{}"加入了{}'.format(name, f'{team}队' if show_team else '小队'))
 
     bat['can_join'] = False
     ui.at_sender = False
