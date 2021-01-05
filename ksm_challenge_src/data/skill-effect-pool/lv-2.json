@@ -145,7 +145,7 @@
             ]
         },
         "desc": "恢复生命值最低的队友{param[0]}点生命",
-        "weight": 2,
+        "weight": 3,
         "type": "HEAL",
         "target": {
             "type": "LIFELEAST",
@@ -156,7 +156,7 @@
             {
                 "random": "biased",
                 "expect": 150,
-                "min": 125
+                "min": 130
             }
         ]
     },
@@ -264,7 +264,8 @@
             },
             3
         ]
-    },    {
+    },
+    {
         "name": {
             "random": "choice",
             "values": [
@@ -289,7 +290,8 @@
                 "min": 70
             }
         ]
-    },    {
+    },
+    {
         "name": {
             "random": "choice",
             "values": [
@@ -300,7 +302,7 @@
             ]
         },
         "weight": 2,
-        "desc": "使用不稳定的魔法攻击一个敌人，成功则造成{param[1]}点魔法伤害，否则对自己造成{param[2]}点魔法伤害",
+        "desc": "使用不稳定的魔法攻击一个敌人，{param[0]:.1%}造成{param[1]}点魔法伤害；否则伤害减半，并对自己造成{param[2]}点魔法伤害",
         "type": "MGC_RAND",
         "target": {
             "type": "RAND",
@@ -308,13 +310,22 @@
             "limit": 1
         },
         "param": [
-            0.70,
+            {
+                "random": "triangular",
+                "min": 0.67,
+                "max": 0.73
+            },
             {
                 "random": "biased",
                 "expect": 120,
                 "min": 110
             },
-            70
+            {
+                "random": "triangular",
+                "min": 89,
+                "max": 79
+            },
+            0.5
         ]
     }
 ]

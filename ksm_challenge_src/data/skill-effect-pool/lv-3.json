@@ -241,13 +241,29 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 164,
-                        "min": 158
+                        "expect": 90,
+                        "min": 60
                     }
                 ]
             },
             {
-                "desc": "强化自身{param[0]:%}的增益幅度，持续{param[1]}回合",
+                "desc": "并为其附加{param[0]}点护盾",
+                "type": "SHIELD",
+                "target": {
+                    "type": "SAME",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 90,
+                        "min": 60
+                    }
+                ]
+            },
+            {
+                "desc": "提升自身{param[0]:%}的增益幅度，持续{param[1]}回合",
                 "type": "BUFF_RATE_UP",
                 "target": {
                     "type": "SELF",
@@ -257,10 +273,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.10,
-                        "min": 0.09
+                        "expect": 0.19,
+                        "min": 0.17
                     },
-                    10
+                    7
                 ]
             }
         ]

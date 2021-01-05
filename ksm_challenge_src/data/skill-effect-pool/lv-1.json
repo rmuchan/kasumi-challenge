@@ -189,10 +189,10 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.20,
-                "min": 0.16
+                "expect": 0.22,
+                "min": 0.18
             },
-            5
+            4
         ]
     },    {
         "name": {

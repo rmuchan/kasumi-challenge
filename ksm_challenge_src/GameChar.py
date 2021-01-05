@@ -639,6 +639,9 @@ class GameChar:
                         'param': {'amount': real_damage}
                     })
 
+                    # 造成较少的伤害
+                    do_magic_damage(param[1][0] * param[3])
+
         # 生命交换
         elif effect['type'] == 'LIFE_SWAP':
             for obj in selector:
