@@ -107,15 +107,6 @@ async def main2():
     plt.legend()
     #plt.show()
 
-def gen_log():
-    with open('doc/更新日志.md', 'w') as F:
-        for item in log_file:
-            F.write(f'### {item["version"]}\n')
-            extra = item["log"].replace('\n', '  \n')
-            F.write(f'  {extra}\n\n')
-
 
 if __name__ == '__main__':
     asyncio.run(main2())
-    #gen_log()
-
