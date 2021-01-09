@@ -28,9 +28,13 @@ async def upgrade_talent(ui: UI):
     show_talent(ui)
     ui.append('你有{}个天赋币'.format(coin))
     await ui.send()
-    selection = await ui.input('选择想要强化的天赋（输入选项序号。输入不在上面列表中的选项即可退出，否则无法使用其他指令）',
-                               is_valid=lambda x: len(x) == 1 and ord(x.upper()) - ord('A') in range(len(data.talent)),
-                               attempts=1)
+    try:
+        selection = await ui.input('选择想要强化的天赋（输入选项序号。输入不在上面列表中的选项即可退出，否则无法使用其他指令）',
+                                   is_valid=lambda x: len(x) == 1 and ord(x.upper()) - ord('A') in range(len(data.talent)),
+                                   attempts=1)
+    except Exception:
+        await ui.send('已退出天赋选择')
+        raise
     selection = ord(selection.upper()) - ord('A')
     key = list(data.talent)[selection]
     param = data.talent[key]
