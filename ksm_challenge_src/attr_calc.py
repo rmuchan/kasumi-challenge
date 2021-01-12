@@ -56,9 +56,13 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
                               lv,
                               calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
 
-    game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate'])
-    game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate'], calc_passive(1.0, chara, 'spell_rate'))
-    game_char['buff_rate'] = _buff_rate_calc(per_)
+    game_char['base_skill_chance_boost'] = calc_passive(numerical['base_skill_chance_boost'], chara, 'skill_chance_boost')
+
+    # 三倍率为玩家基础属性计算得来的倍率 乘以被动带来的增益
+    game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate']) * calc_passive(1.0, chara, 'recover_rate')
+    game_char['spell_rate'] = _spell_rate_calc(int_, per_, chara['magic_int_rate']) * calc_passive(1.0, chara, 'spell_rate')
+    game_char['buff_rate'] = _buff_rate_calc(per_) * calc_passive(1.0, chara, 'buff_rate')
+
     game_char['std_rate'] = attr_based_enhance(attr_calc(numerical['std_attr'], numerical['std_attr_grow'], lv))
 
     game_char['crit_rate'] = crit_rate_calc(str_, calc_passive(0, chara, 'crit_rate'))
@@ -126,8 +130,8 @@ def _recover_rate_calc(per_cur, str_cur, health_per_rate):
 
 
 # 魔法伤害增强 - 对于Magecian种族，mage_rate会有更高的数值
-def _spell_rate_calc(int_cur, per_cur, magic_int_rate, extra=1.0):
-    return attr_based_enhance(int_cur * magic_int_rate + per_cur * (1 - magic_int_rate)) * extra
+def _spell_rate_calc(int_cur, per_cur, magic_int_rate):
+    return attr_based_enhance(int_cur * magic_int_rate + per_cur * (1 - magic_int_rate))
 
 
 # 增益类技能效果增强

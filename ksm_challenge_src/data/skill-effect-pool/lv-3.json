@@ -736,7 +736,7 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.6,
+                        "expect": 1.35,
                         "min": 1.2
                     },
                     3
@@ -772,10 +772,10 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "随机对我方一名{target[limit]}角色造成{param[0]}点魔法伤害",
+                "desc": "对己方MP最少的角色造成{param[0]}点魔法伤害",
                 "type": "MGC_DMG",
                 "target": {
-                    "type": "RAND",
+                    "type": "MPLEAST",
                     "team": 1,
                     "limit": 1
                 },
@@ -798,8 +798,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 380,
-                        "min": 340
+                        "expect": 320,
+                        "min": 290
                     }
                 ]
             }

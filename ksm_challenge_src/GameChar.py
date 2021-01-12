@@ -43,8 +43,7 @@ class GameChar:
         return max(
             (self.attributes['attack'] + self.buff_calc('attack_enhanced')) * self.buff_calc_spec('attack_weaken'), 1)
 
-    # 暴击率是非线性叠加
-    @property
+    @property   # 暴击率    是非线性叠加
     def crit_chance(self):
         not_crit_chance = 1
         if 'crit_chance_enhanced' in self.buff.keys():
@@ -52,65 +51,75 @@ class GameChar:
                 not_crit_chance *= (1 - item[0])
         return 1 - (1 - self.attributes['crit_chance']) * not_crit_chance
 
-    @property
+    @property   # 暴击倍率
     def crit_rate(self):
         return self.attributes['crit_rate'] + self.buff_calc('crit_rate_enhanced')
 
-    @property
+    @property   # 闪避率
     def dodge(self):
         return self.attributes['dodge'] + self.buff_calc('dodge_enhanced')
 
-    @property
+    @property   # 吸血/生命窃取倍率
     def life_steal_rate(self):
         return self.attributes['life_steal_rate'] + self.buff_calc('life_steal_enhanced')
 
-    @property
+    @property   # 恢复强度
     def recover_rate(self):
         return self.attributes['recover_rate'] * self.buff_calc('recover_rate_enhanced',
                                                                 is_multi=True) * self.buff_calc_spec(
             'recover_rate_weaken')
 
-    @property
+    @property   #增益幅度
     def buff_rate(self):
         return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) * self.buff_calc_spec(
             'buff_rate_weaken')
 
-    @property
+    @property   # 计算生命值百分比
     def hp_percentage(self):
         return self.HP / self.attributes['HP']
 
-    @property
+    @property   # 法术倍率
     def spell_rate(self):
         return self.attributes['spell_rate'] * self.buff_calc('spell_rate_enhanced',
                                                               is_multi=True) * self.buff_calc_spec(
             'spell_rate_weaken')
 
-    @property
+    @property   # 技能发动率提升
+    def skill_chance_boost(self):
+        return self.attributes['base_skill_chance_boost'] * self.buff_calc('skill_chance_boost_enhanced', is_multi=True)
+
+    @property   # MP恢复增加
     def mp_gain_rate(self):
         return 1 + self.buff_calc('mp_gain_enhanced')
 
+    @property   # MP减消耗
+    def mp_consume_dec(self):
+        return self.buff_calc('mp_consume_dec_enhanced', is_multi=True)
 
-    @property
+    @property   # 判断是否死亡
     def not_dead(self):
         return self.HP > 0
 
-    @property
+    @property   # 返回普攻信息
     def normal_attack(self):
         return self.attributes['normal_attack']
 
-    @property
+    @property   # 返回是否沉默
     def is_silence(self):
         return 'silence' in self.buff.keys()
 
-    @property
+    @property   # 返回是否是火焰附魔状态
     def fire_enchanted(self):
         return 'fire_enchant' in self.buff.keys()
 
+    # 返回平级调整倍率
     def adj_spell_rate(self, rate):
         base = self.attributes['spell_rate'] / self.attributes['std_rate']
         enhance = ((self.buff_calc('spell_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec('spell_rate_weaken')
         return base * enhance
 
+
+    # 用于Buff总量的计算
     def buff_calc(self, buff_type, is_multi=False):
         if is_multi:
             enhance = 1
@@ -240,11 +249,12 @@ class GameChar:
                 return [self.attributes['unique']]
 
         for sk in self.skills:
-            ret = sk.can_be_used()
+            ret = sk.can_be_used(skill_chance_boost=self.skill_chance_boost)
             if ret:
-                if self.MP < ret['mp_cost']:
+                real_mp_consume = ret['mp_cost'] * self.mp_consume_dec
+                if self.MP < real_mp_consume:
                     return [self.normal_attack]
-                self.MP -= ret['mp_cost']
+                self.MP -= real_mp_consume
                 return [ret]
 
         return [self.normal_attack]
@@ -704,6 +714,16 @@ class GameChar:
                     'param': {'amount': real_added}
                 })
 
+        # 技能发动率提升
+        elif effect['type'] == 'SKILL_CHANCE_BOOST':
+            for obj in selector:
+                real_added = obj.add_buff('skill_chance_boost_enhanced', param[0][0], param[1])
+                ret.append({
+                    'feedback': '提升了{target}{amount:.1%}的技能发动率，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])
         return ret
@@ -908,7 +928,7 @@ class GameChar:
         S = self.name + ', '
         S += '%.0f/%.0f, ' % (self.HP, self.attributes['HP'])
         S += 'shield: %.0f, ' % self.shield
-        S += 'test: %s' % str(self.adj_spell_rate(1))
+        S += 'test: %s' % str(self.skill_chance_boost)
         S += 'buff: %s' % str(self.buff)
         return S
 

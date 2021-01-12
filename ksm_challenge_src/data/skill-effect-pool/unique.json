@@ -314,14 +314,31 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.5,
-                        "min": 1.38
+                        "expect": 1.28,
+                        "min": 1.11
                     },
                     4
                 ]
             },
             {
-                "desc": "进入急速冷却状态，持续{param[1]}回合",
+                "desc": "提高{param[0]:1%}的技能发动率",
+                "type": "SKILL_CHANCE_BOOST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.45,
+                        "min": 0.38
+                    },
+                    3
+                ]
+            },
+            {
+                "desc": "并进入急速冷却状态，持续{param[1]}回合",
                 "type": "FAST_COOLDOWN",
                 "target": {
                     "type": "SELF",
@@ -358,8 +375,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 105,
-                        "min": 94
+                        "expect": 92,
+                        "min": 83
                     },
                     2
                 ]

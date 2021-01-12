@@ -41,6 +41,7 @@ def creature_gen(template: dict, lv):
     creature['is_boss'] = True
     creature['exp_earn'] = 0
     creature['lv'] = lv
+    creature['base_skill_chance_boost'] = creature.get('base_skill_chance_boost', 1)
     return creature, rating
 
 

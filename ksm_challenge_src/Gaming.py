@@ -47,7 +47,8 @@ class Gaming(ABC):
                 # 然后技能发动、攻击、效果执行
                 self._status_manage(chara_info[0])
                 self._skill_check(chara_info[0], chara_info[1])
-
+                if testing_mode:
+                    self.ui.append(str(chara_info))
 
             self.ui.append('')
             self.team_a = self._death_check('a')

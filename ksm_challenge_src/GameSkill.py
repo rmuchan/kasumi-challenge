@@ -7,11 +7,12 @@ class GameSkill:
         self.cooldown = 0
         self.last_time = 1
 
-    def can_be_used(self):
+    def can_be_used(self, skill_chance_boost = 1.0):
         if self.cooldown != 0:
             return False
 
-        if random.random() < self.data['chance'] * self.last_time:
+                                                                 # 乘以一个技能发动概率的提高效果
+        if random.random() < self.data['chance'] * self.last_time * skill_chance_boost:
             # 发动了
             self.last_time = 1
             self.cooldown = self.data['cooldown'] + 1

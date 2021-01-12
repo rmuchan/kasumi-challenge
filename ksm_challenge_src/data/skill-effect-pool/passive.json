@@ -60,23 +60,26 @@
         }
     },
     {
-        "desc": "【致命精准】暴击伤害倍率+85%",
-        "buff": {
-            "crit_rate": 0.85
-        }
-    },
-    {
-        "desc": "【生生不息】基础生命+25 成长值+0.3",
-        "buff": {
-            "life_base": 25,
-            "life_grow": 0.3
-        }
-    },
-    {
-        "desc": "【大魔法师】法术倍率+9.6%",
+        "desc": "【魔能根源】法术倍率+9.6%",
         "buff": {
             "spell_rate": {
                 "multiply": 1.096
+            }
+        }
+    },
+    {
+        "desc": "【神赋卷轴】技能MP消耗-18%",
+        "buff": {
+            "mp_consume_dec": {
+                "multiply": 0.82
+            }
+        }
+    },
+    {
+        "desc": "【大魔法师】技能发动率+12%",
+        "buff": {
+            "skill_chance_boost": {
+                "multiply": 1.12
             }
         }
     }
