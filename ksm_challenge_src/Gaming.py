@@ -87,6 +87,8 @@ class Gaming(ABC):
             key, reverse = {
                 'LIFEMOST': (lambda x: x.hp_percentage, True),
                 'LIFELEAST': (lambda x: x.hp_percentage, False),
+                'MPMOST': (lambda x: x.MP, True),
+                'MPLEAST': (lambda x: x.MP, False),
                 'ATKMOST': (lambda x: x.attack, True),
                 'ATKLEAST': (lambda x: x.attack, False)
             }[type_]
