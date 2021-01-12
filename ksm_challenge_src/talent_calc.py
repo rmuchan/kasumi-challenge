@@ -23,35 +23,36 @@ def show_talent(ui: UI):
 
 
 async def upgrade_talent(ui: UI):
-    coin = int(ui.retrieve('talent_coin') or 0)
-    ui.append('你现有的天赋为：')
-    show_talent(ui)
-    ui.append('你有{}个天赋币'.format(coin))
-    await ui.send()
-    try:
-        selection = await ui.input('选择想要强化的天赋（输入选项序号。输入不在上面列表中的选项即可退出，否则无法使用其他指令）',
-                                   is_valid=lambda x: len(x) == 1 and ord(x.upper()) - ord('A') in range(len(data.talent)),
-                                   attempts=1)
-    except Exception:
-        await ui.send('已退出天赋选择')
-        raise
-    selection = ord(selection.upper()) - ord('A')
-    key = list(data.talent)[selection]
-    param = data.talent[key]
-    player_talent = ui.retrieve('talent') or {}
-    lvl = player_talent.get(key, 0)
-    if lvl >= param['max_level']:
-        await ui.send('该天赋已达到满级')
-        return
-    cost = int(util.recurrence(param['cost_base'], param['cost_ratio'], param['cost_grow'], lvl + 1))
-    if cost > coin:
-        await ui.send('天赋币不足')
-        return
-    player_talent[key] = lvl + 1
-    coin -= cost
-    ui.store('talent', player_talent)
-    ui.store('talent_coin', coin)
-    await ui.send('天赋升级成功！')
+    while True:
+        coin = int(ui.retrieve('talent_coin') or 0)
+        ui.append('你现有的天赋为：')
+        show_talent(ui)
+        ui.append('你有{}个天赋币'.format(coin))
+        await ui.send()
+        try:
+            selection = await ui.input('选择想要强化的天赋（输入选项序号。输入不在上面列表中的选项即可退出，否则无法使用其他指令）',
+                                       is_valid=lambda x: len(x) == 1 and ord(x.upper()) - ord('A') in range(len(data.talent)),
+                                       attempts=1)
+        except Exception:
+            await ui.send('已退出天赋选择')
+            raise
+        selection = ord(selection.upper()) - ord('A')
+        key = list(data.talent)[selection]
+        param = data.talent[key]
+        player_talent = ui.retrieve('talent') or {}
+        lvl = player_talent.get(key, 0)
+        if lvl >= param['max_level']:
+            ui.append('该天赋已达到满级！')
+            continue
+        cost = int(util.recurrence(param['cost_base'], param['cost_ratio'], param['cost_grow'], lvl + 1))
+        if cost > coin:
+            ui.append('天赋币不足！')
+            continue
+        player_talent[key] = lvl + 1
+        coin -= cost
+        ui.store('talent', player_talent)
+        ui.store('talent_coin', coin)
+        ui.append('天赋升级成功！')
 
 
 def build_talent_buff(ui: UI):
