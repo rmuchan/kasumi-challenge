@@ -154,11 +154,17 @@ async def _(session: CommandSession):
         if ui.retrieve('character') is not None:
             await ui.send('你已经拥有了一个角色！你可以使用ksmgame-status来查看属性')
             return
+        pc = ui.retrieve('proto_character')
+        if pc is not None:
+            create_ver = get_ver_idx(pc.get('game_version')) or 0
+            min_ver = get_ver_idx(great_update_ver)
+            if create_ver < min_ver:
+                ui.store('proto_character', None)
         char = await create_character(ui)
         ui.store('character', char)
         ui.store('proto_character', None)
         ui.append('角色创建完成！')
-        await print_character(ui, char)
+        await show_chara_info(ui)
 
     try:
         BotContextUI(session.bot, session.ctx).run(create, mutex_mode='user')

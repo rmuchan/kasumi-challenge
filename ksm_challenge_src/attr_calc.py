@@ -65,7 +65,7 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
 
     game_char['std_rate'] = attr_based_enhance(attr_calc(numerical['std_attr'], numerical['std_attr_grow'], lv))
 
-    game_char['crit_rate'] = crit_rate_calc(str_, calc_passive(0, chara, 'crit_rate'))
+    game_char['crit_rate'] = str_ * numerical['crit_int_convert_rate'] + chara['base_crit_rate'][0] + calc_passive(0, chara, 'crit_rate')
     game_char['crit_chance'] = numerical['crit_chance']
     game_char['life_steal_rate'] = calc_passive(numerical['life_steal_rate_base'], chara, 'life_steal_rate')
     game_char['dodge'] = _dodge_calc(int_, calc_passive(0, chara, 'dodge'))

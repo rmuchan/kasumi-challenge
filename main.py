@@ -7,10 +7,8 @@ from ksm_challenge_src.Gaming import Gaming
 from ksm_challenge_src.attr_calc import game_char_gen
 from ksm_challenge_src.boss_gen import boss_gen
 from ksm_challenge_src.character import create_character, print_character
+from ksm_challenge_src.character_show import show_chara_info
 from ksm_challenge_src.interact import UI
-from ksm_challenge_src.talent_calc import show_talent, upgrade_talent
-from ksm_challenge_src.version import log_file
-
 
 
 class CLI(UI):
@@ -61,13 +59,16 @@ with open('ksm_challenge_src/data/boss-pool/bee.json') as FILE:
 
 test_level = 1
 
+
 async def main():
     chars = []
     for i in range(4):
         ui = CLI(i, debug_mode=not False)
         c = await create_character(ui)
+        ui.store('character', c)
+        ui.store('proto_character', None)
         chars.append(c)
-        await print_character(ui, c)
+        await show_chara_info(ui)
     gcs = [game_char_gen(x, test_lv=test_level) for x in chars]
     game = Gaming(gcs[:4], boss_gen(boss, test_level)['bosses'], CLI(0))
     print(await game.start(testing_mode=True))
@@ -77,7 +78,7 @@ async def main2():
     time_limit = 31
     test_amount = 200
     lvl_list = [1, 15, 30]
-    turn_count = {i:[0 for _ in range(time_limit + 1)] for i in lvl_list}
+    turn_count = {i: [0 for _ in range(time_limit + 1)] for i in lvl_list}
     time_out = {i: 0 for i in lvl_list}
     a_win = {i: 0 for i in lvl_list}
     for lvl in lvl_list:
@@ -91,7 +92,7 @@ async def main2():
                 chars.append(c)
                 await print_character(ui, c)
             gcs = [game_char_gen(x, test_lv=lvl) for x in chars]
-            game = Gaming(gcs[:4], boss_gen(boss, lvl)['bosses'], CLI(0,debug_mode=True))
+            game = Gaming(gcs[:4], boss_gen(boss, lvl)['bosses'], CLI(0, debug_mode=True))
             result, turn = await game.start(testing_mode=True)
             turn_count[lvl][turn] += 1
             if result == 'timeout':
@@ -103,9 +104,9 @@ async def main2():
     for lvl in lvl_list:
         print('--------')
         print(lvl, (a_win[lvl] / test_amount) * 100, '%')
-        plt.plot(list(range(time_limit + 1)), turn_count[lvl],label=str(lvl) + ('[%.0f%%]' % (a_win[lvl] / test_amount * 100)))
+        plt.plot(list(range(time_limit + 1)), turn_count[lvl], label=str(lvl) + ('[%.0f%%]' % (a_win[lvl] / test_amount * 100)))
     plt.legend()
-    #plt.show()
+    # plt.show()
 
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
 from .attr_calc import game_char_gen, lv_calc, exp_overlay_list
+from .character import calc_passive
 from .interact import UI
 from .skill import get_skill_desc
 
@@ -24,8 +25,11 @@ async def show_chara_info(ui: UI):
     ui.append('生命窃取：{:.0%}'.format(game_char['life_steal_rate']))
     ui.append('闪避率：{:.1%}'.format(game_char['dodge']))
     ui.append('------技能组------')
-    ui.append('主技能：\n' + get_skill_desc(game_char['skills'][0], is_unique=False))
-    ui.append('副技能：\n' + get_skill_desc(game_char['skills'][1], is_unique=False))
-    ui.append('小技能：\n' + get_skill_desc(game_char['skills'][2], is_unique=False))
-    ui.append('必杀技：\n' + get_skill_desc(game_char['unique'], is_unique=True))
+    skill_chance_boost = calc_passive(1, char, 'skill_chance_boost')
+    mp_consume_dec = calc_passive(1, char, 'mp_consume_dec')
+    ui.append('必杀技：\n' + get_skill_desc(game_char['unique'], True, skill_chance_boost, mp_consume_dec))
+    ui.append('主技能：\n' + get_skill_desc(game_char['skills'][0], False, skill_chance_boost, mp_consume_dec))
+    ui.append('技能2：\n' + get_skill_desc(game_char['skills'][1], False, skill_chance_boost, mp_consume_dec))
+    ui.append('技能3：\n' + get_skill_desc(game_char['skills'][2], False, skill_chance_boost, mp_consume_dec))
+    ui.append('被动加成：\n' + char['passive']['desc'])
     await ui.send()

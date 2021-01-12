@@ -59,13 +59,16 @@ def _calc_aoe_param(base: float, limit: int) -> float:
     return base * (rate[limit] if limit < len(rate) else rate[-1])
 
 
-def get_skill_desc(skill: Dict[str, Any], is_unique: bool) -> str:
+def get_skill_desc(skill: Dict[str, Any], is_unique: bool,
+                   skill_chance_boost: float = 1, mp_consume_dec: float = 1) -> str:
     """生成技能描述。
 
     生成每个技能效果的描述，并加上技能名。
 
     :param skill: 技能
     :param is_unique: 是否为终极技能
+    :param skill_chance_boost: 技能概率加成
+    :param mp_consume_dec: MP消耗倍率
     :return: 插入具体数值的技能描述
     """
     if is_unique:
@@ -74,11 +77,11 @@ def get_skill_desc(skill: Dict[str, Any], is_unique: bool) -> str:
             desc='；'.join(get_effect_desc(x) for x in skill['effect'])
         )
     else:
-        return '【{name}】\n ├ 冷却回合：{cd}\n ├ 概率：{chance:.1%}\n ├ MP消耗：{mp}\n └ 效果：{desc}'.format(
+        return '【{name}】\n ├ 冷却回合：{cd}\n ├ 概率：{chance:.1%}\n ├ MP消耗：{mp:.0f}\n └ 效果：{desc}'.format(
             name=skill['name'],
             cd=skill['cooldown'],
-            chance=real_chance_calc(skill['chance']),
-            mp=skill['mp_cost'],
+            chance=real_chance_calc(skill['chance'] * skill_chance_boost),
+            mp=skill['mp_cost'] * mp_consume_dec,
             desc='；'.join(get_effect_desc(x) for x in skill['effect'])
         )
 

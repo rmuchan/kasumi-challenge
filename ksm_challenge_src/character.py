@@ -132,7 +132,7 @@ def _build_character_from_proto(proto: Dict[str, Any]) -> Dict[str, Any]:
     fields_to_copy = [
         'name', 'race', 'race_id', 'game_version', 'talent', 'exp',
         'str_build', 'int_build', 'per_build', 'life_build', 'def_base',
-        'defense_str_rate', 'magic_int_rate', 'health_per_rate', 'attack_rate',
+        'defense_str_rate', 'magic_int_rate', 'health_per_rate', 'attack_rate', 'base_crit_rate',
         'passive', 'skill_1', 'skill_2', 'skill_3', 'unique',
     ]
     char = {k: proto[k] for k in fields_to_copy}
@@ -176,7 +176,9 @@ def _print_step_name(ui: UI, char: Dict[str, Any]):
     )
               )
     ui.append('基础物防: %.2f (%s)' % (calc_passive(char['def_base'][0], char, 'def_base'), char['def_base'][1]))
-    ui.append('攻击倍率: %.2f (%s)' % (char['attack_rate'][0], char['attack_rate'][1]))
+    ui.append('攻击倍率: {:.0%} ({})'.format(char['attack_rate'][0], char['attack_rate'][1]))
+    ui.append('基础暴击倍率: {:.0%} ({})'.format(calc_passive(char['base_crit_rate'][0], char, 'base_crit_rate'),
+                                           char['base_crit_rate'][1]))
     ui.append('(如果您不清楚这些属性的意义，您可以使用像\n"ksmgame-help 力量"\n这样的指令查询每个属性的意义)')
 
 
