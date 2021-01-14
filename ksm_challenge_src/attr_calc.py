@@ -57,6 +57,7 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
                               calc_passive(numerical['hp_rate'], chara, 'hp_rate'))
 
     game_char['base_skill_chance_boost'] = calc_passive(numerical['base_skill_chance_boost'], chara, 'skill_chance_boost')
+    game_char['mp_consume_dec'] = calc_passive(1, chara, 'mp_consume_dec')
 
     # 三倍率为玩家基础属性计算得来的倍率 乘以被动带来的增益
     game_char['recover_rate'] = _recover_rate_calc(per_, str_, chara['health_per_rate']) * calc_passive(1.0, chara, 'recover_rate')

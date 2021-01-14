@@ -783,7 +783,7 @@
                     {
                         "random": "biased",
                         "expect": 80,
-                        "min": 74
+                        "min": 89
                     }
                 ]
             },

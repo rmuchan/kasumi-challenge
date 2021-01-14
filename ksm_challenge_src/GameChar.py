@@ -25,6 +25,10 @@ class GameChar:
         self.token = set()
         self.turn_mp_gain()
 
+        # 旧版本数据兼容:
+        if 'mp_consume_dec' not in self.attributes:
+            self.attributes['mp_consume_dec'] = 1
+
     # ————————————————————————————
     #           属性信息
     # ————————————————————————————
@@ -88,13 +92,13 @@ class GameChar:
     def skill_chance_boost(self):
         return self.attributes['base_skill_chance_boost'] * self.buff_calc('skill_chance_boost_enhanced', is_multi=True)
 
-    @property   # MP恢复增加
+    @property   # MP恢复增加 MP恢复速度提升
     def mp_gain_rate(self):
-        return 1 + self.buff_calc('mp_gain_enhanced')
+        return (1 + self.buff_calc('mp_gain_enhanced')) * self.buff_calc_spec('mp_gain_weaken')
 
     @property   # MP减消耗
     def mp_consume_dec(self):
-        return self.buff_calc('mp_consume_dec_enhanced', is_multi=True)
+        return self.attributes['mp_consume_dec'] * self.buff_calc_spec('mp_consume_dec_enhanced')
 
     @property   # 判断是否死亡
     def not_dead(self):
@@ -226,10 +230,6 @@ class GameChar:
         发动技能。顺序依次为终极技能，技能123，最后普通攻击作为一个技能
         :return: 技能的dict模板
         """
-        if 'skill_overload' in self.buff.keys():
-            if self.MP > self.skills[0].mp_cost:
-                self.MP -= self.skills[0].mp_cost
-                return [self.skills[0].data]
 
         # 攻击标记
         if self.use_token('attack_assis'):
@@ -247,6 +247,16 @@ class GameChar:
             if self.MP >= 1000:
                 self.MP = 0
                 return [self.attributes['unique']]
+
+        # 主技能爆发
+        if self.use_token('skill_overload_turn1'):
+            self.add_token('skill_overload_turn2')
+            self.MP = max(self.MP -  2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
+            return [self.skills[0].data, self.skills[0].data]
+
+        if self.use_token('skill_overload_turn2'):
+            self.MP = max(self.MP - self.skills[0].mp_cost * self.mp_consume_dec, 0)
+            return [self.skills[0].data]
 
         for sk in self.skills:
             ret = sk.can_be_used(skill_chance_boost=self.skill_chance_boost)
@@ -355,8 +365,9 @@ class GameChar:
                 atk_damage, is_crit = self.do_attack()
                 real_damage, atk_status, hp_damage = obj.take_damage(atk_damage)
                 # magic_enchant
-                # 吸血
-                self.recover(hp_damage * self.life_steal_rate)
+                # 吸血 对自身无效
+                if obj != self:
+                    self.recover(hp_damage * self.life_steal_rate)
 
                 # miss
                 if atk_status == -1:
@@ -697,10 +708,10 @@ class GameChar:
         # 技能过载
         elif effect['type'] == 'SKILL_OVERLOAD':
             for obj in selector:
-                real_added = obj.add_buff('skill_overload', True, param[1])
+                obj.add_token('skill_overload_turn1')
                 ret.append({
-                    'feedback': '使{target}进入了技能过载状态，持续{duration}回合',
-                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'feedback': '为{target}添加的技能过载标记',
+                    'merge_key': {'target': self._self_replace(obj.name)},
                     'param': {}
                 })
 
@@ -723,6 +734,17 @@ class GameChar:
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
+
+        # MP获取降低
+        elif effect['type'] == 'MP_GAIN_WEAKEN':
+            for obj in selector:
+                real_added = obj.add_buff('mp_gain_weaken', param[0][0], param[1])
+                ret.append({
+                    'feedback': '降低了{target}{amount:.0%}的MP获取速度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
+
 
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])
@@ -926,10 +948,10 @@ class GameChar:
 
     def __repr__(self):
         S = self.name + ', '
-        S += '%.0f/%.0f, ' % (self.HP, self.attributes['HP'])
-        S += 'shield: %.0f, ' % self.shield
-        S += 'test: %s' % str(self.skill_chance_boost)
-        S += 'buff: %s' % str(self.buff)
+        S += '%.0f/%.0f, 【%.0f】\n' % (self.HP, self.attributes['HP'], self.MP)
+        S += 'shield: %.0f,\n' % self.shield
+        S += 'test: %s,\n' % str(self.mp_gain_rate)
+        S += 'buff: %s, ' % str(self.buff)
         return S
 
 

@@ -180,7 +180,7 @@
                 "复苏治疗"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
                 "desc": "治疗生命最低的一名队友{param[0]}点生命",
@@ -362,7 +362,7 @@
                 "致命精准"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
                 "desc": "小幅度强化自身{param[0]:.0f}的攻击，持续{param[1]}回合",
@@ -494,7 +494,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内附带魔法伤害。",
+                "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内额外造成基于自身攻击85%的魔法伤害。",
                 "type": "FIRE_ENCHANT",
                 "target": {
                     "type": "SELF",
@@ -606,7 +606,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "在{param[1]}回合内每回合无视冷却时间、无视概率地使用主技能",
+                "desc": "为自己添加技能过载标记，在下一个回合连续使用两次主技能，并在次回合使用一次主技能。此效果带来的发动技能效果无视冷却时间，无视发动概率，无视MP消耗。",
                 "type": "SKILL_OVERLOAD",
                 "target": {
                     "type": "SELF",
@@ -614,7 +614,23 @@
                     "limit": 1
                 },
                 "param": [
-                    {},
+                    {}
+                ]
+            },
+            {
+                "desc": "在{param[1]}回合内降低自身{param[0]:.1%}的MP获取速度",
+                "type": "MP_GAIN_WEAKEN",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.32,
+                        "min": 0.4
+                    },
                     3
                 ]
             }
@@ -630,7 +646,7 @@
                 "精准猛刺"
             ]
         },
-        "weight": 2,
+        "weight": 2222222222222,
         "effect": [
             {
                 "desc": "进行一次普通攻击",
@@ -669,8 +685,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.65,
-                        "min": 1.6
+                        "expect": 1.40,
+                        "min": 1.28
                     },
                     2
                 ]
