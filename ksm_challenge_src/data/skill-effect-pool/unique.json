@@ -106,7 +106,7 @@
         "weight": 3,
         "effect": [
             {
-                "desc": "大幅度强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
+                "desc": "提升自身{param[0]:.0%}的攻击，持续{param[1]}回合",
                 "type": "PHY_ATK_BUFF_RATE",
                 "target": {
                     "type": "SELF",
@@ -116,8 +116,25 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.25,
-                        "min": 1.15
+                        "expect": 0.57,
+                        "min": 0.52
+                    },
+                    3
+                ]
+            },
+            {
+                "desc": "提升自身{param[0]:.0f}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 126,
+                        "min": 115
                     },
                     3
                 ]
@@ -137,6 +154,70 @@
                         "min": 810
                     },
                     1
+                ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "终极射手",
+                "屏息射击",
+                "沉默的猎杀者",
+                "致命精准"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.50,
+                        "min": 0.45
+                    },
+                    2
+                ]
+            },
+            {
+                "desc": "在{param[1]}回合内使自己必定暴击",
+                "type": "CRIT_CHANCE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        2,
+                        "S"
+                    ],
+                    2
+                ]
+            },
+            {
+                "desc": "沉默自己{param[1]}回合",
+                "type": "SILENCE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 233,
+                        "min": 810
+                    },
+                    2
                 ]
             }
         ]
@@ -321,7 +402,7 @@
                 ]
             },
             {
-                "desc": "提高{param[0]:1%}的技能发动率",
+                "desc": "提高{param[0]:.1%}的技能发动率",
                 "type": "SKILL_CHANCE_BOOST",
                 "target": {
                     "type": "SELF",
@@ -348,70 +429,6 @@
                 "param": [
                     {},
                     3
-                ]
-            }
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
-                "终极射手",
-                "屏息射击",
-                "沉默的猎杀者",
-                "致命精准"
-            ]
-        },
-        "weight": 2,
-        "effect": [
-            {
-                "desc": "小幅度强化自身{param[0]:.0f}的攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_CONST",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 92,
-                        "min": 83
-                    },
-                    2
-                ]
-            },
-            {
-                "desc": "在{param[1]}回合内使自己必定暴击",
-                "type": "CRIT_CHANCE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        2,
-                        "S"
-                    ],
-                    2
-                ]
-            },
-            {
-                "desc": "沉默自己{param[1]}回合",
-                "type": "SILENCE",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 233,
-                        "min": 810
-                    },
-                    2
                 ]
             }
         ]
@@ -606,7 +623,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "为自己添加技能过载标记，在下一个回合连续使用两次主技能，并在次回合使用一次主技能。此效果带来的发动技能效果无视冷却时间，无视发动概率，无视MP消耗。",
+                "desc": "为自己添加技能过载标记，在下一个回合连续使用两次主技能，并在次回合使用一次主技能。此效果带来的发动技能效果无视冷却时间，无视发动概率，无视MP消耗",
                 "type": "SKILL_OVERLOAD",
                 "target": {
                     "type": "SELF",

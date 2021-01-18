@@ -276,7 +276,7 @@
                         "expect": 0.19,
                         "min": 0.17
                     },
-                    7
+                    5
                 ]
             }
         ]
@@ -350,7 +350,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "窃取目标{param[0]}点MP，并以{param[1]:.2f}的倍率恢复自身MP",
+                "desc": "窃取随机一个敌方目标{param[0]}点MP，并以{param[1]:.2f}的倍率恢复自身MP",
                 "type": "MP_STEAL",
                 "target": {
                     "type": "RAND",
@@ -366,7 +366,7 @@
                     {
                         "random": "triangular",
                         "min": 4.5,
-                        "max": 6
+                        "max": 5.7
                     }
                 ]
             },
@@ -381,8 +381,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.24,
-                        "min": 0.20
+                        "expect": 0.11,
+                        "min": 0.09
                     },
                     2
                 ]

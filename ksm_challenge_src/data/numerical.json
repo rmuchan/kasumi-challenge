@@ -48,8 +48,8 @@
         },
         "base_crit_rate": {
             "random": "biased",
-            "expect": 1.3,
-            "min": 1.15
+            "expect": 1.19,
+            "min": 1.08
         }
     },
     "skill_template": {
@@ -97,7 +97,7 @@
     "random_mp_gain_base": 90,
     "random_mp_gain_extra": 60,
     "primary_skill_chance_rate": 1.9,
-    "primary_skill_cooldown_rate": 0.7,
+    "primary_skill_cooldown_rate": 0.76,
     "primary_skill_cost_decrease": 30,
     "aoe_separate_rate": [
         0,
