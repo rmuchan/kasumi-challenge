@@ -397,7 +397,7 @@ class GameChar:
         # 固定值攻击强化
         elif effect['type'] == 'PHY_ATK_BUFF_CONST':
             for obj in selector:
-                real_added = obj.add_buff('attack_enhanced', param[0][0] * fluctuation(), param[1], buff_enhanced=True)
+                real_added = obj.add_buff('attack_enhanced', param[0][0] * fluctuation() * self.buff_rate, param[1])
                 ret.append({
                     'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -428,7 +428,7 @@ class GameChar:
         # 护盾
         elif effect['type'] == 'SHIELD':
             for obj in selector:
-                real_shield = obj.give_shield(param[0][0])
+                real_shield = obj.give_shield(param[0][0], self.buff_rate)
                 if real_shield == 0:
                     feedback = '{target}当前的护盾更好！没有使用新的护盾'
                 else:
@@ -504,8 +504,7 @@ class GameChar:
         # 暴击伤害倍率提升
         elif effect['type'] == 'CRIT_RATE_BUFF':
             for obj in selector:
-                real_added = obj.add_buff('crit_rate_enhanced', param[0][0] * fluctuation(), param[1],
-                                          buff_enhanced=True)
+                real_added = obj.add_buff('crit_rate_enhanced', param[0][0] * fluctuation(), param[1])
                 ret.append({
                     'feedback': '提升了{target}{amount:.0%}的暴击伤害倍率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -525,7 +524,7 @@ class GameChar:
         # 闪避率提升
         elif effect['type'] == 'DODGE_BUFF':
             for obj in selector:
-                real_added = obj.add_buff('dodge_enhanced', param[0][0] * fluctuation(0.9), param[1])
+                real_added = obj.add_buff('dodge_enhanced', param[0][0], param[1])
                 ret.append({
                     'feedback': '提升了{target}{amount:.0%}的闪避率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -825,13 +824,13 @@ class GameChar:
             self.HP = self.attributes['HP']
             return diff
 
-    def give_shield(self, value):
+    def give_shield(self, value, buff_rate):
         """
         添加护盾时使用，传入护盾量
         护盾不会叠加，只会取最大值
         返回实际护盾添加量
         """
-        value *= self.buff_rate
+        value *= buff_rate
         if self.shield >= value:
             return 0
         else:
@@ -915,8 +914,8 @@ class GameChar:
         if not deadly and self.HP < 1 and not already_dead:
             self.HP = 1
 
-        # 计算实际伤害量
-        real_damage = pre_hp - self.HP
+        # 计算实际伤害量 低于0点的伤害不会计入这个实际伤害量中。
+        real_damage = pre_hp - max(0, self.HP)
 
         # 计算此次伤害的百分比并以此为根据增加角色的MP值
         damage_percent = real_damage / self.attributes['HP']

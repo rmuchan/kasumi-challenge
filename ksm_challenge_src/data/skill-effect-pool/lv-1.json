@@ -3,30 +3,6 @@
         "name": {
             "random": "choice",
             "values": [
-                "激励",
-                "鼓舞"
-            ]
-        },
-        "desc": "强化我方全体，提升{param[0]:.0f}点攻击，持续{param[1]}回合",
-        "weight": 1,
-        "type": "PHY_ATK_BUFF_CONST",
-        "target": {
-            "type": "ALL",
-            "team": 1,
-            "limit": 0
-        },
-        "param": [
-            {
-                "random": "biased",
-                "expect": 28,
-                "min": 20
-            },
-            3
-        ]
-    },    {
-        "name": {
-            "random": "choice",
-            "values": [
                 "战术"
             ]
         },
@@ -41,8 +17,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 66,
-                "min": 58
+                "expect": 74,
+                "min": 61
             },
             2
         ]
@@ -194,7 +170,8 @@
             },
             3
         ]
-    },    {
+    },
+    {
         "name": {
             "random": "choice",
             "values": [
@@ -215,6 +192,32 @@
                 "random": "biased",
                 "expect": 170,
                 "min": 120
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "火花",
+                "浪涌",
+                "电极",
+                "破冰"
+            ]
+        },
+        "desc": "随机对1个敌人造成{param[0]}点魔法伤害",
+        "weight": 2,
+        "type": "MGC_DMG",
+        "target": {
+            "type": "RAND",
+            "team": 0,
+            "limit": 1
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 35,
+                "min": 30
             }
         ]
     }

@@ -241,8 +241,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 90,
-                        "min": 60
+                        "expect": 97,
+                        "min": 80
                     }
                 ]
             },
@@ -392,43 +392,60 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.05,
-            "max": 0.15
+            "min": 0.1,
+            "max": 0.2
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 3,
-            "max": 5
+            "min": 1,
+            "max": 4
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 120
+            "min": 40,
+            "max": 55
         },
         "name": {
             "random": "choice",
             "values": [
-                "致残",
-                "攻击削弱"
+                "梦境融入",
+                "幻梦领域"
             ]
         },
         "weight": 1,
         "effect": [
             {
-                "desc": "小幅度降低敌方全体角色{param[0]:%}的攻击力，持续{param[1]}回合",
-                "type": "ATK_DEBUFF",
+                "desc": "提升全队{param[0]:1%}的增益幅度，持续{param[1]}回合",
+                "type": "BUFF_RATE_UP",
                 "target": {
                     "type": "ALL",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.1,
+                        "min": 0.086
+                    },
+                    10
+                ]
+            },
+            {
+                "desc": "降低敌方攻击最高的角色{param[0]:%}的攻击力，持续{param[1]}回合",
+                "type": "ATK_DEBUFF",
+                "target": {
+                    "type": "ATKMOST",
                     "team": 0,
                     "limit": 1
                 },
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.18,
+                        "expect": 0.20,
                         "min": 0.15
                     },
-                    5
+                    2
                 ]
             }
         ]
@@ -441,7 +458,7 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 5,
+            "min": 4,
             "max": 6
         },
         "mp_cost": {
@@ -475,7 +492,7 @@
                         "expect": 0.41,
                         "min": 0.385
                     },
-                    15
+                    18
                 ]
             }
         ]
@@ -874,8 +891,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 40,
-            "max": 50
+            "min": 130,
+            "max": 190
         },
         "name": {
             "random": "choice",
@@ -945,6 +962,23 @@
                     "limit": 1
                 },
                 "param": []
+            },
+            {
+                "desc": "增加其{param[0]:%}的恢复强度，持续{param[1]}回合",
+                "type": "RECOVER_BUFF_RATE",
+                "target": {
+                    "type": "SAME",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.25,
+                        "min": 0.19
+                    },
+                    1
+                ]
             }
         ]
     },

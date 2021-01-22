@@ -106,8 +106,8 @@ async def main2():
         print(lvl, (a_win[lvl] / test_amount) * 100, '%')
         plt.plot(list(range(time_limit + 1)), turn_count[lvl], label=str(lvl) + ('[%.0f%%]' % (a_win[lvl] / test_amount * 100)))
     plt.legend()
-    # plt.show()
+    plt.show()
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main2())

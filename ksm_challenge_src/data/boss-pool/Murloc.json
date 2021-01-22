@@ -393,7 +393,8 @@
                             ]
                         }
                     ]
-                },{
+                },
+                {
                     "chance": 0.3,
                     "cooldown": 2,
                     "mp_cost": 90,
@@ -416,7 +417,8 @@
                                     }
                                 ]
                             ]
-                        },{
+                        },
+                        {
                             "type": "MP_UP",
                             "target": {
                                 "type": "RAND",
@@ -542,8 +544,8 @@
                                 {
                                     "random": "triangular",
                                     "rating_weight": 2,
-                                    "min": 175,
-                                    "max": 190
+                                    "min": 155,
+                                    "max": 160
                                 }
                             ]
                         ]
@@ -588,7 +590,8 @@
                                     }
                                 ]
                             ]
-                        },                        {
+                        },
+                        {
                             "type": "SPELL_DEC",
                             "target": {
                                 "type": "SAME",
@@ -603,11 +606,13 @@
                                         "min": 0.4,
                                         "max": 0.45
                                     }
-                                ],2
+                                ],
+                                2
                             ]
                         }
                     ]
-                },{
+                },
+                {
                     "chance": 0.5,
                     "cooldown": 0,
                     "mp_cost": 40,

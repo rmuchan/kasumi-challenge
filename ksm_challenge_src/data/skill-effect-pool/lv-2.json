@@ -76,10 +76,10 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 50,
-                "min": 45
+                "expect": 71,
+                "min": 59
             },
-            3
+            2
         ]
     },
     {

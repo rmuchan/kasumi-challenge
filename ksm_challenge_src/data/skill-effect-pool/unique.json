@@ -554,18 +554,19 @@
                 ]
             },
             {
-                "desc": "每击拥有更高的暴击率",
+                "desc": "拥有额外{param[0]:.1%}的暴击率",
                 "type": "CRIT_CHANCE_BUFF",
                 "target": {
                     "type": "SELF",
-                    "team": 1,
+                    "team": 0,
                     "limit": 1
                 },
                 "param": [
-                    [
-                        0.20,
-                        "S"
-                    ],
+                    {
+                        "random": "biased",
+                        "expect": 0.30,
+                        "min": 0.25
+                    },
                     0
                 ]
             },
@@ -594,7 +595,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "大幅度提升全队{param[0]:.0%}的闪避率，持续2回合",
+                "desc": "使全队在2回合内完全闪避普通攻击",
                 "type": "DODGE_BUFF",
                 "target": {
                     "type": "ALL",
@@ -602,11 +603,7 @@
                     "limit": 1
                 },
                 "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.50,
-                        "min": 0.55
-                    },
+                    [1, "S"],
                     2
                 ]
             }

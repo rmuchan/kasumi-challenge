@@ -4,12 +4,6 @@
     {
       "name": "幽灵忍者",
       "not_short_hp": true,
-      "weight_water_injection": {
-        "random": "triangular",
-        "rating_weight": 6,
-        "min": 233,
-        "max": 810
-      },
       "attack": {
         "random": "triangular",
         "rating_weight": 8,
@@ -19,20 +13,20 @@
       "defence_base": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 2.1,
+        "min": 2.4,
         "max": 2.6
       },
       "defence_grow": {
         "random": "triangular",
         "rating_weight": 3,
-        "min": 0.07,
-        "max": 0.086
+        "min": 0.075,
+        "max": 0.089
       },
       "hp_base": {
         "random": "triangular",
         "rating_weight": 3,
-        "min": 220,
-        "max": 235
+        "min": 230,
+        "max": 240
       },
       "life_base": {
         "random": "triangular",
@@ -61,7 +55,7 @@
       "crit_rate": 1.5,
       "crit_chance": 0.7,
       "life_steal_rate": 0.66,
-      "dodge": 0.6,
+      "dodge": 0.55,
       "unique": {
         "name": "锁喉",
         "effect": [
