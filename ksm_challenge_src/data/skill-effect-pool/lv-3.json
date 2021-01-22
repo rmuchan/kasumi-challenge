@@ -415,7 +415,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "提升全队{param[0]:1%}的增益幅度，持续{param[1]}回合",
+                "desc": "提升全队{param[0]:.1%}的增益幅度，持续{param[1]}回合",
                 "type": "BUFF_RATE_UP",
                 "target": {
                     "type": "ALL",
