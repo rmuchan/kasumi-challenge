@@ -915,10 +915,10 @@ class GameChar:
             self.HP = 1
 
         # 计算实际伤害量 低于0点的伤害不会计入这个实际伤害量中。
-        real_damage = pre_hp - max(0, self.HP)
+        real_damage = pre_hp - self.HP
 
         # 计算此次伤害的百分比并以此为根据增加角色的MP值
-        damage_percent = real_damage / self.attributes['HP']
+        damage_percent = (pre_hp - max(0, self.HP)) / self.attributes['HP']
         self.gain_mp(damage_percent * 1000 * numerical['life_to_mp'])
 
         return real_damage
