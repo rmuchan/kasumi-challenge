@@ -3,12 +3,14 @@ import json
 from typing import Optional, Any
 import matplotlib.pyplot as plt
 
-from ksm_challenge_src.Gaming import Gaming
-from ksm_challenge_src.attr_calc import game_char_gen
-from ksm_challenge_src.boss_gen import boss_gen
-from ksm_challenge_src.character import create_character, print_character
-from ksm_challenge_src.character_show import show_chara_info
-from ksm_challenge_src.interact import UI
+
+if __name__ == '__main__':
+    from ksm_challenge_src.Gaming import Gaming
+    from ksm_challenge_src.attr_calc import game_char_gen
+    from ksm_challenge_src.boss_gen import boss_gen
+    from ksm_challenge_src.character import create_character, print_character
+    from ksm_challenge_src.character_show import show_chara_info
+    from ksm_challenge_src.interact import UI
 
 
 class CLI(UI):

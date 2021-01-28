@@ -1,6 +1,5 @@
-from ksm_challenge_src.version import log_file
-
 if __name__ == '__main__':
+    from ksm_challenge_src.version import log_file
     md_replace = {
         '\n': '  \n',
         '[': '\\[',

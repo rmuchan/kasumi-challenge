@@ -2,7 +2,7 @@ import json
 import os
 from os import path
 
-from ksm_challenge_src import saves_updater
+from . import saves_updater
 
 
 class _Dir:
