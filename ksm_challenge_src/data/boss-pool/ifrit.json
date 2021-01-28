@@ -1,0 +1,228 @@
+{
+    "desc": "烈焰地狱的恐怖领主——【血炎魔王】，他的战斧上不仅燃烧着地狱中最炽热的火焰，还流淌着无数生灵的鲜血。地狱之火的力量会在每次炎斧的挥砍后衰弱，然而，血炎魔王将会再次用地狱的魔焰点燃它，然后再走向那些向他发起挑战的冒险者们，将他们一一击溃……",
+    "bosses": [
+        {
+            "name": "血炎魔王",
+            "not_short_hp": false,
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 8,
+                "min": 222,
+                "max": 240
+            },
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 3.8,
+                "max": 4.4
+            },
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.18,
+                "max": 0.2
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 730,
+                "max": 780
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 210,
+                "max": 240
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 1.05,
+                "max": 1.12
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 1.38,
+                "max": 1.43
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 1.5,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.56,
+            "dodge": 0.06,
+            "unique": {
+                "name": "烈火重燃",
+                "effect": [
+                    {
+                        "type": "PURIFY",
+                        "target": {
+                            "type": "SELF",
+                            "team": 1,
+                            "limit": 1
+                        },
+                        "param": []
+                    },
+                    {
+                        "type": "FIRE_ENCHANT",
+                        "target": {
+                            "type": "SELF",
+                            "team": 1,
+                            "limit": 1
+                        },
+                        "param": [
+                            233333333,
+                            30
+                        ]
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "炎斧挥砍",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    },
+                    {
+                        "type": "SPELL_DEC",
+                        "target": {
+                            "type": "SELF",
+                            "team": 0,
+                            "limit": 0
+                        },
+                        "param": [
+                            [
+                                0.25
+                            ],
+                            30
+                        ]
+                    }
+                ]
+            },
+            "skills": [
+                {
+                    "chance": 1,
+                    "cooldown": 30,
+                    "mp_cost": 0,
+                    "name": "魔焰狂热",
+                    "effect": [
+                        {
+                            "type": "HEAL",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    65566
+                                ]
+                            ]
+                        },
+                        {
+                            "type": "MP_UP",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    2333
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "chance": 0.2,
+                    "cooldown": 4,
+                    "mp_cost": 150,
+                    "name": "战斗狂热",
+                    "effect": [
+                        {
+                            "type": "ATK_ASSIS",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": []
+                        },
+                        {
+                            "type": "LIFE_STEAL_UP",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    1
+                                ],
+                                1
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "chance": 0.2,
+                    "cooldown": 5,
+                    "mp_cost": 150,
+                    "name": "毁灭横扫",
+                    "effect": [
+                        {
+                            "type": "ATK_DEBUFF",
+                            "target": {
+                                "type": "SELF",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": [
+                                [
+                                    0.5
+                                ],
+                                0
+                            ]
+                        },
+                        {
+                            "type": "NORMAL_ATK",
+                            "target": {
+                                "type": "ALL",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": []
+                        },
+                        {
+                            "type": "SPELL_DEC",
+                            "target": {
+                                "type": "SELF",
+                                "team": 0,
+                                "limit": 0
+                            },
+                            "param": [
+                                [
+                                    0.36
+                                ],
+                                30
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 1
+        }
+    ]
+}

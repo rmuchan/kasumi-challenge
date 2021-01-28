@@ -182,7 +182,7 @@
                 "肾上腺素"
             ]
         },
-        "weight": 4,
+        "weight": 3,
         "effect": [
             {
                 "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
@@ -425,8 +425,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.1,
-                        "min": 0.086
+                        "expect": 0.068,
+                        "min": 0.062
                     },
                     10
                 ]
@@ -476,7 +476,7 @@
                 "法术智慧"
             ]
         },
-        "weight": 3,
+        "weight": 4,
         "effect": [
             {
                 "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
@@ -902,7 +902,7 @@
                 "血之献祭"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "以攻击自己一次为献祭",

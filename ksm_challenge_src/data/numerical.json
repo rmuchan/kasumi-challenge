@@ -23,7 +23,7 @@
         },
         "def_base": {
             "random": "biased",
-            "expect": 2.0,
+            "expect": 1.4,
             "min": 0.7
         },
         "defense_str_rate": {
