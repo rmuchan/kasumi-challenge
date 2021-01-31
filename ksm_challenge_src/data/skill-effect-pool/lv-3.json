@@ -1020,7 +1020,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "提升自身法术倍率，MP越低效果越高，最高可以达到{param[0]:%}",
+                "desc": "提升自身法术倍率，MP越低效果越高，最高可以达到{param[0]:%}，持续{param[2]}回合",
                 "type": "MP_SPELL_UP",
                 "target": {
                     "type": "SELF",

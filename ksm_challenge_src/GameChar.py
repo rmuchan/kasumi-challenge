@@ -779,6 +779,7 @@ class GameChar:
                 mp_adj = max(self.MP - floor, 0)
                 mp_adj = min(mp_adj, ceiling - floor)
                 mp_adj /= ceiling - floor
+                mp_adj = 1 - mp_adj
                 to_add = mp_adj * (param[0][0] - param[1]) + param[1]
                 real_added = obj.add_buff('spell_rate_enhanced', to_add, param[2])
                 ret.append({
