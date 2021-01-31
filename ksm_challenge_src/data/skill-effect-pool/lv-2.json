@@ -327,5 +327,40 @@
             },
             0.5
         ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "随机应变",
+                "灵活决策"
+            ]
+        },
+        "weight": 1,
+        "desc": "发动技能时，如果当前MP低于2/3，增加自身{param[0]:.0f}点MP，{param[1]:.0f}点护盾，否则强化自身{param[2]:.0f}点攻击，持续{param[3]}回合",
+        "type": "MP_CHOICE",
+        "target": {
+            "type": "SELF",
+            "team": 1,
+            "limit": 1
+        },
+        "param": [
+            {
+                "random": "biased",
+                "expect": 170,
+                "min": 140
+            },
+            {
+                "random": "biased",
+                "expect": 130,
+                "min": 100
+            },
+            {
+                "random": "biased",
+                "expect": 75,
+                "min": 66
+            },
+            4
+        ]
     }
 ]

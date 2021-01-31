@@ -48,8 +48,8 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.18,
-            "max": 0.25
+            "min": 0.30,
+            "max": 0.35
         },
         "cooldown": {
             "random": "triangular_int",
@@ -70,7 +70,7 @@
                 "能量涌动"
             ]
         },
-        "weight": 3,
+        "weight": 4,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 62,
-                        "min": 57
+                        "expect": 56,
+                        "min": 51
                     }
                 ]
             },
@@ -273,10 +273,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.19,
-                        "min": 0.17
+                        "expect": 0.072,
+                        "min": 0.066
                     },
-                    5
+                    10
                 ]
             }
         ]
@@ -446,53 +446,6 @@
                         "min": 0.15
                     },
                     2
-                ]
-            }
-        ]
-    },
-    {
-        "chance": {
-            "random": "triangular",
-            "min": 0.16,
-            "max": 0.21
-        },
-        "cooldown": {
-            "random": "triangular_int",
-            "min": 4,
-            "max": 6
-        },
-        "mp_cost": {
-            "random": "triangular_int",
-            "min": 130,
-            "max": 160
-        },
-        "name": {
-            "random": "choice",
-            "values": [
-                "法力涌动",
-                "水晶之力",
-                "魔力增幅",
-                "魔法强化",
-                "法术智慧"
-            ]
-        },
-        "weight": 4,
-        "effect": [
-            {
-                "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
-                "type": "MGC_BUFF_RATE",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.41,
-                        "min": 0.385
-                    },
-                    18
                 ]
             }
         ]
@@ -1037,6 +990,51 @@
                         "min": 3,
                         "max": 4
                     }
+                ]
+            }
+        ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.09,
+            "max": 0.17
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 90
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "能量激活",
+                "魔法激活"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "提升自身法术倍率，MP越低效果越高，最高可以达到{param[0]:%}",
+                "type": "MP_SPELL_UP",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.52,
+                        "min": 0.47
+                    },
+                    0.17,
+                    7
                 ]
             }
         ]

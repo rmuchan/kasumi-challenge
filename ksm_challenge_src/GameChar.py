@@ -231,15 +231,8 @@ class GameChar:
         :return: 技能的dict模板
         """
 
+        # 如果是Boss，必杀技能不会被沉默
         if self.attributes.get('is_boss', False):
-            if self.MP >= 1000:
-                self.MP = 0
-                return [self.attributes['unique']]
-            if self.is_silence:
-                return [self.normal_attack]
-        else:
-            if self.is_silence:
-                return [self.normal_attack]
             if self.MP >= 1000:
                 self.MP = 0
                 return [self.attributes['unique']]
@@ -248,16 +241,26 @@ class GameChar:
         if self.use_token('attack_assis'):
             return [self.normal_attack, self.normal_attack]
 
+        # 沉默状态下  进行普攻
+        if self.is_silence:
+            return [self.normal_attack]
+
+        # 满MP下 使用必杀
+        if self.MP >= 1000:
+            self.MP = 0
+            return [self.attributes['unique']]
+
+
         # 主技能爆发
         if self.use_token('skill_overload_turn1'):
             self.add_token('skill_overload_turn2')
             self.MP = max(self.MP -  2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
             return [self.skills[0].data, self.skills[0].data]
-
         if self.use_token('skill_overload_turn2'):
             self.MP = max(self.MP - self.skills[0].mp_cost * self.mp_consume_dec, 0)
             return [self.skills[0].data]
 
+        # 正常地发动技能
         for sk in self.skills:
             ret = sk.can_be_used(skill_chance_boost=self.skill_chance_boost)
             if ret:
@@ -603,7 +606,7 @@ class GameChar:
         # 火焰附魔 (反正是一回事儿)
         elif effect['type'] == 'FIRE_ENCHANT':
             for obj in selector:
-                real_added = obj.add_buff('fire_enchant', True, param[1])
+                obj.add_buff('fire_enchant', True, param[1])
                 ret.append({
                     'feedback': '为{target}添加了火焰附魔，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -698,7 +701,7 @@ class GameChar:
         # 急速冷却
         elif effect['type'] == 'FAST_COOLDOWN':
             for obj in selector:
-                real_added = obj.add_buff('fast_cooldown', True, param[1])
+                obj.add_buff('fast_cooldown', True, param[1])
                 ret.append({
                     'feedback': '使{target}进入了加速冷却状态，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
@@ -745,6 +748,44 @@ class GameChar:
                     'param': {'amount': real_added}
                 })
 
+        # 根据MP情况基于自身Buff
+        elif effect['type'] == 'MP_CHOICE':
+            for obj in selector:
+                # 如果MP低于一半  恢复自身MP  获得少量护盾
+                if obj.MP <= 666:
+                    real_added, _ = obj.gain_mp(param[0][0])
+                    real_shield = obj.give_shield(param[1][0], self.buff_rate)
+
+                    ret.append({
+                        'feedback': '增加了{target}{MP:.0f}点MP，{shield:.0f}点护盾',
+                        'merge_key': {'target': self._self_replace(obj.name)},
+                        'param': {'MP': real_added, 'shield': real_shield}
+                    })
+
+                else:
+                    real_added = obj.add_buff('attack_enhanced', param[2][0] * self.buff_rate, param[3])
+                    ret.append({
+                        'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
+                        'merge_key': {'target': self._self_replace(obj.name), 'duration': param[3]},
+                        'param': {'amount': real_added}
+                    })
+
+        # 根据MP情况获得增益效果
+        elif effect['type'] == 'MP_SPELL_UP':
+            for obj in selector:
+                # MP效果区间：100 - 1000
+                floor = 100
+                ceiling = 1000
+                mp_adj = max(self.MP - floor, 0)
+                mp_adj = min(mp_adj, ceiling - floor)
+                mp_adj /= ceiling - floor
+                to_add = mp_adj * (param[0][0] - param[1]) + param[1]
+                real_added = obj.add_buff('spell_rate_enhanced', to_add, param[2])
+                ret.append({
+                    'feedback': '强化了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[2]},
+                    'param': {'amount': real_added}
+                })
 
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])
@@ -919,7 +960,8 @@ class GameChar:
         real_damage = pre_hp - self.HP
 
         # 计算此次伤害的百分比并以此为根据增加角色的MP值
-        damage_percent = (pre_hp - max(0, self.HP)) / self.attributes['HP']
+        # 其中生命值最低会计算到最大生命之以下30%，折合200点MP。
+        damage_percent = (pre_hp - max(-0.3 * self.attributes['HP'], self.HP)) / self.attributes['HP']
         self.gain_mp(damage_percent * 1000 * numerical['life_to_mp'])
 
         return real_damage

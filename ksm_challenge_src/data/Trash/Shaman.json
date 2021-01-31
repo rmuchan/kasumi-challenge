@@ -1,273 +1,273 @@
 {
-  "desc": "光与暗交错之间，罪与赎的来去之间，【罪罚萨满】做出了它的选择，他选择了惩戒与罪孽，走进了世界上最阴暗的角落。图腾是他的信仰，也是他的武器，通过[刚毅图腾]的顽固、[火焰图腾]的狂热、[治愈图腾]的医护，他行走在光影交界处，寻找自己的[救赎]。",
-  "bosses": [
-    {
-      "name": "罪罚萨满",
-      "not_short_hp": false,
-      "attack": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 230,
-        "max": 260
-      },
-      "defence_base": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 2.0,
-        "max": 2.3
-      },
-      "defence_grow": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 0.2,
-        "max": 0.22
-      },
-      "hp_base": {
-        "random": "triangular",
-        "rating_weight": 5,
-        "min": 420,
-        "max": 460
-      },
-      "life_base": {
-        "random": "triangular",
-        "rating_weight": 2,
-        "min": 180,
-        "max": 190
-      },
-      "recover_rate": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 0.9,
-        "max": 1
-      },
-      "spell_rate": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 0.9,
-        "max": 1
-      },
-      "buff_rate": {
-        "random": "triangular",
-        "rating_weight": 2,
-        "min": 0.9,
-        "max": 1.1
-      },
-      "crit_rate": 1.7,
-      "crit_chance": 0.11,
-      "life_steal_rate": 0.4,
-      "dodge": 0.03,
-      "unique": {
-        "name": "救赎",
-        "effect": [
-          {
-            "type": "HEAL",
-            "target": {
-              "type": "ALL",
-              "team": 1,
-              "limit": 4
-            },
-            "param": [
-              [
-                {
-                  "random": "triangular",
-                  "rating_weight": 1,
-                  "min": 170,
-                  "max": 180
-                }
-              ]
-            ]
-          },
-          {
-            "type": "HEAL",
-            "target": {
-              "type": "SELF",
-              "team": 0,
-              "limit": 4
-            },
-            "param": [
-              [
-                {
-                  "random": "triangular",
-                  "rating_weight": 1,
-                  "min": 170,
-                  "max": 180
-                }
-              ]
-            ]
-          }
-        ]
-      },
-      "normal_attack": {
-        "name": "降罪",
-        "effect": [
-          {
-            "type": "NORMAL_ATK",
-            "target": {
-              "type": "RAND",
-              "team": 0,
-              "limit": 1
-            },
-            "param": []
-          }
-        ]
-      },
-      "skills": [
+    "desc": "光与暗交错之间，罪与赎的来去之间，【罪罚萨满】做出了它的选择，他选择了惩戒与罪孽，走进了世界上最阴暗的角落。图腾是他的信仰，也是他的武器，通过[刚毅图腾]的顽固、[火焰图腾]的狂热、[治愈图腾]的医护，他行走在光影交界处，寻找自己的[救赎]。",
+    "bosses": [
         {
-          "chance": 0.38,
-          "cooldown": 2,
-          "mp_cost": 80,
-          "name": "召唤烈焰图腾",
-          "effect": [
-            {
-              "type": "SUMMON",
-              "target": {
-                "type": "SELF",
-                "team": 1,
-                "limit": 1
-              },
-              "param": [
-                "fire-totem"
-              ]
-            }
-          ]
+            "name": "罪罚萨满",
+            "not_short_hp": false,
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 230,
+                "max": 260
+            },
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 2.0,
+                "max": 2.3
+            },
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 0.2,
+                "max": 0.22
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 420,
+                "max": 460
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 180,
+                "max": 190
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 0.9,
+                "max": 1
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 0.9,
+                "max": 1
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 1.7,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.4,
+            "dodge": 0.03,
+            "unique": {
+                "name": "救赎",
+                "effect": [
+                    {
+                        "type": "HEAL",
+                        "target": {
+                            "type": "ALL",
+                            "team": 1,
+                            "limit": 4
+                        },
+                        "param": [
+                            [
+                                {
+                                    "random": "triangular",
+                                    "rating_weight": 1,
+                                    "min": 170,
+                                    "max": 180
+                                }
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "HEAL",
+                        "target": {
+                            "type": "SELF",
+                            "team": 0,
+                            "limit": 4
+                        },
+                        "param": [
+                            [
+                                {
+                                    "random": "triangular",
+                                    "rating_weight": 1,
+                                    "min": 170,
+                                    "max": 180
+                                }
+                            ]
+                        ]
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "降罪",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "skills": [
+                {
+                    "chance": 0.38,
+                    "cooldown": 2,
+                    "mp_cost": 80,
+                    "name": "召唤烈焰图腾",
+                    "effect": [
+                        {
+                            "type": "SUMMON",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                "fire-totem"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "chance": 0.38,
+                    "cooldown": 4,
+                    "mp_cost": 100,
+                    "name": "召唤治愈图腾",
+                    "effect": [
+                        {
+                            "type": "SUMMON",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                "heal-totem"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 6
         },
         {
-          "chance": 0.38,
-          "cooldown": 4,
-          "mp_cost": 100,
-          "name": "召唤治愈图腾",
-          "effect": [
-            {
-              "type": "SUMMON",
-              "target": {
-                "type": "SELF",
-                "team": 1,
-                "limit": 1
-              },
-              "param": [
-                "heal-totem"
-              ]
-            }
-          ]
-        }
-      ],
-      "weight": 6
-    },
-    {
-      "name": "刚毅图腾",
-      "not_short_hp": false,
-      "attack": {
-        "random": "triangular",
-        "rating_weight": 2,
-        "min": 160,
-        "max": 170
-      },
-      "defence_base": {
-        "random": "triangular",
-        "rating_weight": 1,
-        "min": 100,
-        "max": 101
-      },
-      "defence_grow": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 0.2,
-        "max": 0.25
-      },
-      "hp_base": {
-        "random": "triangular",
-        "rating_weight": 6,
-        "min": 120,
-        "max": 140
-      },
-      "life_base": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 20,
-        "max": 24
-      },
-      "recover_rate": {
-        "random": "triangular",
-        "rating_weight": 3,
-        "min": 1,
-        "max": 1.12
-      },
-      "spell_rate": {
-        "random": "triangular",
-        "rating_weight": 4,
-        "min": 1.06,
-        "max": 1.2
-      },
-      "buff_rate": {
-        "random": "triangular",
-        "rating_weight": 2,
-        "min": 0.9,
-        "max": 1.1
-      },
-      "crit_rate": 2,
-      "crit_chance": 0.1,
-      "life_steal_rate": 0.0,
-      "dodge": 0.00,
-      "unique": {
-        "name": "损毁献祭",
-        "effect": [
-          {
-            "type": "PIERCE",
-            "target": {
-              "type": "SELF",
-              "team": 0,
-              "limit": 1
+            "name": "刚毅图腾",
+            "not_short_hp": false,
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 160,
+                "max": 170
             },
-            "param": [
-              [
-                2
-              ],
-              true
-            ]
-          }
-        ]
-      },
-      "normal_attack": {
-        "name": "刚毅审判",
-        "effect": [
-          {
-            "type": "NORMAL_ATK",
-            "target": {
-              "type": "RAND",
-              "team": 0,
-              "limit": 1
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 1,
+                "min": 100,
+                "max": 101
             },
-            "param": []
-          }
-        ]
-      },
-      "skills": [
-        {
-          "chance": 1,
-          "cooldown": 30,
-          "mp_cost": 0,
-          "name": "刚毅战线",
-          "effect": [
-            {
-              "type": "DEF_UP",
-              "target": {
-                "type": "ALL",
-                "team": 1,
-                "limit": 1
-              },
-              "param": [
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 0.2,
+                "max": 0.25
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 6,
+                "min": 120,
+                "max": 140
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 20,
+                "max": 24
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 1,
+                "max": 1.12
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 1.06,
+                "max": 1.2
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 2,
+            "crit_chance": 0.1,
+            "life_steal_rate": 0.0,
+            "dodge": 0.00,
+            "unique": {
+                "name": "损毁献祭",
+                "effect": [
+                    {
+                        "type": "PIERCE",
+                        "target": {
+                            "type": "SELF",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": [
+                            [
+                                2
+                            ],
+                            true
+                        ]
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "刚毅审判",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "skills": [
                 {
-                  "random": "biased",
-                  "expect": 160,
-                  "min": 150
-                },
-                2
-              ]
-            }
-          ]
+                    "chance": 1,
+                    "cooldown": 30,
+                    "mp_cost": 0,
+                    "name": "刚毅战线",
+                    "effect": [
+                        {
+                            "type": "DEF_UP",
+                            "target": {
+                                "type": "ALL",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                {
+                                    "random": "biased",
+                                    "expect": 160,
+                                    "min": 150
+                                },
+                                2
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 1
         }
-      ],
-      "weight": 1
-    }
-  ]
+    ]
 }

@@ -87,8 +87,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 560,
-                        "min": 500
+                        "expect": 500,
+                        "min": 460
                     }
                 ]
             }
@@ -402,7 +402,7 @@
                 ]
             },
             {
-                "desc": "提高{param[0]:.1%}的技能发动率",
+                "desc": "提高{param[0]:.0%}的技能发动率",
                 "type": "SKILL_CHANCE_BOOST",
                 "target": {
                     "type": "SELF",
@@ -412,8 +412,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.45,
-                        "min": 0.38
+                        "expect": 0.60,
+                        "min": 0.53
                     },
                     3
                 ]
@@ -642,10 +642,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.32,
-                        "min": 0.4
+                        "expect": 0.40,
+                        "min": 0.45
                     },
-                    3
+                    4
                 ]
             }
         ]
