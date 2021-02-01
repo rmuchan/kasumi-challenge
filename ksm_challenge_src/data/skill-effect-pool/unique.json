@@ -197,7 +197,7 @@
                 },
                 "param": [
                     [
-                        2,
+                        1,
                         "S"
                     ],
                     2
@@ -603,7 +603,10 @@
                     "limit": 1
                 },
                 "param": [
-                    [1, "S"],
+                    [
+                        1,
+                        "S"
+                    ],
                     2
                 ]
             }
@@ -663,6 +666,23 @@
         "weight": 2,
         "effect": [
             {
+                "desc": "在接下来{param[1]}回合内提升{param[0]:.0%}的暴击伤害倍率",
+                "type": "CRIT_RATE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.30,
+                        "min": 0.24
+                    },
+                    2
+                ]
+            },
+            {
                 "desc": "进行一次普通攻击",
                 "type": "CRIT_CHANCE_BUFF",
                 "target": {
@@ -672,7 +692,7 @@
                 },
                 "param": [
                     [
-                        2,
+                        1,
                         "S"
                     ],
                     0
