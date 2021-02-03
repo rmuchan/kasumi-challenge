@@ -1002,8 +1002,8 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 3,
-            "max": 5
+            "min": 2,
+            "max": 4
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -1033,7 +1033,7 @@
                         "expect": 0.52,
                         "min": 0.47
                     },
-                    0.17,
+                    0.27,
                     7
                 ]
             }
