@@ -10,7 +10,7 @@
                 "灭亡之影"
             ]
         },
-        "weight": 4,
+        "weight": 3,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -23,8 +23,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 235,
-                        "min": 215
+                        "expect": 251,
+                        "min": 238
                     }
                 ]
             }
@@ -54,8 +54,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 120,
-                        "min": 110
+                        "expect": 138,
+                        "min": 120
                     }
                 ]
             },
@@ -73,7 +73,7 @@
                         "expect": 0.35,
                         "min": 0.31
                     },
-                    9
+                    10
                 ]
             },
             {
@@ -290,26 +290,26 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 200,
-                        "min": 170
+                        "expect": 250,
+                        "min": 210
                     }
                 ]
             },
             {
-                "desc": "并在{param[1]}回合内提升其防御{param[0]:.1f}点",
-                "type": "DEF_UP",
+                "desc": "提升自身{param[0]:%}的增益幅度，持续{param[1]}回合",
+                "type": "BUFF_RATE_UP",
                 "target": {
-                    "type": "SAME",
+                    "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 10,
-                        "min": 8
+                        "expect": 0.12,
+                        "min": 0.1
                     },
-                    3
+                    7
                 ]
             }
         ]
@@ -338,35 +338,6 @@
                         "expect": 200,
                         "min": 175
                     }
-                ]
-            }
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
-                "残废",
-                "衰弱巫术"
-            ]
-        },
-        "weight": 1,
-        "effect": [
-            {
-                "desc": "超大幅度降低敌方攻击最高的2名角色{param[0]:%}的攻击力，持续2回合",
-                "type": "ATK_DEBUFF",
-                "target": {
-                    "type": "ATKMOST",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 1.3,
-                        "min": 1.2
-                    },
-                    2
                 ]
             }
         ]
@@ -412,8 +383,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.60,
-                        "min": 0.53
+                        "expect": 1,
+                        "min": 0.9
                     },
                     3
                 ]

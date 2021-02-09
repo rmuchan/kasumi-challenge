@@ -221,9 +221,8 @@ class GameChar:
             skill.dec_cooldown()
 
         if 'fast_cooldown' in self.buff.keys():
-            for _ in range(2):
-                for skill in self.skills:
-                    skill.dec_cooldown()
+            for skill in self.skills:
+                skill.dec_cooldown()
 
     def skill_activate(self):
         """
@@ -249,7 +248,6 @@ class GameChar:
         if self.MP >= 1000:
             self.MP = 0
             return [self.attributes['unique']]
-
 
         # 主技能爆发
         if self.use_token('skill_overload_turn1'):

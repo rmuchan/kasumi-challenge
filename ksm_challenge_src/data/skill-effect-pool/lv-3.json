@@ -38,8 +38,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 100,
-                        "min": 95
+                        "expect": 115,
+                        "min": 102
                     }
                 ]
             }
@@ -83,8 +83,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 56,
-                        "min": 51
+                        "expect": 63,
+                        "min": 56
                     }
                 ]
             },
@@ -150,8 +150,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 100,
-                        "min": 90
+                        "expect": 115,
+                        "min": 100
                     }
                 ]
             }
@@ -800,7 +800,7 @@
                 "凌空射击"
             ]
         },
-        "weight": 3,
+        "weight": 4,
         "effect": [
             {
                 "desc": "暂时提高自身{param[0]:.0%}的攻击",

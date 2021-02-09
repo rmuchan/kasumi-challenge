@@ -68,18 +68,18 @@
         }
     },
     {
-        "desc": "【神赋卷轴】技能MP消耗-25%",
+        "desc": "【神赋卷轴】技能MP消耗-32%",
         "buff": {
             "mp_consume_dec": {
-                "multiply": 0.75
+                "multiply": 0.68
             }
         }
     },
     {
-        "desc": "【施法精通】技能发动率+16%",
+        "desc": "【施法精通】技能发动率+27%(乘法)",
         "buff": {
             "skill_chance_boost": {
-                "multiply": 1.16
+                "multiply": 1.27
             }
         }
     }

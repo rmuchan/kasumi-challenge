@@ -21,8 +21,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 66,
-                "min": 58
+                "expect": 75,
+                "min": 62
             }
         ]
     },
@@ -51,8 +51,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 66,
-                "min": 58
+                "expect": 75,
+                "min": 62
             }
         ]
     },
@@ -92,7 +92,7 @@
             ]
         },
         "desc": "提升自身{param[0]:.0f}点攻击，持续{param[1]}回合",
-        "weight": 2,
+        "weight": 4,
         "type": "PHY_ATK_BUFF_CONST",
         "target": {
             "type": "SELF",
