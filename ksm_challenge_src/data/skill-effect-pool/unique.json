@@ -296,6 +296,22 @@
                 ]
             },
             {
+                "desc": "提升目标{param[0]:%}的增益幅度，持续{param[1]}回合",
+                "type": "BUFF_RATE_UP",
+                "target": {
+                    "type": "SAME",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.20,
+                        "min": 0.17
+                    },
+                    7
+                ]
+            },           {
                 "desc": "提升自身{param[0]:%}的增益幅度，持续{param[1]}回合",
                 "type": "BUFF_RATE_UP",
                 "target": {

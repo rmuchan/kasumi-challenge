@@ -518,7 +518,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('crit_chance_enhanced', param[0][0], param[1])
                 ret.append({
-                    'feedback': '提升了{target}{amount:.1%}的暴击率，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:0}的暴击率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -538,7 +538,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('recover_rate_enhanced', param[0][0], param[1])
                 ret.append({
-                    'feedback': '提升了{target}{amount:.1%}的恢复强度，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.0%}的恢复强度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -548,7 +548,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('recover_rate_weaken', param[0][0], param[1])
                 ret.append({
-                    'feedback': '降低了{target}{amount:.1%}的恢复强度，持续{duration}回合',
+                    'feedback': '降低了{target}{amount:.0%}的恢复强度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -731,7 +731,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('skill_chance_boost_enhanced', param[0][0], param[1])
                 ret.append({
-                    'feedback': '提升了{target}{amount:.1%}的技能发动率，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.0%}的技能发动率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
