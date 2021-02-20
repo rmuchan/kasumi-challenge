@@ -16,20 +16,20 @@
     "defence_grow": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 0.1,
-        "max": 0.15
+        "min": 0.10,
+        "max": 0.11
     },
     "hp_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 100,
-        "max": 110
+        "min": 70,
+        "max": 71
     },
     "life_base": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 30,
-        "max": 40
+        "min": 17,
+        "max": 18
     },
     "recover_rate": {
         "random": "triangular",
@@ -46,7 +46,7 @@
     "buff_rate": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 0.9,
+        "min": 1.0,
         "max": 1.1
     },
     "crit_rate": 1.6,
@@ -75,21 +75,13 @@
                 ]
             },
             {
-                "type": "MGC_DMG",
+                "type": "ENFORCE_DEAD",
                 "target": {
                     "type": "SELF",
                     "team": 0,
                     "limit": 1
                 },
                 "param": [
-                    [
-                        {
-                            "random": "triangular",
-                            "rating_weight": 6,
-                            "min": 610.0,
-                            "max": 610.1
-                        }
-                    ]
                 ]
             }
         ]
@@ -112,7 +104,7 @@
         {
             "chance": 1,
             "cooldown": 0,
-            "mp_cost": 0,
+            "mp_cost": 200,
             "name": "火球",
             "effect": [
                 {
@@ -127,8 +119,8 @@
                             {
                                 "random": "triangular",
                                 "rating_weight": 6,
-                                "min": 70,
-                                "max": 90
+                                "min": 110,
+                                "max": 120
                             }
                         ]
                     ]

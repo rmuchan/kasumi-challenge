@@ -406,7 +406,7 @@ def _get_boss(gid: int, lvl: int, force_boss: str):
 
 async def _remove_battle(session: BaseSession, bat: dict):
     group_id = session.ctx['group_id']
-    await asyncio.sleep(600)
+    await asyncio.sleep(1200)
     if _battles.get(group_id) is bat and bat['can_join']:
         for uid in _battles[group_id]['team_a']:
             _reset_join_time(uid)

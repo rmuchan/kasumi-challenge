@@ -1,0 +1,150 @@
+{
+    "desc": "光与暗交错之间，罪与赎的来去之间，【罪罚萨满】做出了它的选择，他选择了惩戒与罪孽，走进了世界上最阴暗的角落。图腾是他的信仰，也是他的武器，通过[刚毅图腾]的顽固、[火焰图腾]的狂热、[治愈图腾]的医护，他行走在光影交界处，寻找自己的[救赎]。",
+    "bosses": [
+        {
+            "name": "罪罚萨满",
+            "not_short_hp": false,
+            "attack": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 270,
+                "max": 300
+            },
+            "defence_base": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 2.2,
+                "max": 2.6
+            },
+            "defence_grow": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 0.18,
+                "max": 0.2
+            },
+            "hp_base": {
+                "random": "triangular",
+                "rating_weight": 5,
+                "min": 490,
+                "max": 520
+            },
+            "life_base": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 160,
+                "max": 170
+            },
+            "recover_rate": {
+                "random": "triangular",
+                "rating_weight": 3,
+                "min": 0.9,
+                "max": 1
+            },
+            "spell_rate": {
+                "random": "triangular",
+                "rating_weight": 4,
+                "min": 0.9,
+                "max": 1
+            },
+            "buff_rate": {
+                "random": "triangular",
+                "rating_weight": 2,
+                "min": 0.9,
+                "max": 1.1
+            },
+            "crit_rate": 1.7,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.4,
+            "dodge": 0.03,
+            "unique": {
+                "name": "救赎",
+                "effect": [
+                    {
+                        "type": "HEAL",
+                        "target": {
+                            "type": "ALL",
+                            "team": 1,
+                            "limit": 4
+                        },
+                        "param": [
+                            [
+                                {
+                                    "random": "triangular",
+                                    "rating_weight": 1,
+                                    "min": 170,
+                                    "max": 180
+                                }
+                            ]
+                        ]
+                    },
+                    {
+                        "type": "SUMMON",
+                        "target": {
+                            "type": "SELF",
+                            "team": 1,
+                            "limit": 1
+                        },
+                        "param": [
+                            "fire-totem"
+                        ]
+                    }
+                ]
+            },
+            "normal_attack": {
+                "name": "降罪",
+                "effect": [
+                    {
+                        "type": "NORMAL_ATK",
+                        "target": {
+                            "type": "RAND",
+                            "team": 0,
+                            "limit": 1
+                        },
+                        "param": []
+                    }
+                ]
+            },
+            "skills": [
+                {
+                    "chance": 0.52,
+                    "cooldown": 1,
+                    "mp_cost": 100,
+                    "name": "召唤烈焰图腾",
+                    "effect": [
+                        {
+                            "type": "SUMMON",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                "fire-totem"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "chance": 0.33,
+                    "cooldown": 1,
+                    "mp_cost": 100,
+                    "name": "召唤治愈图腾",
+                    "effect": [
+                        {
+                            "type": "SUMMON",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                "heal-totem"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "weight": 6
+        }
+    ]
+}

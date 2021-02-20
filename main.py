@@ -56,7 +56,7 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/ifrit.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/Shaman.json') as FILE:
     boss = json.load(FILE)
 
 test_level = 1
@@ -112,4 +112,4 @@ async def main2():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main2())

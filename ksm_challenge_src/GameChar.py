@@ -24,6 +24,7 @@ class GameChar:
         self.skills = [GameSkill(x) for x in self.attributes['skills']]
         self.token = set()
         self.turn_mp_gain()
+        self.enforce_dead = False
 
         # 旧版本数据兼容:
         if 'mp_consume_dec' not in self.attributes:
@@ -102,7 +103,7 @@ class GameChar:
 
     @property   # 判断是否死亡
     def not_dead(self):
-        return self.HP > 0
+        return self.HP > 0 and not self.enforce_dead
 
     @property   # 返回普攻信息
     def normal_attack(self):
@@ -292,7 +293,11 @@ class GameChar:
 
     def mp_display(self) -> str:
         value = int(self.MP / (1000 / 7))
-        return mp_block_list[value]
+        try:
+            return mp_block_list[value]
+        except IndexError:
+            print(f'mp显示数组参数越界{value}')
+            return '??'
 
     # ————————————————————————————
     #         技能效果执行
@@ -518,7 +523,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('crit_chance_enhanced', param[0][0], param[1])
                 ret.append({
-                    'feedback': '提升了{target}{amount:0}的暴击率，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:0%}的暴击率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -768,6 +773,17 @@ class GameChar:
                         'param': {'amount': real_added}
                     })
 
+        # 强制死亡
+        elif effect['type'] == 'ENFORCE_DEAD':
+            for obj in selector:
+                obj.enforce_dead = True
+                ret.append({
+                    'feedback': '破坏了{target}',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {}
+                })
+
+
         # 根据MP情况获得增益效果
         elif effect['type'] == 'MP_SPELL_UP':
             for obj in selector:
@@ -996,7 +1012,7 @@ class GameChar:
         return S
 
 
-hp_block_list = '▏▎▍▌▋▊▉'
+hp_block_list = '▏▎▍▌▋▊▉▉'
 mp_block_list = '▁▂▃▄▅▆▇★'
 
 

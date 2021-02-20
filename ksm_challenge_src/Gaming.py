@@ -60,7 +60,7 @@ class Gaming(ABC):
             self.turn += 1
 
             if not testing_mode:
-                await asyncio.sleep(16)
+                await asyncio.sleep(20)
 
     def selector(self, target, team_name: str, initiator: GameChar):
         type_ = target['type']
