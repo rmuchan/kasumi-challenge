@@ -523,7 +523,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('crit_chance_enhanced', param[0][0], param[1])
                 ret.append({
-                    'feedback': '提升了{target}{amount:0%}的暴击率，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.0%}的暴击率，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
