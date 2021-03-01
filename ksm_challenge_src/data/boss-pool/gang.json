@@ -13,32 +13,32 @@
       "attack": {
         "random": "triangular",
         "rating_weight": 5,
-        "min": 43,
-        "max": 50
+        "min": 44,
+        "max": 51
       },
       "defence_base": {
         "random": "triangular",
         "rating_weight": 3,
-        "min": 2.2,
-        "max": 2.5
+        "min": 2.0,
+        "max": 2.2
       },
       "defence_grow": {
         "random": "triangular",
         "rating_weight": 2,
-        "min": 0.1,
-        "max": 0.11
+        "min": 0.001,
+        "max": 0.002
       },
       "hp_base": {
         "random": "triangular",
         "rating_weight": 4,
-        "min": 430,
-        "max": 460
+        "min": 130,
+        "max": 160
       },
       "life_base": {
         "random": "triangular",
         "rating_weight": 6,
-        "min": 590,
-        "max": 640
+        "min": 960,
+        "max": 1000
       },
       "recover_rate": {
         "random": "triangular",
@@ -60,7 +60,7 @@
       },
       "crit_rate": 2.4,
       "crit_chance": 0.14,
-      "life_steal_rate": 0.56,
+      "life_steal_rate": 0.51,
       "dodge": 0.06,
       "unique": {
         "name": "人肉炸弹",

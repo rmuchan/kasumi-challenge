@@ -19,20 +19,20 @@
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 3,
-                "min": 0.075,
-                "max": 0.089
+                "min": 0.001,
+                "max": 0.002
             },
             "hp_base": {
                 "random": "triangular",
                 "rating_weight": 3,
-                "min": 230,
-                "max": 240
+                "min": 80,
+                "max": 90
             },
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 145,
-                "max": 155
+                "min": 365,
+                "max": 375
             },
             "recover_rate": {
                 "random": "triangular",
@@ -54,7 +54,7 @@
             },
             "crit_rate": 1.5,
             "crit_chance": 0.7,
-            "life_steal_rate": 0.66,
+            "life_steal_rate": 0.7,
             "dodge": 0.55,
             "unique": {
                 "name": "锁喉",

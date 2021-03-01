@@ -7,32 +7,32 @@
             "attack": {
                 "random": "triangular",
                 "rating_weight": 8,
-                "min": 222,
-                "max": 240
+                "min": 242,
+                "max": 260
             },
             "defence_base": {
                 "random": "triangular",
                 "rating_weight": 6,
-                "min": 3.8,
-                "max": 4.4
+                "min": 3.6,
+                "max": 4.0
             },
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 2,
-                "min": 0.18,
-                "max": 0.2
+                "min": 0.01,
+                "max": 0.02
             },
             "hp_base": {
                 "random": "triangular",
                 "rating_weight": 6,
-                "min": 730,
-                "max": 780
+                "min": 180,
+                "max": 200
             },
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 210,
-                "max": 240
+                "min": 720,
+                "max": 740
             },
             "recover_rate": {
                 "random": "triangular",
@@ -54,7 +54,7 @@
             },
             "crit_rate": 1.5,
             "crit_chance": 0.11,
-            "life_steal_rate": 0.56,
+            "life_steal_rate": 0.51,
             "dodge": 0.06,
             "unique": {
                 "name": "烈火重燃",
@@ -103,7 +103,7 @@
                         },
                         "param": [
                             [
-                                0.25
+                                0.20
                             ],
                             30
                         ]
@@ -191,7 +191,7 @@
                             },
                             "param": [
                                 [
-                                    0.5
+                                    0.4
                                 ],
                                 0
                             ]
@@ -214,7 +214,7 @@
                             },
                             "param": [
                                 [
-                                    0.36
+                                    0.32
                                 ],
                                 30
                             ]

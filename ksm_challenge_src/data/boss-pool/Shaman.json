@@ -7,8 +7,8 @@
             "attack": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 270,
-                "max": 300
+                "min": 310,
+                "max": 330
             },
             "defence_base": {
                 "random": "triangular",
@@ -19,20 +19,20 @@
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 0.18,
-                "max": 0.2
+                "min": 0.001,
+                "max": 0.002
             },
             "hp_base": {
                 "random": "triangular",
                 "rating_weight": 5,
-                "min": 490,
-                "max": 520
+                "min": 290,
+                "max": 220
             },
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 2,
-                "min": 160,
-                "max": 170
+                "min": 360,
+                "max": 370
             },
             "recover_rate": {
                 "random": "triangular",
@@ -54,7 +54,7 @@
             },
             "crit_rate": 1.7,
             "crit_chance": 0.11,
-            "life_steal_rate": 0.4,
+            "life_steal_rate": 0.6,
             "dodge": 0.03,
             "unique": {
                 "name": "救赎",

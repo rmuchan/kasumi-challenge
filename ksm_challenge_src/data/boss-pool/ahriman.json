@@ -19,26 +19,26 @@
             "defence_base": {
                 "random": "triangular",
                 "rating_weight": 5,
-                "min": 3.0,
-                "max": 3.5
+                "min": 2.8,
+                "max": 3.1
             },
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 3,
-                "min": 0.09,
-                "max": 0.11
+                "min": 0.001,
+                "max": 0.005
             },
             "hp_base": {
                 "random": "triangular",
                 "rating_weight": 5,
-                "min": 490,
-                "max": 520
+                "min": 170,
+                "max": 190
             },
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 230,
-                "max": 250
+                "min": 630,
+                "max": 650
             },
             "recover_rate": {
                 "random": "triangular",

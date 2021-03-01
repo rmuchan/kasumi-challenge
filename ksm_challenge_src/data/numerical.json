@@ -48,7 +48,7 @@
         },
         "base_crit_rate": {
             "random": "biased",
-            "expect": 1.19,
+            "expect": 1.22,
             "min": 1.08
         }
     },
@@ -82,7 +82,7 @@
     "attr_grow_expend": 1.23,
     "crit_base": 1.25,
     "crit_chance": 0.11,
-    "crit_int_convert_rate": 0.0082,
+    "crit_int_convert_rate": 0.0085,
     "life_steal_rate_base": 0.36,
     "def_adj_rate": 0.05,
     "def_rate": 0.27,
@@ -118,9 +118,9 @@
     "talent_coin_earn_index": 0.55,
     "talent_coin_earn_rate": 0.2,
     "life_to_mp": 0.66,
-    "fire_enchant_rate": 0.85,
+    "fire_enchant_rate": 0.68,
     "fire_enchant_spell_enchance_rate": 1.0,
-    "atk_index": 1.11,
+    "atk_index": 1.06,
     "atk_avr": 175,
     "fair_mode": 9,
     "boss_virtual_attr": 70,

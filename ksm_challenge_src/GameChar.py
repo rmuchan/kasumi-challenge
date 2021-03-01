@@ -117,12 +117,17 @@ class GameChar:
     def fire_enchanted(self):
         return 'fire_enchant' in self.buff.keys()
 
-    # 返回平级调整倍率
+    # 返回平级调整倍率 - 魔法倍率
     def adj_spell_rate(self, rate):
         base = self.attributes['spell_rate'] / self.attributes['std_rate']
         enhance = ((self.buff_calc('spell_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec('spell_rate_weaken')
         return base * enhance
 
+    # 返回平级调整倍率 - 吸血使用的恢复强度
+    def adj_recover_rate(self, rate):
+        base = self.attributes['recover_rate'] / self.attributes['std_rate']
+        enhance = ((self.buff_calc('recover_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec('recover_rate_weaken')
+        return base * enhance
 
     # 用于Buff总量的计算
     def buff_calc(self, buff_type, is_multi=False):
@@ -373,7 +378,7 @@ class GameChar:
                 # magic_enchant
                 # 吸血 对自身无效
                 if obj != self:
-                    self.recover(hp_damage * self.life_steal_rate)
+                    self.recover(hp_damage * self.life_steal_rate, is_lifesteal=True)
 
                 # miss
                 if atk_status == -1:
@@ -838,7 +843,7 @@ class GameChar:
         else:
             return False
 
-    def recover(self, param, percentage_type=None):
+    def recover(self, param, percentage_type=None, is_lifesteal=False):
         """
         生命恢复。传入恢复量
         超过最大值的将会被舍弃
@@ -850,8 +855,13 @@ class GameChar:
 
         pre_hp = self.HP
 
-        if not percentage_type:
+        if is_lifesteal:
+            to_recover = param * self.adj_recover_rate(1)
+        else:
             to_recover = param * self.recover_rate
+
+        if not percentage_type:
+
             self.HP += to_recover
         elif percentage_type == PercentageType.SET:
             if self.hp_percentage < param:
@@ -987,8 +997,8 @@ class GameChar:
         返回护甲减免后的伤害值
         """
         damage_decrease = 1 + numerical['def_rate'] * self.defence
-        if damage_decrease < 0.4:
-            damage_decrease = 0.4
+        if damage_decrease < 0.2:
+            damage_decrease = 0.2
         return damage / damage_decrease
 
     def _attack_rate_to_pont(self, rate):

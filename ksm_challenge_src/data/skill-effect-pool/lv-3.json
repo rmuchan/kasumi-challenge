@@ -670,8 +670,6 @@
         "name": {
             "random": "choice",
             "values": [
-                "穿甲弹",
-                "破甲一击",
                 "护甲破坏",
                 "盔甲腐蚀",
                 "防御穿透"
@@ -679,22 +677,6 @@
         },
         "weight": 2,
         "effect": [
-            {
-                "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 36,
-                        "min": 30
-                    }
-                ]
-            },
             {
                 "desc": "并使目标防御下降{param[0]:.1f}点，持续{param[1]}回合",
                 "type": "DEF_DEC",
@@ -706,10 +688,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.35,
-                        "min": 1.2
+                        "expect": 1.8,
+                        "min": 1.5
                     },
-                    3
+                    2
                 ]
             }
         ]
