@@ -678,11 +678,11 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "并使目标防御下降{param[0]:.1f}点，持续{param[1]}回合",
+                "desc": "使目标防御下降{param[0]:.1f}点，持续{param[1]}回合",
                 "type": "DEF_DEC",
                 "target": {
-                    "type": "SAME",
-                    "team": 1,
+                    "type": "RAND",
+                    "team": 0,
                     "limit": 1
                 },
                 "param": [
