@@ -70,7 +70,7 @@
                 "能量涌动"
             ]
         },
-        "weight": 4,
+        "weight": 3,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -211,7 +211,7 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 1,
+            "min": 2,
             "max": 4
         },
         "mp_cost": {
@@ -944,7 +944,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "为自身添加伤害抵抗标记，完全抵抗下一次受到的伤害",
+                "desc": "为自身添加攻击抵抗标记，完全抵抗下一次受到的攻击",
                 "type": "DMG_RESIST",
                 "target": {
                     "type": "SELF",
@@ -984,7 +984,7 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 2,
+            "min": 3,
             "max": 4
         },
         "mp_cost": {
@@ -1017,6 +1017,48 @@
                     },
                     0.27,
                     7
+                ]
+            }
+        ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.12
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 2,
+            "max": 3
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 200,
+            "max": 220
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "复仇火花"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "使自身进入复仇火花状态，在下一次受到普通攻击时，对伤害来源造成{param[0]}点魔法伤害，多个复仇火花效果不叠加",
+                "type": "REVENGE_FLAME",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 135,
+                        "min": 120
+                    }
                 ]
             }
         ]

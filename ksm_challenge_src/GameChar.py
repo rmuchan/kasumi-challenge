@@ -177,7 +177,7 @@ class GameChar:
         """
         角色受到伤害，需要传入伤害量，可选是否为法术伤害。
         伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
-        返回一个tuple，[0]为实际伤害量，[1]为攻击状态(-1: 闪避了, 0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破, 3: 伤害抵抗), [2]为对生命本身而非护盾造成的伤害
+        返回一个tuple，[0]为实际伤害量，[1]为攻击状态(-1: 闪避了, 0: 直接伤害, 1: 护盾被击破, 2: 护盾未击破, 3: 攻击抵抗), [2]为对生命本身而非护盾造成的伤害
         """
         shield_break = 0
         shield_damage = 0
@@ -305,6 +305,130 @@ class GameChar:
             return '??'
 
     # ————————————————————————————
+    #         技能效果封装
+    # ————————————————————————————
+
+    # 物理伤害消息生成
+    def do_phy_damage(self, obj, is_crit, atk_status, real_damage):
+        feedback = ''
+        if is_crit:
+            feedback += '暴击！'
+        feedback += '对{target}'
+        # 未击破
+        if atk_status == 2:
+            feedback += '的护盾'
+
+        feedback += '造成了{amount:.0f}点伤害'
+        # 击破护盾了
+        if atk_status == 1:
+            feedback += '，破坏了护盾'
+        return [{
+            'feedback': feedback,
+            'merge_key': {'target': self._self_replace(obj.name), 'amount': real_damage},
+            'param': {}
+        }]
+
+    # 造成魔法伤害
+    def do_magic_damage(self, obj, damage, enhance=None, special_msg=None):
+        """
+        角色造成魔法伤害时调用的函数。
+        :param enhance: 法术倍率，不填为角色自身的法术倍率
+        :param damage: 造成的魔法伤害量
+        :param obj: 攻击目标的GameChar对象
+        :return: 与ret一样，可以使用+=直接连接此函数的返回值
+        """
+        # 默认为角色自身法术倍率
+        if enhance is None:
+            enhance = self.spell_rate
+
+        # 生成实际魔法伤害量
+        magic_damage = damage * enhance * fluctuation()
+
+        # 对目标角色造成魔法伤害
+        magic_real_damage, magic_atk_status, _ = obj.take_damage(magic_damage, magic=True)
+
+        # 攻击抵抗作用
+        if magic_atk_status == 3:
+            return [{
+                'feedback': '{target}抵抗了{count}次攻击',
+                'merge_key': {'target': self._self_replace(obj.name)},
+                'param': {'count': 1}
+            }]
+
+        # 允许调用时自定义消息头
+        if special_msg is None:
+            feedback = '对{target}'
+        else:
+            feedback = special_msg
+
+        if magic_atk_status == 2:
+            feedback += '的护盾'
+        feedback += '造成了{amount:.0f}点魔法伤害'
+        if magic_atk_status == 1:
+            feedback += '，破坏了护盾'
+        return [{
+            'feedback': feedback,
+            'merge_key': {'target': self._self_replace(obj.name)},
+            'param': {'amount': magic_real_damage}
+        }]
+
+    def do_normal_attack(self, obj: "GameChar"):
+        """
+        角色进行普通攻击时调用的函数。
+        :param obj: 攻击目标的GameChar对象
+        :return: 与ret一样，可以使用+=直接连接此函数的返回值
+        """
+
+        # 初始化返回数据数组
+        ret = []
+
+        # 进行攻击伤害与是否暴击的计算
+        atk_damage, is_crit = self.do_attack()
+
+        # 对目标发起攻击，获得实际伤害量、伤害状态与实际生命值伤害
+        real_damage, atk_status, hp_damage = obj.take_damage(atk_damage)
+
+        # 根据实际生命值伤害计算吸血 对自身的普通攻击不会计算吸血
+        if obj != self:
+            self.recover(hp_damage * self.life_steal_rate, is_lifesteal=True)
+
+        # 闪避情况
+        if atk_status == -1:
+            ret.append({
+                'feedback': '{target}闪避了{count}次攻击',
+                'merge_key': {'target': self._self_replace(obj.name)},
+                'param': {'count': 1}
+            })
+        # 攻击抵抗情况  注意火焰附魔的附加效果同样也会被抵抗掉
+        elif atk_status == 3:
+            ret.append({
+                'feedback': '{target}抵抗了{count}次攻击',
+                'merge_key': {'target': self._self_replace(obj.name)},
+                'param': {'count': 1}
+            })
+        # 本次攻击命中，进行攻击
+        else:
+            if self.fire_enchanted:
+                ret += self.do_phy_damage(obj, is_crit, atk_status, real_damage)
+                ret += self.do_magic_damage(obj, self.attack * numerical['fire_enchant_rate'],
+                                self.adj_spell_rate(numerical['fire_enchant_spell_enchance_rate']))
+
+            else:
+                ret += self.do_phy_damage(obj, is_crit, atk_status, real_damage)
+
+            # 触发复仇火花效果 取数组第一个(即最早加上的Buff)
+            if 'revenge_flame' in obj.buff:
+                real_damage = obj.do_magic_damage(self, obj.buff['revenge_flame'][0][0], obj.spell_rate)[0]['param']['amount']
+                ret += [{
+                    'feedback': '触发[{target}]的复仇火花效果，受到其造成的{amount:.0f}点魔法伤害',
+                    'merge_key': {'target': obj.name},
+                    'param': {'amount': real_damage}
+                }]
+                # 清掉Buff
+                del obj.buff['revenge_flame']
+        return ret
+
+    # ————————————————————————————
     #         技能效果执行
     # ————————————————————————————
 
@@ -323,88 +447,15 @@ class GameChar:
 
         ret = []
 
-        # —————————————————————
-        # 物理伤害
-        def do_phy_damage():
-            feedback = ''
-            if is_crit:
-                feedback += '暴击！'
-            feedback += '对{target}'
-            # 未击破
-            if atk_status == 2:
-                feedback += '的护盾'
-
-            feedback += '造成了{amount:.0f}点伤害'
-            # 击破护盾了
-            if atk_status == 1:
-                feedback += '，破坏了护盾'
-            ret.append({
-                'feedback': feedback,
-                'merge_key': {'target': self._self_replace(obj.name), 'amount': real_damage},
-                'param': {}
-            })
-
-        # ————————————————————
-        # 魔法伤害
-        def do_magic_damage(damage, enhance=self.spell_rate):
-            magic_damage = damage * enhance * fluctuation()
-            magic_real_damage, magic_atk_status, _ = obj.take_damage(magic_damage, magic=True)
-
-            if magic_atk_status == 3:
-                ret.append({
-                    'feedback': '{target}抵抗了{count}次攻击',
-                    'merge_key': {'target': self._self_replace(obj.name)},
-                    'param': {'count': 1}
-                })
-                return
-
-            feedback = '对{target}'
-            if magic_atk_status == 2:
-                feedback += '的护盾'
-            feedback += '造成了{amount:.0f}点魔法伤害'
-            if magic_atk_status == 1:
-                feedback += '，破坏了护盾'
-            ret.append({
-                'feedback': feedback,
-                'merge_key': {'target': self._self_replace(obj.name)},
-                'param': {'amount': magic_real_damage}
-            })
-
         # 普通攻击
         if effect['type'] == 'NORMAL_ATK':
             for obj in selector:
-                atk_damage, is_crit = self.do_attack()
-                real_damage, atk_status, hp_damage = obj.take_damage(atk_damage)
-                # magic_enchant
-                # 吸血 对自身无效
-                if obj != self:
-                    self.recover(hp_damage * self.life_steal_rate, is_lifesteal=True)
-
-                # miss
-                if atk_status == -1:
-                    ret.append({
-                        'feedback': '{target}闪避了{count}次攻击',
-                        'merge_key': {'target': self._self_replace(obj.name)},
-                        'param': {'count': 1}
-                    })
-                elif atk_status == 3:
-                    ret.append({
-                        'feedback': '{target}抵抗了{count}次攻击',
-                        'merge_key': {'target': self._self_replace(obj.name)},
-                        'param': {'count': 1}
-                    })
-                else:
-                    if self.fire_enchanted:
-                        do_phy_damage()
-                        do_magic_damage(self.attack * numerical['fire_enchant_rate'], self.adj_spell_rate(numerical['fire_enchant_spell_enchance_rate']))
-
-                    else:
-                        do_phy_damage()
+                ret += self.do_normal_attack(obj)
 
         # 魔法伤害
         elif effect['type'] == 'MGC_DMG':
             for obj in selector:
-                do_magic_damage(param[0][0])
+                ret += self.do_magic_damage(obj, param[0][0])
 
         # 固定值攻击强化
         elif effect['type'] == 'PHY_ATK_BUFF_CONST':
@@ -641,12 +692,12 @@ class GameChar:
                     'param': {}
                 })
 
-        # 伤害抵抗标记
+        # 攻击抵抗标记
         elif effect['type'] == 'DMG_RESIST':
             for obj in selector:
                 obj.add_token('damage_resist')
                 ret.append({
-                    'feedback': '为{target}附加了伤害抵抗标记',
+                    'feedback': '为{target}附加了攻击抵抗标记',
                     'merge_key': {'target': self._self_replace(obj.name)},
                     'param': {}
                 })
@@ -655,7 +706,7 @@ class GameChar:
         elif effect['type'] == 'MGC_RAND':
             for obj in selector:
                 if random.random() < param[0]:
-                    do_magic_damage(param[1][0])
+                    self.do_magic_damage(obj, param[1][0])
                 else:
                     magic_damage = param[2] * self.spell_rate * fluctuation()
                     real_damage, atk_status, _ = self.take_damage(magic_damage, magic=True)
@@ -672,7 +723,7 @@ class GameChar:
                     })
 
                     # 造成较少的伤害
-                    do_magic_damage(param[1][0] * param[3])
+                    self.do_magic_damage(obj, param[1][0] * param[3])
 
         # 生命交换
         elif effect['type'] == 'LIFE_SWAP':
@@ -682,7 +733,7 @@ class GameChar:
 
                 # 如果目标的生命百分比小于自己的则造成伤害
                 if obj.hp_percentage < self.hp_percentage * rate:
-                    do_magic_damage(param[0][0])
+                    self.do_magic_damage(obj, param[0][0])
                 else:
                     # 交换生命
                     pre_self_life = self.hp_percentage
@@ -804,6 +855,16 @@ class GameChar:
                 ret.append({
                     'feedback': '强化了{target}{amount:.0%}的法术强度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[2]},
+                    'param': {'amount': real_added}
+                })
+
+        # 复仇火花
+        elif effect['type'] == 'REVENGE_FLAME':
+            for obj in selector:
+                real_added = obj.add_buff('revenge_flame', param[0][0], 30)
+                ret.append({
+                    'feedback': '为{target}添加了复仇火花状态，在下一次受到普通攻击时，对伤害来源造成魔法伤害',
+                    'merge_key': {'target': self._self_replace(obj.name)},
                     'param': {'amount': real_added}
                 })
 
