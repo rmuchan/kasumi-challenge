@@ -21,7 +21,7 @@ def show_help():
     -help [关键词]: 查询有关游戏机制的详细解释(关键词前有空格)
     -check:        查看上一次的交互消息
 ————————————
-👤如果您发现了任何文字、战斗数值等错误，或是对平衡性有任何建议，或者直接在GitHub中发起Issue或PR，感谢您的支持！
+👤如果您发现了任何文字、战斗数值等错误，或是对平衡性有任何建议，请直接在GitHub中发起Issue或PR，感谢您的支持！
 项目地址：https://github.com/rMuchan/kasumi-challenge
 """
 

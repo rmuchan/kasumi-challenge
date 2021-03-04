@@ -706,7 +706,7 @@ class GameChar:
         elif effect['type'] == 'MGC_RAND':
             for obj in selector:
                 if random.random() < param[0]:
-                    self.do_magic_damage(obj, param[1][0])
+                    ret += self.do_magic_damage(obj, param[1][0])
                 else:
                     magic_damage = param[2] * self.spell_rate * fluctuation()
                     real_damage, atk_status, _ = self.take_damage(magic_damage, magic=True)
@@ -723,7 +723,7 @@ class GameChar:
                     })
 
                     # 造成较少的伤害
-                    self.do_magic_damage(obj, param[1][0] * param[3])
+                    ret += self.do_magic_damage(obj, param[1][0] * param[3])
 
         # 生命交换
         elif effect['type'] == 'LIFE_SWAP':
