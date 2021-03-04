@@ -67,8 +67,6 @@ async def main():
     for i in range(4):
         ui = CLI(i, debug_mode=False)
         c = await create_character(ui)
-        ui.store('character', c)
-        ui.store('proto_character', None)
         chars.append(c)
         await show_chara_info(ui)
     gcs = [game_char_gen(x, test_lv=test_level) for x in chars]

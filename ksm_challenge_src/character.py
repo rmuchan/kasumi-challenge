@@ -13,7 +13,7 @@ from .user_guide import get_ver
 async def create_character(ui: UI):
     proto = ui.retrieve('proto_character')
     if isinstance(proto, dict) and proto.get('progress') == 'full':
-        return _build_character_from_proto(proto)
+        return _build_character_from_proto(ui, proto)
 
     if not isinstance(proto, dict) or proto.get('progress') not in _CREATE_STEPS:
         proto = _init_proto_character(ui.uid())
@@ -23,7 +23,7 @@ async def create_character(ui: UI):
 
     ui.append('开始创建角色，当前进度：')
     await print_character(ui, proto)
-    if proto['progress'] == next(iter(_CREATE_STEPS)):
+    if not ui.retrieve('created') and proto['progress'] == next(iter(_CREATE_STEPS)):
         await ui.send(data.race[proto['race_id']]['desc'])
 
     while proto['progress'] in _CREATE_STEPS:
@@ -33,7 +33,7 @@ async def create_character(ui: UI):
         ui.store('proto_character', proto)
         if should_print:
             await print_character(ui, proto)
-    return _build_character_from_proto(proto)
+    return _build_character_from_proto(ui, proto)
 
 
 def _init_proto_character(uid: int):
@@ -127,7 +127,7 @@ _CREATE_STEPS = {
 }
 
 
-def _build_character_from_proto(proto: Dict[str, Any]) -> Dict[str, Any]:
+def _build_character_from_proto(ui: UI, proto: Dict[str, Any]) -> Dict[str, Any]:
     assert proto['progress'] == 'full'
     fields_to_copy = [
         'name', 'race', 'race_id', 'game_version', 'talent', 'exp',
@@ -136,6 +136,9 @@ def _build_character_from_proto(proto: Dict[str, Any]) -> Dict[str, Any]:
         'passive', 'skill_1', 'skill_2', 'skill_3', 'unique',
     ]
     char = {k: proto[k] for k in fields_to_copy}
+    ui.store('character', char)
+    ui.store('proto_character', None)
+    ui.store('created', True)
     return char
 
 

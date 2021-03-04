@@ -160,9 +160,7 @@ async def _(session: CommandSession):
             min_ver = get_ver_idx(great_update_ver)
             if create_ver < min_ver:
                 ui.store('proto_character', None)
-        char = await create_character(ui)
-        ui.store('character', char)
-        ui.store('proto_character', None)
+        await create_character(ui)
         ui.append('角色创建完成！')
         await show_chara_info(ui)
 
