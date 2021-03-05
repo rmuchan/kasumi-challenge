@@ -418,12 +418,23 @@ class GameChar:
 
             # 触发复仇火花效果 取数组第一个(即最早加上的Buff)
             if 'revenge_flame' in obj.buff:
-                real_damage = obj.do_magic_damage(self, obj.buff['revenge_flame'][0][0], obj.spell_rate)[0]['param']['amount']
-                ret += [{
-                    'feedback': '触发[{target}]的复仇火花效果，受到其造成的{amount:.0f}点魔法伤害',
-                    'merge_key': {'target': obj.name},
-                    'param': {'amount': real_damage}
-                }]
+                # 持续时间超过两回合
+                if obj.buff['revenge_flame'][0][1] <= 28:
+
+                    real_added = obj.add_buff('spell_rate_enhanced', obj.buff['revenge_flame'][0][0]['spell_rate'], obj.buff['revenge_flame'][0][0]['duration'])
+                    real_damage = obj.do_magic_damage(self, obj.buff['revenge_flame'][0][0]['damage'], obj.spell_rate)[0]['param']['amount']
+                    ret.append({
+                        'feedback': '触发[{target}]的复仇火花效果，{target}的法术强度提高了{spell_rate:.0%}，持续{duration}回合，自身受到其造成的{amount:.0f}点魔法伤害',
+                        'merge_key': {'target': obj.name, 'duration': obj.buff['revenge_flame'][0][0]['duration'], 'amount': real_damage, 'spell_rate': real_added},
+                        'param': {}
+                    })
+                else:
+                    real_damage = obj.do_magic_damage(self, obj.buff['revenge_flame'][0][0]['damage'], obj.spell_rate)[0]['param']['amount']
+                    ret.append({
+                        'feedback': '触发[{target}]的复仇火花效果，自身受到其造成的{amount:.0f}点魔法伤害',
+                        'merge_key': {'target': obj.name, 'amount': real_damage},
+                        'param': {}
+                    })
                 # 清掉Buff
                 del obj.buff['revenge_flame']
         return ret
@@ -861,11 +872,13 @@ class GameChar:
         # 复仇火花
         elif effect['type'] == 'REVENGE_FLAME':
             for obj in selector:
-                real_added = obj.add_buff('revenge_flame', param[0][0], 30)
+                # 仅当身上没有的时候生效
+                if 'revenge_flame' not in obj.buff:
+                    obj.buff['revenge_flame'] = [(dict(damage=param[0][0], spell_rate=param[1][0], duration=param[2]), 30)]
                 ret.append({
                     'feedback': '为{target}添加了复仇火花状态，在下一次受到普通攻击时，对伤害来源造成魔法伤害',
                     'merge_key': {'target': self._self_replace(obj.name)},
-                    'param': {'amount': real_added}
+                    'param': {}
                 })
 
         else:
