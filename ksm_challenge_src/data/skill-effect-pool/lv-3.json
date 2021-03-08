@@ -2,8 +2,8 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.05,
-            "max": 0.14
+            "min": 0.12,
+            "max": 0.21
         },
         "cooldown": {
             "random": "triangular_int",
@@ -110,8 +110,8 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.05,
-            "max": 0.15
+            "min": 0.10,
+            "max": 0.20
         },
         "cooldown": {
             "random": "triangular_int",
@@ -1043,7 +1043,7 @@
                 "复仇火花"
             ]
         },
-        "weight": 2,
+        "weight": 3,
         "effect": [
             {
                 "desc": "使自身进入复仇火花状态，在下一次受到普通攻击时，对伤害来源造成{param[0]}点魔法伤害，多个效果不叠加；如果复仇火花状态持续时间超过2回合，则效果触发时额外提高自身{param[1]:.0%}的法术倍率，持续{param[2]}回合",
