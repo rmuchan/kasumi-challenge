@@ -159,7 +159,22 @@ class Gaming(ABC):
         }
 
     def _status_manage(self, chara):
-        chara.buff_fade()
+        feedback = []
+        feedback.extend(chara.buff_fade())
+        merged = []
+        for f in feedback:
+            for m in merged:
+                if m['feedback'] == f['feedback'] and m['merge_key'] == f['merge_key']:
+                    for k, v in f['param'].items():
+                        m['param'][k] += f'、{v}' if isinstance(v, str) else v
+                    break
+            else:
+                merged.append(f)
+        if merged:
+            lines = [x['feedback'].format(**x['merge_key'], **x['param']) for x in merged]
+            for line in lines:
+                self.ui.append(f'[{chara.name}]' + line)
+
         chara.skill_cooldown()
         chara.turn_mp_gain()
 

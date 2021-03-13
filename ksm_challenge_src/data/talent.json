@@ -84,7 +84,7 @@
     "desc": "生命提升",
     "format": ".1%",
     "effect": {
-      "madd": 0.01
+      "madd": 0.008
     },
     "max_level": 15,
     "cost_base": 15,

@@ -181,7 +181,7 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.30,
+                        "expect": 0.37,
                         "min": 0.25
                     },
                     2
@@ -534,7 +534,7 @@
                 },
                 "param": [
                     [
-                        0.66,
+                        0.63,
                         "S"
                     ],
                     0
@@ -558,7 +558,7 @@
                 ]
             },
             {
-                "desc": "然而每次攻击的伤害降低66%",
+                "desc": "然而每次攻击的伤害降低63%",
                 "type": "NORMAL_ATK",
                 "target": {
                     "type": "RAND",
@@ -706,8 +706,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.40,
-                        "min": 1.28
+                        "expect": 1.01,
+                        "min": 0.98
                     },
                     2
                 ]

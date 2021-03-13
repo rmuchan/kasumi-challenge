@@ -71,10 +71,26 @@
                                 {
                                     "random": "triangular",
                                     "rating_weight": 5,
-                                    "min": 260,
+                                    "min": 270,
                                     "max": 300
                                 }
                             ]
+                        ]
+                    },
+                    {
+                        "type": "MGC_BUFF_RATE",
+                        "target": {
+                            "type": "SELF",
+                            "team": 1,
+                            "limit": 1
+                        },
+                        "param": [
+                            {
+                                "random": "biased",
+                                "expect": 0.24,
+                                "min": 0.18
+                            },
+                            30
                         ]
                     }
                 ]
@@ -176,8 +192,8 @@
                                     {
                                         "random": "triangular",
                                         "rating_weight": 1,
-                                        "min": 40,
-                                        "max": 50
+                                        "min": 60,
+                                        "max": 70
                                     }
                                 ]
                             ]

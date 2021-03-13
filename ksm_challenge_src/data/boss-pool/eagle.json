@@ -95,7 +95,7 @@
                                 {
                                     "random": "triangular",
                                     "rating_weight": 3,
-                                    "min": 150,
+                                    "min": 170,
                                     "max": 180
                                 }
                             ]
@@ -181,7 +181,7 @@
                         {
                             "type": "MGC_DMG",
                             "target": {
-                                "type": "RAND_SAFE",
+                                "type": "RAND",
                                 "team": 0,
                                 "limit": 3
                             },

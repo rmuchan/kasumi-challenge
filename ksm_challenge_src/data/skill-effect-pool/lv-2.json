@@ -181,7 +181,7 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 0.28,
+                "expect": 0.29,
                 "min": 0.26
             },
             7
@@ -210,32 +210,6 @@
                 "expect": 220,
                 "min": 180
             }
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
-                "铁壁",
-                "护甲增强",
-                "防御增强"
-            ]
-        },
-        "weight": 1,
-        "desc": "中幅度强化自身防御{param[0]:.1f}点，持续{param[1]}回合",
-        "type": "DEF_UP",
-        "target": {
-            "type": "SELF",
-            "team": 1,
-            "limit": 1
-        },
-        "param": [
-            {
-                "random": "biased",
-                "expect": 7,
-                "min": 6
-            },
-            5
         ]
     },
     {
@@ -312,8 +286,8 @@
         "param": [
             {
                 "random": "triangular",
-                "min": 0.67,
-                "max": 0.73
+                "min": 0.75,
+                "max": 0.83
             },
             {
                 "random": "biased",
@@ -322,8 +296,8 @@
             },
             {
                 "random": "triangular",
-                "min": 89,
-                "max": 79
+                "min": 59,
+                "max": 69
             },
             0.5
         ]
