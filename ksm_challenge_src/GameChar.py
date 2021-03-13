@@ -217,7 +217,6 @@ class GameChar:
         """
         ret = []
 
-
         if 'revenge_flame' in self.buff and self.buff['revenge_flame'][0][1] == 0:
             real_added = self.add_buff('spell_rate_enhanced', self.buff['revenge_flame'][0][0]['spell_rate'], self.buff['revenge_flame'][0][0]['duration'])
             ret.append({
@@ -439,12 +438,7 @@ class GameChar:
                     'param': {}
                 })
 
-                real_add = obj.mp_up(obj, obj.buff['revenge_flame'][0][0]['mp_gain_value'])
-                ret.append({
-                    'feedback': '[{target}]恢复了{amount}点MP',
-                    'merge_key': {'target': obj.name, 'amount': real_add},
-                    'param': {}
-                })
+                ret += obj.mp_up(obj, obj.buff['revenge_flame'][0][0]['mp_gain_value'])
                 # 清掉Buff
                 del obj.buff['revenge_flame']
         return ret
