@@ -220,7 +220,7 @@ class GameChar:
         if 'revenge_flame' in self.buff and self.buff['revenge_flame'][0][1] == 0:
             real_added = self.add_buff('spell_rate_enhanced', self.buff['revenge_flame'][0][0]['spell_rate'], self.buff['revenge_flame'][0][0]['duration'])
             ret.append({
-                'feedback': '的复仇火花消失了，强化了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                'feedback': '的复仇火花消失了，提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
                 'merge_key': {'target': self._self_replace(self.name), 'duration': self.buff['revenge_flame'][0][0]['duration']},
                 'param': {'amount': real_added}
             })
@@ -432,13 +432,12 @@ class GameChar:
             if 'revenge_flame' in obj.buff:
 
                 real_damage = obj.do_magic_damage(self, obj.buff['revenge_flame'][0][0]['damage'], obj.spell_rate)[0]['param']['amount']
+                real_added = obj.mp_up(obj, obj.buff['revenge_flame'][0][0]['mp_gain_value'])[0]['param']['amount']
                 ret.append({
-                    'feedback': '触发[{target}]的复仇火花效果，自身受到其造成的{amount:.0f}点魔法伤害',
-                    'merge_key': {'target': obj.name, 'amount': real_damage},
+                    'feedback': '触发[{target}]的复仇火花效果，自身受到其造成的{amount:.0f}点魔法伤害，[{target}]增加了{mp:.0f}点MP',
+                    'merge_key': {'target': obj.name, 'amount': real_damage, 'mp': real_added},
                     'param': {}
                 })
-
-                ret += obj.mp_up(obj, obj.buff['revenge_flame'][0][0]['mp_gain_value'])
                 # 清掉Buff
                 del obj.buff['revenge_flame']
         return ret
@@ -560,7 +559,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('spell_rate_enhanced', param[0][0], param[1])
                 ret.append({
-                    'feedback': '强化了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -582,7 +581,7 @@ class GameChar:
                 real_added = obj.add_buff('defence_enhanced', param[0][0], param[1],
                                           buff_enhanced=True)
                 ret.append({
-                    'feedback': '强化了{target}{amount:.1f}点防御，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.1f}点防御，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -695,7 +694,7 @@ class GameChar:
             for obj in selector:
                 real_added = obj.add_buff('buff_rate_enhanced', param[0][0], param[1])
                 ret.append({
-                    'feedback': '强化了{target}{amount:.0%}的增益幅度，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.0%}的增益幅度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {'amount': real_added}
                 })
@@ -871,7 +870,7 @@ class GameChar:
                 to_add = mp_adj * (param[0][0] - param[1]) + param[1]
                 real_added = obj.add_buff('spell_rate_enhanced', to_add, param[2])
                 ret.append({
-                    'feedback': '强化了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                    'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[2]},
                     'param': {'amount': real_added}
                 })

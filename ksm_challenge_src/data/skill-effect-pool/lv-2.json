@@ -145,7 +145,7 @@
             ]
         },
         "desc": "恢复生命值最低的队友{param[0]}点生命",
-        "weight": 3,
+        "weight": 2,
         "type": "HEAL",
         "target": {
             "type": "LIFELEAST",
@@ -155,8 +155,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 150,
-                "min": 130
+                "expect": 120,
+                "min": 110
             }
         ]
     },
@@ -192,8 +192,7 @@
             "random": "choice",
             "values": [
                 "护盾",
-                "防御盾",
-                "减伤盾"
+                "防御盾"
             ]
         },
         "desc": "为自身添加{param[0]}点护盾",
@@ -207,8 +206,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 220,
-                "min": 180
+                "expect": 160,
+                "min": 150
             }
         ]
     },

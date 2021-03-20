@@ -257,62 +257,45 @@
             "random": "choice",
             "values": [
                 "天使降临",
-                "觉醒之触",
-                "复苏治疗"
+                "觉醒之触"
             ]
         },
-        "weight": 2,
+        "weight": 2222222,
         "effect": [
             {
-                "desc": "治疗生命最低的一名队友{param[0]}点生命",
-                "type": "HEAL",
-                "target": {
-                    "type": "LIFELEAST",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 240,
-                        "min": 200
-                    }
-                ]
-            },
-            {
-                "desc": "为其附加{param[0]}点护盾",
+                "desc": "为自身附加{param[0]}点护盾",
                 "type": "SHIELD",
                 "target": {
-                    "type": "SAME",
+                    "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 250,
-                        "min": 210
+                        "expect": 100,
+                        "min": 99
                     }
                 ]
             },
             {
-                "desc": "提升目标{param[0]:%}的增益幅度，持续{param[1]}回合",
+                "desc": "在{param[1]}回合内大幅提升自身{param[0]:%}的增益幅度",
                 "type": "BUFF_RATE_UP",
                 "target": {
-                    "type": "SAME",
+                    "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.20,
-                        "min": 0.17
+                        "expect": 0.56,
+                        "min": 0.50
                     },
-                    7
+                    4
                 ]
             },           {
-                "desc": "提升自身{param[0]:%}的增益幅度，持续{param[1]}回合",
+                "desc": "并在本局中永久提升自身{param[0]:%}的增益幅度",
                 "type": "BUFF_RATE_UP",
                 "target": {
                     "type": "SELF",
@@ -325,7 +308,7 @@
                         "expect": 0.12,
                         "min": 0.1
                     },
-                    7
+                    30
                 ]
             }
         ]

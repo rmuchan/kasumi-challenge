@@ -66,8 +66,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 95,
-                "min": 80
+                "expect": 63,
+                "min": 57
             }
         ]
     },
@@ -116,8 +116,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 100,
-                "min": 90
+                "expect": 86,
+                "min": 79
             }
         ]
     },

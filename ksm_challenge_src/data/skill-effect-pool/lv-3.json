@@ -257,7 +257,7 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 90,
+                        "expect": 70,
                         "min": 60
                     }
                 ]
@@ -317,8 +317,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 310,
-                        "min": 270
+                        "expect": 260,
+                        "min": 240
                     }
                 ]
             }
@@ -453,7 +453,7 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.05,
+            "min": 0.1,
             "max": 0.15
         },
         "cooldown": {
@@ -463,23 +463,22 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 120
+            "min": 120,
+            "max": 150
         },
         "name": {
             "random": "choice",
             "values": [
-                "铜墙铁壁",
-                "护甲强化",
-                "防御强化",
-                "防御充能",
-                "构建防御"
+                "原始力量",
+                "全面强化",
+                "战斗充能",
+                "构建战场"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
-                "desc": "大幅度强化自身防御{param[0]:.1f}点，持续{param[1]}回合",
+                "desc": "在{param[1]}回合内，提升自身{param[0]:.1f}点防御",
                 "type": "DEF_UP",
                 "target": {
                     "type": "SELF",
@@ -489,55 +488,61 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 11,
-                        "min": 9
+                        "expect": 1.4,
+                        "min": 1
                     },
-                    5
+                    6
                 ]
-            }
-        ]
-    },
-    {
-        "chance": {
-            "random": "triangular",
-            "min": 0.05,
-            "max": 0.15
-        },
-        "cooldown": {
-            "random": "triangular_int",
-            "min": 5,
-            "max": 6
-        },
-        "mp_cost": {
-            "random": "triangular_int",
-            "min": 60,
-            "max": 120
-        },
-        "name": {
-            "random": "choice",
-            "values": [
-                "战线统一",
-                "协同防御",
-                "团队防御"
-            ]
-        },
-        "weight": 1,
-        "effect": [
+            },
             {
-                "desc": "中幅度强化全队防御{param[0]:.1f}点，持续{param[1]}回合",
-                "type": "DEF_UP",
+                "desc": "{param[0]:.1%}的增益幅度",
+                "type": "BUFF_RATE_UP",
                 "target": {
-                    "type": "ALL",
+                    "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 4.5,
-                        "min": 4
+                        "expect": 0.068,
+                        "min": 0.062
                     },
-                    4
+                    6
+                ]
+            },
+            {
+                "desc": "{param[0]:%}的恢复强度",
+                "type": "RECOVER_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.07,
+                        "min": 0.06
+                    },
+                    6
+                ]
+            },
+            {
+                "desc": "{param[0]:%}的法术倍率",
+                "type": "MGC_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.07,
+                        "min": 0.06
+                    },
+                    6
                 ]
             }
         ]
