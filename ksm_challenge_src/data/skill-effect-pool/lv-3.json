@@ -338,7 +338,7 @@
         "mp_cost": {
             "random": "triangular_int",
             "min": 60,
-            "max": 120
+            "max": 100
         },
         "name": {
             "random": "choice",
@@ -365,8 +365,8 @@
                     },
                     {
                         "random": "triangular",
-                        "min": 4.5,
-                        "max": 5.7
+                        "min": 5.7,
+                        "max": 6.7
                     }
                 ]
             },
@@ -512,7 +512,7 @@
                 ]
             },
             {
-                "desc": "{param[0]:%}的恢复强度",
+                "desc": "{param[0]:.1%}的恢复强度",
                 "type": "RECOVER_BUFF_RATE",
                 "target": {
                     "type": "SELF",
@@ -529,7 +529,7 @@
                 ]
             },
             {
-                "desc": "{param[0]:%}的法术倍率",
+                "desc": "{param[0]:.1%}的法术倍率",
                 "type": "MGC_BUFF_RATE",
                 "target": {
                     "type": "SELF",
@@ -541,6 +541,22 @@
                         "random": "biased",
                         "expect": 0.07,
                         "min": 0.06
+                    },
+                    6
+                ]
+            },            {
+                "desc": "{param[0]:%}的MP获取速度",
+                "type": "MP_GAIN_UP",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.12,
+                        "min": 0.1
                     },
                     6
                 ]
