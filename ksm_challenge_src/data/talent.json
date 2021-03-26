@@ -63,7 +63,7 @@
     "name": "硬化皮肤",
     "desc": "物防基础",
     "format": ".1f",
-    "effect": 0.2,
+    "effect": 0.1,
     "max_level": 15,
     "cost_base": 5,
     "cost_ratio": 1.21,

@@ -56,7 +56,7 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/magician.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/ninja.json') as FILE:
     boss = json.load(FILE)
 
 test_level = 1

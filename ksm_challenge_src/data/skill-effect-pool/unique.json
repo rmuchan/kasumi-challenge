@@ -181,15 +181,15 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.37,
-                        "min": 0.25
+                        "expect": 0.24,
+                        "min": 0.20
                     },
                     2
                 ]
             },
             {
-                "desc": "在{param[1]}回合内使自己必定暴击",
-                "type": "CRIT_CHANCE_BUFF",
+                "desc": "在{param[1]}回合内使自己普通攻击必定命中",
+                "type": "ACCURATE",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -198,6 +198,22 @@
                 "param": [
                     [
                         1,
+                        "S"
+                    ],
+                    2
+                ]
+            },
+            {
+                "desc": "提高{param[0]:%}的暴击率",
+                "type": "CRIT_CHANCE_BUFF",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        0.75,
                         "S"
                     ],
                     2
@@ -294,7 +310,8 @@
                     },
                     4
                 ]
-            },           {
+            },
+            {
                 "desc": "并在本局中永久提升自身{param[0]:%}的增益幅度",
                 "type": "BUFF_RATE_UP",
                 "target": {

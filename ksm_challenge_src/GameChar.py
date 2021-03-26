@@ -173,7 +173,7 @@ class GameChar:
 
         return attack_damage, is_crit
 
-    def take_damage(self, damage, magic=False):
+    def take_damage(self, damage, magic=False, accurate=False):
         """
         角色受到伤害，需要传入伤害量，可选是否为法术伤害。
         伤害会优先对护盾造成伤害，溢出的伤害仍然会作用在本体
@@ -183,7 +183,7 @@ class GameChar:
         shield_damage = 0
 
         # 考虑闪避
-        if random.random() < self.dodge and not magic:
+        if random.random() < self.dodge and not magic and not accurate:
             return 0, -1, 0
 
         if self.use_token('damage_resist'):
@@ -398,7 +398,7 @@ class GameChar:
         atk_damage, is_crit = self.do_attack()
 
         # 对目标发起攻击，获得实际伤害量、伤害状态与实际生命值伤害
-        real_damage, atk_status, hp_damage = obj.take_damage(atk_damage)
+        real_damage, atk_status, hp_damage = obj.take_damage(atk_damage, True if 'accurate' in self.buff else False)
 
         # 根据实际生命值伤害计算吸血 对自身的普通攻击不会计算吸血
         if obj != self:
@@ -893,6 +893,17 @@ class GameChar:
                         'param': {}
                     })
 
+
+        # 必中Buff
+        elif effect['type'] == 'ACCURATE':
+            for obj in selector:
+                obj.add_buff('accurate', True, param[1])
+                ret.append({
+                    'feedback': '使{target}的普攻攻击无视闪避，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {}
+                })
+
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])
         return ret
@@ -1103,6 +1114,7 @@ class GameChar:
         S = self.name + ', '
         S += '%.0f/%.0f, 【%.0f】\n' % (self.HP, self.attributes['HP'], self.MP)
         S += 'shield: %.0f,\n' % self.shield
+        S += 'crit_rate: %.0f%%\n' % (self.crit_chance*100)
         S += 'test: %s,\n' % str(self.mp_gain_rate)
         S += 'buff: %s, ' % str(self.buff)
         return S
