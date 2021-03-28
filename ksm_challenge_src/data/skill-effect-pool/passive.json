@@ -35,35 +35,32 @@
         }
     },
     {
-        "desc": "【冥想之力】力量+3.4 感知+3.4 增益幅度提升3%",
+        "desc": "【冥想之力】力量+3.4 感知+3.4",
         "buff": {
             "per_base": 3.4,
-            "str_base": 3.4,
-            "buff_rate": {
+            "str_base": 3.4
+        }
+    },
+    {
+        "desc": "【闪避大师】闪避+12%",
+        "buff": {
+            "dodge": 0.12
+        }
+    },
+    {
+        "desc": "【嗜血渴望】生命窃取+21% 恢复强度+3%",
+        "buff": {
+            "life_steal_rate": 0.21,
+            "recover_rate": {
                 "multiply": 1.03
             }
         }
     },
     {
-        "desc": "【闪避大师】闪避+14%",
-        "buff": {
-            "dodge": 0.14
-        }
-    },
-    {
-        "desc": "【嗜血渴望】生命窃取+21% 恢复强度+12%",
-        "buff": {
-            "life_steal_rate": 0.21,
-            "recover_rate": {
-                "multiply": 1.12
-            }
-        }
-    },
-    {
-        "desc": "【魔能根源】法术倍率+9.6%",
+        "desc": "【魔能根源】法术倍率+10%",
         "buff": {
             "spell_rate": {
-                "multiply": 1.096
+                "multiply": 1.1
             }
         }
     },
@@ -76,10 +73,18 @@
         }
     },
     {
-        "desc": "【施法精通】技能发动率+27%(乘法)",
+        "desc": "【施法精通】技能发动率+30%(乘法)",
         "buff": {
             "skill_chance_boost": {
-                "multiply": 1.27
+                "multiply": 1.3
+            }
+        }
+    },
+    {
+        "desc": "【鼓舞大师】增益幅度+10%",
+        "buff": {
+            "buff_rate": {
+                "multiply": 1.1
             }
         }
     }

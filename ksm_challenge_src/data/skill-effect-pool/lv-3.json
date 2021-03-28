@@ -458,13 +458,13 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 5,
-            "max": 6
+            "min": 4,
+            "max": 5
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 120,
-            "max": 150
+            "min": 90,
+            "max": 120
         },
         "name": {
             "random": "choice",

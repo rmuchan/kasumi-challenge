@@ -76,8 +76,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 70,
-                "min": 59
+                "expect": 64,
+                "min": 57
             },
             2
         ]

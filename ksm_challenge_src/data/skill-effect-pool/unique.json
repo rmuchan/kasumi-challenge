@@ -116,10 +116,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.57,
-                        "min": 0.52
+                        "expect": 0.30,
+                        "min": 0.25
                     },
-                    3
+                    4
                 ]
             },
             {
@@ -133,10 +133,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 126,
-                        "min": 115
+                        "expect": 150,
+                        "min": 136
                     },
-                    3
+                    4
                 ]
             },
             {
@@ -276,7 +276,7 @@
                 "觉醒之触"
             ]
         },
-        "weight": 2222222,
+        "weight": 2,
         "effect": [
             {
                 "desc": "为自身附加{param[0]}点护盾",

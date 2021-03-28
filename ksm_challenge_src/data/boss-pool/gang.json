@@ -189,7 +189,139 @@
             }
           ]
         },
+        {      "skills": [
         {
+          "chance": 0.2,
+          "cooldown": 5,
+          "mp_cost": 120,
+          "name": "高爆手雷",
+          "effect": [
+            {
+              "type": "MGC_DMG",
+              "target": {
+                "type": "ALL",
+                "team": 0,
+                "limit": 0
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 5,
+                    "min": 120,
+                    "max": 150
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "chance": 0.11,
+          "cooldown": 4,
+          "mp_cost": 60,
+          "name": "高精度瞄准镜",
+          "effect": [
+            {
+              "type": "CRIT_CHANCE_BUFF",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 8,
+                    "min": 0.5,
+                    "max": 0.6
+                  }
+                ],
+                4
+              ]
+            },
+            {
+              "type": "PHY_ATK_BUFF_RATE",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 2,
+                    "min": 0.3,
+                    "max": 0.32
+                  }
+                ],
+                4
+              ]
+            }
+          ]
+        },
+        {
+          "chance": 0.14,
+          "cooldown": 5,
+          "mp_cost": 80,
+          "name": "寻找掩体",
+          "effect": [
+            {
+              "type": "DODGE_BUFF",
+              "target": {
+                "type": "SELF",
+                "team": 0,
+                "limit": 2
+              },
+              "param": [
+                [
+                  0.3
+                ],
+                2
+              ]
+            },
+            {
+              "type": "SHIELD",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 4,
+                    "min": 200,
+                    "max": 240
+                  }
+                ]
+              ]
+            },
+            {
+              "type": "DEF_UP",
+              "target": {
+                "type": "SELF",
+                "team": 1,
+                "limit": 1
+              },
+              "param": [
+                [
+                  {
+                    "random": "triangular",
+                    "rating_weight": 2,
+                    "min": 3,
+                    "max": 3.2
+                  }
+                ],
+                2
+              ]
+            }
+          ]
+        }
+      ]
           "chance": 0.11,
           "cooldown": 4,
           "mp_cost": 60,

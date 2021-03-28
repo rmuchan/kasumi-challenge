@@ -83,7 +83,7 @@
     "crit_base": 1.25,
     "crit_chance": 0.11,
     "crit_int_convert_rate": 0.0085,
-    "life_steal_rate_base": 0.36,
+    "life_steal_rate_base": 0.3,
     "def_adj_rate": 0.05,
     "def_rate": 0.27,
     "dodge_base": 0.04,
