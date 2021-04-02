@@ -213,7 +213,7 @@
                 },
                 "param": [
                     [
-                        0.75,
+                        0.6,
                         "S"
                     ],
                     2
@@ -541,7 +541,7 @@
                 ]
             },
             {
-                "desc": "拥有额外{param[0]:.1%}的暴击率",
+                "desc": "拥有额外{param[0]:.0%}的暴击率",
                 "type": "CRIT_CHANCE_BUFF",
                 "target": {
                     "type": "SELF",
@@ -551,8 +551,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.30,
-                        "min": 0.25
+                        "expect": 0.38,
+                        "min": 0.32
                     },
                     0
                 ]

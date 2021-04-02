@@ -225,6 +225,14 @@ class GameChar:
                 'param': {'amount': real_added}
             })
 
+        if 'energe_gen' in self.buff:
+            real_added = self.add_buff('spell_rate_enhanced', self.buff['energe_gen'][0][0]['value'], self.buff['energe_gen'][0][0]['duration'])
+            ret.append({
+                'feedback': '的魔法蓄能效果提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                'merge_key': {'target': self._self_replace(self.name), 'duration': self.buff['energe_gen'][0][0]['duration']},
+                'param': {'amount': real_added}
+            })
+
         for buff_type in self.buff:
             self.buff[buff_type] = [(i[0], i[1] - 1) for i in self.buff[buff_type] if i[1] > 0]
         self.buff = {k: v for k, v in self.buff.items() if v}
@@ -248,45 +256,48 @@ class GameChar:
         :return: 技能的dict模板
         """
 
+        ret = []
+
+        # 攻击标记
+        if self.use_token('attack_assis'):
+            ret += [self.normal_attack]
+
+
         # 如果是Boss，必杀技能不会被沉默
         if self.attributes.get('is_boss', False):
             if self.MP >= 1000:
                 self.MP = 0
-                return [self.attributes['unique']]
-
-        # 攻击标记
-        if self.use_token('attack_assis'):
-            return [self.normal_attack, self.normal_attack]
+                return ret + [self.attributes['unique']]
 
         # 沉默状态下  进行普攻
         if self.is_silence:
-            return [self.normal_attack]
+            return ret + [self.normal_attack]
 
         # 满MP下 使用必杀
         if self.MP >= 1000:
             self.MP = 0
-            return [self.attributes['unique']]
+            return ret + [self.attributes['unique']]
 
         # 主技能爆发
         if self.use_token('skill_overload_turn1'):
             self.add_token('skill_overload_turn2')
             self.MP = max(self.MP -  2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
-            return [self.skills[0].data, self.skills[0].data]
+            return ret + [self.skills[0].data, self.skills[0].data]
         if self.use_token('skill_overload_turn2'):
             self.MP = max(self.MP - self.skills[0].mp_cost * self.mp_consume_dec, 0)
-            return [self.skills[0].data]
+            return ret + [self.skills[0].data]
 
         # 正常地发动技能
         for sk in self.skills:
-            ret = sk.can_be_used(skill_chance_boost=self.skill_chance_boost)
-            if ret:
-                real_mp_consume = ret['mp_cost'] * self.mp_consume_dec
+            skill = sk.can_be_used(skill_chance_boost=self.skill_chance_boost)
+            if skill:
+                real_mp_consume = skill['mp_cost'] * self.mp_consume_dec
                 if self.MP < real_mp_consume:
-                    return [self.normal_attack]
+                    return ret + [self.normal_attack]
                 self.MP -= real_mp_consume
-                return [ret]
+                return ret + [skill]
 
-        return [self.normal_attack]
+        return ret + [self.normal_attack]
 
     def turn_mp_gain(self):
         """
@@ -903,6 +914,17 @@ class GameChar:
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {}
                 })
+
+        # 魔法蓄能
+        elif effect['type'] == 'ENERGE_GEN':
+            for obj in selector:
+                obj.buff['energe_gen'] = [(dict(value=param[0][0], duration=param[2]), param[1])]
+                ret.append({
+                    'feedback': '为{target}添加了魔法蓄能状态，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {}
+                })
+
 
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])

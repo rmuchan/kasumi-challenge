@@ -63,6 +63,11 @@ except:
     config = dict(enabled_group=[], pre_version="")
     conf_write('ksmgame', config)
 
+session_hint = """可能有以下几种可能：
+1. 当前有战斗正在进行。
+2. 您已经开启了角色创建进程，如果没有收到消息，可以使用ksmgame-check指令查看。
+3. 您正处于天赋管理界面，请输入任意其他内容退出天赋管理界面。"""
+
 
 @on_natural_language(only_to_me=False)
 async def _(session: NLPSession):
@@ -167,7 +172,7 @@ async def _(session: CommandSession):
     try:
         BotContextUI(session.bot, session.ctx).run(create, mutex_mode='user')
     except BotContextUI.RunningException:
-        await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
+        await session.send("无法开始角色创建进程。" + session_hint)
 
 
 # 查询角色信息
@@ -330,7 +335,7 @@ async def _(session: CommandSession):
     try:
         ui.run(_join, mutex_mode='group', args=(group_id, team, char, bat['is_pvp']))
     except BotContextUI.RunningException:
-        await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
+        await session.send("无法加入小队。" + session_hint)
 
 
 # 转生
@@ -369,7 +374,7 @@ async def _(session: CommandSession):
     try:
         BotContextUI(session.bot, session.ctx).run(upgrade_talent, mutex_mode='user')
     except BotContextUI.RunningException:
-        await session.send(session.bot.config.SESSION_RUNNING_EXPRESSION)
+        await session.send("无法开始天赋管理进程。" + session_hint)
 
 
 # 管理员功能：重新加载数据

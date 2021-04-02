@@ -185,8 +185,8 @@
         "weight": 3,
         "effect": [
             {
-                "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_RATE",
+                "desc": "强化自身{param[0]:.0f}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -195,8 +195,70 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.76,
-                        "min": 0.72
+                        "expect": 110,
+                        "min": 100
+                    },
+                    3
+                ]
+            }
+        ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 2,
+            "max": 4
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 60,
+            "max": 120
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "激励",
+                "鼓舞",
+                "战术协调"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "提升我方全体{param[0]:.0f}点攻击，持续{param[1]}回合",
+                "type": "PHY_ATK_BUFF_CONST",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 0
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 64,
+                        "min": 57
+                    },
+                    2
+                ]
+            },
+            {
+                "desc": "提升我方全体{param[0]:.0%}的暴击伤害倍率，持续{param[1]}回合",
+                "type": "CRIT_RATE_BUFF",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.32,
+                        "min": 0.3
                     },
                     3
                 ]
@@ -544,7 +606,8 @@
                     },
                     6
                 ]
-            },            {
+            },
+            {
                 "desc": "{param[0]:%}的MP获取速度",
                 "type": "MP_GAIN_UP",
                 "target": {
@@ -559,51 +622,6 @@
                         "min": 0.1
                     },
                     6
-                ]
-            }
-        ]
-    },
-    {
-        "chance": {
-            "random": "triangular",
-            "min": 0.05,
-            "max": 0.12
-        },
-        "cooldown": {
-            "random": "triangular_int",
-            "min": 4,
-            "max": 6
-        },
-        "mp_cost": {
-            "random": "triangular_int",
-            "min": 120,
-            "max": 150
-        },
-        "name": {
-            "random": "choice",
-            "values": [
-                "静默魔法",
-                "沉默法术",
-                "法术封锁"
-            ]
-        },
-        "weight": 1,
-        "effect": [
-            {
-                "desc": "沉默随机2个敌人{param[1]}回合",
-                "type": "SILENCE",
-                "target": {
-                    "type": "RAND_SAFE",
-                    "team": 0,
-                    "limit": 2
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 233,
-                        "min": 610
-                    },
-                    2
                 ]
             }
         ]
@@ -890,8 +908,8 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 4,
-            "max": 5
+            "min": 3,
+            "max": 4
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -910,7 +928,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "为攻击最高的队友添加攻击标记，使其在下次行动时必定进行2次普通攻击",
+                "desc": "为攻击最高的队友添加攻击标记，使其在下次行动时先额外进行一次普通攻击",
                 "type": "ATK_ASSIS",
                 "target": {
                     "type": "ATKMOST",
@@ -1088,6 +1106,49 @@
                     },
                     5,
                     60
+                ]
+            }
+        ]
+    },    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 4,
+            "max": 5
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 200,
+            "max": 220
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "魔法蓄能"
+            ]
+        },
+        "weight": 1,
+        "effect": [
+            {
+                "desc": "使自身进入魔法蓄能状态，持续{param[1]}回合，重复添加魔法蓄能效果将会刷新持续时间；魔法蓄能状态下，每回合提高{param[0]:.0f}的法术倍率，每个效果独立持续{param[2]}回合",
+                "type": "ENERGE_GEN",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.12,
+                        "min": 0.10
+                    },
+                    4,
+                    7
                 ]
             }
         ]

@@ -60,40 +60,14 @@
         "name": {
             "random": "choice",
             "values": [
-                "激励",
-                "鼓舞",
-                "战术协调"
-            ]
-        },
-        "desc": "强化我方全体，提升{param[0]:.0f}点攻击，持续{param[1]}回合",
-        "weight": 1,
-        "type": "PHY_ATK_BUFF_CONST",
-        "target": {
-            "type": "ALL",
-            "team": 1,
-            "limit": 0
-        },
-        "param": [
-            {
-                "random": "biased",
-                "expect": 64,
-                "min": 57
-            },
-            2
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
                 "战吼",
                 "磨剑",
                 "怒吼"
             ]
         },
-        "desc": "提升自身{param[0]:.0f}点攻击，持续{param[1]}回合",
+        "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
         "weight": 4,
-        "type": "PHY_ATK_BUFF_CONST",
+        "type": "PHY_ATK_BUFF_RATE",
         "target": {
             "type": "SELF",
             "team": 1,
@@ -102,8 +76,8 @@
         "param": [
             {
                 "random": "biased",
-                "expect": 110,
-                "min": 100
+                "expect": 0.56,
+                "min": 0.5
             },
             3
         ]
@@ -242,9 +216,7 @@
         "name": {
             "random": "choice",
             "values": [
-                "加油助威",
-                "小组讨论",
-                "头脑风暴",
+                "能量风暴",
                 "灵感涌动"
             ]
         },
@@ -330,8 +302,8 @@
             },
             {
                 "random": "biased",
-                "expect": 75,
-                "min": 66
+                "expect": 66,
+                "min": 58
             },
             4
         ]
