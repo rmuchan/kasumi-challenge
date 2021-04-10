@@ -48,8 +48,8 @@
         },
         "base_crit_rate": {
             "random": "biased",
-            "expect": 1.22,
-            "min": 1.08
+            "expect": 1.20,
+            "min": 1.12
         }
     },
     "skill_template": {
@@ -81,8 +81,8 @@
     "attr_grow_compress": 0.4,
     "attr_grow_expend": 1.23,
     "crit_base": 1.25,
-    "crit_chance": 0.11,
-    "crit_int_convert_rate": 0.0085,
+    "crit_chance": 0.21,
+    "crit_int_convert_rate": 0.0036,
     "life_steal_rate_base": 0.3,
     "def_adj_rate": 0.05,
     "def_rate": 0.27,

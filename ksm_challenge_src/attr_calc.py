@@ -90,6 +90,9 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
             }
         ]
     }
+
+    game_char['tag'] = {}
+
     # print(game_char)
     return game_char
 
@@ -113,11 +116,6 @@ def hp_calc(str_cur, life_base, life_grow, lv, modify):
 # 防御计算
 def _def_calc(per_cur, def_base):
     return per_cur * numerical['def_adj_rate'] + def_base
-
-
-# 暴击倍率增益计算
-def crit_rate_calc(str_cur, extra):
-    return str_cur * numerical['crit_int_convert_rate'] + numerical['crit_base'] + extra
 
 
 # 下面会有三个基于属性的技能强化率的计算会用到这个函数
@@ -151,4 +149,3 @@ def lv_calc(exp: int):
         if exp_overlay_list[i - 1] <= exp < exp_overlay_list[i]:
             return i
     return 30
-

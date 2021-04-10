@@ -3,36 +3,23 @@ from ksm_challenge_src.attr_calc import attr_calc, numerical
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-build_high = 1.232
-build_low = 0.825
-test_attr_grow = numerical['str_grow'] * 9
-compress = numerical['attr_grow_expend']
+# 暴击倍率增益计算
+def crit_rate_calc(str_cur, extra):
+    return str_cur * numerical['crit_int_convert_rate'] + 0.22 + extra
 
-x = range(1, 31)
-y_list = []
-for build in ['high', 'mid','low']:
-    for edition in ['now', 'new']:
-        if build == 'high':
-            b = build_high
-        elif build == 'low':
-            b = build_low
-        else:
-            b = 1.03
+def c_new(str_cur, extra):
+    return str_cur * 0.0036 + 0.20 + extra
 
-        if edition == 'now':
-            color = 'red'
-            grow = numerical['str_grow'] * ((b - 1) * numerical['attr_grow_compress'] + 1)
-            #grow = numerical['str_grow'] * 0
-        else:
-            color = 'blue'
-            grow = numerical['str_grow'] * ((1 - b) * compress + 1)
+def damge_p(chance, rate):
+    return chance * rate + 1 - chance
 
-        y = [attr_calc(numerical['str_base'] * b, grow, i) for i in x]
-
-        print(build + edition, y[0], y[14], y[29])
-        plt.plot(x, y, label=build + edition, color = color)
-
-
-plt.legend()
-plt.show()
-
+if __name__ == '__main__':
+    for attr in [120]:
+        print('旧：' + str(attr), end='    ')
+        a1 = crit_rate_calc(attr, 0) + 1
+        print(a1)
+        print(damge_p(0.11, a1))
+        print('新：'+ str(attr), end='    ')
+        a2 = c_new(attr, 0) + 1
+        print(a2)
+        print(damge_p(0.21, a2))

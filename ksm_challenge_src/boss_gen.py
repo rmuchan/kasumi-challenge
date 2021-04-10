@@ -43,6 +43,7 @@ def creature_gen(template: dict, lv):
     creature['lv'] = lv
     creature['base_skill_chance_boost'] = creature.get('base_skill_chance_boost', 1)
     creature['mp_consume_dec'] = creature.get('mp_consume_dec', 1)
+    creature['tag'] = creature.get('tag', {})
     return creature, rating
 
 

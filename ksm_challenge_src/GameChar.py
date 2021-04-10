@@ -34,6 +34,13 @@ class GameChar:
     #           属性信息
     # ————————————————————————————
 
+    def has_tag(self, tag_name):
+        return tag_name in self.attributes['tag']
+
+    @property
+    def tag(self):
+        return self.attributes['tag']
+
     @property
     def defence(self):
         return max(self.attributes['defence'] + self.buff_calc('defence_enhanced') - self.buff_calc('defence_weaken'),
@@ -76,8 +83,10 @@ class GameChar:
 
     @property   #增益幅度
     def buff_rate(self):
-        return self.attributes['buff_rate'] * self.buff_calc('buff_rate_enhanced', is_multi=True) * self.buff_calc_spec(
-            'buff_rate_weaken')
+        p1 = self.buff_calc('buff_rate_enhanced', is_multi=True)
+        p2 = self.buff_calc_spec('buff_rate_weaken')
+        p3 = (1 + self.tag['mp_to_buff_rate'] * self.MP) if self.has_tag('mp_to_buff_rate') else 1
+        return self.attributes['buff_rate'] * p1 * p2 * p3
 
     @property   # 计算生命值百分比
     def hp_percentage(self):
@@ -85,9 +94,10 @@ class GameChar:
 
     @property   # 法术倍率
     def spell_rate(self):
-        return self.attributes['spell_rate'] * self.buff_calc('spell_rate_enhanced',
-                                                              is_multi=True) * self.buff_calc_spec(
-            'spell_rate_weaken')
+        p1 = self.buff_calc('spell_rate_enhanced', is_multi=True)
+        p2 = self.buff_calc_spec('spell_rate_weaken')
+        p3 = (1 + self.tag['mp_to_spell_rate'] * self.MP) if self.has_tag('mp_to_spell_rate') else 1
+        return self.attributes['spell_rate'] * p1 * p2 * p3
 
     @property   # 技能发动率提升
     def skill_chance_boost(self):
@@ -116,6 +126,7 @@ class GameChar:
     @property   # 返回是否是火焰附魔状态
     def fire_enchanted(self):
         return 'fire_enchant' in self.buff.keys()
+
 
     # 返回平级调整倍率 - 魔法倍率
     def adj_spell_rate(self, rate):
@@ -237,6 +248,9 @@ class GameChar:
             self.buff[buff_type] = [(i[0], i[1] - 1) for i in self.buff[buff_type] if i[1] > 0]
         self.buff = {k: v for k, v in self.buff.items() if v}
 
+        if self.has_tag('revenge_lighting_body'):
+            self.add_buff('revenge_lighting', self.tag['revenge_lighting_body'], 30)
+
         return ret
 
     def skill_cooldown(self):
@@ -256,6 +270,12 @@ class GameChar:
         :return: 技能的dict模板
         """
 
+        # 检查是否可以施放必杀技  有"no_unique"标签的不会使用必杀
+        def cast_unque():
+            if self.MP >= 1000 and 'no_unique' not in self.attributes['tag']:
+                self.MP = 0
+                return ret + [self.attributes['unique']]
+
         ret = []
 
         # 攻击标记
@@ -265,18 +285,14 @@ class GameChar:
 
         # 如果是Boss，必杀技能不会被沉默
         if self.attributes.get('is_boss', False):
-            if self.MP >= 1000:
-                self.MP = 0
-                return ret + [self.attributes['unique']]
+            cast_unque()
 
         # 沉默状态下  进行普攻
         if self.is_silence:
             return ret + [self.normal_attack]
 
         # 满MP下 使用必杀
-        if self.MP >= 1000:
-            self.MP = 0
-            return ret + [self.attributes['unique']]
+        cast_unque()
 
         # 主技能爆发
         if self.use_token('skill_overload_turn1'):
@@ -375,7 +391,8 @@ class GameChar:
             return [{
                 'feedback': '{target}抵抗了{count}次攻击',
                 'merge_key': {'target': self._self_replace(obj.name)},
-                'param': {'count': 1}
+                'param': {'count': 1},
+                'resist': True
             }]
 
         # 允许调用时自定义消息头
@@ -441,16 +458,36 @@ class GameChar:
 
             # 触发复仇火花效果 取数组第一个(即最早加上的Buff)
             if 'revenge_flame' in obj.buff:
-
-                real_damage = obj.do_magic_damage(self, obj.buff['revenge_flame'][0][0]['damage'], obj.spell_rate)[0]['param']['amount']
+                result = obj.do_magic_damage(self, obj.buff['revenge_flame'][0][0]['damage'], obj.spell_rate)
                 real_added = obj.mp_up(obj, obj.buff['revenge_flame'][0][0]['mp_gain_value'])[0]['param']['amount']
-                ret.append({
-                    'feedback': '触发[{target}]的复仇火花效果，自身受到其造成的{amount:.0f}点魔法伤害，[{target}]增加了{mp:.0f}点MP',
-                    'merge_key': {'target': obj.name, 'amount': real_damage, 'mp': real_added},
-                    'param': {}
-                })
+                if 'resist' not in result[0]:
+                    mgc_real_damage = result[0]['param']['amount']
+                    ret.append({
+                        'feedback': '触发[{target}]的复仇火花效果，自身受到其造成的{amount:.0f}点魔法伤害，[{target}]增加了{mp:.0f}点MP',
+                        'merge_key': {'target': obj.name, 'mp': real_added, 'amount': mgc_real_damage},
+                        'param': {}
+                    })
+                else:
+                    ret.append({
+                        'feedback': '触发[{target}]的复仇火花效果，自身的攻击标记抵抗了此次攻击，[{target}]增加了{mp:.0f}点MP',
+                        'merge_key': {'target': obj.name, 'mp': real_added},
+                        'param': {}
+                    })
                 # 清掉Buff
                 del obj.buff['revenge_flame']
+
+            if 'revenge_lighting' in obj.buff:
+                result = obj.do_magic_damage(self, obj.buff['revenge_lighting'][0][0], obj.spell_rate)
+                result[0]['feedback'] = '逆向电流的效果生效，' + result[0]['feedback']
+                ret += result
+                # 清掉Buff
+                del obj.buff['revenge_lighting']
+
+
+            # 触发受击MP减少的效果
+            if obj.has_tag('be_attacked_mp_dec'):
+                obj.mp_dec(obj.tag['be_attacked_mp_dec'])
+
         return ret
 
     def mp_up(self, obj, amount):
@@ -1136,8 +1173,7 @@ class GameChar:
         S = self.name + ', '
         S += '%.0f/%.0f, 【%.0f】\n' % (self.HP, self.attributes['HP'], self.MP)
         S += 'shield: %.0f,\n' % self.shield
-        S += 'crit_rate: %.0f%%\n' % (self.crit_chance*100)
-        S += 'test: %s,\n' % str(self.mp_gain_rate)
+        S += 'test: %s,\n' % str(self.spell_rate)
         S += 'buff: %s, ' % str(self.buff)
         return S
 

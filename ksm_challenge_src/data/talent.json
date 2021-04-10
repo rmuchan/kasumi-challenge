@@ -140,7 +140,7 @@
     "name": "暴击伤害倍率",
     "desc": "暴击伤害倍率",
     "format": ".0%",
-    "effect": 0.025,
+    "effect": 0.02,
     "max_level": 15,
     "cost_base": 3,
     "cost_ratio": 1.4,

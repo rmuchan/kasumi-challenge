@@ -66,7 +66,7 @@
             ]
         },
         "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
-        "weight": 4,
+        "weight": 3,
         "type": "PHY_ATK_BUFF_RATE",
         "target": {
             "type": "SELF",
@@ -145,7 +145,7 @@
             ]
         },
         "desc": "提升自身{param[0]:%}的法术倍率，持续{param[1]}回合",
-        "weight": 3,
+        "weight": 4,
         "type": "MGC_BUFF_RATE",
         "target": {
             "type": "SELF",
