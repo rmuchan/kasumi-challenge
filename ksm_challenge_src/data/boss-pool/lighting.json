@@ -19,8 +19,8 @@
            "defence_base": {
                 "random": "triangular",
                 "rating_weight": 6,
-                "min": 2.7,
-                "max": 2.8
+                "min": 2.9,
+                "max": 3
             },
             "defence_grow": {
                 "random": "triangular",
@@ -37,8 +37,8 @@
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 860,
-                "max": 870
+                "min": 880,
+                "max": 890
             },
             "recover_rate": {
                 "random": "triangular",
@@ -60,9 +60,9 @@
             },
             "tag": {
                 "no_unique": true,
-                "revenge_lighting_body": 96,
-                "mp_to_spell_rate": 0.00125,
-                "mp_to_buff_rate": 0.00125,
+                "revenge_lighting_body": 115,
+                "mp_to_spell_rate": 0.0013,
+                "mp_to_buff_rate": 0.0013,
                 "be_attacked_mp_dec": 75
             },
             "crit_rate": 1.4,

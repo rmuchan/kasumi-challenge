@@ -270,13 +270,9 @@ class GameChar:
         :return: 技能的dict模板
         """
 
-        # 检查是否可以施放必杀技  有"no_unique"标签的不会使用必杀
-        def cast_unque():
-            if self.MP >= 1000 and 'no_unique' not in self.attributes['tag']:
-                self.MP = 0
-                return ret + [self.attributes['unique']]
-
         ret = []
+
+        # 检查是否可以施放必杀技  有"no_unique"标签的不会使用必杀
 
         # 攻击标记
         if self.use_token('attack_assis'):
@@ -285,14 +281,18 @@ class GameChar:
 
         # 如果是Boss，必杀技能不会被沉默
         if self.attributes.get('is_boss', False):
-            cast_unque()
+            if self.MP >= 1000 and 'no_unique' not in self.attributes['tag']:
+                self.MP = 0
+                return ret + [self.attributes['unique']]
 
         # 沉默状态下  进行普攻
         if self.is_silence:
             return ret + [self.normal_attack]
 
         # 满MP下 使用必杀
-        cast_unque()
+        if self.MP >= 1000 and 'no_unique' not in self.attributes['tag']:
+            self.MP = 0
+            return ret + [self.attributes['unique']]
 
         # 主技能爆发
         if self.use_token('skill_overload_turn1'):
