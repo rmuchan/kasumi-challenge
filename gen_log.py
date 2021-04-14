@@ -1,11 +1,12 @@
 if __name__ == '__main__':
+    import sys
     from ksm_challenge_src.version import log_file
     md_replace = {
         '\n': '  \n',
         '[': '\\[',
         ']': '\\]'
     }
-    with open('doc/更新日志.md', 'w') as f:
+    with open(sys.argv[1], 'w') as f:
         for item in log_file:
             f.write(f'### {item["version"]}\n')
             log = item['log']

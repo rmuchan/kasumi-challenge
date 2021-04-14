@@ -20,9 +20,9 @@
 
 ~~设计初期并没有考虑到拓展性等方面，有大量硬编码和不合理逻辑的情况，请谨慎阅读代码~~
 
-如果有任何好的建议，发起 [Issue](https://github.com/rMuchan/kasumi-challenge/issues) 让我知道！
+如果有任何好的建议，发起 [Issue](https://github.com/rmuchan/kasumi-challenge/issues) 让我知道！
 
-如果您想要设计新的Boss，我撰写了一份[Boss设计手册](https://github.com/rMuchan/kasumi-challenge/blob/master/doc/Kasumi%20Challenge%20Boss%E8%AE%BE%E8%AE%A1%E6%89%8B%E5%86%8C.md)，它会帮助您设计一个优秀的Boss，在设计完成后，您可以发起 [Issue](https://github.com/rMuchan/kasumi-challenge/issues) 或是直接发起 [Pull Request](https://github.com/rMuchan/kasumi-challenge/pulls) 。
+如果您想要设计新的Boss，我撰写了一份 [Boss设计手册](doc/Kasumi%20Challenge%20Boss%E8%AE%BE%E8%AE%A1%E6%89%8B%E5%86%8C.md) ，它会帮助您设计一个优秀的Boss，在设计完成后，您可以发起 [Issue](https://github.com/rmuchan/kasumi-challenge/issues) 或是直接发起 [Pull Request](https://github.com/rmuchan/kasumi-challenge/pulls) 。
 
 ## 创意
 
@@ -37,7 +37,7 @@
 偶尔会设计一些新技能丰富一下技能构成。
 
 ### ~~坎坷历史~~
-在这里查看[历史更新日志](./doc/更新日志.md)
+在这里查看[历史更新日志](https://github.com/rmuchan/kasumi-challenge/blob/auto-docs/doc/更新日志.md)
 
 ### 更新前瞻
 这里列出了一些未来**有可能**会新添加的特性。
