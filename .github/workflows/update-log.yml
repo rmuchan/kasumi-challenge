@@ -30,6 +30,7 @@ jobs:
         run: |
           tf=$(mktemp)
           ver=$(python3 gen_log.py "$tf")
+          git pull
           git checkout -f auto-docs
           mkdir -p doc
           if ! diff 'doc/更新日志.md' "$tf" > /dev/null; then
