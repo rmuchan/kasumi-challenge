@@ -28,10 +28,15 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Generate Log
         run: |
-          ver=$(python3 gen_log.py)
-          if ! git diff --exit-code -- 'doc/更新日志.md' > /dev/null; then
+          tf=$(mktemp)
+          ver=$(python3 gen_log.py "$tf")
+          git pull
+          git checkout -f auto-docs
+          mkdir -p doc
+          if ! diff 'doc/更新日志.md' "$tf" > /dev/null; then
             git config user.name 'Bot'
             git config user.email "$(git log -1 --pretty=format:%ae)"
+            cp -f "$tf" 'doc/更新日志.md'
             git add 'doc/更新日志.md'
             git commit -m "[Bot] 更新日志 ($ver)"
             git push

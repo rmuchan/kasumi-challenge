@@ -207,7 +207,7 @@ lv1和lv2中的攻击百分比提升效果将会更强
 现在维护bot前后会有提示
 转生频率限制降低到5小时
 🎉本项目已于GitHub开源，如果你对项目开发、Boss设计、游戏平衡等方面有任何建议，欢迎给开发者发送Issue或者PR。
-项目地址：https://github.com/rMuchan/kasumi-challenge
+项目地址：https://github.com/rmuchan/kasumi-challenge
 """
     }, {
         "version": "Alpha 0.3.0",
@@ -265,7 +265,7 @@ lv3中[攻击削弱]组技能现在效果变为对敌方全体，但是削减量
         "version": "Alpha 0.3.4",
         "log": """
 我更新了一系列文档和《Boss设计手册》，欢迎所有玩家一起设计Boss。
-手册地址：https://github.com/rMuchan/kasumi-challenge/blob/master/doc/Kasumi%20Challenge%20Boss%E8%AE%BE%E8%AE%A1%E6%89%8B%E5%86%8C.md
+手册地址：https://github.com/rmuchan/kasumi-challenge/blob/master/doc/Kasumi%20Challenge%20Boss%E8%AE%BE%E8%AE%A1%E6%89%8B%E5%86%8C.md
 ——系统更新——
 现在，每个玩家同时只能参与一场战斗。请好好享受和朋友们一起嘲笑不停叠Buff和叠了Buff又Miss的大兄弟的过程，不要为了刷而刷！
 """
@@ -391,7 +391,7 @@ Vunpire种族基础生命窃取倍率和回复倍率轻微下调
         "log": """
 ——小推送——
 把历史更新日志做成了markdown的版本，可以在这里方便地查看：
-https://github.com/rMuchan/kasumi-challenge/blob/master/doc/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.md
+https://github.com/rmuchan/kasumi-challenge/blob/auto-docs/doc/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97.md
 """
     }, {
         "version": "Alpha 0.4.11",
@@ -419,7 +419,7 @@ lv2中[魔法药剂]组技能的法术倍率增益持续时间由6回合上调�
 PVP功能解锁，现在可以使用"ksmgame-pvp"发起PVP！
 PVP无法获得经验。
 *PVP功能的加入对原代码结构有较大的影响，如果出现任何不符合预期的异常或是错误，请来项目地址提交Issue：
-https://github.com/rMuchan/kasumi-challenge/issues
+https://github.com/rmuchan/kasumi-challenge/issues
 感谢您的支持！
 使用"ksmgame-help"获取更多帮助。
 """
@@ -431,7 +431,7 @@ https://github.com/rMuchan/kasumi-challenge/issues
 PVP现在默认为fair模式
 
 *PVP功能的加入对原代码结构有较大的影响，如果出现任何不符合预期的异常或是错误，请来项目地址提交Issue：
-https://github.com/rMuchan/kasumi-challenge/issues
+https://github.com/rmuchan/kasumi-challenge/issues
 感谢您的支持！
 使用"ksmgame-help"获取更多帮助。
 """
@@ -442,7 +442,7 @@ https://github.com/rMuchan/kasumi-challenge/issues
 修复了Boss战模式下join的玩家会变成fair模式下的等级进入队伍的问题。
 
 *PVP功能的加入对原代码结构有较大的影响，如果出现任何不符合预期的异常或是错误，请来项目地址提交Issue：
-https://github.com/rMuchan/kasumi-challenge/issues
+https://github.com/rmuchan/kasumi-challenge/issues
 感谢您的支持！
 使用"ksmgame-help"获取更多帮助。
 """}, {
