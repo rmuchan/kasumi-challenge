@@ -249,9 +249,7 @@ async def _(session: CommandSession):
         ui.append('本次的boss是：')
     ui.append(boss['desc'])
     ui.append('强度参考值：%.0f' % (boss['final_rating'] * 10))
-    ui.append('使用指令ksmgame-help <Boss名>可以查看Boss机制。')
     await ui.send('Boss战已开启！其他人可以使用ksmgame-join来加入小队')
-
     asyncio.ensure_future(_remove_battle(session, bat))
 
 

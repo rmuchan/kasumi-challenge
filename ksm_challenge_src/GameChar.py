@@ -244,6 +244,15 @@ class GameChar:
                 'param': {'amount': real_added}
             })
 
+        if 'revenge_lighting' in self.buff:
+            heal_value = self.buff['revenge_lighting'][0][0]['recover']
+            real_heal = self.heal(heal_value * fluctuation(), self.buff_rate)
+            ret.append({
+                'feedback': '的逆向电流治疗了{target}{amount:.0f}点生命',
+                'merge_key': {'target': self._self_replace(self.name)},
+                'param': {'amount': real_heal}
+            })
+
         for buff_type in self.buff:
             self.buff[buff_type] = [(i[0], i[1] - 1) for i in self.buff[buff_type] if i[1] > 0]
         self.buff = {k: v for k, v in self.buff.items() if v}
@@ -477,8 +486,10 @@ class GameChar:
                 del obj.buff['revenge_flame']
 
             if 'revenge_lighting' in obj.buff:
-                result = obj.do_magic_damage(self, obj.buff['revenge_lighting'][0][0], obj.spell_rate)
-                result[0]['feedback'] = '逆向电流的效果生效，' + result[0]['feedback']
+                the_buff = obj.buff['revenge_lighting'][0][0]
+                result = obj.do_magic_damage(self, the_buff['damage'], obj.spell_rate)
+                self.atk_dec(obj, the_buff['atk_dec'], the_buff['duration'])
+                result[0]['feedback'] = '逆向电流的效果生效，' + result[0]['feedback'] + f'，攻击降低{int(the_buff["atk_dec"]*100)}%，持续{the_buff["duration"]}回合'
                 ret += result
                 # 清掉Buff
                 del obj.buff['revenge_lighting']
@@ -496,6 +507,15 @@ class GameChar:
             'feedback': '增加了{target}{amount:.0f}点MP',
             'merge_key': {'target': self._self_replace(obj.name)},
             'param': {'amount': real_added}
+        }]
+
+    # 攻击降低
+    def atk_dec(self, obj, value, duration):
+        real_minus = obj.add_buff('attack_weaken', value, duration)
+        return [{
+            'feedback': '削弱了{target}{minus_value:.0%}的攻击，持续{duration}回合',
+            'merge_key': {'target': self._self_replace(obj.name), 'duration': duration},
+            'param': {'minus_value': real_minus}
         }]
 
     # ————————————————————————————
@@ -595,12 +615,7 @@ class GameChar:
         # 攻击削弱
         elif effect['type'] == 'ATK_DEBUFF':
             for obj in selector:
-                real_minus = obj.add_buff('attack_weaken', param[0][0], param[1])
-                ret.append({
-                    'feedback': '削弱了{target}{minus_value:.0%}的攻击，持续{duration}回合',
-                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
-                    'param': {'minus_value': real_minus}
-                })
+                ret += self.atk_dec(obj, param[0][0], param[1])
 
         # 法术倍率提高
         elif effect['type'] == 'MGC_BUFF_RATE':

@@ -171,19 +171,18 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "强化自身{param[0]:.0%}的攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_RATE",
+                "desc": "提高{param[0]:%}的暴击率",
+                "type": "CRIT_CHANCE_BUFF",
                 "target": {
                     "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.24,
-                        "min": 0.20
-                    },
+                    [
+                        0.6,
+                        "S"
+                    ],
                     2
                 ]
             },
@@ -198,22 +197,6 @@
                 "param": [
                     [
                         1,
-                        "S"
-                    ],
-                    2
-                ]
-            },
-            {
-                "desc": "提高{param[0]:%}的暴击率",
-                "type": "CRIT_CHANCE_BUFF",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    [
-                        0.6,
                         "S"
                     ],
                     2

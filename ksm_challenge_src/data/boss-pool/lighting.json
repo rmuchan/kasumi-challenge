@@ -16,11 +16,11 @@
                 "min": 170,
                 "max": 180
             },
-           "defence_base": {
+            "defence_base": {
                 "random": "triangular",
                 "rating_weight": 6,
-                "min": 2.9,
-                "max": 3
+                "min": 3.4,
+                "max": 3.6
             },
             "defence_grow": {
                 "random": "triangular",
@@ -37,14 +37,14 @@
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 880,
-                "max": 890
+                "min": 580,
+                "max": 600
             },
             "recover_rate": {
                 "random": "triangular",
                 "rating_weight": 1,
-                "min": 1.3,
-                "max": 1.4
+                "min": 1.1,
+                "max": 1.2
             },
             "spell_rate": {
                 "random": "triangular",
@@ -60,15 +60,20 @@
             },
             "tag": {
                 "no_unique": true,
-                "revenge_lighting_body": 115,
+                "revenge_lighting_body": {
+                    "damage": 110,
+                    "atk_dec": 0.5,
+                    "duration": 1,
+                    "recover": 75
+                },
                 "mp_to_spell_rate": 0.0013,
                 "mp_to_buff_rate": 0.0013,
-                "be_attacked_mp_dec": 75
+                "be_attacked_mp_dec": 66
             },
             "crit_rate": 1.4,
-            "crit_chance": 0.13,
-            "life_steal_rate": 0.7,
-            "dodge": 0.08,
+            "crit_chance": 0.11,
+            "life_steal_rate": 0.5,
+            "dodge": 0.04,
             "unique": {},
             "normal_attack": {
                 "name": "线路短接",
@@ -76,9 +81,9 @@
                     {
                         "type": "NORMAL_ATK",
                         "target": {
-                            "type": "RAND",
+                            "type": "RAND_SAFE",
                             "team": 0,
-                            "limit": 1
+                            "limit": 2
                         },
                         "param": []
                     },
@@ -94,8 +99,8 @@
                                 {
                                     "random": "triangular",
                                     "rating_weight": 3,
-                                    "min": 21,
-                                    "max": 26
+                                    "min": 15,
+                                    "max": 16
                                 }
                             ]
                         ]
@@ -106,7 +111,7 @@
                 {
                     "chance": 0.3,
                     "cooldown": 4,
-                    "mp_cost": 100,
+                    "mp_cost": 140,
                     "name": "磁场屏障",
                     "effect": [
                         {
@@ -150,11 +155,11 @@
                 {
                     "chance": 0.3,
                     "cooldown": 3,
-                    "mp_cost": 100,
+                    "mp_cost": 90,
                     "name": "电力过载",
                     "effect": [
                         {
-                            "type": "PIERCE",
+                            "type": "SHIELD",
                             "target": {
                                 "type": "SELF",
                                 "team": 1,
@@ -164,12 +169,11 @@
                                 [
                                     {
                                         "random": "triangular",
-                                        "rating_weight": 4,
-                                        "min": 0.14,
-                                        "max": 0.15
+                                        "rating_weight": 1,
+                                        "min": 70,
+                                        "max": 80
                                     }
-                                ],
-                                false
+                                ]
                             ]
                         },
                         {
@@ -183,9 +187,9 @@
                                 [
                                     {
                                         "random": "triangular",
-                                        "rating_weight": 2,
-                                        "min": 60,
-                                        "max": 66
+                                        "rating_weight": 3,
+                                        "min": 71,
+                                        "max": 73
                                     }
                                 ],
                                 3
