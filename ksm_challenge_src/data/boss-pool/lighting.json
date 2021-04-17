@@ -19,8 +19,8 @@
             "defence_base": {
                 "random": "triangular",
                 "rating_weight": 6,
-                "min": 3.4,
-                "max": 3.6
+                "min": 3.1,
+                "max": 3.2
             },
             "defence_grow": {
                 "random": "triangular",
@@ -37,8 +37,8 @@
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 580,
-                "max": 600
+                "min": 540,
+                "max": 560
             },
             "recover_rate": {
                 "random": "triangular",
@@ -61,18 +61,18 @@
             "tag": {
                 "no_unique": true,
                 "revenge_lighting_body": {
-                    "damage": 110,
-                    "atk_dec": 0.5,
+                    "damage": 100,
+                    "atk_dec": 0.4,
                     "duration": 1,
-                    "recover": 75
+                    "recover": 60
                 },
-                "mp_to_spell_rate": 0.0013,
-                "mp_to_buff_rate": 0.0013,
+                "mp_to_spell_rate": 0.0012,
+                "mp_to_buff_rate": 0.0012,
                 "be_attacked_mp_dec": 66
             },
             "crit_rate": 1.4,
-            "crit_chance": 0.11,
-            "life_steal_rate": 0.5,
+            "crit_chance": 0.08,
+            "life_steal_rate": 0.4,
             "dodge": 0.04,
             "unique": {},
             "normal_attack": {
@@ -126,8 +126,8 @@
                                     {
                                         "random": "triangular",
                                         "rating_weight": 4,
-                                        "min": 370,
-                                        "max": 380
+                                        "min": 310,
+                                        "max": 320
                                     }
                                 ]
                             ]
@@ -188,8 +188,8 @@
                                     {
                                         "random": "triangular",
                                         "rating_weight": 3,
-                                        "min": 71,
-                                        "max": 73
+                                        "min": 61,
+                                        "max": 63
                                     }
                                 ],
                                 3

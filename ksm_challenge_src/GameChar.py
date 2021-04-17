@@ -488,7 +488,7 @@ class GameChar:
             if 'revenge_lighting' in obj.buff:
                 the_buff = obj.buff['revenge_lighting'][0][0]
                 result = obj.do_magic_damage(self, the_buff['damage'], obj.spell_rate)
-                self.atk_dec(obj, the_buff['atk_dec'], the_buff['duration'])
+                obj.atk_dec(self, the_buff['atk_dec'], the_buff['duration'])
                 result[0]['feedback'] = '逆向电流的效果生效，' + result[0]['feedback'] + f'，攻击降低{int(the_buff["atk_dec"]*100)}%，持续{the_buff["duration"]}回合'
                 ret += result
                 # 清掉Buff
