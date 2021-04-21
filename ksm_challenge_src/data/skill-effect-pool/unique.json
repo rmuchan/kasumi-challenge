@@ -27,6 +27,25 @@
                         "min": 238
                     }
                 ]
+            },
+            {
+                "passive": true,
+                "passive_type": "normal_attack_enhance",
+                "desc": "\n被动：进行普通攻击时，强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
+                "type": "MGC_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.07,
+                        "min": 0.06
+                    },
+                    9
+                ]
             }
         ]
     },
@@ -54,8 +73,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 138,
-                        "min": 120
+                        "expect": 140,
+                        "min": 130
                     }
                 ]
             },
@@ -87,10 +106,26 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 500,
-                        "min": 460
+                        "expect": 450,
+                        "min": 430
                     }
                 ]
+            },
+            {
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "\n被动：MP获取速度提高{param[0]:.0%}",
+                "tag": {
+                    "mp_gain_enhanced": 0.12
+                },
+                "param": [
+                    0.12
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
             }
         ]
     },
@@ -103,7 +138,7 @@
                 "狂怒战神"
             ]
         },
-        "weight": 3,
+        "weight": 2,
         "effect": [
             {
                 "desc": "提升自身{param[0]:.0%}的攻击，持续{param[1]}回合",
@@ -168,7 +203,7 @@
                 "致命精准"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "desc": "提高{param[0]:%}的暴击率",
@@ -400,24 +435,10 @@
                     {},
                     3
                 ]
-            }
-        ]
-    },
-    {
-        "name": {
-            "random": "choice",
-            "values": [
-                "嗜血渴望",
-                "恶魔之力",
-                "血之盛宴",
-                "吸血光环"
-            ]
-        },
-        "weight": 1,
-        "effect": [
+            },
             {
-                "desc": "中幅度强化自身{param[0]:.0f}点攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_CONST",
+                "desc": "并恢复自身{param[0]:.0f}点MP",
+                "type": "MP_UP",
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -426,45 +447,23 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 112,
-                        "min": 100
-                    },
-                    4
+                        "expect": 102,
+                        "min": 97
+                    }
                 ]
             },
             {
-                "desc": "大幅度提升全队{param[0]:.0%}的生命窃取倍率",
-                "type": "LIFE_STEAL_UP",
-                "target": {
-                    "type": "ALL",
-                    "team": 1,
-                    "limit": 1
-                },
+                "passive": true,
+                "passive_type": "mp_consume_change",
+                "desc": "\n被动：MP消耗降低至{param[0]:.0%}",
                 "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.30,
-                        "min": 0.24
-                    },
-                    3
-                ]
-            },
-            {
-                "desc": "额外提升自身{param[0]:.0%}的生命窃取倍率，持续{param[1]}回合",
-                "type": "LIFE_STEAL_UP",
+                    0.8
+                ],
                 "target": {
                     "type": "SELF",
                     "team": 1,
                     "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.50,
-                        "min": 0.45
-                    },
-                    3
-                ]
+                }
             }
         ]
     },
@@ -646,8 +645,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.30,
-                        "min": 0.24
+                        "expect": 0.40,
+                        "min": 0.32
                     },
                     2
                 ]
@@ -694,6 +693,49 @@
                     },
                     2
                 ]
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "限界力量",
+                "边缘魔法",
+                "黑魔法之力"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "\n被动：角色不再使用必杀技，MP越多，法术倍率越高，最高提升至{param[0]:.0%}",
+                "tag": {
+                    "no_unique": true,
+                    "mp_to_spell_rate": 0.0036
+                },
+                "param": [
+                    3.6
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
+            },
+            {
+                "passive": true,
+                "passive_type": "mp_consume_change",
+                "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}",
+                "param": [
+                    2.2
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
             }
         ]
     }

@@ -56,7 +56,7 @@ class CLI(UI):
         exit(1)
 
 
-with open('ksm_challenge_src/data/boss-pool/lighting.json') as FILE:
+with open('ksm_challenge_src/data/boss-pool/teacher.json', encoding='UTF-8') as FILE:
     boss = json.load(FILE)
 
 test_level = 1
@@ -65,7 +65,7 @@ test_level = 1
 async def main():
     chars = []
     for i in range(4):
-        ui = CLI(i, debug_mode=not False)
+        ui = CLI(i, debug_mode=not not False)
         c = await create_character(ui)
         chars.append(c)
         await show_chara_info(ui)
@@ -76,7 +76,7 @@ async def main():
 
 async def main2():
     time_limit = 31
-    test_amount = 200
+    test_amount = 100
     lvl_list = [1, 15, 30]
     turn_count = {i: [0 for _ in range(time_limit + 1)] for i in lvl_list}
     time_out = {i: 0 for i in lvl_list}

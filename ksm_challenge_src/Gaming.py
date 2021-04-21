@@ -115,6 +115,9 @@ class Gaming(ABC):
                 self.ui.append(f'[{chara.name}] 使用了 "{skill["name"]}"')
                 feedback = []
                 for effect in skill['effect']:
+                    # 不对被动效果做处理
+                    if effect.get('passive'):
+                        continue
                     if effect['type'] == 'SUMMON':
                         is_ally = bool(effect['target']['team'])
                         tgt_team_name = team_name if is_ally else {'a': 'b', 'b': 'a'}[team_name]

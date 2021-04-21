@@ -25,20 +25,20 @@
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 0.001,
-                "max": 0.002
+                "min": 0.07,
+                "max": 0.08
             },
             "hp_base": {
                 "random": "triangular",
                 "rating_weight": 6,
-                "min": 30,
-                "max": 80
+                "min": 10,
+                "max": 30
             },
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 910,
-                "max": 940
+                "min": 750,
+                "max": 800
             },
             "recover_rate": {
                 "random": "triangular",

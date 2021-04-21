@@ -25,8 +25,8 @@
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 0.01,
-                "max": 0.02
+                "min": 0.03,
+                "max": 0.04
             },
             "hp_base": {
                 "random": "triangular",

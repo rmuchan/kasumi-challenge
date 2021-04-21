@@ -65,7 +65,7 @@ class GameChar:
 
     @property   # 暴击倍率
     def crit_rate(self):
-        return self.attributes['crit_rate'] + self.buff_calc('crit_rate_enhanced')
+        return max(self.attributes['crit_rate'] - 1, 0) * (1 + self.buff_calc('crit_rate_enhanced')) + 1
 
     @property   # 闪避率
     def dodge(self):
@@ -105,7 +105,10 @@ class GameChar:
 
     @property   # MP恢复增加 MP恢复速度提升
     def mp_gain_rate(self):
-        return (1 + self.buff_calc('mp_gain_enhanced')) * self.buff_calc_spec('mp_gain_weaken')
+        p1 = self.buff_calc('mp_gain_enhanced')
+        p2 = (1 + self.tag['mp_gain_enhanced']) if self.has_tag('mp_gain_enhanced') else 1
+        p3 = self.buff_calc_spec('mp_gain_weaken')
+        return (1 + p1) * p2 * p3
 
     @property   # MP减消耗
     def mp_consume_dec(self):
@@ -842,7 +845,7 @@ class GameChar:
             for obj in selector:
                 obj.add_buff('fast_cooldown', True, param[1])
                 ret.append({
-                    'feedback': '使{target}进入了加速冷却状态，持续{duration}回合',
+                    'feedback': '使{target}进入了急速冷却状态，持续{duration}回合',
                     'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
                     'param': {}
                 })
@@ -970,6 +973,12 @@ class GameChar:
         # 魔法蓄能
         elif effect['type'] == 'ENERGE_GEN':
             for obj in selector:
+                real_added = obj.add_buff('spell_rate_enhanced', param[0][0], param[2])
+                ret.append({
+                    'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
+                    'param': {'amount': real_added}
+                })
                 obj.buff['energe_gen'] = [(dict(value=param[0][0], duration=param[2]), param[1])]
                 ret.append({
                     'feedback': '为{target}添加了魔法蓄能状态，持续{duration}回合',
@@ -1188,7 +1197,7 @@ class GameChar:
         S = self.name + ', '
         S += '%.0f/%.0f, 【%.0f】\n' % (self.HP, self.attributes['HP'], self.MP)
         S += 'shield: %.0f,\n' % self.shield
-        S += 'test: %s,\n' % str(self.spell_rate)
+        S += 'mp_gain_rate: %s,\n' % str(self.mp_gain_rate)
         S += 'buff: %s, ' % str(self.buff)
         return S
 

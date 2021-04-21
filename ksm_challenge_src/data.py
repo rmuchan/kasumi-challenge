@@ -21,7 +21,7 @@ class _Dir:
         item = item.replace('_', '-')
         if item not in self._loaded:
             if path.isfile(path.join(self._path, f'{item}.json')):
-                with open(path.join(self._path, f'{item}.json'), 'r') as f:
+                with open(path.join(self._path, f'{item}.json'), 'r', encoding='UTF-8') as f:
                     self._loaded[item] = json.load(f)
                     if self._is_save:
                         saves_updater.update(self._loaded[item])
@@ -37,7 +37,7 @@ class _Dir:
         item = item.replace('_', '-')
         self._loaded[item] = value
         os.makedirs(self._path, 0o755, exist_ok=True)
-        with open(path.join(self._path, f'{item}.json'), 'w') as f:
+        with open(path.join(self._path, f'{item}.json'), 'w', encoding='UTF-8') as f:
             if self._is_save:
                 value['$version'] = saves_updater.current_version
             json.dump(value, f, ensure_ascii=False, indent=2)

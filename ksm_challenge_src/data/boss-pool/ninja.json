@@ -3,7 +3,7 @@
     "bosses": [
         {
             "name": "幽灵忍者",
-            "not_short_hp": true,
+            "not_short_hp": false,
             "attack": {
                 "random": "triangular",
                 "rating_weight": 8,
@@ -19,8 +19,8 @@
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 3,
-                "min": 0.001,
-                "max": 0.002
+                "min": 0.04,
+                "max": 0.05
             },
             "hp_base": {
                 "random": "triangular",
@@ -31,8 +31,8 @@
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 365,
-                "max": 375
+                "min": 565,
+                "max": 575
             },
             "recover_rate": {
                 "random": "triangular",
@@ -55,7 +55,7 @@
             "crit_rate": 1.5,
             "crit_chance": 0.7,
             "life_steal_rate": 0.7,
-            "dodge": 0.55,
+            "dodge": 0.36,
             "unique": {
                 "name": "锁喉",
                 "effect": [
@@ -119,8 +119,8 @@
                                 {
                                     "random": "triangular",
                                     "rating_weight": 5,
-                                    "min": 0.2,
-                                    "max": 0.24
+                                    "min": 0.4,
+                                    "max": 0.5
                                 }
                             ],
                             30
@@ -210,8 +210,8 @@
                                     {
                                         "random": "triangular",
                                         "rating_weight": 3,
-                                        "min": 0.85,
-                                        "max": 0.95
+                                        "min": 1.7,
+                                        "max": 1.9
                                     }
                                 ],
                                 30

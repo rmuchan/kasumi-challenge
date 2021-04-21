@@ -72,7 +72,7 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
     game_char['dodge'] = _dodge_calc(int_, calc_passive(0, chara, 'dodge'))
 
     game_char['skills'] = [chara[f'skill_{i}'] for i in range(1, 4)]
-    game_char['unique'] = chara['unique']
+    game_char['unique'] = chara['unique'].copy()
 
     game_char['lv'] = lv
 
@@ -92,6 +92,25 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
     }
 
     game_char['tag'] = {}
+
+
+    # 特殊效果处理
+    for effect in chara['unique']["effect"]:
+        if effect.get('passive'):
+            # 普攻特效
+            temp = effect.copy()
+            if effect['passive_type'] == 'normal_attack_enhance':
+                game_char['normal_attack']['effect'] += [temp]
+            # 添加标签
+            elif effect['passive_type'] == 'add_tag':
+                for k, v in temp['tag'].items():
+                    game_char['tag'][k] = v
+            # 蓝耗变化
+            elif effect['passive_type'] == 'mp_consume_change':
+                game_char['mp_consume_dec'] *= effect['param'][0]
+
+            del temp['passive']
+
 
     # print(game_char)
     return game_char

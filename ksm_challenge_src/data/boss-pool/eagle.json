@@ -25,20 +25,20 @@
             "defence_grow": {
                 "random": "triangular",
                 "rating_weight": 2,
-                "min": 0.001,
-                "max": 0.002
+                "min": 0.07,
+                "max": 0.08
             },
             "hp_base": {
                 "random": "triangular",
                 "rating_weight": 3,
-                "min": 120,
+                "min": 140,
                 "max": 150
             },
             "life_base": {
                 "random": "triangular",
                 "rating_weight": 4,
-                "min": 710,
-                "max": 725
+                "min": 600,
+                "max": 601
             },
             "recover_rate": {
                 "random": "triangular",
@@ -60,7 +60,7 @@
             },
             "crit_rate": 1.70,
             "crit_chance": 0.12,
-            "life_steal_rate": 0.43,
+            "life_steal_rate": 0.4,
             "dodge": 0.14,
             "unique": {
                 "name": "血色凋零",
