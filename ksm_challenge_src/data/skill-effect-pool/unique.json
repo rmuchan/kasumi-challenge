@@ -729,7 +729,7 @@
                 "passive_type": "mp_consume_change",
                 "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}",
                 "param": [
-                    2.2
+                    3.2
                 ],
                 "target": {
                     "type": "SELF",
