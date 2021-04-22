@@ -592,7 +592,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "为自己添加技能过载标记，在下一个回合连续使用两次主技能，并在次回合使用一次主技能。此效果带来的发动技能效果无视冷却时间，无视发动概率，无视MP消耗",
+                "desc": "为自己添加技能过载标记，在下一个回合连续使用两次主技能。此效果带来的发动技能效果无视冷却时间，无视发动概率，无视MP消耗",
                 "type": "SKILL_OVERLOAD",
                 "target": {
                     "type": "SELF",
@@ -601,23 +601,6 @@
                 },
                 "param": [
                     {}
-                ]
-            },
-            {
-                "desc": "在{param[1]}回合内降低自身{param[0]:.1%}的MP获取速度",
-                "type": "MP_GAIN_WEAKEN",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 0.40,
-                        "min": 0.45
-                    },
-                    4
                 ]
             }
         ]
@@ -705,7 +688,7 @@
                 "黑魔法之力"
             ]
         },
-        "weight": 2,
+        "weight": 1,
         "effect": [
             {
                 "passive": true,
@@ -727,9 +710,11 @@
             {
                 "passive": true,
                 "passive_type": "mp_consume_change",
-                "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}",
+                "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}+{param[2]}",
                 "param": [
-                    3.2
+                    3.6,
+                    13.88,
+                    50
                 ],
                 "target": {
                     "type": "SELF",

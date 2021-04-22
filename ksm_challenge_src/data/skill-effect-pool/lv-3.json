@@ -58,8 +58,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 35,
-            "max": 50
+            "min": 60,
+            "max": 70
         },
         "name": {
             "random": "choice",
@@ -1073,8 +1073,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 200,
-            "max": 220
+            "min": 170,
+            "max": 180
         },
         "name": {
             "random": "choice",
@@ -1104,7 +1104,7 @@
                         "expect": 0.50,
                         "min": 0.44
                     },
-                    5,
+                    6,
                     60
                 ]
             }

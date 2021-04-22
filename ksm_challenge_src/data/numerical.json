@@ -98,7 +98,7 @@
     "random_mp_gain_extra": 60,
     "primary_skill_chance_rate": 1.9,
     "primary_skill_cooldown_rate": 0.76,
-    "primary_skill_cost_decrease": 30,
+    "primary_skill_cost_decrease": 0.8,
     "aoe_separate_rate": [
         0,
         1,

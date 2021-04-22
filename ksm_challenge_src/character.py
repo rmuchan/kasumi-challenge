@@ -112,7 +112,7 @@ async def _create_step_main_skill(ui: UI, proto: Dict[str, Any]):
     proto['skill_1'], proto[f'skill_{selection}'] = primary, proto['skill_1']
     primary['chance'] *= data.numerical['primary_skill_chance_rate']
     primary['cooldown'] = int(primary['cooldown'] * data.numerical['primary_skill_cooldown_rate'])
-    primary['mp_cost'] -= data.numerical['primary_skill_cost_decrease']
+    primary['mp_cost'] *= data.numerical['primary_skill_cost_decrease']
 
 
 _CREATE_STEPS = {

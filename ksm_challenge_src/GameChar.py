@@ -307,13 +307,9 @@ class GameChar:
             return ret + [self.attributes['unique']]
 
         # 主技能爆发
-        if self.use_token('skill_overload_turn1'):
-            self.add_token('skill_overload_turn2')
+        if self.use_token('skill_overload_turn'):
             self.MP = max(self.MP -  2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
             return ret + [self.skills[0].data, self.skills[0].data]
-        if self.use_token('skill_overload_turn2'):
-            self.MP = max(self.MP - self.skills[0].mp_cost * self.mp_consume_dec, 0)
-            return ret + [self.skills[0].data]
 
         # 正常地发动技能
         for sk in self.skills:
@@ -853,7 +849,7 @@ class GameChar:
         # 技能过载
         elif effect['type'] == 'SKILL_OVERLOAD':
             for obj in selector:
-                obj.add_token('skill_overload_turn1')
+                obj.add_token('skill_overload_turn')
                 ret.append({
                     'feedback': '为{target}添加的技能过载标记',
                     'merge_key': {'target': self._self_replace(obj.name)},

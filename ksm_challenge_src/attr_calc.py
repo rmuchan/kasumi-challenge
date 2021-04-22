@@ -108,6 +108,9 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
             # 蓝耗变化
             elif effect['passive_type'] == 'mp_consume_change':
                 game_char['mp_consume_dec'] *= effect['param'][0]
+                if len(effect['param']) > 1:
+                    for sk in game_char['skills']:
+                        sk['mp_cost'] += effect['param'][1]
 
             del temp['passive']
 
