@@ -65,10 +65,10 @@
         }
     },
     {
-        "desc": "【神赋卷轴】技能MP消耗-32%",
+        "desc": "【神赋卷轴】技能MP消耗-25%",
         "buff": {
             "mp_consume_dec": {
-                "multiply": 0.68
+                "multiply": 0.75
             }
         }
     },

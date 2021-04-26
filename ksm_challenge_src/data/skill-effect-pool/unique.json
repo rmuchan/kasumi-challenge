@@ -684,8 +684,7 @@
             "random": "choice",
             "values": [
                 "限界力量",
-                "边缘魔法",
-                "黑魔法之力"
+                "黑魔法"
             ]
         },
         "weight": 1,
@@ -712,9 +711,9 @@
                 "passive_type": "mp_consume_change",
                 "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}+{param[2]}",
                 "param": [
-                    3.6,
-                    13.88,
-                    50
+                    2.25,
+                    77.77,
+                    175
                 ],
                 "target": {
                     "type": "SELF",
