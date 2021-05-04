@@ -1,7 +1,7 @@
 import random
 from typing import Dict, Any
 
-from . import rand
+from . import rand, util
 from .GameChar import numerical
 from .data import data
 from .interact import UI
@@ -47,8 +47,10 @@ def _init_proto_character(uid: int):
 
 
 async def _create_step_name(ui: UI, proto: Dict[str, Any]):
-    proto['name'] = await ui.input('↓ 请为你的角色命名(12个英文字符/6个汉字以内，过长的名字将会被忽略)：',
-                                   is_valid=lambda x: len(x) + sum(1 for y in x if ord(y) > 127) <= 12)
+    name = await ui.input('↓ 请为你的角色命名(12个英文字符/6个汉字以内，不要包含emoji，不符合要求的名字将会被忽略)：',
+                          is_valid=lambda x: ((len(x) + sum(1 for y in x if ord(y) > 127) <= 12)
+                                              and not util.contains_emoji(x)))
+    proto['name'] = name
 
 
 async def _create_step_skill_candidate(_: UI, proto: Dict[str, Any]):

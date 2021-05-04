@@ -1,3 +1,6 @@
+import demoji
+
+
 class BiasedRandomFormat:
     def __init__(self, val):
         self._val = NumFormat(val[0])
@@ -20,3 +23,11 @@ class NumFormat:
 
 def recurrence(a_1: float, k: float, m: float, n: int) -> float:
     return (a_1 - m) * k ** (n - 1) + m * ((k ** n - 1) / (k - 1) if k != 1 else n)
+
+
+def contains_emoji(s: str) -> bool:
+    try:
+        demoji.set_emoji_pattern()
+    except IOError:
+        demoji.download_codes()
+    return bool(demoji.findall_list(s, desc=False))
