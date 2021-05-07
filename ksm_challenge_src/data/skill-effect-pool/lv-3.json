@@ -1023,8 +1023,8 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 3,
-            "max": 4
+            "min": 2,
+            "max": 3
         },
         "mp_cost": {
             "random": "triangular_int",
@@ -1073,8 +1073,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 170,
-            "max": 180
+            "min": 120,
+            "max": 130
         },
         "name": {
             "random": "choice",
@@ -1105,7 +1105,7 @@
                         "min": 0.44
                     },
                     6,
-                    60
+                    30
                 ]
             }
         ]
@@ -1122,8 +1122,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 200,
-            "max": 220
+            "min": 170,
+            "max": 190
         },
         "name": {
             "random": "choice",

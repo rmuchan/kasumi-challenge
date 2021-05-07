@@ -507,7 +507,7 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "进行5次快速的普通攻击",
+                "desc": "进行4次快速的普通攻击",
                 "type": "ATK_DEBUFF",
                 "target": {
                     "type": "SELF",
@@ -516,7 +516,7 @@
                 },
                 "param": [
                     [
-                        0.63,
+                        0.54,
                         "S"
                     ],
                     0
@@ -533,21 +533,41 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.38,
-                        "min": 0.32
+                        "expect": 0.4,
+                        "min": 0.36
                     },
                     0
                 ]
             },
             {
-                "desc": "然而每次攻击的伤害降低63%",
+                "desc": "然而每次攻击的伤害降低54%",
                 "type": "NORMAL_ATK",
                 "target": {
                     "type": "RAND",
                     "team": 0,
-                    "limit": 5
+                    "limit": 4
                 },
                 "param": []
+            },
+            {
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "\n被动：普攻攻击暴击时，在{param[1]}回合内提高自身{param[0]:.0%}的攻击",
+                "tag": {
+                    "when_crit_atk_buff": [
+                        0.24,
+                        3
+                    ]
+                },
+                "param": [
+                    0.24,
+                    3
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
             }
         ]
     },
@@ -695,10 +715,10 @@
                 "desc": "\n被动：角色不再使用必杀技，MP越多，法术倍率越高，最高提升至{param[0]:.0%}",
                 "tag": {
                     "no_unique": true,
-                    "mp_to_spell_rate": 0.0036
+                    "mp_to_spell_rate": 0.0038
                 },
                 "param": [
-                    3.6
+                    3.8
                 ],
                 "target": {
                     "type": "SELF",

@@ -55,7 +55,7 @@ class GameChar:
         return max(
             (self.attributes['attack'] + self.buff_calc('attack_enhanced')) * self.buff_calc_spec('attack_weaken'), 1)
 
-    @property   # 暴击率    是非线性叠加
+    @property  # 暴击率    是非线性叠加
     def crit_chance(self):
         not_crit_chance = 1
         if 'crit_chance_enhanced' in self.buff.keys():
@@ -63,84 +63,85 @@ class GameChar:
                 not_crit_chance *= (1 - item[0])
         return 1 - (1 - self.attributes['crit_chance']) * not_crit_chance
 
-    @property   # 暴击倍率
+    @property  # 暴击倍率
     def crit_rate(self):
         return max(self.attributes['crit_rate'] - 1, 0) * (1 + self.buff_calc('crit_rate_enhanced')) + 1
 
-    @property   # 闪避率
+    @property  # 闪避率
     def dodge(self):
         return self.attributes['dodge'] + self.buff_calc('dodge_enhanced')
 
-    @property   # 吸血/生命窃取倍率
+    @property  # 吸血/生命窃取倍率
     def life_steal_rate(self):
         return self.attributes['life_steal_rate'] + self.buff_calc('life_steal_enhanced')
 
-    @property   # 恢复强度
+    @property  # 恢复强度
     def recover_rate(self):
         return self.attributes['recover_rate'] * self.buff_calc('recover_rate_enhanced',
                                                                 is_multi=True) * self.buff_calc_spec(
             'recover_rate_weaken')
 
-    @property   #增益幅度
+    @property  # 增益幅度
     def buff_rate(self):
         p1 = self.buff_calc('buff_rate_enhanced', is_multi=True)
         p2 = self.buff_calc_spec('buff_rate_weaken')
         p3 = (1 + self.tag['mp_to_buff_rate'] * self.MP) if self.has_tag('mp_to_buff_rate') else 1
         return self.attributes['buff_rate'] * p1 * p2 * p3
 
-    @property   # 计算生命值百分比
+    @property  # 计算生命值百分比
     def hp_percentage(self):
         return self.HP / self.attributes['HP']
 
-    @property   # 法术倍率
+    @property  # 法术倍率
     def spell_rate(self):
         p1 = self.buff_calc('spell_rate_enhanced', is_multi=True)
         p2 = self.buff_calc_spec('spell_rate_weaken')
         p3 = (1 + self.tag['mp_to_spell_rate'] * self.MP) if self.has_tag('mp_to_spell_rate') else 1
         return self.attributes['spell_rate'] * p1 * p2 * p3
 
-    @property   # 技能发动率提升
+    @property  # 技能发动率提升
     def skill_chance_boost(self):
         return self.attributes['base_skill_chance_boost'] * self.buff_calc('skill_chance_boost_enhanced', is_multi=True)
 
-    @property   # MP恢复增加 MP恢复速度提升
+    @property  # MP恢复增加 MP恢复速度提升
     def mp_gain_rate(self):
         p1 = self.buff_calc('mp_gain_enhanced')
         p2 = (1 + self.tag['mp_gain_enhanced']) if self.has_tag('mp_gain_enhanced') else 1
         p3 = self.buff_calc_spec('mp_gain_weaken')
         return (1 + p1) * p2 * p3
 
-    @property   # MP减消耗
+    @property  # MP减消耗
     def mp_consume_dec(self):
         return self.attributes['mp_consume_dec'] * self.buff_calc_spec('mp_consume_dec_enhanced')
 
-    @property   # 判断是否死亡
+    @property  # 判断是否死亡
     def not_dead(self):
         return self.HP > 0 and not self.enforce_dead
 
-    @property   # 返回普攻信息
+    @property  # 返回普攻信息
     def normal_attack(self):
         return self.attributes['normal_attack']
 
-    @property   # 返回是否沉默
+    @property  # 返回是否沉默
     def is_silence(self):
         return 'silence' in self.buff.keys()
 
-    @property   # 返回是否是火焰附魔状态
+    @property  # 返回是否是火焰附魔状态
     def fire_enchanted(self):
         return 'fire_enchant' in self.buff.keys()
-
 
     # 返回平级调整倍率 - 魔法倍率
     def adj_spell_rate(self, rate):
         base = self.attributes['spell_rate'] / self.attributes['std_rate']
-        enhance = ((self.buff_calc('spell_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec('spell_rate_weaken')
+        enhance = ((self.buff_calc('spell_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec(
+            'spell_rate_weaken')
         return base * enhance
 
     # 返回平级调整倍率 - 吸血使用的恢复强度
     def adj_recover_rate(self, rate):
         base = self.attributes['recover_rate'] / self.attributes['std_rate']
-        enhance = ((self.buff_calc('recover_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec('recover_rate_weaken')
+        enhance = ((self.buff_calc('recover_rate_enhanced', is_multi=True) - 1) * rate + 1) * self.buff_calc_spec(
+            'recover_rate_weaken')
         return base * enhance
 
     # 用于Buff总量的计算
@@ -232,18 +233,22 @@ class GameChar:
         ret = []
 
         if 'revenge_flame' in self.buff and self.buff['revenge_flame'][0][1] == 0:
-            real_added = self.add_buff('spell_rate_enhanced', self.buff['revenge_flame'][0][0]['spell_rate'], self.buff['revenge_flame'][0][0]['duration'])
+            real_added = self.add_buff('spell_rate_enhanced', self.buff['revenge_flame'][0][0]['spell_rate'],
+                                       self.buff['revenge_flame'][0][0]['duration'])
             ret.append({
                 'feedback': '的复仇火花消失了，提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
-                'merge_key': {'target': self._self_replace(self.name), 'duration': self.buff['revenge_flame'][0][0]['duration']},
+                'merge_key': {'target': self._self_replace(self.name),
+                              'duration': self.buff['revenge_flame'][0][0]['duration']},
                 'param': {'amount': real_added}
             })
 
         if 'energe_gen' in self.buff:
-            real_added = self.add_buff('spell_rate_enhanced', self.buff['energe_gen'][0][0]['value'], self.buff['energe_gen'][0][0]['duration'])
+            real_added = self.add_buff('spell_rate_enhanced', self.buff['energe_gen'][0][0]['value'],
+                                       self.buff['energe_gen'][0][0]['duration'])
             ret.append({
                 'feedback': '的魔法蓄能效果提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
-                'merge_key': {'target': self._self_replace(self.name), 'duration': self.buff['energe_gen'][0][0]['duration']},
+                'merge_key': {'target': self._self_replace(self.name),
+                              'duration': self.buff['energe_gen'][0][0]['duration']},
                 'param': {'amount': real_added}
             })
 
@@ -290,7 +295,6 @@ class GameChar:
         if self.use_token('attack_assis'):
             ret += [self.normal_attack]
 
-
         # 如果是Boss，必杀技能不会被沉默
         if self.attributes.get('is_boss', False):
             if self.MP >= 1000 and 'no_unique' not in self.attributes['tag']:
@@ -308,7 +312,7 @@ class GameChar:
 
         # 主技能爆发
         if self.use_token('skill_overload_turn'):
-            self.MP = max(self.MP -  2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
+            self.MP = max(self.MP - 2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
             return ret + [self.skills[0].data, self.skills[0].data]
 
         # 正常地发动技能
@@ -459,10 +463,14 @@ class GameChar:
             if self.fire_enchanted:
                 ret += self.do_phy_damage(obj, is_crit, atk_status, real_damage)
                 ret += self.do_magic_damage(obj, self.attack * numerical['fire_enchant_rate'],
-                                self.adj_spell_rate(numerical['fire_enchant_spell_enchance_rate']))
+                                            self.adj_spell_rate(numerical['fire_enchant_spell_enchance_rate']))
 
             else:
                 ret += self.do_phy_damage(obj, is_crit, atk_status, real_damage)
+
+            # 暴击时攻击加强
+            if is_crit and self.has_tag('when_crit_atk_buff'):
+                ret += self.atk_up_rate(self, self.tag['when_crit_atk_buff'][0], self.tag['when_crit_atk_buff'][1], True)
 
             # 触发复仇火花效果 取数组第一个(即最早加上的Buff)
             if 'revenge_flame' in obj.buff:
@@ -488,11 +496,11 @@ class GameChar:
                 the_buff = obj.buff['revenge_lighting'][0][0]
                 result = obj.do_magic_damage(self, the_buff['damage'], obj.spell_rate)
                 obj.atk_dec(self, the_buff['atk_dec'], the_buff['duration'])
-                result[0]['feedback'] = '逆向电流的效果生效，' + result[0]['feedback'] + f'，攻击降低{int(the_buff["atk_dec"]*100)}%，持续{the_buff["duration"]}回合'
+                result[0]['feedback'] = '逆向电流的效果生效，' + result[0][
+                    'feedback'] + f'，攻击降低{int(the_buff["atk_dec"] * 100)}%，持续{the_buff["duration"]}回合'
                 ret += result
                 # 清掉Buff
                 del obj.buff['revenge_lighting']
-
 
             # 触发受击MP减少的效果
             if obj.has_tag('be_attacked_mp_dec'):
@@ -516,6 +524,24 @@ class GameChar:
             'merge_key': {'target': self._self_replace(obj.name), 'duration': duration},
             'param': {'minus_value': real_minus}
         }]
+
+    # 攻击百分比提高
+    def atk_up_rate(self, obj, value, duration, no_merge=False):
+        real_point = obj._attack_rate_to_pont(value)
+        real_added = obj.add_buff('attack_enhanced', real_point, duration)
+        if no_merge:
+            return [{
+                'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
+                'merge_key': {'target': self._self_replace(obj.name),'duration': duration, 'amount': real_added},
+                'param': {},
+                'no_merge': True
+            }]
+        else:
+            return [{
+                'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
+                'merge_key': {'target': self._self_replace(obj.name), 'duration': duration},
+                'param': {'amount': real_added}
+            }]
 
     # ————————————————————————————
     #         技能效果执行
@@ -559,13 +585,7 @@ class GameChar:
         # 百分比强化
         elif effect['type'] == 'PHY_ATK_BUFF_RATE':
             for obj in selector:
-                real_point = obj._attack_rate_to_pont(param[0][0])
-                real_added = obj.add_buff('attack_enhanced', real_point, param[1])
-                ret.append({
-                    'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
-                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
-                    'param': {'amount': real_added}
-                })
+                ret += self.atk_up_rate(obj, param[0][0], param[1])
 
         # 治疗
         elif effect['type'] == 'HEAL':
@@ -942,7 +962,8 @@ class GameChar:
             for obj in selector:
                 # 仅当身上没有的时候生效
                 if 'revenge_flame' not in obj.buff:
-                    obj.buff['revenge_flame'] = [(dict(damage=param[0][0], mp_gain_value=param[4], spell_rate=param[2][0], duration=param[3]), param[1])]
+                    obj.buff['revenge_flame'] = [(dict(damage=param[0][0], mp_gain_value=param[4],
+                                                       spell_rate=param[2][0], duration=param[3]), param[1])]
                     ret.append({
                         'feedback': '为{target}添加了复仇火花状态，持续2回合',
                         'merge_key': {'target': self._self_replace(obj.name)},

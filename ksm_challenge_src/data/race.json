@@ -26,9 +26,9 @@
     {
         "name": "Shadoul",
         "desc": "Shadoul诞生在阴影之中，无声无息，难以触摸。尽管Shadoul看起来十分柔弱，但是每当尝试攻击他，似乎都无法触及他的本体。",
-        "info": "闪避+5%，生命最大值-3.5%",
+        "info": "闪避+6%，生命最大值-3.5%",
         "buff": {
-            "dodge": 0.05,
+            "dodge": 0.06,
             "hp_rate": {
                 "multiply": 0.965
             }
@@ -37,20 +37,20 @@
     {
         "name": "Vunpire",
         "desc": "Vunpire历代嗜血为生，他们是优雅的猎手，能够从猎物身上汲取力量。Vunpire嗜血习性使你有天生的攻击吸血和更强的生命力。",
-        "info": "基础物理吸血+12%，恢复倍率增加6%",
+        "info": "基础物理吸血+9%，恢复倍率增加9%",
         "buff": {
-            "life_steal_rate": 0.12,
+            "life_steal_rate": 0.09,
             "recover_rate": {
-                "multiply": 1.06
+                "multiply": 1.09
             }
         }
     },
     {
         "name": "Huntars",
         "desc": "Huntars生活在草原上，是狩猎的好能手，在狩猎中，他们总是那样地精确且致命。Huntars常年的打猎经验使你拥有更高的暴击倍率。",
-        "info": "基础暴击倍率+18%",
+        "info": "基础暴击倍率+11%",
         "buff": {
-            "crit_rate": 0.18
+            "crit_rate": 0.11
         }
     },
     {

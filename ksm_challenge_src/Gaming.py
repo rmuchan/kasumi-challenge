@@ -131,6 +131,8 @@ class Gaming(ABC):
                 merged = []
                 for f in feedback:
                     for m in merged:
+                        if m.get('no_merge'):
+                            continue
                         if m['feedback'] == f['feedback'] and m['merge_key'] == f['merge_key']:
                             for k, v in f['param'].items():
                                 m['param'][k] += f'、{v}' if isinstance(v, str) else v
