@@ -357,7 +357,7 @@ async def _(session: CommandSession):
         return await ui.send(f'每5小时只能进行一次转生\n你可以在{next_rebirth_str}之后再次转生')
 
     coin = int(ui.retrieve('talent_coin') or 0)
-    acquire_coin = int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate'))
+    acquire_coin = min(int(exp_to_talent_coin(char['exp']) * calc_passive(1, char, 'talent_coin_earn_rate')), 1000)
     ui.store('talent_coin', coin + acquire_coin)
     ui.store('character', None)
     ui.store('last_rebirth', current_time)

@@ -20,7 +20,7 @@ class GameChar:
         self.HP = chara['HP']
         self.shield = 0
         self.buff = {}
-        self.MP = 0
+        self.MP = 0 if 'start_mp' not in self.tag else self.tag['start_mp']
         self.skills = [GameSkill(x) for x in self.attributes['skills']]
         self.token = set()
         self.turn_mp_gain()
@@ -311,7 +311,7 @@ class GameChar:
             return ret + [self.attributes['unique']]
 
         # 主技能爆发
-        if self.use_token('skill_overload_turn'):
+        if 'skill_overload' in self.attributes['tag'] and self.tag['skill_overload'] and self.MP >= 1000:
             self.MP = max(self.MP - 2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
             return ret + [self.skills[0].data, self.skills[0].data]
 

@@ -111,6 +111,8 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
                 if len(effect['param']) > 1:
                     for sk in game_char['skills']:
                         sk['mp_cost'] += effect['param'][1]
+            elif effect['passive_type'] == 'skill_chance_boost':
+                game_char['base_skill_chance_boost'] *= (1 + effect['param'][0])
 
             del temp['passive']
 

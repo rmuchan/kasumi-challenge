@@ -612,16 +612,32 @@
         "weight": 2,
         "effect": [
             {
-                "desc": "为自己添加技能过载标记，在下一个回合连续使用两次主技能。此效果带来的发动技能效果无视冷却时间，无视发动概率，无视MP消耗",
-                "type": "SKILL_OVERLOAD",
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "在一回合中连续施放两次主技能",
+                "tag": {
+                    "no_unique": true,
+                    "skill_overload": true
+                },
+                "param": [],
                 "target": {
                     "type": "SELF",
                     "team": 1,
                     "limit": 1
-                },
+                }
+            },
+            {
+                "passive": true,
+                "passive_type": "skill_chance_boost",
+                "desc": "\n被动：所有非必杀技能的发动率提高24%",
                 "param": [
-                    {}
-                ]
+                    0.24
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
             }
         ]
     },
@@ -703,16 +719,15 @@
         "name": {
             "random": "choice",
             "values": [
-                "限界力量",
                 "黑魔法"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
                 "passive": true,
                 "passive_type": "add_tag",
-                "desc": "\n被动：角色不再使用必杀技，MP越多，法术倍率越高，最高提升至{param[0]:.0%}",
+                "desc": "被动：角色不再使用必杀技，MP越多，法术倍率越高，最高提升至{param[0]:.0%}",
                 "tag": {
                     "no_unique": true,
                     "mp_to_spell_rate": 0.0038
@@ -731,9 +746,25 @@
                 "passive_type": "mp_consume_change",
                 "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}+{param[2]}",
                 "param": [
-                    2.25,
+                    2.75,
                     77.77,
-                    175
+                    125
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
+            },
+            {
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "角色进入战斗时初始便拥有{param[0]}点MP",
+                "tag": {
+                    "start_mp": 250
+                },
+                "param": [
+                    250
                 ],
                 "target": {
                     "type": "SELF",
