@@ -77,7 +77,7 @@ def get_skill_desc(skill: Dict[str, Any], is_unique: bool,
             desc='；'.join(get_effect_desc(x) for x in skill['effect'])
         )
     else:
-        return '【{name}】\n ├ 冷却回合：{cd}\n ├ 概率：{chance:.1%}\n ├ MP消耗：{mp:.0f}\n └ 效果：{desc}'.format(
+        return '【{name}】\n ├ 冷却回合：{cd}\n ├ 参考概率：{chance:.1%}\n ├ MP消耗：{mp:.0f}\n └ 效果：{desc}'.format(
             name=skill['name'],
             cd=skill['cooldown'],
             chance=real_chance_calc(skill['chance'] * skill_chance_boost),
