@@ -312,7 +312,7 @@ class GameChar:
 
         # 主技能爆发
         if 'skill_overload' in self.attributes['tag'] and self.tag['skill_overload'] and self.MP >= 1000:
-            self.MP = max(self.MP - 2 * self.skills[0].mp_cost * self.mp_consume_dec, 0)
+            self.MP = 0
             return ret + [self.skills[0].data, self.skills[0].data]
 
         # 正常地发动技能
