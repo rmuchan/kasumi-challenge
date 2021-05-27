@@ -65,7 +65,7 @@ test_level = 1
 async def main():
     chars = []
     for i in range(4):
-        ui = CLI(i, debug_mode=not not False)
+        ui = CLI(i, debug_mode=not False)
         c = await create_character(ui)
         chars.append(c)
         await show_chara_info(ui)

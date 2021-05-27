@@ -380,7 +380,7 @@ class GameChar:
         }]
 
     # 造成魔法伤害
-    def do_magic_damage(self, obj, damage, enhance=None, special_msg=None):
+    def do_magic_damage(self, obj, damage, enhance=None, special_msg=None, no_merge=False):
         """
         角色造成魔法伤害时调用的函数。
         :param enhance: 法术倍率，不填为角色自身的法术倍率
@@ -418,11 +418,20 @@ class GameChar:
         feedback += '造成了{amount:.0f}点魔法伤害'
         if magic_atk_status == 1:
             feedback += '，破坏了护盾'
-        return [{
-            'feedback': feedback,
-            'merge_key': {'target': self._self_replace(obj.name)},
-            'param': {'amount': magic_real_damage}
-        }]
+
+        if no_merge:
+            return [{
+                'feedback': feedback,
+                'merge_key': {'target': self._self_replace(obj.name), 'amount': magic_real_damage},
+                'param': {},
+                'no_merge': True
+            }]
+        else:
+            return [{
+                'feedback': feedback,
+                'merge_key': {'target': self._self_replace(obj.name)},
+                'param': {'amount': magic_real_damage}
+            }]
 
     def do_normal_attack(self, obj: "GameChar"):
         """
@@ -543,6 +552,23 @@ class GameChar:
                 'param': {'amount': real_added}
             }]
 
+    # 法术倍率提高
+    def spell_rate_up(self, obj, value, duration, no_merge=False):
+        real_added = obj.add_buff('spell_rate_enhanced', value, duration)
+        if no_merge:
+            return [{
+                'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                'merge_key': {'target': self._self_replace(obj.name), 'duration': duration, 'amount': real_added},
+                'param': {},
+                'no_merge': True
+            }]
+        else:
+            return [{
+            'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
+            'merge_key': {'target': self._self_replace(obj.name), 'duration': duration},
+            'param': {'amount': real_added}
+        }]
+
     # ————————————————————————————
     #         技能效果执行
     # ————————————————————————————
@@ -639,12 +665,8 @@ class GameChar:
         # 法术倍率提高
         elif effect['type'] == 'MGC_BUFF_RATE':
             for obj in selector:
-                real_added = obj.add_buff('spell_rate_enhanced', param[0][0], param[1])
-                ret.append({
-                    'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
-                    'merge_key': {'target': self._self_replace(obj.name), 'duration': param[1]},
-                    'param': {'amount': real_added}
-                })
+                ret += self.spell_rate_up(obj, param[0][0], param[1])
+
 
         # 护甲衰减
         elif effect['type'] == 'DEF_DEC':
@@ -1003,6 +1025,17 @@ class GameChar:
                     'param': {}
                 })
 
+        # 魔法连锁
+        elif effect['type'] == 'LINK_MAGIC':
+            for obj in selector:
+                ret += self.do_magic_damage(obj, param[0][0], no_merge=True)
+                ret += self.spell_rate_up(obj, param[1], param[2], no_merge=True)
+
+                chance = param[3]
+                while (random.random() < chance * self.skill_chance_boost):
+                    ret += self.do_magic_damage(obj, param[0][0], no_merge=True)
+                    ret += self.spell_rate_up(obj, param[1], param[2], no_merge=True)
+                    chance *= param[4]
 
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])

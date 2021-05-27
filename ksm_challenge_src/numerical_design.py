@@ -1,25 +1,37 @@
-from ksm_challenge_src.attr_calc import attr_calc, numerical
+from random import random
+damage = 46
+spell_up = 0.16
 
-import seaborn as sns
-import matplotlib.pyplot as plt
+class testP:
+    def __init__(self):
+        self.spell = 1.0
+        self.total_damage = 0
+        self.chance = 0.5
 
-# 暴击倍率增益计算
-def crit_rate_calc(str_cur, extra):
-    return str_cur * numerical['crit_int_convert_rate'] + 0.22 + extra
+    def do_effect(self):
+        self.total_damage += self.do_damage()
+        self.spell *= ( 1 + spell_up)
 
-def c_new(str_cur, extra):
-    return str_cur * 0.0036 + 0.20 + extra
+    def do_damage(self):
+        return damage * self.spell
 
-def damge_p(chance, rate):
-    return chance * rate + 1 - chance
+    def skill(self):
+        self.do_effect()
+        while random() < self.chance:
+            self.do_effect()
+            self.chance *= 0.75
+
 
 if __name__ == '__main__':
-    for attr in [120]:
-        print('旧：' + str(attr), end='    ')
-        a1 = crit_rate_calc(attr, 0) + 1
-        print(a1)
-        print(damge_p(0.11, a1))
-        print('新：'+ str(attr), end='    ')
-        a2 = c_new(attr, 0) + 1
-        print(a2)
-        print(damge_p(0.21, a2))
+    amount = 1000
+    total_damage = 0
+    total_spell = 0
+
+    for _ in range(amount):
+        a = testP()
+        a.skill()
+        total_damage += a.total_damage
+        total_spell += a.spell
+
+    print(total_damage / amount)
+    print(total_spell / amount)

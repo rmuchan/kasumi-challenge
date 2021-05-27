@@ -730,10 +730,10 @@
                 "desc": "被动：角色不再使用必杀技，MP越多，法术倍率越高，最高提升至{param[0]:.0%}",
                 "tag": {
                     "no_unique": true,
-                    "mp_to_spell_rate": 0.0038
+                    "mp_to_spell_rate": 0.004
                 },
                 "param": [
-                    3.8
+                    4.0
                 ],
                 "target": {
                     "type": "SELF",
@@ -746,9 +746,9 @@
                 "passive_type": "mp_consume_change",
                 "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}+{param[2]}",
                 "param": [
-                    2.75,
-                    45.45,
-                    125
+                    2.5,
+                    48,
+                    120
                 ],
                 "target": {
                     "type": "SELF",

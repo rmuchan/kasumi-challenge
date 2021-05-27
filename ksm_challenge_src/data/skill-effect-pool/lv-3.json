@@ -665,8 +665,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.22,
-                        "min": 0.20
+                        "expect": 0.30,
+                        "min": 0.26
                     },
                     4
                 ]
@@ -834,8 +834,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.38,
-                        "min": 0.30
+                        "expect": 0.5,
+                        "min": 0.45
                     },
                     0
                 ]
@@ -1095,21 +1095,22 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 130,
-                        "min": 123
+                        "expect": 120,
+                        "min": 117
                     },
                     1,
                     {
                         "random": "biased",
-                        "expect": 0.50,
-                        "min": 0.44
+                        "expect": 0.57,
+                        "min": 0.53
                     },
                     6,
                     30
                 ]
             }
         ]
-    },    {
+    },
+    {
         "chance": {
             "random": "triangular",
             "min": 0.05,
@@ -1149,6 +1150,52 @@
                     },
                     4,
                     7
+                ]
+            }
+        ]
+    },
+    {
+        "chance": {
+            "random": "triangular",
+            "min": 0.05,
+            "max": 0.15
+        },
+        "cooldown": {
+            "random": "triangular_int",
+            "min": 3,
+            "max": 4
+        },
+        "mp_cost": {
+            "random": "triangular_int",
+            "min": 90,
+            "max": 160
+        },
+        "name": {
+            "random": "choice",
+            "values": [
+                "连锁魔法"
+            ]
+        },
+        "weight": 3,
+        "effect": [
+            {
+                "desc": "执行一次效果①。①：随机对1个敌人造成{param[0]}点魔法伤害，在{param[2]}回合内提升自身{param[1]:.0%}的法术倍率，X的概率再次执行一次效果①，并降低X的值到当前的{param[4]:.0%}。\nX初始值为{param[3]:.0%}，技能发动率提升效果会提升X的数值",
+                "type": "LINK_MAGIC",
+                "target": {
+                    "type": "RAND",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 46,
+                        "min": 42
+                    },
+                    0.16,
+                    5,
+                    0.5,
+                    0.75
                 ]
             }
         ]
