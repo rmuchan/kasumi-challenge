@@ -1034,7 +1034,7 @@ class GameChar:
                 chance = param[3]
                 while (random.random() < chance * self.skill_chance_boost):
                     ret += self.do_magic_damage(obj, param[0][0], no_merge=True)
-                    ret += self.spell_rate_up(obj, param[1], param[2], no_merge=True)
+                    ret += self.spell_rate_up(self, param[1], param[2], no_merge=True)
                     chance *= param[4]
 
         else:
