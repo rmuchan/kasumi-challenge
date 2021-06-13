@@ -41,8 +41,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.07,
-                        "min": 0.06
+                        "expect": 0.042,
+                        "min": 0.04
                     },
                     9
                 ]
@@ -215,7 +215,7 @@
                 },
                 "param": [
                     [
-                        0.6,
+                        0.72,
                         "S"
                     ],
                     2
@@ -516,7 +516,7 @@
                 },
                 "param": [
                     [
-                        0.54,
+                        0.43,
                         "S"
                     ],
                     0
@@ -540,7 +540,7 @@
                 ]
             },
             {
-                "desc": "然而每次攻击的伤害降低54%",
+                "desc": "然而每次攻击的伤害降低43%",
                 "type": "NORMAL_ATK",
                 "target": {
                     "type": "RAND",
@@ -555,7 +555,7 @@
                 "desc": "\n被动：普攻攻击暴击时，在{param[1]}回合内提高自身{param[0]:.0%}的攻击",
                 "tag": {
                     "when_crit_atk_buff": [
-                        0.24,
+                        0.3,
                         3
                     ]
                 },
@@ -761,10 +761,10 @@
                 "passive_type": "add_tag",
                 "desc": "角色进入战斗时初始便拥有{param[0]}点MP",
                 "tag": {
-                    "start_mp": 250
+                    "start_mp": 360
                 },
                 "param": [
-                    250
+                    360
                 ],
                 "target": {
                     "type": "SELF",

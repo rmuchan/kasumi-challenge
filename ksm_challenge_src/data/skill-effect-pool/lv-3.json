@@ -25,7 +25,7 @@
                 "暗影腐蚀"
             ]
         },
-        "weight": 3,
+        "weight": 5,
         "effect": [
             {
                 "desc": "随机对{target[limit]}个敌人造成{param[0]}点魔法伤害",
@@ -41,6 +41,23 @@
                         "expect": 115,
                         "min": 102
                     }
+                ]
+            },
+            {
+                "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
+                "type": "MGC_BUFF_RATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.041,
+                        "min": 0.04
+                    },
+                    15
                 ]
             }
         ]
@@ -58,8 +75,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 70
+            "min": 52,
+            "max": 58
         },
         "name": {
             "random": "choice",
@@ -110,56 +127,6 @@
     {
         "chance": {
             "random": "triangular",
-            "min": 0.10,
-            "max": 0.20
-        },
-        "cooldown": {
-            "random": "triangular_int",
-            "min": 2,
-            "max": 4
-        },
-        "mp_cost": {
-            "random": "triangular_int",
-            "min": 60,
-            "max": 120
-        },
-        "name": {
-            "random": "choice",
-            "values": [
-                "烈焰之风",
-                "激流涌动",
-                "闪电锁链",
-                "寒冰爆破",
-                "暗影裂隙"
-            ]
-        },
-        "weight": 2,
-        "effect": [
-            {
-                "desc": "随机攻击敌人{target[limit]}次，每次造成{param[0]}点魔法伤害",
-                "type": "MGC_DMG",
-                "target": {
-                    "type": "RAND",
-                    "team": 0,
-                    "limit": {
-                        "random": "cubic",
-                        "min": 2,
-                        "max": 4
-                    }
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 115,
-                        "min": 100
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "chance": {
-            "random": "triangular",
             "min": 0.05,
             "max": 0.15
         },
@@ -195,8 +162,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 110,
-                        "min": 100
+                        "expect": 130,
+                        "min": 115
                     },
                     3
                 ]
@@ -567,8 +534,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.068,
-                        "min": 0.062
+                        "expect": 0.091,
+                        "min": 0.09
                     },
                     6
                 ]
@@ -584,8 +551,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.07,
-                        "min": 0.06
+                        "expect": 0.091,
+                        "min": 0.09
                     },
                     6
                 ]
@@ -601,8 +568,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.07,
-                        "min": 0.06
+                        "expect": 0.091,
+                        "min": 0.09
                     },
                     6
                 ]
@@ -634,7 +601,7 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 3,
+            "min": 4,
             "max": 5
         },
         "mp_cost": {
@@ -668,7 +635,7 @@
                         "expect": 0.30,
                         "min": 0.26
                     },
-                    4
+                    5
                 ]
             },
             {
@@ -685,7 +652,7 @@
                         "expect": 45,
                         "min": 38
                     },
-                    3
+                    5
                 ]
             }
         ]
@@ -1189,13 +1156,13 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 46,
-                        "min": 42
+                        "expect": 50,
+                        "min": 47
                     },
-                    0.16,
+                    0.06,
                     5,
-                    0.5,
-                    0.75
+                    0.8,
+                    0.5
                 ]
             }
         ]
