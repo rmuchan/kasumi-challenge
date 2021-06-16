@@ -7,7 +7,7 @@
             ]
         },
         "desc": "强化自身{param[0]:.0f}点攻击，持续{param[1]}回合",
-        "weight": 1,
+        "weight": 2,
         "type": "PHY_ATK_BUFF_CONST",
         "target": {
             "type": "SELF",
@@ -81,7 +81,7 @@
             ]
         },
         "desc": "提升自身{param[0]:%}的法术倍率，持续{param[1]}回合",
-        "weight": 3,
+        "weight": 2,
         "type": "MGC_BUFF_RATE",
         "target": {
             "type": "SELF",
@@ -154,7 +154,7 @@
                 "向阳"
             ]
         },
-        "weight": 2,
+        "weight": 3,
         "desc": "强化自身{param[0]:%}的增益强度，持续{param[1]}回合",
         "type": "BUFF_RATE_UP",
         "target": {
