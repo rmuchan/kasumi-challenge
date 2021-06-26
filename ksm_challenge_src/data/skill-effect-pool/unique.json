@@ -352,8 +352,24 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 200,
-                        "min": 175
+                        "expect": 160,
+                        "min": 150
+                    }
+                ]
+            },
+            {
+                "desc": "直到护盾破坏为止，使其获得勇往直前效果，提高{param[0]:.0%}的攻击",
+                "type": "SHIELD_BUFF",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 0.36,
+                        "min": 0.31
                     }
                 ]
             }
@@ -400,8 +416,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1,
-                        "min": 0.9
+                        "expect": 0.8,
+                        "min": 0.72
                     },
                     3
                 ]
@@ -647,8 +663,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.40,
-                        "min": 0.32
+                        "expect": 0.55,
+                        "min": 0.48
                     },
                     2
                 ]
@@ -749,6 +765,32 @@
                 "param": [
                     360
                 ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "会心"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "被动：角色不再使用必杀技，角色进行普通攻击时，消耗{tag[mp_crit]}点MP，此次攻击必定暴击，MP不足时，不会造成暴击。",
+                "tag": {
+                    "no_unique": true,
+                    "mp_crit": 320
+                },
+                "param": [],
                 "target": {
                     "type": "SELF",
                     "team": 1,

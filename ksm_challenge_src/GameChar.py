@@ -53,7 +53,7 @@ class GameChar:
     @property
     def attack(self):
         return max(
-            (self.attributes['attack'] + self.buff_calc('attack_enhanced')) * self.buff_calc_spec('attack_weaken'), 1)
+            (self.attributes['attack'] + self.buff_calc('attack_enhanced') + (self.attributes['attack'] * self.buff['shield_buff'][0][0] if 'shield_buff' in self.buff else 0)) * self.buff_calc_spec('attack_weaken'), 1)
 
     @property  # 暴击率    是非线性叠加
     def crit_chance(self):
@@ -62,6 +62,19 @@ class GameChar:
             for item in self.buff['crit_chance_enhanced']:
                 not_crit_chance *= (1 - item[0])
         return 1 - (1 - self.attributes['crit_chance']) * not_crit_chance
+
+    # 普通攻击用，判断是否暴击
+    def try_crit(self):
+        # 是否有会心词条
+        if self.has_tag('mp_crit'):
+            # 检查当前MP是否大于灰心要求的MP
+            if self.MP >= self.tag['mp_crit']:
+                self.MP -= self.tag['mp_crit']
+                return True
+            else:
+                return False
+        else:
+            return random.random() < self.crit_chance
 
     @property  # 暴击倍率
     def crit_rate(self):
@@ -181,7 +194,7 @@ class GameChar:
         """
         attack_damage = biased(1, numerical['damage_fluctuation'])[0] * self.attack
         # 暴击判断
-        is_crit = (random.random() < self.crit_chance)
+        is_crit = (self.try_crit())
 
         if is_crit:
             attack_damage *= self.crit_rate
@@ -222,6 +235,10 @@ class GameChar:
             real_damage = self._life_hurt(damage)
         else:
             real_damage = self._life_hurt(self._damage_reduce(damage))
+
+        # 如果破盾，解除勇往直前效果
+        if shield_break == 1 and 'shield_buff' in self.buff:
+            del self.buff['shield_buff']
 
         return real_damage + shield_damage, shield_break, real_damage
 
@@ -1037,6 +1054,16 @@ class GameChar:
                     ret += self.spell_rate_up(self, param[1], param[2], no_merge=True)
                     chance *= param[4]
 
+        # 魔法蓄能
+        elif effect['type'] == 'SHIELD_BUFF':
+            for obj in selector:
+                real_added = obj.add_buff('shield_buff', param[0][0], 30)
+                ret.append({
+                    'feedback': '为{target}添加勇往直前效果，直到护盾被破坏',
+                    'merge_key': {},
+                    'param': {'target': self._self_replace(obj.name)}
+                })
+
         else:
             raise ValueError('出现了未知的效果类型：' + effect['type'])
         return ret
@@ -1247,8 +1274,9 @@ class GameChar:
         S = self.name + ', '
         S += '%.0f/%.0f, 【%.0f】\n' % (self.HP, self.attributes['HP'], self.MP)
         S += 'shield: %.0f,\n' % self.shield
-        S += 'mp_gain_rate: %s,\n' % str(self.mp_gain_rate)
-        S += 'buff: %s, ' % str(self.buff)
+        S += 'atk: %s,\n' % str(self.attack)
+        S += 'buff: %s, \n' % str(self.buff)
+        S += 'Debug: %s' % str((self.buff['shield_buff'][0][0] if 'shield_buff' in self.buff else 0))
         return S
 
 

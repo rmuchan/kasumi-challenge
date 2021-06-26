@@ -65,8 +65,8 @@
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 120
+            "min": 80,
+            "max": 150
         }
     },
     "single_effect_chance": 0.6,
