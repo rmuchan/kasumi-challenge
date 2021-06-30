@@ -336,13 +336,25 @@ class GameChar:
         for sk in self.skills:
             skill = sk.can_be_used(skill_chance_boost=self.skill_chance_boost)
             if skill:
-                real_mp_consume = skill['mp_cost'] * self.mp_consume_dec
+                real_mp_consume, pct = self.mp_consume_test(skill['mp_cost'])
                 if self.MP < real_mp_consume:
                     return ret + [self.normal_attack]
                 self.MP -= real_mp_consume
+
+                # 新黑魔法的法术倍率提高效果
+                if 'kuro_magic' in self.tag:
+                    self.spell_rate_up(self, pct * self.tag['kuro_magic']['mp_to_spell_rate'], 0)
+
                 return ret + [skill]
 
         return ret + [self.normal_attack]
+
+    def mp_consume_test(self, skill_mp):
+        # skill['mp_cost']
+        skill_consume = skill_mp * self.mp_consume_dec
+        # 黑魔法计算
+        pct = (self.MP - skill_consume) * self.tag['kuro_magic']['ratio'] if 'kuro_magic' in self.tag else 0
+        return  skill_consume + pct, pct
 
     def turn_mp_gain(self):
         """

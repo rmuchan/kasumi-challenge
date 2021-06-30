@@ -726,29 +726,15 @@
             {
                 "passive": true,
                 "passive_type": "add_tag",
-                "desc": "被动：角色不再使用必杀技，MP越多，法术倍率越高，最高提升至{param[0]:.0%}",
+                "desc": "被动：角色不再使用必杀技，角色使用技能时额外消耗{tag[kuro_magic][ratio]:.0%}的当前MP，每1点以此方法消耗的MP临时提高{tag[kuro_magic][mp_to_spell_rate]:.0%}的法术倍率",
                 "tag": {
                     "no_unique": true,
-                    "mp_to_spell_rate": 0.004
+                    "kuro_magic": {
+                        "ratio": 0.32,
+                        "mp_to_spell_rate": 0.009
+                    }
                 },
-                "param": [
-                    4.0
-                ],
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                }
-            },
-            {
-                "passive": true,
-                "passive_type": "mp_consume_change",
-                "desc": "相对的，角色所有技能的MP消耗将会提高{param[0]:.0%}+{param[2]}",
-                "param": [
-                    2.5,
-                    48,
-                    120
-                ],
+                "param": [],
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -758,13 +744,11 @@
             {
                 "passive": true,
                 "passive_type": "add_tag",
-                "desc": "角色进入战斗时初始便拥有{param[0]}点MP",
+                "desc": "角色进入战斗时初始便拥有{tag[start_mp]}点MP",
                 "tag": {
-                    "start_mp": 360
+                    "start_mp": 120
                 },
-                "param": [
-                    360
-                ],
+                "param": [],
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -788,7 +772,7 @@
                 "desc": "被动：角色不再使用必杀技，角色进行普通攻击时，消耗{tag[mp_crit]}点MP，此次攻击必定暴击，MP不足时，不会造成暴击。",
                 "tag": {
                     "no_unique": true,
-                    "mp_crit": 320
+                    "mp_crit": 300
                 },
                 "param": [],
                 "target": {
