@@ -1256,7 +1256,8 @@ class GameChar:
         # 计算此次伤害的百分比并以此为根据增加角色的MP值
         # 其中生命值最低会计算到最大生命之以下30%，折合200点MP。
         damage_percent = (pre_hp - max(-0.3 * self.attributes['HP'], self.HP)) / self.attributes['HP']
-        self.gain_mp(damage_percent * 1000 * numerical['life_to_mp'])
+        if damage_percent > 0:
+            self.gain_mp(damage_percent * 1000 * numerical['life_to_mp'])
 
         return real_damage
 
