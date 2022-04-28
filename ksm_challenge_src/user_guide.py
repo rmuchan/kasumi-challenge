@@ -4,6 +4,8 @@ from . import version
 def show_help():
     return rf"""——-KASUMI CHALLENGE 帮助-——
 > 当前版本：{get_ver()}
+> 新手入门
+    输入"ksmgame-create"指令开始创建角色！
 > 指令列表
     前缀："ksmgame"无空格间隔后接
     -help:      展示此帮助
