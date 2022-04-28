@@ -628,9 +628,9 @@
             {
                 "passive": true,
                 "passive_type": "skill_chance_boost",
-                "desc": "\n被动：所有非必杀技能的发动率提高24%",
+                "desc": "\n被动：所有非必杀技能的发动率提高30%",
                 "param": [
-                    0.24
+                    0.30
                 ],
                 "target": {
                     "type": "SELF",
@@ -730,8 +730,8 @@
                 "tag": {
                     "no_unique": true,
                     "kuro_magic": {
-                        "ratio": 0.32,
-                        "mp_to_spell_rate": 0.009
+                        "ratio": 0.400,
+                        "mp_to_spell_rate": 0.0075
                     }
                 },
                 "param": [],
@@ -772,7 +772,7 @@
                 "desc": "被动：角色不再使用必杀技，角色进行普通攻击时，消耗{tag[mp_crit]}点MP，此次攻击必定暴击，MP不足时，不会造成暴击。",
                 "tag": {
                     "no_unique": true,
-                    "mp_crit": 300
+                    "mp_crit": 275
                 },
                 "param": [],
                 "target": {
