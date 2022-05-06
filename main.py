@@ -1,7 +1,7 @@
 import asyncio
 import json
 from typing import Optional, Any
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 if __name__ == '__main__':
@@ -104,10 +104,10 @@ async def main2():
     for lvl in lvl_list:
         print('--------')
         print(lvl, (a_win[lvl] / test_amount) * 100, '%')
-        plt.plot(list(range(time_limit + 1)), turn_count[lvl], label=str(lvl) + ('[%.0f%%]' % (a_win[lvl] / test_amount * 100)))
-    plt.legend()
-    plt.show()
+        # plt.plot(list(range(time_limit + 1)), turn_count[lvl], label=str(lvl) + ('[%.0f%%]' % (a_win[lvl] / test_amount * 100)))
+    # plt.legend()
+    # plt.show()
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main2())

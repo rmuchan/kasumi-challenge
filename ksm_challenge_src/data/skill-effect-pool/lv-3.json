@@ -601,13 +601,13 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 4,
-            "max": 5
+            "min": 3,
+            "max": 4
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 60,
-            "max": 120
+            "min": 50,
+            "max": 100
         },
         "name": {
             "random": "choice",
@@ -632,27 +632,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.30,
-                        "min": 0.26
+                        "expect": 0.5,
+                        "min": 0.43
                     },
-                    5
-                ]
-            },
-            {
-                "desc": "强化自身{param[0]:.0f}点攻击，持续{param[1]}回合",
-                "type": "PHY_ATK_BUFF_CONST",
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                },
-                "param": [
-                    {
-                        "random": "biased",
-                        "expect": 45,
-                        "min": 38
-                    },
-                    5
+                    4
                 ]
             }
         ]
@@ -950,7 +933,7 @@
         "weight": 1,
         "effect": [
             {
-                "desc": "为自身添加攻击抵抗标记，完全抵抗下一次受到的攻击",
+                "desc": "为自身添加攻击抵抗标记，完全抵抗两次接下来受到的攻击",
                 "type": "DMG_RESIST",
                 "target": {
                     "type": "SELF",
@@ -970,8 +953,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.45,
-                        "min": 0.36
+                        "expect": 0.15,
+                        "min": 0.10
                     },
                     {
                         "random": "cubic",
@@ -990,13 +973,13 @@
         },
         "cooldown": {
             "random": "triangular_int",
-            "min": 2,
-            "max": 3
+            "min": 3,
+            "max": 4
         },
         "mp_cost": {
             "random": "triangular_int",
-            "min": 100,
-            "max": 150
+            "min": 150,
+            "max": 190
         },
         "name": {
             "random": "choice",
@@ -1018,10 +1001,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.32,
-                        "min": 0.265
+                        "expect": 0.42,
+                        "min": 0.340
                     },
-                    0.15,
+                    0.20,
                     8
                 ]
             }
@@ -1071,7 +1054,7 @@
                         "expect": 0.6,
                         "min": 0.55
                     },
-                    4,
+                    3,
                     30
                 ]
             }

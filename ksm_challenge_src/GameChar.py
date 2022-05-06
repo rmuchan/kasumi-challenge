@@ -216,6 +216,8 @@ class GameChar:
 
         if self.use_token('damage_resist'):
             return 0, 3, 0
+        elif self.use_token('damage_resist_2'):
+            return 0, 3, 0
 
         # 护盾将会被优先攻击
         if self.shield > 0:
@@ -846,6 +848,7 @@ class GameChar:
         elif effect['type'] == 'DMG_RESIST':
             for obj in selector:
                 obj.add_token('damage_resist')
+                obj.add_token('damage_resist_2')
                 ret.append({
                     'feedback': '为{target}附加了攻击抵抗标记',
                     'merge_key': {'target': self._self_replace(obj.name)},

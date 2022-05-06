@@ -23,8 +23,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 251,
-                        "min": 238
+                        "expect": 257,
+                        "min": 241
                     }
                 ]
             },
@@ -41,8 +41,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.042,
-                        "min": 0.04
+                        "expect": 0.05,
+                        "min": 0.044
                     },
                     9
                 ]
@@ -73,8 +73,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 162,
-                        "min": 146
+                        "expect": 170,
+                        "min": 150
                     }
                 ]
             },
@@ -89,10 +89,10 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 0.44,
-                        "min": 0.40
+                        "expect": 0.40,
+                        "min": 0.37
                     },
-                    8
+                    10
                 ]
             },
             {
@@ -106,21 +106,19 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 450,
-                        "min": 430
+                        "expect": 420,
+                        "min": 400
                     }
                 ]
             },
             {
                 "passive": true,
                 "passive_type": "add_tag",
-                "desc": "\n被动：MP获取速度提高{param[0]:.0%}",
+                "desc": "角色进入战斗时初始便拥有{tag[start_mp]}点MP",
                 "tag": {
-                    "mp_gain_enhanced": 0.12
+                    "start_mp": 300
                 },
-                "param": [
-                    0.12
-                ],
+                "param": [],
                 "target": {
                     "type": "SELF",
                     "team": 1,
@@ -198,7 +196,7 @@
                 },
                 "param": [
                     [
-                        0.72,
+                        0.90,
                         "S"
                     ],
                     2
@@ -328,6 +326,22 @@
                     },
                     30
                 ]
+            },
+            {
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "\n被动：MP获取速度提高{param[0]:.0%}",
+                "tag": {
+                    "mp_gain_enhanced": 0.24
+                },
+                "param": [
+                    0.24
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
             }
         ]
     },
@@ -726,7 +740,7 @@
             {
                 "passive": true,
                 "passive_type": "add_tag",
-                "desc": "被动：角色不再使用必杀技，角色使用技能时额外消耗{tag[kuro_magic][ratio]:.0%}的当前MP，每1点以此方法消耗的MP临时提高{tag[kuro_magic][mp_to_spell_rate]:.0%}的法术倍率",
+                "desc": "被动：角色不再使用必杀技，角色使用技能时额外消耗{tag[kuro_magic][ratio]:.0%}的当前MP，每1点以此方法消耗的MP临时提高{tag[kuro_magic][mp_to_spell_rate]:.2%}的法术倍率",
                 "tag": {
                     "no_unique": true,
                     "kuro_magic": {
@@ -746,7 +760,7 @@
                 "passive_type": "add_tag",
                 "desc": "角色进入战斗时初始便拥有{tag[start_mp]}点MP",
                 "tag": {
-                    "start_mp": 120
+                    "start_mp": 50
                 },
                 "param": [],
                 "target": {
@@ -772,7 +786,7 @@
                 "desc": "被动：角色不再使用必杀技，角色进行普通攻击时，消耗{tag[mp_crit]}点MP，此次攻击必定暴击，MP不足时，不会造成暴击。",
                 "tag": {
                     "no_unique": true,
-                    "mp_crit": 275
+                    "mp_crit": 210
                 },
                 "param": [],
                 "target": {
