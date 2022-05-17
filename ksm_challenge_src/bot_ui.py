@@ -40,7 +40,7 @@ class BotContextUI(UI):
             try:
                 await self._bot.send(self._ctx, msg, at_sender=self.at_sender)
                 return
-            except aiocqhttp.ActionFailed:
+            except aiocqhttp.Error:
                 self._bot.logger.error('Failed to send message', exc_info=True)
 
     async def do_input(self) -> str:
