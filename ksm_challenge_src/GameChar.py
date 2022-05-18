@@ -53,7 +53,9 @@ class GameChar:
     @property
     def attack(self):
         return max(
-            (self.attributes['attack'] + self.buff_calc('attack_enhanced') + (self.attributes['attack'] * self.buff['shield_buff'][0][0] if 'shield_buff' in self.buff else 0)) * self.buff_calc_spec('attack_weaken'), 1)
+            (self.attributes['attack'] + self.buff_calc('attack_enhanced') + (
+                self.attributes['attack'] * self.buff['shield_buff'][0][
+                    0] if 'shield_buff' in self.buff else 0)) * self.buff_calc_spec('attack_weaken'), 1)
 
     @property  # 暴击率    是非线性叠加
     def crit_chance(self):
@@ -90,9 +92,12 @@ class GameChar:
 
     @property  # 恢复强度
     def recover_rate(self):
-        return self.attributes['recover_rate'] * self.buff_calc('recover_rate_enhanced',
-                                                                is_multi=True) * self.buff_calc_spec(
-            'recover_rate_weaken')
+        if self.has_tag("recover_alter"):
+            return self.spell_rate
+        else:
+            return self.attributes['recover_rate'] * self.buff_calc('recover_rate_enhanced',
+                                                                    is_multi=True) * self.buff_calc_spec(
+                'recover_rate_weaken')
 
     @property  # 增益幅度
     def buff_rate(self):
@@ -356,7 +361,7 @@ class GameChar:
         skill_consume = skill_mp * self.mp_consume_dec
         # 黑魔法计算
         pct = (self.MP - skill_consume) * self.tag['kuro_magic']['ratio'] if 'kuro_magic' in self.tag else 0
-        return  skill_consume + pct, pct
+        return skill_consume + pct, pct
 
     def turn_mp_gain(self):
         """
@@ -486,11 +491,22 @@ class GameChar:
 
         # 闪避情况
         if atk_status == -1:
-            ret.append({
-                'feedback': '{target}闪避了{count}次攻击',
-                'merge_key': {'target': self._self_replace(obj.name)},
-                'param': {'count': 1}
-            })
+            # 如果没有反击状态，正常结算
+            if 'revenge_attack' not in obj.buff:
+                ret.append({
+                    'feedback': '{target}闪避了{count}次攻击',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'count': 1}
+                })
+            else:
+                obj.add_token('attack_assis')
+                ret.append({
+                    'feedback': '{target}闪避了{count}次攻击，并获得了攻击标记',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {'count': 1}
+                })
+                del obj.buff['revenge_attack']
+
         # 攻击抵抗情况  注意火焰附魔的附加效果同样也会被抵抗掉
         elif atk_status == 3:
             ret.append({
@@ -510,7 +526,8 @@ class GameChar:
 
             # 暴击时攻击加强
             if is_crit and self.has_tag('when_crit_atk_buff'):
-                ret += self.atk_up_rate(self, self.tag['when_crit_atk_buff'][0], self.tag['when_crit_atk_buff'][1], True)
+                ret += self.atk_up_rate(self, self.tag['when_crit_atk_buff'][0], self.tag['when_crit_atk_buff'][1],
+                                        True)
 
             # 触发复仇火花效果 取数组第一个(即最早加上的Buff)
             if 'revenge_flame' in obj.buff:
@@ -572,7 +589,7 @@ class GameChar:
         if no_merge:
             return [{
                 'feedback': '强化了{target}{amount:.0f}点攻击，持续{duration}回合',
-                'merge_key': {'target': self._self_replace(obj.name),'duration': duration, 'amount': real_added},
+                'merge_key': {'target': self._self_replace(obj.name), 'duration': duration, 'amount': real_added},
                 'param': {},
                 'no_merge': True
             }]
@@ -595,10 +612,10 @@ class GameChar:
             }]
         else:
             return [{
-            'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
-            'merge_key': {'target': self._self_replace(obj.name), 'duration': duration},
-            'param': {'amount': real_added}
-        }]
+                'feedback': '提升了{target}{amount:.0%}的法术强度，持续{duration}回合',
+                'merge_key': {'target': self._self_replace(obj.name), 'duration': duration},
+                'param': {'amount': real_added}
+            }]
 
     # ————————————————————————————
     #         技能效果执行
@@ -1077,6 +1094,16 @@ class GameChar:
                     'feedback': '为{target}添加勇往直前效果，直到护盾被破坏',
                     'merge_key': {},
                     'param': {'target': self._self_replace(obj.name)}
+                })
+
+        # 反击
+        elif effect['type'] == 'REVENGE_ATTACK':
+            for obj in selector:
+                obj.add_buff('revenge_attack', True, param[1])
+                ret.append({
+                    'feedback': '为{target}添加了反击状态，持续2回合',
+                    'merge_key': {'target': self._self_replace(obj.name)},
+                    'param': {}
                 })
 
         else:

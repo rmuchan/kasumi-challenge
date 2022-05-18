@@ -149,11 +149,21 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 300,
-                        "min": 270
+                        "expect": 225,
+                        "min": 190
                     },
-                    4
+                    3
                 ]
+            },
+            {
+                "desc": "立即进行一次普通攻击",
+                "type": "NORMAL_ATK",
+                "target": {
+                    "type": "RAND",
+                    "team": 0,
+                    "limit": 1
+                },
+                "param": []
             },
             {
                 "desc": "沉默自己{param[1]}回合",
@@ -203,18 +213,19 @@
                 ]
             },
             {
-                "desc": "在{param[1]}回合内使自己普通攻击必定命中",
-                "type": "ACCURATE",
+                "desc": "提高{param[0]:.0f}点攻击",
+                "type": "PHY_ATK_BUFF_CONST",
                 "target": {
                     "type": "SELF",
                     "team": 1,
                     "limit": 1
                 },
                 "param": [
-                    [
-                        1,
-                        "S"
-                    ],
+                    {
+                        "random": "biased",
+                        "expect": 100,
+                        "min": 80
+                    },
                     2
                 ]
             },
@@ -349,7 +360,6 @@
         "name": {
             "random": "choice",
             "values": [
-                "守护天使",
                 "不灭屏障"
             ]
         },
@@ -372,7 +382,7 @@
                 ]
             },
             {
-                "desc": "直到护盾破坏为止，使其获得勇往直前效果，提高{param[0]:.0%}的攻击",
+                "desc": "直到护盾破坏为止，使其获得勇往直前效果：提高{param[0]:.0%}的攻击",
                 "type": "SHIELD_BUFF",
                 "target": {
                     "type": "ALL",
@@ -413,8 +423,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.28,
-                        "min": 1.11
+                        "expect": 1.41,
+                        "min": 1.21
                     },
                     4
                 ]
@@ -464,19 +474,6 @@
                         "min": 97
                     }
                 ]
-            },
-            {
-                "passive": true,
-                "passive_type": "mp_consume_change",
-                "desc": "\n被动：MP消耗降低至{param[0]:.0%}",
-                "param": [
-                    0.8
-                ],
-                "target": {
-                    "type": "SELF",
-                    "team": 1,
-                    "limit": 1
-                }
             }
         ]
     },
@@ -490,7 +487,7 @@
                 "火焰之拳"
             ]
         },
-        "weight": 2,
+        "weight": 3,
         "effect": [
             {
                 "desc": "将火焰之力附加在自己的武器上，使自己的普通攻击在{param[1]}回合内额外造成基于自身攻击68%的魔法伤害。",
@@ -529,7 +526,7 @@
                 },
                 "param": [
                     [
-                        0.43,
+                        0.45,
                         "S"
                     ],
                     0
@@ -553,7 +550,7 @@
                 ]
             },
             {
-                "desc": "然而每次攻击的伤害降低43%",
+                "desc": "然而每次攻击的伤害降低45%",
                 "type": "NORMAL_ATK",
                 "target": {
                     "type": "RAND",
@@ -594,11 +591,27 @@
                 "烟雾弹"
             ]
         },
-        "weight": 1,
+        "weight": 2,
         "effect": [
             {
                 "desc": "使全队在2回合内完全闪避普通攻击",
                 "type": "DODGE_BUFF",
+                "target": {
+                    "type": "ALL",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        1,
+                        "S"
+                    ],
+                    2
+                ]
+            },
+            {
+                "desc": "期间，当角色第一次触发闪避效果时，获得攻击标记",
+                "type": "REVENGE_ATTACK",
                 "target": {
                     "type": "ALL",
                     "team": 1,
@@ -642,9 +655,22 @@
             {
                 "passive": true,
                 "passive_type": "skill_chance_boost",
-                "desc": "\n被动：所有非必杀技能的发动率提高30%",
+                "desc": "\n被动：所有非必杀技能的发动率提高40%",
                 "param": [
-                    0.30
+                    0.40
+                ],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
+            },
+            {
+                "passive": true,
+                "passive_type": "mp_consume_change",
+                "desc": "MP消耗降低至{param[0]:.0%}",
+                "param": [
+                    0.5
                 ],
                 "target": {
                     "type": "SELF",
@@ -710,6 +736,22 @@
                 "param": []
             },
             {
+                "desc": "且必定命中",
+                "type": "ACCURATE",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    [
+                        1,
+                        "S"
+                    ],
+                    1
+                ]
+            },
+            {
                 "desc": "并在{param[1]}回合内提升自身{param[0]:.0%}的MP获取速度",
                 "type": "MP_GAIN_UP",
                 "target": {
@@ -720,8 +762,8 @@
                 "param": [
                     {
                         "random": "biased",
-                        "expect": 1.01,
-                        "min": 0.98
+                        "expect": 1.21,
+                        "min": 1.05
                     },
                     2
                 ]
@@ -787,6 +829,89 @@
                 "tag": {
                     "no_unique": true,
                     "mp_crit": 210
+                },
+                "param": [],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
+            }
+        ]
+    },
+    {
+        "name": {
+            "random": "choice",
+            "values": [
+                "血戮魔法"
+            ]
+        },
+        "weight": 2,
+        "effect": [
+            {
+                "desc": "治疗自身{param[0]}点生命",
+                "type": "HEAL",
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                },
+                "param": [
+                    {
+                        "random": "biased",
+                        "expect": 50,
+                        "min": 46
+                    }
+                ]
+            },
+            {
+                "passive": true,
+                "passive_type": "normal_attack_alter",
+                "desc": "被动：角色的普通攻击替换为献祭攻击：以自身为目标进行普通攻击，同时在8回合内提高自身22%的法术倍率",
+                "alter": {
+                    "name": "献祭攻击",
+                    "effect": [
+                        {
+                            "type": "NORMAL_ATK",
+                            "target": {
+                                "type": "SELF",
+                                "team": 0,
+                                "limit": 1
+                            },
+                            "param": []
+                        },
+                        {
+                            "desc": "强化自身{param[0]:%}的法术倍率，持续{param[1]}回合",
+                            "type": "MGC_BUFF_RATE",
+                            "target": {
+                                "type": "SELF",
+                                "team": 1,
+                                "limit": 1
+                            },
+                            "param": [
+                                {
+                                    "random": "biased",
+                                    "expect": 0.221,
+                                    "min": 0.220
+                                },
+                                8
+                            ]
+                        }
+                    ]
+                },
+                "param": [],
+                "target": {
+                    "type": "SELF",
+                    "team": 1,
+                    "limit": 1
+                }
+            },
+            {
+                "passive": true,
+                "passive_type": "add_tag",
+                "desc": "角色的恢复强度将会被自身的法术倍率替代",
+                "tag": {
+                    "recover_alter": true
                 },
                 "param": [],
                 "target": {

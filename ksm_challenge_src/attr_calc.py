@@ -101,6 +101,9 @@ def game_char_gen(chara: dict, test_lv=False, real_mode=True) -> dict:
             temp = effect.copy()
             if effect['passive_type'] == 'normal_attack_enhance':
                 game_char['normal_attack']['effect'] += [temp]
+            # 普攻替换
+            elif effect['passive_type'] == 'normal_attack_alter':
+                game_char['normal_attack'] = temp['alter']
             # 添加标签
             elif effect['passive_type'] == 'add_tag':
                 for k, v in temp['tag'].items():
